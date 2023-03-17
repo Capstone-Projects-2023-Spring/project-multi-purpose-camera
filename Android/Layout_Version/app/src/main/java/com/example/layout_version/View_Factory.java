@@ -100,6 +100,7 @@ public class View_Factory {
         int camera_width = (int)(width*0.8);
         int camera_height = (int)(camera_width * 0.62);
         int camera_padding = 100;
+        int number_cameras = 4;
 
         View background = fill_rectangle(activity, background_color2);
         background.setLayoutParams(createLayoutParams(0, 0, 0, 0, -1, -1));
@@ -112,7 +113,7 @@ public class View_Factory {
         ConstraintLayout scroll_container = new ConstraintLayout(activity);
         scroll.addView(scroll_container);
 
-        ConstraintLayout[] layouts = new ConstraintLayout[4];
+        ConstraintLayout[] layouts = new ConstraintLayout[number_cameras];
         for(int i = 0; i < layouts.length; i++){
             ConstraintLayout constraintLayout_camera1 = new ConstraintLayout(activity);
             constraintLayout_camera1.setLayoutParams(createLayoutParams(100 + (camera_height + camera_padding) * i, -1, 0, 0, camera_width, camera_height));
