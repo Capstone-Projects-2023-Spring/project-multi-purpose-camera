@@ -29,6 +29,15 @@ public class Settings extends AppCompatActivity {
         back_home_im = (ImageView) findViewById(R.id.back_home_btn_setting);
         back_home_txt = (TextView) findViewById(R.id.back_home_text_setting);
 
+        TextView saving_policy = (TextView) findViewById(R.id.cloud_saving_settings);
+        saving_policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (Settings.this,Saving_Policy_Page.class);
+                startActivity(intent);
+            }
+        });
+
         back_home_im.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -48,6 +57,8 @@ public class Settings extends AppCompatActivity {
         });
 
     }
+
+
 
     public ConstraintLayout construct_settings_layout(ConstraintLayout main_layout){
         ConstraintLayout settings_layout = new ConstraintLayout(this);

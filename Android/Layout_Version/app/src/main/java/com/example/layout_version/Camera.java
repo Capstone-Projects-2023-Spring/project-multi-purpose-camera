@@ -4,5 +4,6 @@ public class Camera {
     public int id;
     public String name;
     public Camera(String name){
+        this.name = name;
     }
 }
