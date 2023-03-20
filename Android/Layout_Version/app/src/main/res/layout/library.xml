@@ -67,20 +67,31 @@
             android:text="Library" />
     </LinearLayout>
 
-<!--    Layout for videos -->
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/captured_videos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="110dp">
 
         <VideoView
-            android:id="@+id/video"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="30dp" />
+
+        <TextView
+            android:id="@+id/video_description"
             android:layout_width="match_parent"
-            android:layout_height="255dp">
-        </VideoView>
-    </FrameLayout>
+            android:layout_height="wrap_content"
+            android:translationZ="90dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="14sp"
+            android:text="Personal"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
