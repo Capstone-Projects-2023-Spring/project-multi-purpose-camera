@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.net.*;
 import java.io.*;
 
-public class Receiver_Client extends AppCompatActivity implements Runnable {
+public abstract class Receiver_Client extends AppCompatActivity implements Runnable {
 
     private Socket socket = null;
     private DataInputStream input = null;

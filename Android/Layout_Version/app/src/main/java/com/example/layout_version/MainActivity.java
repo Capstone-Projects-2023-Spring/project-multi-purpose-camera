@@ -67,6 +67,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        VideoView videoView = findViewById(R.id.video);
+
+        MediaController mediaController = new MediaController (this);
+        videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(videoView);
+
+        // ------------- Video from project folder -------------
+//        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.pain;
+//        Uri uri = Uri.parse(videoPath);
+//        videoView.setVideoURI(uri);
+
+        // ------------- Video from online URL -------------
+        Uri uri = Uri.parse("https://cdn.pixabay.com/vimeo/337972830/fall-23881.mp4?width=1280&expiry=1679280222&hash=91ca9353004b8a87a69b57e97bcd5e8c51faca68");
+        videoView.setVideoURI(uri);
+        videoView.requestFocus();
+        videoView.start();
+
     }
 
 

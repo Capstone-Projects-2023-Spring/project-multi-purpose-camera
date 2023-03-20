@@ -24,14 +24,14 @@ public class Library extends AppCompatActivity {
         btn = (ImageView) findViewById(R.id.settings);
         view = (Button) findViewById(R.id.view);
 
-        VideoView videoView = findViewById(R.id.video);
-        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.pain;
-        Uri uri = Uri.parse(videoPath);
-        videoView.setVideoURI(uri);
-
-        MediaController mediaController = new MediaController (this);
-        videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(videoView);
+//        VideoView videoView = findViewById(R.id.video);
+//        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.pain;
+//        Uri uri = Uri.parse(videoPath);
+//        videoView.setVideoURI(uri);
+//
+//        MediaController mediaController = new MediaController (this);
+//        videoView.setMediaController(mediaController);
+//        mediaController.setAnchorView(videoView);
 
         btn.setOnClickListener(new View.OnClickListener()
         {
