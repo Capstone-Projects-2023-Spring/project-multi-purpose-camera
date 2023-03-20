@@ -1,11 +1,8 @@
 package com.example.layout_version;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.fonts.Font;
-import android.graphics.fonts.FontStyle;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,7 +19,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saving_policies);
 
-        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.saving_vertical_layout);
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.saving_vertical_layout_title);
 
         ArrayList<String> policies = BackEnd.get_policy_string_saving();
 
@@ -37,8 +34,9 @@ public class Saving_Policy_Page extends AppCompatActivity {
         int width = 400;
         int padding = 50;
 
-        TextView title = findViewById(R.id.saving_title);
-        Typeface font = title.getTypeface();
+
+
+
 
 
         System.out.println("# saving policies: " + policies.size());
@@ -57,13 +55,13 @@ public class Saving_Policy_Page extends AppCompatActivity {
                 }
             });
 
-            TextView text = new TextView(this);
+            TextView text = (TextView) LayoutInflater.from(this).inflate(R.layout.policy_text_view, null);
             text.setText(policies.get(i));
             text.setLayoutParams(View_Factory.createLayoutParams(padding, 0, -1, left_offset + text_left_offset, width - text_left_offset*2 - 50, height));
             text.setTextSize(20);
-            text.setTypeface(font);
+            //text.setTypeface(font);
             constraintLayout.addView(text);
-            System.out.println(font);
+            //System.out.println(font);
 
 
 

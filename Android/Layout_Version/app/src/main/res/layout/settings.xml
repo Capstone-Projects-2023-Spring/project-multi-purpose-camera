@@ -33,7 +33,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/saving_vertical_layout"
+        android:id="@+id/saving_vertical_layout_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"

@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         constraintLayout.addView(main_layout);
 
         //ConstraintLayout camera_layout = construct_camera_layout(main_layout);
+        ConstraintLayout camera_layout = View_Factory.construct_camera_layout(main_layout, this);
 
         btn = (ImageView) findViewById(R.id.settings);
         lib = (Button) findViewById(R.id.library);
