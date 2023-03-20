@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView btn;
         Button lib;
+        TextView vid;
 
         ConstraintLayout constraintLayout = findViewById(R.id.main_layout);
         System.out.println("*******************\n\n\n" + constraintLayout);
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         btn = (ImageView) findViewById(R.id.settings);
         lib = (Button) findViewById(R.id.library);
+        vid = (TextView) findViewById(R.id.cam_vid_clip);
 
         btn.setOnClickListener(new View.OnClickListener()
         {
@@ -67,6 +70,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        vid.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
+                startActivity(intent);
+            }
+        });
+
         VideoView videoView = findViewById(R.id.video);
 
         MediaController mediaController = new MediaController (this);
@@ -79,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 //        videoView.setVideoURI(uri);
 
         // ------------- Video from online URL -------------
-        Uri uri = Uri.parse("https://cdn.pixabay.com/vimeo/337972830/fall-23881.mp4?width=1280&expiry=1679280222&hash=91ca9353004b8a87a69b57e97bcd5e8c51faca68");
+        Uri uri = Uri.parse("https://cdn.pixabay.com/vimeo/337972830/fall-23881.mp4?width=1280&expiry=1679342882&hash=e5678dfeff59e6d8b1c639ca9180c1cc181b7c21");
         videoView.setVideoURI(uri);
         videoView.requestFocus();
         videoView.start();
