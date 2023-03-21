@@ -14,6 +14,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
     }
 
     buildTypes {
@@ -25,6 +28,15 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+            jni.srcDirs = [] //disable automatic ndk-build call
+            res {
+                srcDirs 'src\\main\\res', 'src\\main\\res\\2'
+            }
+        }
     }
 }
 
