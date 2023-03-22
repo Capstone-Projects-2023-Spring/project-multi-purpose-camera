@@ -16,13 +16,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/back_home_btn_setting"
+            android:id="@+id/back_setting_btn_savingP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_arrow_back_ios_new_24" />
 
         <TextView
-            android:id="@+id/back_home_text_setting"
+            android:id="@+id/back_setting_text_savingP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"

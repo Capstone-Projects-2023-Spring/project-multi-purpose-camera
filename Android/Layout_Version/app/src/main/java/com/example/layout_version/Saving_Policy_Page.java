@@ -1,12 +1,14 @@
 package com.example.layout_version;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.fonts.Font;
 import android.graphics.fonts.FontStyle;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,11 +24,35 @@ public class Saving_Policy_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saving_policies);
 
+        ImageView back_setting_im;
+        TextView back_setting_txt;
+
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.saving_vertical_layout);
 
         ArrayList<String> policies = BackEnd.get_policy_string_saving();
 
         add_policies(linearLayout, policies);
+
+        back_setting_im = (ImageView) findViewById(R.id.back_setting_btn_savingP);
+        back_setting_txt = (TextView) findViewById(R.id.back_setting_text_savingP);
+
+        back_setting_im.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Saving_Policy_Page.this,Settings.class);
+                startActivity(intent);
+            }
+        });
+
+        back_setting_txt.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Saving_Policy_Page.this,Settings.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void add_policies(LinearLayout linearLayout, ArrayList<String> policies){

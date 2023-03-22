@@ -53,9 +53,45 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <VideoView
+                android:id="@+id/video"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"></VideoView>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/cam_vid_clip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginLeft="100dp"
+            android:background="#c7c7c7"
+            android:alpha="0.5">
+
+        </TextView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:translationZ="1dp"
-        android:layout_marginTop="270dp"
+        android:layout_marginTop="370dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
         android:padding="25dp"
         android:background="#dddddd"
         app:layout_constraintTop_toTopOf="parent">
@@ -71,53 +107,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/baseline_fiber_manual_record_24"/>
+            android:src="@drawable/baseline_clip_24"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/baseline_photo_camera_24"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="350dp"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:background="#dddddd"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:padding="15dp"
-            android:background="#dddddd"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            android:padding="15dp"
-            android:background="#dddddd"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="105dp"
-            android:padding="15dp"
-            android:background="#dddddd"
-            />
-
+            android:src="@drawable/baseline_save_as_24"/>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
