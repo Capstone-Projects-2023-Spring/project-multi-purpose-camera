@@ -48,4 +48,9 @@ public class Receiver_Client extends AppCompatActivity implements Runnable {
             System.out.println(i);
         }
     }
+
+    @Override
+    public void run() {
+
+    }
 }

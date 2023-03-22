@@ -25,6 +25,8 @@ public class Saving_Policy_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saving_policies);
 
+
+
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.saving_vertical_layout_title);
 
         ArrayList<String> policies = BackEnd.get_policy_string_saving();
@@ -62,8 +64,8 @@ public class Saving_Policy_Page extends AppCompatActivity {
             linearLayout.addView(policy_layout);
         }
 
-        add_policies(linearLayout, policies);
-
+        ImageView back_setting_im;
+        TextView back_setting_txt;
         back_setting_im = (ImageView) findViewById(R.id.back_setting_btn_savingP);
         back_setting_txt = (TextView) findViewById(R.id.back_setting_text_savingP);
 
