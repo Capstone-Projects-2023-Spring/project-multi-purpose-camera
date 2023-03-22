@@ -26,6 +26,7 @@
         <activity android:name=".Settings"/>
         <activity android:name=".Library" />
         <activity android:name=".Saving_Policy_Page" />
+        <activity android:name=".Edit_Saving_Policy_Page" />
     </application>
 
 </manifest>

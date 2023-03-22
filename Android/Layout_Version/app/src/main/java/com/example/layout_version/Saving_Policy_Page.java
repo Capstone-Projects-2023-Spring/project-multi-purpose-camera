@@ -1,5 +1,6 @@
 package com.example.layout_version;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,8 +23,40 @@ public class Saving_Policy_Page extends AppCompatActivity {
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.saving_vertical_layout_title);
 
         ArrayList<String> policies = BackEnd.get_policy_string_saving();
+        linearLayout.removeAllViews();
 
-        add_policies(linearLayout, policies);
+        add_policies_using_template(linearLayout, policies);
+    }
+
+    public void add_policies_using_template(LinearLayout linearLayout, ArrayList<String> policies){
+        for(int i = 0; i < policies.size(); i++){
+            int finalI = i;
+            Saving_Policy policy = BackEnd.savings.get(finalI);
+            ConstraintLayout policy_layout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.title_and_description_template, null);
+
+            policy_layout.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Edit_Saving_Policy_Page.current_policy = policy;
+                    Intent intent = new Intent (Saving_Policy_Page.this,Edit_Saving_Policy_Page.class);
+                    startActivity(intent);
+                }
+            });
+
+            LinearLayout inner_layout = (LinearLayout) ((ConstraintLayout) policy_layout.getChildAt(0)).getChildAt(0);
+
+            String[] tokens = policies.get(i).split("\n");
+            TextView title = (TextView) inner_layout.getChildAt(0);
+            TextView time = (TextView) inner_layout.getChildAt(2);
+            TextView second = (TextView) inner_layout.getChildAt(4);
+
+            title.setText(tokens[0]);
+            time.setText(tokens[1]);
+
+            linearLayout.addView(policy_layout);
+        }
+
     }
 
     public void add_policies(LinearLayout linearLayout, ArrayList<String> policies){
