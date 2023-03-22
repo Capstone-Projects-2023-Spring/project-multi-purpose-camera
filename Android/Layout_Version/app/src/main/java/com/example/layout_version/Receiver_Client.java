@@ -6,21 +6,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.net.*;
 import java.io.*;
 
-public class Receiver_Client extends AppCompatActivity implements Runnable {
+public class Receiver_Client implements Runnable {
 
     private Socket socket = null;
     private DataInputStream input = null;
     private DataOutputStream output = null;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+    public void create_connection() {
+        //super.onCreate(savedInstanceState);
         //Client client = new Client( ip address, port);
+        String address = "44.212.17.188";
+        int port = 9999;
+
+        connect(address, port);
     }
-    public void connect( String address, int port ){
+    public void connect( String address, int port){
         try {
             socket = new Socket(address, port);
-            input = new DataInputStream(System.in);
+            input = new DataInputStream(socket.getInputStream());
             output = new DataOutputStream(socket.getOutputStream());
+
+            PrintWriter writer = new PrintWriter(output, true);
+            writer.println("Hello from client!");
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            String response = reader.readLine();
+            System.out.println("Server response: " + response);
         }
         catch(UnknownHostException u){
             System.out.println(u);
