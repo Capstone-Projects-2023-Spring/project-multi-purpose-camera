@@ -24,24 +24,40 @@ public class Receiver_Client implements Runnable{
         try {
             System.out.println("Start of connect method");
             DatagramSocket clientSocket = new DatagramSocket();
+            DatagramSocket videoSocket = new DatagramSocket();
+            DatagramSocket audioSocket = new DatagramSocket();
             InetAddress IPAddress = InetAddress.getByName(address);
-            System.out.println("checkpoint 1");
             String sentence = "R" + ID;
             byte[] bytes = sentence.getBytes(StandardCharsets.UTF_8);
             byte[] receivebytes = new byte[5];
             DatagramPacket sendPacket = new DatagramPacket(bytes, bytes.length, IPAddress, port);
-            System.out.println("checkpoint 2");
             clientSocket.send(sendPacket);
-            System.out.println("checkpoint 3");
             DatagramPacket receivePacket = new DatagramPacket(receivebytes, receivebytes.length);
-            System.out.println("checkpoint 4");
             clientSocket.receive(receivePacket);
-            System.out.println("checkpoint 5");
             receivebytes = receivePacket.getData();
-            System.out.println("checkpoint 6");
             String decoded = new String(receivebytes, "UTF-8");
             System.out.println("From server: " + decoded);
+            int port_num = Integer.parseInt(decoded);
             clientSocket.close();
+            byte[] videoInitMessage = "Vid_Init".getBytes();
+            byte[] audioInitMessage = "Aud_Init".getBytes();
+            DatagramPacket startVideoPacket = new DatagramPacket(videoInitMessage, videoInitMessage.length, IPAddress, port_num);
+            DatagramPacket startAudioPacket = new DatagramPacket(audioInitMessage, audioInitMessage.length, IPAddress, port_num + 1);
+            videoSocket.send(startVideoPacket);
+            audioSocket.send(startAudioPacket);
+            while(true){
+                byte[] receivevideobytes = new byte[65536];
+                byte[] receiveaudiobytes = new byte[65536];
+                DatagramPacket receiveVideoPacket = new DatagramPacket(receivevideobytes, receivevideobytes.length, IPAddress, port_num);
+                DatagramPacket receiveAudioPacket = new DatagramPacket(receiveaudiobytes, receiveaudiobytes.length, IPAddress, port_num + 1);
+                videoSocket.receive(receiveVideoPacket);
+                receivevideobytes = receiveAudioPacket.getData();
+                System.out.println("Size of video packet: " + receivevideobytes.length);
+                audioSocket.receive(receiveAudioPacket);
+                receiveaudiobytes = receiveAudioPacket.getData();
+                System.out.println("Size of video packet: " + receiveaudiobytes.length);
+
+            }
         } catch (UnknownHostException u) {
             System.out.println(u);
         } catch (IOException i) {
