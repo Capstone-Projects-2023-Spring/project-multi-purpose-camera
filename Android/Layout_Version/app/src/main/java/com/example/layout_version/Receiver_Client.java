@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.net.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.sql.Array;
+import java.util.Arrays;
+import java.util.Base64;
 
 public class Receiver_Client implements Runnable{
     static String address = "44.212.17.188";
@@ -44,18 +47,23 @@ public class Receiver_Client implements Runnable{
             DatagramPacket startVideoPacket = new DatagramPacket(videoInitMessage, videoInitMessage.length, IPAddress, port_num);
             DatagramPacket startAudioPacket = new DatagramPacket(audioInitMessage, audioInitMessage.length, IPAddress, port_num + 1);
             videoSocket.send(startVideoPacket);
-            audioSocket.send(startAudioPacket);
+            // audioSocket.send(startAudioPacket);
             while(true){
                 byte[] receivevideobytes = new byte[65536];
-                byte[] receiveaudiobytes = new byte[65536];
-                DatagramPacket receiveVideoPacket = new DatagramPacket(receivevideobytes, receivevideobytes.length, IPAddress, port_num);
-                DatagramPacket receiveAudioPacket = new DatagramPacket(receiveaudiobytes, receiveaudiobytes.length, IPAddress, port_num + 1);
+                //byte[] receiveaudiobytes = new byte[8];
+                DatagramPacket receiveVideoPacket = new DatagramPacket(receivevideobytes, receivevideobytes.length);
+                //DatagramPacket receiveAudioPacket = new DatagramPacket(receiveaudiobytes, receiveaudiobytes.length);
                 videoSocket.receive(receiveVideoPacket);
-                receivevideobytes = receiveAudioPacket.getData();
-                System.out.println("Size of video packet: " + receivevideobytes.length);
-                audioSocket.receive(receiveAudioPacket);
-                receiveaudiobytes = receiveAudioPacket.getData();
-                System.out.println("Size of video packet: " + receiveaudiobytes.length);
+                System.out.println(receiveVideoPacket);
+                byte[] byte_arr = trim(receivevideobytes);
+                //receivevideobytes = receiveAudioPacket.getData();
+
+                System.out.println("Size of video packet: " + byte_arr.length);
+                //byte[] v_result = trim(receivevideobytes);
+                //byte[] a_result = trim(receivevideobytes);
+                //audioSocket.receive(receiveAudioPacket);
+                //receiveaudiobytes = receiveAudioPacket.getData();
+                // System.out.println("Size of video packet: " + a_result.length);
 
             }
         } catch (UnknownHostException u) {
@@ -84,6 +92,15 @@ public class Receiver_Client implements Runnable{
             System.out.println(i);
         }
     }*/
+    public static byte[] trim(byte[] data) {
+        byte[] input = data;
+        int i = input.length;
+        while (i-- > 0 && input[i] == 0) {}
+
+        byte[] output = new byte[i+1];
+        System.arraycopy(input, 0, output, 0, i+1);
+        return output;
+    }
 
     @Override
     public void run() {
