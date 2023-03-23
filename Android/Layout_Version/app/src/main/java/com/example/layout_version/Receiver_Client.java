@@ -14,7 +14,7 @@ public class Receiver_Client implements Runnable{
     //static Socket socket = new Socket(address, port);
     //static DataInputStream input = new DataInputStream(socket.getInputStream());
      //static DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-    public static void main(String args []){
+    public Receiver_Client(){
         //super.onCreate(savedInstanceState);
         //Client client = new Client( ip address, port);
         System.out.println("Start of program");
@@ -28,7 +28,7 @@ public class Receiver_Client implements Runnable{
             System.out.println("checkpoint 1");
             String sentence = "R" + ID;
             byte[] bytes = sentence.getBytes(StandardCharsets.UTF_8);
-            byte[] receivebytes = sentence.getBytes(StandardCharsets.UTF_8);
+            byte[] receivebytes = new byte[5];
             DatagramPacket sendPacket = new DatagramPacket(bytes, bytes.length, IPAddress, port);
             System.out.println("checkpoint 2");
             clientSocket.send(sendPacket);
