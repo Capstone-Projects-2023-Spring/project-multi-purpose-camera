@@ -7,21 +7,20 @@ import java.net.*;
 import java.io.*;
 
 public class Receiver_Client implements Runnable{
+    static String address = "44.212.17.188";
+    static int port = 9999;
+    static Socket socket = new Socket(address, port);
+    static DataInputStream input = new DataInputStream(socket.getInputStream());
+     static DataOutputStream output = new DataOutputStream(socket.getOutputStream());
     public static void main(String args[])throws UnknownHostException, SocketException, IOException {
         //super.onCreate(savedInstanceState);
         //Client client = new Client( ip address, port);
-        String address = "44.212.17.188";
-        int port = 9999;
         connect(address, port);
     }
     public static void connect( String address, int port){
         try {
             int BUFF_SIZE = 66536;
             //byte buf[] = null;
-
-            Socket socket = new Socket(address, port);
-            DataInputStream input = new DataInputStream(socket.getInputStream());
-            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
             /*
             DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 1234);
             DatagramSocket datagramSocket = new DatagramSocket(port);
