@@ -13,7 +13,7 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         System.out.println("starting connection");
+        //Receiver_Client client = new Receiver_Client();
         Receiver_Client client = new Receiver_Client();
-        client.create_connection();
     }
 }

@@ -10,8 +10,14 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -20,9 +26,6 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static int background_color1;
-    public static int background_color2;
 
     public ConstraintLayout main_layout;
 
@@ -35,23 +38,21 @@ public class MainActivity extends AppCompatActivity {
         ImageView btn;
         Button lib;
         TextView vid;
+        WebView mWebView;
 
         ConstraintLayout constraintLayout = findViewById(R.id.main_layout);
         System.out.println("*******************\n\n\n" + constraintLayout);
 
-        background_color1 = Color.DKGRAY;
-        background_color2 = Color.WHITE;
 
         main_layout = new ConstraintLayout(this);
         main_layout.setLayoutParams(View_Factory.createLayoutParams(0, 0, 0, 0, -1, -1 ));
         constraintLayout.addView(main_layout);
 
         //ConstraintLayout camera_layout = construct_camera_layout(main_layout);
-        ConstraintLayout camera_layout = View_Factory.construct_camera_layout(main_layout, this);
 
         btn = (ImageView) findViewById(R.id.settings);
         lib = (Button) findViewById(R.id.library);
-        vid = (TextView) findViewById(R.id.cam_vid_clip);
+        //vid = (TextView) findViewById(R.id.cam_vid_clip);
 
         btn.setOnClickListener(new View.OnClickListener()
         {
@@ -71,20 +72,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        vid.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
-                startActivity(intent);
-            }
-        });
+//        vid.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
+//                startActivity(intent);
+//            }
+//        });
 
-        VideoView videoView = findViewById(R.id.video);
-
-        MediaController mediaController = new MediaController (this);
-        videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(videoView);
+//        VideoView videoView = findViewById(R.id.video);
+//
+//        MediaController mediaController = new MediaController (this);
+//        videoView.setMediaController(mediaController);
+//        mediaController.setAnchorView(videoView);
 
         // ------------- Video from project folder -------------
 //        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.pain;
@@ -92,15 +93,26 @@ public class MainActivity extends AppCompatActivity {
 //        videoView.setVideoURI(uri);
 
         // ------------- Video from online URL -------------
-        Uri uri = Uri.parse("https://cdn.pixabay.com/vimeo/337972830/fall-23881.mp4?width=1280&expiry=1679342882&hash=e5678dfeff59e6d8b1c639ca9180c1cc181b7c21");
-        videoView.setVideoURI(uri);
-        videoView.requestFocus();
-        videoView.start();
+//        Uri uri = Uri.parse("");
+//        videoView.setVideoURI(uri);
+//        videoView.requestFocus();
+//        videoView.start();
 
+        //
+        mWebView = (WebView) findViewById(R.id.video_web);
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        mWebView.setWebViewClient(new Callback());
+        // mWebView.loadUrl("http://192.168.1.214:8082/");
+        mWebView.loadUrl("http://google.com/");
     }
 
 
-
-
-
+    private class Callback extends WebViewClient {
+        @Override
+        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
+            return false;
+        }
+    }
 }
