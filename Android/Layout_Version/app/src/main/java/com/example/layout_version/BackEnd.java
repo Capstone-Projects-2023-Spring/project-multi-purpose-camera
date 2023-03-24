@@ -28,6 +28,8 @@ public class BackEnd {
         saving.add_camera(cameras.get(2));
         savings.add(saving);
         savings.add(new Saving_Policy(cameras.get(1), 20, p1080));
+        savings.add(savings.get(savings.size() - 1));
+        savings.add(savings.get(savings.size() - 1));
     }
 
     public static ArrayList<String>  get_policy_string_saving(){

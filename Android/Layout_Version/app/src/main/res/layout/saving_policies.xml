@@ -63,6 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/saving_vertical_layout_title">
 
         <LinearLayout
+            android:id="@+id/saving_policies_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

@@ -28,22 +28,27 @@ public class Saving_Policy_Page extends AppCompatActivity {
 
 
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.saving_vertical_layout_title);
+        LinearLayout linearLayout_policies = (LinearLayout)findViewById(R.id.saving_policies_container);
 
         ArrayList<String> policies = BackEnd.get_policy_string_saving();
-        linearLayout.removeAllViews();
-
-        add_policies_using_template(linearLayout, policies);
+        //linearLayout.removeAllViews();
+        linearLayout.removeViewAt(1);
+        linearLayout_policies.removeAllViews();
+        add_policies_using_template(linearLayout_policies, policies);
     }
 
     protected void onStart(){
         super.onStart();
 
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.saving_vertical_layout_title);
+        LinearLayout linearLayout_policies = (LinearLayout)findViewById(R.id.saving_policies_container);
 
         ArrayList<String> policies = BackEnd.get_policy_string_saving();
-        linearLayout.removeAllViews();
+        //
+        // linearLayout.removeViewAt(1);
+        linearLayout_policies.removeAllViews();
 
-        add_policies_using_template(linearLayout, policies);
+        add_policies_using_template(linearLayout_policies, policies);
     }
 
     public void add_policies_using_template(LinearLayout linearLayout, ArrayList<String> policies){
@@ -51,7 +56,6 @@ public class Saving_Policy_Page extends AppCompatActivity {
             int finalI = i;
             Saving_Policy policy = BackEnd.savings.get(finalI);
             ConstraintLayout policy_layout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.title_and_description_template, null);
-
             policy_layout.setOnClickListener(new View.OnClickListener() {
 
                 @Override
