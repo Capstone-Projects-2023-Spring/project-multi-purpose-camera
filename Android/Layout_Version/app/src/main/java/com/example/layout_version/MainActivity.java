@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         mWebView.setWebViewClient(new Callback());
         // mWebView.loadUrl("http://192.168.1.214:8082/");
-        mWebView.loadUrl("http://google.com/");
+        mWebView.loadUrl("http://10.0.2.2:5500/Display-Character.html");
     }
 
 
