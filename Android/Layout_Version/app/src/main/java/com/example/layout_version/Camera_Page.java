@@ -1,10 +1,13 @@
 package com.example.layout_version;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +41,18 @@ public class Camera_Page extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        VideoView videoView = findViewById(R.id.video);
+
+        MediaController mediaController = new MediaController (this);
+        videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(videoView);
+
+        // ------------- Video from online URL -------------
+        Uri uri = Uri.parse("https://arbzc576ef.execute-api.us-east-1.amazonaws.com/milestone1?event_type=Video");
+        videoView.setVideoURI(uri);
+        videoView.requestFocus();
+        videoView.start();
 
     }
 

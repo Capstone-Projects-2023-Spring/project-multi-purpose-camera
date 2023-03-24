@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         btn = (ImageView) findViewById(R.id.settings);
         lib = (Button) findViewById(R.id.library);
-        //vid = (TextView) findViewById(R.id.cam_vid_clip);
+        vid = (TextView) findViewById(R.id.cam_vid_clip);
 
         btn.setOnClickListener(new View.OnClickListener()
         {
@@ -72,20 +72,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        vid.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
-//                startActivity(intent);
-//            }
-//        });
+        vid.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
+                startActivity(intent);
+            }
+        });
 
-//        VideoView videoView = findViewById(R.id.video);
-//
-//        MediaController mediaController = new MediaController (this);
-//        videoView.setMediaController(mediaController);
-//        mediaController.setAnchorView(videoView);
+        VideoView videoView = findViewById(R.id.video);
+
+        MediaController mediaController = new MediaController (this);
+        videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(videoView);
 
         // ------------- Video from project folder -------------
 //        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.pain;
@@ -93,26 +93,27 @@ public class MainActivity extends AppCompatActivity {
 //        videoView.setVideoURI(uri);
 
         // ------------- Video from online URL -------------
-//        Uri uri = Uri.parse("");
-//        videoView.setVideoURI(uri);
-//        videoView.requestFocus();
-//        videoView.start();
+        Uri uri = Uri.parse("https://arbzc576ef.execute-api.us-east-1.amazonaws.com/milestone1?event_type=Video");
+        videoView.setVideoURI(uri);
+        videoView.requestFocus();
+        videoView.start();
 
-        //
-        mWebView = (WebView) findViewById(R.id.video_web);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-
-        mWebView.setWebViewClient(new Callback());
-        // mWebView.loadUrl("http://192.168.1.214:8082/");
-        mWebView.loadUrl("http://10.0.2.2:5500/Display-Character.html");
+        // ------------- Web Page from online and Local -------------
+//        mWebView = (WebView) findViewById(R.id.video_web);
+//        WebSettings webSettings = mWebView.getSettings();
+//        webSettings.setJavaScriptEnabled(true);
+//
+//        mWebView.setWebViewClient(new Callback());
+//        // mWebView.loadUrl("http://192.168.1.214:8082/");
+//        mWebView.loadUrl("http://10.0.2.2:5500/Display-Character.html");
+//        //mWebView.loadUrl("");
     }
 
 
-    private class Callback extends WebViewClient {
-        @Override
-        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
-            return false;
-        }
-    }
+//    private class Callback extends WebViewClient {
+//        @Override
+//        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
+//            return false;
+//        }
+//    }
 }
