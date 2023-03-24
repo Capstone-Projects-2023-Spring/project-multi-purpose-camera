@@ -35,6 +35,17 @@ public class Saving_Policy_Page extends AppCompatActivity {
         add_policies_using_template(linearLayout, policies);
     }
 
+    protected void onStart(){
+        super.onStart();
+
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.saving_vertical_layout_title);
+
+        ArrayList<String> policies = BackEnd.get_policy_string_saving();
+        linearLayout.removeAllViews();
+
+        add_policies_using_template(linearLayout, policies);
+    }
+
     public void add_policies_using_template(LinearLayout linearLayout, ArrayList<String> policies){
         for(int i = 0; i < policies.size(); i++){
             int finalI = i;

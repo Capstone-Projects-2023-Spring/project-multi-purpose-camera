@@ -1,16 +1,21 @@
 package com.example.layout_version;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import java.util.ArrayList;
 
 public class View_Factory {
     public static View fill_rectangle(AppCompatActivity activity, int color){
@@ -100,7 +105,7 @@ public class View_Factory {
         int camera_width = (int)(width*0.8);
         int camera_height = (int)(camera_width * 0.62);
         int camera_padding = 100;
-        int number_cameras = 4;
+        int number_spinner = 4;
 
 
         View background = fill_rectangle(activity, background_color2);
@@ -129,7 +134,7 @@ public class View_Factory {
 
 
 
-        ConstraintLayout[] layouts = new ConstraintLayout[number_cameras];
+        ConstraintLayout[] layouts = new ConstraintLayout[number_spinner];
         for(int i = 0; i < layouts.length; i++){
             ConstraintLayout constraintLayout_camera1 = new ConstraintLayout(activity);
             constraintLayout_camera1.setLayoutParams(createLayoutParams(100 + (camera_height + camera_padding) * i, -1, 0, 0, camera_width, camera_height));
@@ -173,6 +178,16 @@ public class View_Factory {
             }
 
         };
+    }
+    
+    public static void set_entries(ArrayList<String> entries, Spinner spinner, Context context){
+        String[] final_entries = new String[entries.size()];
+        for(int j = 0; j < entries.size(); j++)
+            final_entries[j] = entries.get(j);
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                context, android.R.layout.simple_spinner_item, final_entries );
+        spinner.setAdapter(spinnerArrayAdapter);
     }
 
 
