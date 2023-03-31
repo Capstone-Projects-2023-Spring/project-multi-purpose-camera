@@ -18,4 +18,8 @@ public class Camera {
         }
         return result;
     }
+
+    public Camera copy(){
+        return new Camera(String.valueOf(name.toCharArray()), resolution);
+    }
 }
