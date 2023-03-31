@@ -38,6 +38,7 @@ android {
             }
         }
     }
+    buildToolsVersion '33.0.2'
 }
 
 dependencies {
