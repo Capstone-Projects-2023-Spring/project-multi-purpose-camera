@@ -23,6 +23,7 @@ public class Receiver_Client implements Runnable{
         System.out.println("Start of program");
         connect(address, port);
     }
+
     public static void connect( String address, int port) {
         try {
             System.out.println("Start of connect method");
@@ -48,6 +49,7 @@ public class Receiver_Client implements Runnable{
             DatagramPacket startAudioPacket = new DatagramPacket(audioInitMessage, audioInitMessage.length, IPAddress, port_num + 1);
             videoSocket.send(startVideoPacket);
             // audioSocket.send(startAudioPacket);
+            
             while(true){
                 byte[] receivevideobytes = new byte[65536];
                 //byte[] receiveaudiobytes = new byte[8];
