@@ -54,7 +54,11 @@ public class Saving_Policy implements Displayable_Policy{
         }
 
 
-        return camera_string + "\n" + max_time + " minutes";
+        return camera_string + "\n" + max_time + " minutes" + "\n" + resolution;
+    }
+
+    public String toString(){
+        return get_display_text();
     }
 
     public ArrayList<Camera> get_available_cameras_to_add(){
@@ -70,7 +74,7 @@ public class Saving_Policy implements Displayable_Policy{
 
     public ArrayList<Resolution> get_available_resoltions_to_add(){
         ArrayList<Resolution> entries = new ArrayList<>();
-        ArrayList<Resolution> all_resolutions = BackEnd.main.resolutions;
+        ArrayList<Resolution> all_resolutions = Resolution.resolutions;
         for(int i = 0; i < all_resolutions.size(); i++){
             if(resolution.equals(all_resolutions.get(i)))
                 continue;

@@ -16,11 +16,52 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.security.Policy;
 import java.util.ArrayList;
 
 public class Saving_Policy_Page extends AppCompatActivity {
     ArrayList<Saving_Policy> current_saving_policies;
     boolean data_saved = false;
+
+    public ArrayList<Saving_Policy> is_policies_valid(){
+        System.out.println("policies: ");
+        for(int i = 0; i < current_saving_policies.size(); i++){
+            System.out.println(current_saving_policies.get(i));
+        }
+        //unique policy: resolution, camera
+        for(int saving_policy = 0; saving_policy < current_saving_policies.size(); saving_policy++){
+            Saving_Policy temp = current_saving_policies.get(saving_policy);
+            Resolution resolution = temp.get_resolution();
+            ArrayList<Camera> cameras = temp.get_cameras();
+            for(int camera_index = 0; camera_index < cameras.size(); camera_index++){
+                Camera camera = cameras.get(camera_index);
+                Saving_Policy duplicate = has_camera_resolution(camera, resolution, saving_policy + 1);
+                if(duplicate != null){
+                    ArrayList<Saving_Policy> list = new ArrayList<>();
+                    list.add(temp);
+                    list.add(duplicate);
+                    return list;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Saving_Policy has_camera_resolution(Camera camera, Resolution resolution, int start){
+        System.out.println("is there: " + camera + ", " + resolution + ", after " + start);
+        for(int i = start; i < current_saving_policies.size(); i++){
+            Saving_Policy policy = current_saving_policies.get(i);
+            if(policy.get_resolution().equals(resolution)){
+                if(policy.get_cameras().contains(camera)){
+                    System.out.println("yes");
+                    return policy;
+                }
+            }
+        }
+        System.out.println("no");
+        return null;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +125,32 @@ public class Saving_Policy_Page extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        ArrayList<Saving_Policy> duplicate = is_policies_valid();
+        if(duplicate != null){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Cannot save duplicate");
+            String message = "";
+            message += duplicate.get(0) + "\n\n" + duplicate.get(1);
+
+
+            builder.setMessage(message);
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Save the data
+
+                    // User chose to save and exit, call the superclass onBackPressed() method to exit the activity
+
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+            return;
+        }
+        else{
+            System.out.println("no duplicate found");
+        }
+
         showExitConfirmationDialog();
     }
 

@@ -118,7 +118,7 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String item = (String) spinner_resolution.getSelectedItem();
-                Resolution chosen_resolution = BackEnd.main.name_to_resolution(item);
+                Resolution chosen_resolution = Resolution.name_to_resolution(item);
                 if(chosen_resolution!= null)
                     set_resolution_label(item, linearLayout);
                 Saving_Policy new_policy = new Saving_Policy(current_policy.get_cameras(), current_policy.get_max_time(), chosen_resolution);
