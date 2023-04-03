@@ -3,10 +3,14 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.opencv.core.Mat;
+import org.opencv.core.*;
 import org.opencv.core.MatOfByte;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.VideoCapture;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.VideoWriter;
 
 import java.net.*;
 import java.io.*;
@@ -26,6 +30,7 @@ public class Receiver_Client implements Runnable{
         //super.onCreate(savedInstanceState);
         //Client client = new Client( ip address, port);
         System.out.println("Start of program");
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         connect(address, port);
     }
 
@@ -69,6 +74,12 @@ public class Receiver_Client implements Runnable{
                     Base64.getDecoder().decode(byte_arr);
                 }
                 Mat mat = Imgcodecs.imdecode(new MatOfByte(byte_arr), Imgcodecs.IMREAD_UNCHANGED);
+                VideoCapture cap = new VideoCapture();
+                cap.open("appsrc ! h264parse ! avdec_h264 ! videoconvert ! appsink");
+                mat.put(0, 0,byte_arr);
+                cap.read(mat, byte_arr.length);
+                Imgcodecs.imshow("Video Stream", cap);
+                Imgcodecs.waitKey(1);
                 //byte[] v_result = trim(receivevideobytes);
                 //byte[] a_result = trim(receivevideobytes);
                 //audioSocket.receive(receiveAudioPacket);
