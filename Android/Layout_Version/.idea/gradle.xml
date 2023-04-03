@@ -14,7 +14,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app/opencv" />
             <option value="$PROJECT_DIR$/java" />
-            <option value="$PROJECT_DIR$/opencv" />
+            <option value="$PROJECT_DIR$/openCV" />
           </set>
         </option>
       </GradleProjectSettings>

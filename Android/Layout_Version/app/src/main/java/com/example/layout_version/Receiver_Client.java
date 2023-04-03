@@ -1,7 +1,12 @@
 package com.example.layout_version;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import java.net.*;
 import java.io.*;
@@ -23,6 +28,7 @@ public class Receiver_Client implements Runnable{
         System.out.println("Start of program");
         connect(address, port);
     }
+
     public static void connect( String address, int port) {
         try {
             System.out.println("Start of connect method");
@@ -48,6 +54,7 @@ public class Receiver_Client implements Runnable{
             DatagramPacket startAudioPacket = new DatagramPacket(audioInitMessage, audioInitMessage.length, IPAddress, port_num + 1);
             videoSocket.send(startVideoPacket);
             // audioSocket.send(startAudioPacket);
+
             while(true){
                 byte[] receivevideobytes = new byte[65536];
                 //byte[] receiveaudiobytes = new byte[8];
@@ -57,8 +64,11 @@ public class Receiver_Client implements Runnable{
                 System.out.println(receiveVideoPacket);
                 byte[] byte_arr = trim(receivevideobytes);
                 //receivevideobytes = receiveAudioPacket.getData();
-
                 System.out.println("Size of video packet: " + byte_arr.length);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Base64.getDecoder().decode(byte_arr);
+                }
+                Mat mat = Imgcodecs.imdecode(new MatOfByte(byte_arr), Imgcodecs.IMREAD_UNCHANGED);
                 //byte[] v_result = trim(receivevideobytes);
                 //byte[] a_result = trim(receivevideobytes);
                 //audioSocket.receive(receiveAudioPacket);
