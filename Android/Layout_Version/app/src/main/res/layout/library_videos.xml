@@ -9,11 +9,13 @@
         android:layout_height="wrap_content">
 
         <VideoView
+            android:id="@+id/saved_video"
             android:layout_width="100dp"
             android:layout_height="80dp"
             android:layout_marginLeft="30dp" />
 
         <TextView
+            android:id="@+id/video_description"
             android:layout_width="257dp"
             android:layout_height="19dp"
             android:layout_marginLeft="20dp"
