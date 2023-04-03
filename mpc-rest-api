@@ -1,0 +1,1174 @@
+openapi: 3.0.1
+info:
+  title: mpc
+  version: '1.03'
+servers:
+  - url: https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/path3
+paths:
+  /:
+    get:
+      summary: Get server information
+      responses:
+        '200':
+          description: 200 response
+          headers:
+            Json:
+              schema:
+                type: string
+            Content-Type:
+              schema:
+                type: string
+          content:
+            image/png:
+              schema:
+                $ref: '#/components/schemas/Empty'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+            image/jpeg:
+              schema:
+                $ref: '#/components/schemas/Empty'
+            video/mp4:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+    post:
+      summary: Get server information
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+      x-amazon-apigateway-integration:
+        type: aws
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /account:
+    get:
+      summary: Get all accounts
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+    post:
+      summary: Create new account
+      parameters:
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ID'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /account/{id}:
+    get:
+      summary: Get account detail by account_id
+      description: GET method that returns the Account information related to the given id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /criteria:
+    get:
+      summary: Get all criteria
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Criteria'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+    post:
+      summary: Create new criteria
+      parameters:
+        - name: criteria_type
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: duration
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: magnitude
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /criteria/{type}:
+    get:
+      summary: Get criteria detail by criteria_type
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Criteria'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /hardware:
+    get:
+      summary: Get all hardware
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hardware'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+    post:
+      summary: Create new hardware
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: max_resolution
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ID'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /hardware/{id}:
+    get:
+      summary: Get hardware by hardware_id
+      description: GET method that returns the Hardware information related to the given id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hardware'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /image:
+    get:
+      summary: "Get sample image data"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            image/jpeg:
+              schema:
+                $ref: "#/components/schemas/Empty"
+            image/png:
+              schema:
+                $ref: "#/components/schemas/Empty"
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /image/{image_name}:
+    get:
+      summary: "Get image data with image name"
+      parameters:
+      - name: "image_name"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            image/jpeg:
+              schema:
+                $ref: "#/components/schemas/Empty"
+            image/png:
+              schema:
+                $ref: "#/components/schemas/Empty"
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /notification:
+    get:
+      summary: Get all notifications
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+    post:
+      summary: Create new notification
+      parameters:
+        - name: criteria_type
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: hardware_id
+          in: query
+          schema:
+            type: string
+        - name: notification_type
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ID'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /notification/{id}:
+    get:
+      summary: Get notification detail by notification_id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /notification/{id}/add/{hardware_id}:
+    post:
+      summary: Add hardware to notification
+      parameters:
+        - name: hardware_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /notification/{id}/hardware:
+    get:
+      summary: Get all hardware associated with notification
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hardware'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /recording:
+    get:
+      summary: Get all recodings
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recording'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+    post:
+      summary: Create new recording
+      parameters:
+        - name: hardware_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: year
+          in: query
+          schema:
+            type: string
+        - name: hour
+          in: query
+          schema:
+            type: string
+        - name: minute
+          in: query
+          schema:
+            type: string
+        - name: file_name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: second
+          in: query
+          schema:
+            type: string
+        - name: month
+          in: query
+          schema:
+            type: string
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: timestamp
+          in: query
+          schema:
+            type: string
+        - name: account_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ID'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /recording/{id}:
+    get:
+      summary: Get recording detail by recoding_id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recording'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /resolution:
+    get:
+      summary: Get all resolutions
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resolution'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+    post:
+      summary: Create new resolution
+      parameters:
+        - name: height
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: width
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: resolution_name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /resolution/{name}:
+    get:
+      summary: Get detail of resolution by resolution_name
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resolution'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /saving_policy:
+    get:
+      summary: Get all saving_policies
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SavingPolicy'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+    post:
+      summary: Create new saving policy
+      parameters:
+        - name: max_time
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: resolution_name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ID'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /saving_policy/{id}:
+    get:
+      summary: Get detail of saving policy by saving_policy_id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SavingPolicy'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /saving_policy/{id}/add/{hardware_id}:
+    post:
+      summary: Add hardware to saving policy
+      parameters:
+        - name: hardware_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /saving_policy/{id}/hardware:
+    get:
+      summary: Get all hardware associated with saving policy
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hardware'
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+  /storage/{item}:
+    get:
+      summary: Get the binary data to the storage with item name
+      parameters:
+      - name: "item"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Content-Type:
+              schema:
+                type: "string"
+          content:
+            image/jpeg:
+              schema:
+                $ref: "#/components/schemas/Empty"
+            image/png:
+              schema:
+                $ref: "#/components/schemas/Empty"
+            video/mp4:
+              schema:
+                $ref: "#/components/schemas/Empty"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::052524269538:role/API-Gateway-S3"
+        httpMethod: "GET"
+        uri: "arn:aws:apigateway:us-east-1:s3:path/mpc-capstone/{object}"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Content-Type: "integration.response.header.Content-Type"
+        requestParameters:
+          integration.request.path.object: "method.request.path.item"
+        passthroughBehavior: "when_no_match"
+        type: "aws"
+    put:
+      summary: Same as POST method
+      parameters:
+      - name: "item"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::052524269538:role/API-Gateway-S3"
+        httpMethod: "PUT"
+        uri: "arn:aws:apigateway:us-east-1:s3:path/mpc-capstone/{object}"
+        responses:
+          default:
+            statusCode: "200"
+        requestParameters:
+          integration.request.path.object: "method.request.path.item"
+        passthroughBehavior: "when_no_match"
+        type: "aws"
+    post:
+      summary: Saves the binary data to the storage with item name
+      parameters:
+      - name: "item"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::052524269538:role/API-Gateway-S3"
+        httpMethod: "PUT"
+        uri: "arn:aws:apigateway:us-east-1:s3:path/mpc-capstone/{object}"
+        responses:
+          default:
+            statusCode: "200"
+        requestParameters:
+          integration.request.path.object: "method.request.path.item"
+        passthroughBehavior: "when_no_match"
+        type: "aws"
+    delete:
+      summary: Delete file with file name
+      parameters:
+      - name: "item"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::052524269538:role/API-Gateway-S3"
+        httpMethod: "DELETE"
+        uri: "arn:aws:apigateway:us-east-1:s3:path/mpc-capstone/{object}"
+        responses:
+          default:
+            statusCode: "200"
+        requestParameters:
+          integration.request.path.object: "method.request.path.item"
+        passthroughBehavior: "when_no_match"
+        type: "aws"
+  /video:
+    get:
+      summary: "Get sample video data"
+      responses:
+        "400":
+          description: "400 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+        "200":
+          description: "200 response"
+          content:
+            video/mp4:
+              schema:
+                $ref: "#/components/schemas/Empty"
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  /video/{video_name}:
+    get:
+      summary: "Get video with video name"
+      parameters:
+      - name: "video_name"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "400 response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Empty"
+        "200":
+          description: "200 response"
+          content:
+            video/mp4:
+              schema:
+                $ref: "#/components/schemas/Empty"
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+  
+components:
+  schemas:
+    ID:
+      type: object
+      properties:
+        ID:
+          type: integer
+      xml:
+        name: ID
+    
+    Event:
+      type: object
+      properties:
+        server_information:
+          type: string
+      xml:
+        name: Event
+      
+    Account:
+      type: object
+      properties:
+        account_id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        password:
+          type: string
+      xml:
+        name: Account
+        
+    Hardware:
+      type: object
+      properties:
+        hardware_id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        account_id:
+          type: integer
+          format: int64
+        max_resolution:
+          type: string
+      xml:
+        name: Hardware
+    
+    Recording:
+      type: object
+      properties:
+        recording_id:
+          type: integer
+        hardware_id:
+          type: integer
+        account_id:
+          type: integer
+        file_name:
+          type: string
+        url:
+          type: string
+          format: url
+        timestamp:
+          type: string
+          format: date-time
+        date:
+          type: string
+          format: date
+      xml: 
+        name: Recording
+    
+    Resolution:
+      type: object
+      properties:
+        resolution_name:
+          type: string
+        width:
+          type: integer
+        height:
+          type: integer
+      xml:
+        name: Resolution
+        
+    Notification:
+      type: object
+      properties:
+        notification_id:
+          type: integer
+        notification_type:
+          type: integer
+        criteria_type:
+          type: integer
+        hardware:
+          type: array
+          items:
+            type: integer
+          
+      xml:
+        name: Notification
+        
+    SavingPolicy:
+      type: object
+      properties:
+        criteria_type:
+          type: integer
+        max_time:
+          type: integer
+        resolution_name:
+          type: string
+        hardware:
+          type: array
+          items:
+            type: integer
+      xml:
+        name: SavingPolicy
+        
+    Criteria:
+      type: object
+      properties:
+        criteria_type:
+          type: integer
+        magnitude:
+          type: integer
+        duration:
+          type: integer
+      xml:
+        name: Criteria
+        
+    Empty:
+      type: object
+      xml:
+          name: Empty
+        
+      
+x-amazon-apigateway-documentation:
+  version: '1'
+  createdDate: '2023-03-29T20:39:36Z'
+  documentationParts:
+    - location:
+        type: METHOD
+        path: /account/{id}
+        method: GET
+      properties:
+        description: >-
+          GET method that returns the Account information related to the given
+          id
+    - location:
+        type: METHOD
+        path: /account
+        method: GET
+      properties:
+        description: ''
+    - location:
+        type: METHOD
+        path: /hardware/{id}
+        method: GET
+      properties:
+        description: >-
+          GET method that returns the Hardware information related to the given
+          id
+x-amazon-apigateway-request-validators:
+  Validate query string parameters and headers:
+    validateRequestParameters: true
+    validateRequestBody: false
+x-amazon-apigateway-binary-media-types:
+  - image/jpeg
+  - image/png
+  - '*/*'
+  - video/mp4
