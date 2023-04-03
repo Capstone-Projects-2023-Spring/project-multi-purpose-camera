@@ -18,7 +18,7 @@ public class BackEnd {
             result.add(cameras.get(i));
         return result;
     }
-    public static ArrayList<Resolution> resolutions = new ArrayList<>();
+
 
     private ArrayList<Saving_Policy> savings = new ArrayList<>();
     public ArrayList<Saving_Policy> get_savings(){
@@ -39,29 +39,25 @@ public class BackEnd {
         ArrayList<Notification_Policy> notifications = new ArrayList<>();
         ArrayList<Camera> cameras = new ArrayList<>();
 
-        Resolution p480 = new Resolution(720, 480, "480p");
-        Resolution p720 = new Resolution(1280, 720, "720p");
-        Resolution p1080 = new Resolution(1920, 1080, "1080p");
-        resolutions.add(p480);
-        resolutions.add(p720);
-        resolutions.add(p1080);
+        Resolution.init_resolutions();
 
-        cameras.add(new Camera("camera 1", p1080));
-        cameras.add(new Camera("camera 2", p1080));
-        cameras.add(new Camera("camera 3", p1080));
-        cameras.add(new Camera("camera 4", p1080));
+        cameras.add(new Camera("camera 1", Resolution.name_to_resolution("1080p"), 1));
+        cameras.add(new Camera("camera 2", Resolution.name_to_resolution("1080p"), 2));
+        cameras.add(new Camera("camera 3", Resolution.name_to_resolution("1080p"), 3));
+        cameras.add(new Camera("camera 4", Resolution.name_to_resolution("1080p"), 4));
         Criteria criteria = new Criteria(Criteria.type_brightness, 10, 10);
         notifications.add(new Notification_Policy(criteria, cameras.get(0), Notification_Policy.type_buzz));
-        savings.add(new Saving_Policy(cameras.get(0), 10, p1080));
-        Saving_Policy saving = new Saving_Policy(cameras.get(3), 30, p1080);
+        savings.add(new Saving_Policy(cameras.get(0), 10, Resolution.name_to_resolution("1080p")));
+        Saving_Policy saving = new Saving_Policy(cameras.get(3), 30, Resolution.name_to_resolution("1080p"));
         saving.add_camera(cameras.get(2));
         savings.add(saving);
-        savings.add(new Saving_Policy(cameras.get(1), 20, p1080));
+        savings.add(new Saving_Policy(cameras.get(1), 20, Resolution.name_to_resolution("1080p")));
         savings.add(savings.get(savings.size() - 1));
         savings.add(savings.get(savings.size() - 1));
 
         main = new BackEnd(cameras, savings, notifications);
     }
+
 
     public Camera name_to_camera(String name){
         Camera chosen_camera = null;
@@ -73,16 +69,7 @@ public class BackEnd {
         }
         return chosen_camera;
     }
-    public static Resolution name_to_resolution(String name){
-        Resolution chosen_resolution = null;
-        for(int i = 0; i < resolutions.size(); i++){
-            if(resolutions.get(i).name.equals(name)){
-                chosen_resolution = resolutions.get(i);
-                break;
-            }
-        }
-        return chosen_resolution;
-    }
+
 
     public BackEnd get_copy_data(){
         BackEnd copy = new BackEnd(get_cameras(), get_savings(),get_notifications());

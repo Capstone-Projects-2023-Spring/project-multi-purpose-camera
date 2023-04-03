@@ -3,12 +3,14 @@ package com.example.layout_version;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.DisplayMetrics;
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+//
         VideoView videoView = findViewById(R.id.video);
 
         MediaController mediaController = new MediaController (this);
@@ -93,7 +95,11 @@ public class MainActivity extends AppCompatActivity {
 //        videoView.setVideoURI(uri);
 
         // ------------- Video from online URL -------------
-        Uri uri = Uri.parse("https://arbzc576ef.execute-api.us-east-1.amazonaws.com/milestone1?event_type=Video");
+        //Uri uri = Uri.parse("https://arbzc576ef.execute-api.us-east-1.amazonaws.com/milestone1?event_type=Video");
+        // Livestream online and server
+        //Uri uri = Uri.parse("http://44.212.17.188:9999/");
+        Uri uri = Uri.parse("http://10.0.2.2:9999/");
+        //Uri uri = Uri.parse("https://livestream.com/accounts/11707815/events/4299357");
         videoView.setVideoURI(uri);
         videoView.requestFocus();
         videoView.start();
@@ -104,16 +110,55 @@ public class MainActivity extends AppCompatActivity {
 //        webSettings.setJavaScriptEnabled(true);
 //
 //        mWebView.setWebViewClient(new Callback());
-//        // mWebView.loadUrl("http://192.168.1.214:8082/");
-//        mWebView.loadUrl("http://10.0.2.2:5500/Display-Character.html");
-//        //mWebView.loadUrl("");
+////        // mWebView.loadUrl("http://192.168.1.214:8082/");
+//          mWebView.loadUrl("http://192.168.87.249:5500/Display-Character.html");
+////        mWebView.loadUrl("http://44.212.17.188:9999/");
+
+        //        String targetServer = "http://10.0.2.2:9999/";
+        //        AsyncTaskRunner ad = new AsyncTaskRunner();
+        //        ad.execute(targetServer);
     }
 
 
-//    private class Callback extends WebViewClient {
+    private class Callback extends WebViewClient {
+        @Override
+        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
+            return false;
+        }
+    }
+
+//    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+//
+//        private String resp;
+//        ProgressDialog progressDialog;
+//
 //        @Override
-//        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
-//            return false;
+//        protected String doInBackground(String... params) {
+//            System.out.println("asnc task working");
+//
+//
+////            //publishProgress("Sleeping..."); // Calls onProgressUpdate()
+////            try {
+////                int time = Integer.parseInt(params[0]) * 1000;
+////
+////                Thread.sleep(time);
+////                resp = "Slept for " + params[0] + " seconds";
+////            } catch (InterruptedException e) {
+////                e.printStackTrace();
+////                resp = e.getMessage();
+////            } catch (Exception e) {
+////                e.printStackTrace();
+////                resp = e.getMessage();
+////            }
+//            return resp;
+//        }
+//
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // execution of result of Long time consuming operation
+//            progressDialog.dismiss();
+//            //finalResult.setText(result);
 //        }
 //    }
 }

@@ -14,4 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Layout_Version"
 include ':app'
+include ':java'
+include ':java'
+include ':java'
+include ':app:opencv'
+include ':java'
 include ':openCV'
