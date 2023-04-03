@@ -162,68 +162,69 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+
     post:
       summary: Create new criteria
       parameters:
-        - name: criteria_type
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: duration
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: magnitude
-          in: query
-          required: true
-          schema:
-            type: string
+      - name: "criteria_type"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "duration"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "magnitude"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
       responses:
-        '200':
-          description: 200 response
+        "200":
+          description: "200 response"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+                $ref: "#/components/schemas/Empty"
+      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        \ headers"
       x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations"
         responses:
           default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-  /criteria/{type}:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+
+  /criteria/{id}:
     get:
       summary: Get criteria detail by criteria_type
       parameters:
-        - name: type
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       responses:
-        '200':
-          description: 200 response
+        "200":
+          description: "200 response"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Criteria'
+                $ref: "#/components/schemas/Criteria"
       x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations"
         responses:
           default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
   /hardware:
     get:
       summary: Get all hardware
@@ -376,41 +377,42 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+
     post:
       summary: Create new notification
       parameters:
-        - name: criteria_type
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: hardware_id
-          in: query
-          schema:
-            type: string
-        - name: notification_type
-          in: query
-          required: true
-          schema:
-            type: string
+      - name: "hardware_id"
+        in: "query"
+        schema:
+          type: "string"
+      - name: "notification_type"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      - name: "criteria_id"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
       responses:
-        '200':
-          description: 200 response
+        "200":
+          description: "200 response"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ID'
-      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+                $ref: "#/components/schemas/ID"
+      x-amazon-apigateway-request-validator: "Validate query string parameters and\
+        \ headers"
       x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc/invocations
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations"
         responses:
           default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
   /notification/{id}:
     get:
       summary: Get notification detail by notification_id
@@ -1093,12 +1095,14 @@ components:
           type: integer
         notification_type:
           type: integer
-        criteria_type:
+        criteria_id:
           type: integer
+          format: int32
         hardware:
           type: array
           items:
             type: integer
+          
           
       xml:
         name: Notification
@@ -1106,7 +1110,7 @@ components:
     SavingPolicy:
       type: object
       properties:
-        criteria_type:
+        saving_policy_id:
           type: integer
         max_time:
           type: integer
@@ -1122,6 +1126,9 @@ components:
     Criteria:
       type: object
       properties:
+        criteria_id:
+          type: integer
+          format: int32
         criteria_type:
           type: integer
         magnitude:
