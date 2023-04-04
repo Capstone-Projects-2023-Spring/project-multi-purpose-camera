@@ -77,9 +77,9 @@ public class Receiver_Client implements Runnable{
                 VideoCapture cap = new VideoCapture();
                 cap.open("appsrc ! h264parse ! avdec_h264 ! videoconvert ! appsink");
                 mat.put(0, 0,byte_arr);
-                cap.read(mat, byte_arr.length);
-                Imgcodecs.imshow("Video Stream", cap);
-                Imgcodecs.waitKey(1);
+//                cap.read(mat, byte_arr.length);
+//                Imgcodecs.imshow("Video Stream", cap);
+//                Imgcodecs.waitKey(1);
                 //byte[] v_result = trim(receivevideobytes);
                 //byte[] a_result = trim(receivevideobytes);
                 //audioSocket.receive(receiveAudioPacket);
