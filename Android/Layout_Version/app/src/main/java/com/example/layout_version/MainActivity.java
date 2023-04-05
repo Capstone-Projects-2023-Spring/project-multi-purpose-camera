@@ -83,11 +83,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //
-        VideoView videoView = findViewById(R.id.video);
+        //VideoView videoView = findViewById(R.id.video);
 
-        MediaController mediaController = new MediaController (this);
-        videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(videoView);
+//        MediaController mediaController = new MediaController (this);
+//        videoView.setMediaController(mediaController);
+//        mediaController.setAnchorView(videoView);
 
         // ------------- Video from project folder -------------
 //        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.pain;
@@ -100,9 +100,9 @@ public class MainActivity extends AppCompatActivity {
         //Uri uri = Uri.parse("http://44.212.17.188:9999/");
         Uri uri = Uri.parse("http://10.0.2.2:9999/");
         //Uri uri = Uri.parse("https://livestream.com/accounts/11707815/events/4299357");
-        videoView.setVideoURI(uri);
-        videoView.requestFocus();
-        videoView.start();
+//        videoView.setVideoURI(uri);
+//        videoView.requestFocus();
+//        videoView.start();
 
         // ------------- Web Page from online and Local -------------
 //        mWebView = (WebView) findViewById(R.id.video_web);
@@ -117,6 +117,17 @@ public class MainActivity extends AppCompatActivity {
         //        String targetServer = "http://10.0.2.2:9999/";
         //        AsyncTaskRunner ad = new AsyncTaskRunner();
         //        ad.execute(targetServer);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        ImageView image = (ImageView) findViewById(R.id.image);
+        Receiver_Client.yourImageView = image;
+        AsyncTaskRunner thread = new AsyncTaskRunner();
+        thread.execute("");
+
     }
 
 
@@ -127,38 +138,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
-//
-//        private String resp;
-//        ProgressDialog progressDialog;
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//            System.out.println("asnc task working");
-//
-//
-////            //publishProgress("Sleeping..."); // Calls onProgressUpdate()
-////            try {
-////                int time = Integer.parseInt(params[0]) * 1000;
-////
-////                Thread.sleep(time);
-////                resp = "Slept for " + params[0] + " seconds";
-////            } catch (InterruptedException e) {
-////                e.printStackTrace();
-////                resp = e.getMessage();
-////            } catch (Exception e) {
-////                e.printStackTrace();
-////                resp = e.getMessage();
-////            }
-//            return resp;
-//        }
-//
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            // execution of result of Long time consuming operation
-//            progressDialog.dismiss();
-//            //finalResult.setText(result);
-//        }
-//    }
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+        //call doInBackGround with execute()
+        private String resp;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            Receiver_Client.custom_run();
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            //progressDialog.dismiss();
+            //finalResult.setText(result);
+        }
+    }
 }
