@@ -2,11 +2,7 @@
   {
     "level_": 0,
     "message_": "Start JSON generation. Platform version: 21 min SDK version: x86",
-<<<<<<< HEAD
     "file_": "C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-=======
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
->>>>>>> d8797db08aa44eeaee73da8893a73c47fc7018db
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -15,21 +11,12 @@
       "fieldsDescending": {}
     },
     "memoizedSize": -1,
-<<<<<<< HEAD
     "memoizedHashCode": 1114471353
   },
   {
     "level_": 0,
     "message_": "JSON \u0027C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\Debug\\2h115o65\\x86\\android_gradle_build.json\u0027 was up-to-date",
     "file_": "C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-=======
-    "memoizedHashCode": 1427069229
-  },
-  {
-    "level_": 0,
-    "message_": "JSON \u0027C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\Debug\\2h115o65\\x86\\android_gradle_build.json\u0027 was up-to-date",
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
->>>>>>> d8797db08aa44eeaee73da8893a73c47fc7018db
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -38,20 +25,12 @@
       "fieldsDescending": {}
     },
     "memoizedSize": -1,
-<<<<<<< HEAD
     "memoizedHashCode": -611983138
-=======
-    "memoizedHashCode": 40692515
->>>>>>> d8797db08aa44eeaee73da8893a73c47fc7018db
   },
   {
     "level_": 0,
     "message_": "JSON generation completed without problems",
-<<<<<<< HEAD
     "file_": "C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-=======
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
->>>>>>> d8797db08aa44eeaee73da8893a73c47fc7018db
     "tag_": "debug|x86",
     "diagnosticCode_": 0,
     "memoizedIsInitialized": 1,
@@ -60,10 +39,6 @@
       "fieldsDescending": {}
     },
     "memoizedSize": -1,
-<<<<<<< HEAD
     "memoizedHashCode": 906360518
-=======
-    "memoizedHashCode": 1218958394
->>>>>>> d8797db08aa44eeaee73da8893a73c47fc7018db
   }
 ]
