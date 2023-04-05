@@ -2,7 +2,6 @@ package com.example.layout_version;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,14 +33,9 @@ public class Receiver_Client implements Runnable{
         //super.onCreate(savedInstanceState);
         //Client client = new Client( ip address, port);
         System.out.println("Start of program");
-        //connect(address, port);
-    }
-    public static ImageView yourImageView;
-    public static void custom_run(){
         connect(address, port);
     }
-    public static void connect(String address, int port) {
-
+    public static void connect( String address, int port) {
         try {
             System.out.println("Start of connect method");
             DatagramSocket clientSocket = new DatagramSocket();
@@ -74,8 +68,6 @@ public class Receiver_Client implements Runnable{
                 videoSocket.receive(receiveVideoPacket);
                 System.out.println(receiveVideoPacket);
                 byte[] byte_arr = trim(receivevideobytes);
-                String data = new String(byte_arr);
-                System.out.println("----------" + data);
                 //receivevideobytes = receiveAudioPacket.getData();
                 ByteArrayInputStream inStreambj = new ByteArrayInputStream(byte_arr);
                 ByteArrayInputStream bis = new ByteArrayInputStream(byte_arr);
