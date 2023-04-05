@@ -29,6 +29,7 @@
         <activity android:name=".Saving_Policy_Page" />
         <activity android:name=".Edit_Saving_Policy_Page" />
         <activity android:name=".Camera_Page" />
+        <activity android:name=".Library_Videos_Page" />
     </application>
 
 </manifest>

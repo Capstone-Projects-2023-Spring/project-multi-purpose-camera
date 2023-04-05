@@ -74,36 +74,92 @@ public class Library extends AppCompatActivity {
 
         // The reuseable layout for libraries
         ViewGroup myLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.library_videos, null);
+        myLayout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Library.this, Library_Videos_Page.class);
+                startActivity(intent);
+            }
+        });
         container.addView(myLayout);
 
         ViewGroup myLayout2 = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.library_videos, null);
         params.setMargins(0, 230, 0, 10);
         myLayout2.setLayoutParams(params);
+        myLayout2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Library.this, Library_Videos_Page.class);
+                startActivity(intent);
+            }
+        });
         container.addView(myLayout2);
 
         ViewGroup myLayout3 = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.library_videos, null);
         params.setMargins(0, 460, 0, 10);
         myLayout3.setLayoutParams(params);
+        myLayout3.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Library.this, Library_Videos_Page.class);
+                startActivity(intent);
+            }
+        });
         container.addView(myLayout3);
 
         ViewGroup myLayout4 = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.library_videos, null);
         params.setMargins(0, 690, 0, 10);
         myLayout4.setLayoutParams(params);
+        myLayout4.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Library.this, Library_Videos_Page.class);
+                startActivity(intent);
+            }
+        });
         container.addView(myLayout4);
 
         ViewGroup myLayout5 = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.library_videos, null);
         params.setMargins(0, 920, 0, 10);
         myLayout5.setLayoutParams(params);
+        myLayout5.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Library.this, Library_Videos_Page.class);
+                startActivity(intent);
+            }
+        });
         container.addView(myLayout5);
 
         ViewGroup myLayout6 = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.library_videos, null);
         params.setMargins(0, 1150, 0, 10);
         myLayout6.setLayoutParams(params);
+        myLayout6.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Library.this, Library_Videos_Page.class);
+                startActivity(intent);
+            }
+        });
         container.addView(myLayout6);
 
         ViewGroup myLayout7= (ViewGroup) LayoutInflater.from(this).inflate(R.layout.library_videos, null);
         params.setMargins(0, 1380, 0, 10);
         myLayout7.setLayoutParams(params);
+        myLayout7.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Library.this, Library_Videos_Page.class);
+                startActivity(intent);
+            }
+        });
         container.addView(myLayout7);
 
 
