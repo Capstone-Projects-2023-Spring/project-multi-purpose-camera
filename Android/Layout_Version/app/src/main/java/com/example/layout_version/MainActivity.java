@@ -15,7 +15,9 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -23,6 +25,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         BackEnd.init_test_objects();
 
         ImageView btn;
+        ImageView account;
         Button lib;
         TextView vid;
         WebView mWebView;
@@ -53,14 +57,24 @@ public class MainActivity extends AppCompatActivity {
         //ConstraintLayout camera_layout = construct_camera_layout(main_layout);
 
         btn = (ImageView) findViewById(R.id.settings);
+        account = (ImageView) findViewById(R.id.account);
         lib = (Button) findViewById(R.id.library);
-        vid = (TextView) findViewById(R.id.cam_vid_clip);
+//        vid = (TextView) findViewById(R.id.cam_vid_clip);
 
         btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (MainActivity.this,Settings.class);
+                startActivity(intent);
+            }
+        });
+
+        account.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (MainActivity.this,Account_Page.class);
                 startActivity(intent);
             }
         });
@@ -74,16 +88,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        vid.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
-                startActivity(intent);
-            }
-        });
+//        vid.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
+//                startActivity(intent);
+//                System.out.println("--------Entering live stream");
+//            }
+//        });
+
+        // ------------- Layout fir reuseable navbar ---------------
+//        RelativeLayout container = findViewById(R.id.nav_test);
+//        ViewGroup nav = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.main_top_nav_bar, null);
+//        container.addView(nav);
 //
-        //VideoView videoView = findViewById(R.id.video);
+//        VideoView videoView = findViewById(R.id.video);
 
 //        MediaController mediaController = new MediaController (this);
 //        videoView.setMediaController(mediaController);
@@ -98,35 +118,35 @@ public class MainActivity extends AppCompatActivity {
         //Uri uri = Uri.parse("https://arbzc576ef.execute-api.us-east-1.amazonaws.com/milestone1?event_type=Video");
         // Livestream online and server
         //Uri uri = Uri.parse("http://44.212.17.188:9999/");
-        Uri uri = Uri.parse("http://10.0.2.2:9999/");
-        //Uri uri = Uri.parse("https://livestream.com/accounts/11707815/events/4299357");
+//        Uri uri = Uri.parse("http://10.0.2.2:9999/");
+//        //Uri uri = Uri.parse("https://livestream.com/accounts/11707815/events/4299357");
 //        videoView.setVideoURI(uri);
 //        videoView.requestFocus();
 //        videoView.start();
 
         // ------------- Web Page from online and Local -------------
-//        mWebView = (WebView) findViewById(R.id.video_web);
-//        WebSettings webSettings = mWebView.getSettings();
-//        webSettings.setJavaScriptEnabled(true);
-//
-//        mWebView.setWebViewClient(new Callback());
-////        // mWebView.loadUrl("http://192.168.1.214:8082/");
+        mWebView = (WebView) findViewById(R.id.video_web);
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        mWebView.setWebViewClient(new Callback());
+        mWebView.loadUrl("http://192.168.137.247:8082/");
 //          mWebView.loadUrl("http://192.168.87.249:5500/Display-Character.html");
 ////        mWebView.loadUrl("http://44.212.17.188:9999/");
 
         //        String targetServer = "http://10.0.2.2:9999/";
         //        AsyncTaskRunner ad = new AsyncTaskRunner();
         //        ad.execute(targetServer);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
-        ImageView image = (ImageView) findViewById(R.id.image);
-        Receiver_Client.yourImageView = image;
-        AsyncTaskRunner thread = new AsyncTaskRunner();
-        thread.execute("");
+//        ImageView image = (ImageView) findViewById(R.id.image);
+//        Receiver_Client.yourImageView = image;
+//        AsyncTaskRunner thread = new AsyncTaskRunner();
+//        thread.execute("");
 
     }
 

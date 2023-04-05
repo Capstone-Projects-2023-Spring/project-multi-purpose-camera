@@ -25,11 +25,12 @@
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="35dp"
-                android:src="@drawable/baseline_notifications_none_24" />
+                android:src="@drawable/baseline_account_circle_24" />
 
             <ImageView
                 android:id="@+id/settings"
@@ -68,61 +69,73 @@
             android:text="Library" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/nav_test"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
 
-<!--        <FrameLayout-->
+    <!--    </RelativeLayout>-->
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <FrameLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="120dp"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                <VideoView-->
+<!--                    android:id="@+id/video"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="230dp"></VideoView>-->
+<!--            </FrameLayout>-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/image"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="230dp"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            android:layout_marginTop="120dp"-->
+<!--            android:layout_marginRight="30dp">-->
+
+
+<!--        </ImageView>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/cam_vid_clip"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="120dp"-->
-<!--            android:layout_marginRight="30dp"-->
-<!--            android:layout_marginLeft="30dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent">-->
+<!--            android:layout_marginLeft="100dp"-->
+<!--            android:layout_marginTop="150dp"-->
+<!--            android:layout_marginRight="100dp"-->
+<!--            android:alpha="0.5"-->
+<!--            android:background="#c7c7c7">-->
 
-<!--            <VideoView-->
-<!--                android:id="@+id/video"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="230dp"></VideoView>-->
-<!--        </FrameLayout>-->
+<!--        </TextView>-->
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:layout_marginTop="120dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp">
+<!--    </RelativeLayout>-->
 
-            </ImageView>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/cam_vid_clip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="150dp"
-                android:layout_marginRight="100dp"
-                android:layout_marginLeft="100dp"
-                android:background="#c7c7c7"
-                android:alpha="0.5">
+        <WebView
+            android:id="@+id/video_web"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="100dp">
 
-            </TextView>
-
-        </RelativeLayout>
-
-    <!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-
-<!--        <WebView-->
-<!--            android:id="@+id/video_web"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="560dp"-->
-<!--            android:layout_marginTop="100dp">-->
-
-<!--        </WebView>-->
-<!--    </LinearLayout>-->
+        </WebView>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

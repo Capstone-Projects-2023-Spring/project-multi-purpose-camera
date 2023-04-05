@@ -30,6 +30,7 @@
         <activity android:name=".Edit_Saving_Policy_Page" />
         <activity android:name=".Camera_Page" />
         <activity android:name=".Library_Videos_Page" />
+        <activity android:name=".Account_Page" />
     </application>
 
 </manifest>
