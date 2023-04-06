@@ -72,7 +72,7 @@ public class Receiver_Client implements Runnable{
                 ByteArrayInputStream inStreambj = new ByteArrayInputStream(byte_arr);
                 ByteArrayInputStream bis = new ByteArrayInputStream(byte_arr);
                 Bitmap bp = BitmapFactory.decodeStream(bis); //decode stream to a bitmap image
-                yourImageView.setImageBitmap(bp); //set the JPEG image in your image view
+//                yourImageView.setImageBitmap(bp); //set the JPEG image in your image view
 //                BufferedImage bImage = ImageIO.read(inStreambj);
 //                ByteArrayOutputStream bos = new ByteArrayOutputStream();
 //                ImageIO.write(bImage, "jpg", bos );

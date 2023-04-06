@@ -8,22 +8,49 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <VideoView
-            android:id="@+id/saved_video"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="30dp" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <VideoView
+                android:id="@+id/saved_video"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="30dp" />
 
-        <TextView
-            android:id="@+id/video_description"
-            android:layout_width="257dp"
-            android:layout_height="19dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Personal"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:translationZ="90dp" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:translationZ="1dp"
+                android:src="@drawable/baseline_play_arrow_48"
+                />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/video_description"
+                android:layout_width="257dp"
+                android:layout_height="19dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Personal"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:translationZ="90dp" />
+            <TextView
+                android:id="@+id/timeStamp"
+                android:layout_width="257dp"
+                android:layout_height="19dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
+                android:text="Personal"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:translationZ="90dp" />
+
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

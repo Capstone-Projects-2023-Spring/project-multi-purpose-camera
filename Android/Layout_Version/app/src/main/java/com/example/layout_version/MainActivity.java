@@ -157,26 +157,26 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
-
-    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
-        //call doInBackGround with execute()
-        private String resp;
-        ProgressDialog progressDialog;
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            Receiver_Client.custom_run();
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            // execution of result of Long time consuming operation
-            //progressDialog.dismiss();
-            //finalResult.setText(result);
-        }
-    }
+//
+//    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+//        //call doInBackGround with execute()
+//        private String resp;
+//        ProgressDialog progressDialog;
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//
+//            Receiver_Client.custom_run();
+//
+//            return null;
+//        }
+//
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // execution of result of Long time consuming operation
+//            //progressDialog.dismiss();
+//            //finalResult.setText(result);
+//        }
+//    }
 }
