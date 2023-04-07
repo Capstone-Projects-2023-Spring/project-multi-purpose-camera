@@ -39,8 +39,8 @@ public class BackEnd {
         return result;
     }
     public static void init(){
-        //main = Database_Manager.create_BackEnd();
-        init_test_objects();
+        main = Database_Manager.create_BackEnd();
+        //init_test_objects();
     }
     public static void init_test_objects(){
         ArrayList<Saving_Policy> savings = new ArrayList<>();

@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -94,6 +95,12 @@ public class ExampleUnitTest {
         //Receiver_Client client = new Receiver_Client();
         Receiver_Client.custom_run();
         //client.execute(new Object[1]);
+    }
+
+    @Test
+    public void test_saving_policy_duplicate_checker(){
+        ArrayList<Saving_Policy> policies = new ArrayList<>();
+        Saving_Policy_Page.is_policies_valid(policies);
     }
 
 

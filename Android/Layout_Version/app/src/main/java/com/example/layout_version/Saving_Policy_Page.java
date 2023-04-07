@@ -23,7 +23,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
     ArrayList<Saving_Policy> current_saving_policies;
     boolean data_saved = false;
 
-    public ArrayList<Saving_Policy> is_policies_valid(){
+    public static ArrayList<Saving_Policy> is_policies_valid(ArrayList<Saving_Policy> current_saving_policies){
         System.out.println("policies: ");
         for(int i = 0; i < current_saving_policies.size(); i++){
             System.out.println(current_saving_policies.get(i));
@@ -35,7 +35,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
             ArrayList<Camera> cameras = temp.get_cameras();
             for(int camera_index = 0; camera_index < cameras.size(); camera_index++){
                 Camera camera = cameras.get(camera_index);
-                Saving_Policy duplicate = has_camera_resolution(camera, resolution, saving_policy + 1);
+                Saving_Policy duplicate = has_camera_resolution(current_saving_policies, camera, resolution, saving_policy + 1);
                 if(duplicate != null){
                     ArrayList<Saving_Policy> list = new ArrayList<>();
                     list.add(temp);
@@ -47,7 +47,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
         return null;
     }
 
-    public Saving_Policy has_camera_resolution(Camera camera, Resolution resolution, int start){
+    public static Saving_Policy has_camera_resolution(ArrayList<Saving_Policy> current_saving_policies, Camera camera, Resolution resolution, int start){
         System.out.println("is there: " + camera + ", " + resolution + ", after " + start);
         for(int i = start; i < current_saving_policies.size(); i++){
             Saving_Policy policy = current_saving_policies.get(i);
@@ -98,7 +98,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
         setup_view();
     }
 
-    void save_data(){
+    public boolean save_data(){
         ArrayList<Saving_Policy> to_add = new ArrayList<>();
         ArrayList<Saving_Policy> to_delete = new ArrayList<>();
 
@@ -121,18 +121,47 @@ public class Saving_Policy_Page extends AppCompatActivity {
         for(int i = 0; i < to_delete.size(); i++){
             System.out.println(to_delete.get(i).get_display_text());
         }
+        if(!delete_policies(to_delete))
+            return false;
+
+        if (!add_policies(to_add))
+            return false;
+        return true;
+    }
+
+    public boolean delete_policies(ArrayList<Saving_Policy> policies){
+        for(int i = 0; i < policies.size(); i++){
+            if(!Database_Manager.delete_saving_policy(policies.get(i).id))
+                return false;
+            System.out.println("deleting id: "+policies.get(i).id);
+        }
+        return true;
+    }
+
+    public boolean add_policies(ArrayList<Saving_Policy> policies){
+        for(int i = 0; i < policies.size(); i++){
+            Saving_Policy policy = policies.get(i);
+            int new_id = Database_Manager.add_saving_policy(policy.get_max_time(), policy.get_resolution().name);
+            if(new_id == -1)
+                return false;
+            policy.id = new_id;
+            System.out.println("new id: " + new_id);
+            ArrayList<Camera> cameras = policy.get_cameras();
+            for(int j = 0; j < cameras.size(); j++){
+                Database_Manager.database_add_camera_to_saving_policy(policy.id, cameras.get(j).id);
+            }
+        }
+        return true;
     }
 
     @Override
     public void onBackPressed() {
-        ArrayList<Saving_Policy> duplicate = is_policies_valid();
+        ArrayList<Saving_Policy> duplicate = is_policies_valid(current_saving_policies);
         if(duplicate != null){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Cannot save duplicate");
             String message = "";
             message += duplicate.get(0) + "\n\n" + duplicate.get(1);
-
-
             builder.setMessage(message);
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
@@ -176,7 +205,8 @@ public class Saving_Policy_Page extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             // Save your data here
-            save_data();
+            boolean saved=  save_data();
+            data_saved = saved;
             return null;
         }
 

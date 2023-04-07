@@ -20,11 +20,14 @@ import java.util.List;
 
 public class Database_Manager {
 
-    static String url_account = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/path3/account/";
-    static String url_hardware = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/path3/hardware/";
-    static String url_criteria = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/path3/criteria/";
-    static String url_notification = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/path3/notification/";
-    static String url_saving_policy = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/path3/saving_policy/";
+    static String url_account = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/account/";
+    static String url_hardware = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/hardware/";
+    static String url_criteria = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/criteria/";
+    static String url_notification = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/notification/";
+    static String url_saving_policy = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/saving_policy/";
+
+    public static final int pass = 200;
+    public static final int error = 500;
 
     //region data_classes
     class Saving_Policy_Configuration {
@@ -170,10 +173,9 @@ public class Database_Manager {
     }
     //endregion
 
-    public static String do_post(String url_input){
+    public static boolean do_post(String url_input){
         String urlString = url_input;
         String postData = "";
-
         try {
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -193,12 +195,86 @@ public class Database_Manager {
 
             int responseCode = urlConnection.getResponseCode();
             urlConnection.disconnect();
+            if(responseCode == pass)
+                return true;
+            return false;
 
-            return "Response code: " + responseCode;
         } catch (IOException e) {
             Log.e("HttpPostTask", "Error: " + e.getMessage(), e);
-            return null;
+            return false;
         }
+    }
+
+
+
+    public static boolean do_put(String url_string){
+
+        String urlString = url_string;
+        String postData = "";
+
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setRequestMethod("PUT");
+            urlConnection.setDoOutput(true);
+            urlConnection.setDoInput(true);
+            urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            OutputStream os = urlConnection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+
+            writer.write(postData);
+            writer.flush();
+            writer.close();
+            os.close();
+
+            int responseCode = urlConnection.getResponseCode();
+            urlConnection.disconnect();
+
+            if(responseCode == pass)
+                return true;
+            return false;
+        } catch (IOException e) {
+            Log.e("HttpPostTask", "Error: " + e.getMessage(), e);
+            return false;
+        }
+
+    }
+
+    public static boolean do_delete(String url_string){
+
+        String urlString = url_string;
+        String postData = "";
+
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setRequestMethod("DELETE");
+            urlConnection.setDoOutput(true);
+            urlConnection.setDoInput(true);
+            urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            OutputStream os = urlConnection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+
+            writer.write(postData);
+            writer.flush();
+            writer.close();
+            os.close();
+
+            int responseCode = urlConnection.getResponseCode();
+            urlConnection.disconnect();
+
+            if(responseCode == pass)
+                return true;
+            return false;
+        } catch (IOException e) {
+            Log.e("HttpPostTask", "Error: " + e.getMessage(), e);
+            return false;
+        }
+
     }
 
     //region get
@@ -353,12 +429,42 @@ public class Database_Manager {
         String test = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/path3/saving_policy/" + saving_policy_id + "/add/" + camera_id;
         do_post(test);
     }
+
+
     //endregion
 
     //region add
-    public static void add_saving_policy(int time, String resolution){
-        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/path3/saving_policy?max_time="+time+"&resolution_name="+resolution;
-        do_post(url);
+    public static int add_saving_policy(int time, String resolution){
+        List<Saving_Policy_Configuration> old = get_saving_policy_from_database();
+
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/saving_policy?max_time="+time+"&resolution_name="+resolution;
+        boolean result = do_post(url);
+        System.out.println(result);
+        if(!result)
+            return -1;
+        List<Saving_Policy_Configuration> new_list = get_saving_policy_from_database();
+        System.out.println("old list: "+ old.size());
+        for(int i = 0; i < old.size(); i++){
+            System.out.println(old.get(i).saving_policy_id);
+        }
+        System.out.println("new list: "+ new_list.size());
+        for(int i = 0; i < new_list.size(); i++){
+            System.out.println(new_list.get(i).saving_policy_id);
+        }
+
+        for(int i = 0; i < new_list.size(); i++){
+            int id = new_list.get(i).saving_policy_id;
+            boolean found_id = false;
+            for(int j = 0; j < old.size(); j++){
+                if(old.get(j).saving_policy_id == id){
+                    found_id = true;
+                    break;
+                }
+            }
+            if(!found_id)
+                return id;
+        }
+        return -1;
     }
     public static void add_notification_policy(int type, int criteria_id){
         String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/path3/notification?notification_type="+type+"&criteria_id="+criteria_id;
@@ -427,5 +533,74 @@ public class Database_Manager {
 
     public static void test(){
 
+        //database_add_camera_to_saving_policy(7, 12);
+        //database_add_camera_to_saving_policy(8, 12);
+        saving_policy_remove_camera(8, 12);
+    }
+
+    public static boolean edit_criteria(int type, int duration, int magnitude, int id){
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/criteria/"+id+"?criteria_type="+type+"&duration="+duration+"&magnitude="+magnitude;
+        System.out.println(url);
+        boolean result_code = do_put(url);
+        System.out.println(result_code);
+        return result_code;
+    }
+    public static boolean edit_saving_policy(int max_time, String resolution_name, int id){
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/saving_policy/"+id+"?max_time="+max_time+"&resolution_name="+resolution_name;
+        System.out.println(url);
+        boolean result_code = do_put(url);
+        System.out.println(result_code);
+        return result_code;
+    }
+    public static boolean edit_notificaiton_policy(int type, int criteria_id, int id){
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/notification/"+id+"?notification_type="+type+"&criteria_id="+criteria_id;
+        System.out.println(url);
+        boolean result_code = do_put(url);
+        System.out.println(result_code);
+        return result_code;
+    }
+    public static boolean edit_camera(String new_name, String max_res, int camera_id){
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/hardware/"+camera_id+"?name="+new_name+"&max_resolution="+max_res;
+        System.out.println(url);
+        boolean result_code = do_put(url);
+        System.out.println(result_code);
+        return result_code;
+    }
+
+    public static boolean delete_criteria(int id){
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/criteria/"+id;
+        System.out.println(url);
+        boolean result_code = do_put(url);
+        System.out.println(result_code);
+        return result_code;
+    }
+    public static boolean delete_camera(int id){
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/hardware/"+id;
+        System.out.println(url);
+        boolean result_code = do_put(url);
+        System.out.println(result_code);
+        return result_code;
+    }
+    public static boolean delete_saving_policy(int id){
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/saving_policy/"+id;
+        System.out.println(url);
+        boolean result_code = do_put(url);
+        System.out.println(result_code);
+        return result_code;
+    }
+    public static boolean delete_notification_policy(int id){
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/notification/"+id;
+        System.out.println(url);
+        boolean result_code = do_put(url);
+        System.out.println(result_code);
+        return result_code;
+    }
+
+    public static boolean saving_policy_remove_camera(int saving_policy_id, int camera_id){
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/saving_policy/"+saving_policy_id+"/hardware/"+camera_id;
+        System.out.println(url);
+        boolean result_code = do_put(url);
+        System.out.println(result_code);
+        return result_code;
     }
 }
