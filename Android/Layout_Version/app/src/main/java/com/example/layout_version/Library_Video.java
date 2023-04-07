@@ -1,6 +1,8 @@
 package com.example.layout_version;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -12,6 +14,17 @@ public class Library_Video extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.library_videos);
+
+        VideoView videoView = findViewById(R.id.saved_video);
+
+        MediaController mediaController = new MediaController (this);
+        videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(videoView);
+
+        Uri uri = Uri.parse("");
+        videoView.setVideoURI(uri);
+        videoView.requestFocus();
+        videoView.start();
 
     }
 
