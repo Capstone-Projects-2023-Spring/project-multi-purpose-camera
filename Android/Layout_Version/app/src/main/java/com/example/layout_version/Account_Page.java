@@ -50,7 +50,6 @@ public class Account_Page extends AppCompatActivity {
 
         back_home_im = (ImageView) findViewById(R.id.back_home_btn_setting);
         back_home_txt = (TextView) findViewById(R.id.back_home_text_setting);
-
         back_home_im.setOnClickListener(new View.OnClickListener()
         {
             @Override
