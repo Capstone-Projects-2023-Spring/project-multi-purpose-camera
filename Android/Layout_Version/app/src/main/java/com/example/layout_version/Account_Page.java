@@ -37,6 +37,7 @@ public class Account_Page extends AppCompatActivity {
         TextView password = (TextView) findViewById(R.id.Password);
 
         Button loginbtn = (Button) findViewById(R.id.login);
+        Button signupbtn = (Button) findViewById(R.id.signup);
 
         EditText clearEmail = (EditText) findViewById(R.id.EmailAddress);
         EditText clearPassword = (EditText) findViewById(R.id.Password);
@@ -112,6 +113,14 @@ public class Account_Page extends AppCompatActivity {
 //                {
 //                    Toast.makeText(Account_Page.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
 //                }
+            }
+        });
+
+        signupbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (Account_Page.this,Account_Page_Signup.class);
+                startActivity(intent);
             }
         });
 

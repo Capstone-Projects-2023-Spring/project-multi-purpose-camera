@@ -50,15 +50,15 @@
             android:layout_marginTop="75dp"
             android:gravity="center">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sign In"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    tools:layout_editor_absoluteX="176dp"
-                    tools:layout_editor_absoluteY="116dp" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign In"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="176dp"
+                tools:layout_editor_absoluteY="116dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -103,20 +103,17 @@
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="270dp"
             android:gravity="center">
-
-        <Button
-            android:id="@+id/login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log In"
-            android:layout_marginRight="55dp"
-            android:layout_marginLeft="55dp"
-            android:backgroundTint="@color/blue"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="401dp" />
+            <EditText
+                android:id="@+id/Repassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Confirm your Password"
+                android:ems="15"
+                android:inputType="textPassword"
+                tools:layout_editor_absoluteX="100dp"
+                tools:layout_editor_absoluteY="195dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -124,16 +121,18 @@
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="350dp"
+            android:layout_marginTop="360dp"
             android:gravity="center">
 
             <Button
                 android:id="@+id/signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sign Up"
+                android:text="Sign up"
                 android:layout_marginRight="55dp"
                 android:layout_marginLeft="55dp"
+                android:backgroundTint="@color/blue"
+                android:textColor="@color/white"
                 tools:layout_editor_absoluteX="161dp"
                 tools:layout_editor_absoluteY="401dp" />
         </LinearLayout>

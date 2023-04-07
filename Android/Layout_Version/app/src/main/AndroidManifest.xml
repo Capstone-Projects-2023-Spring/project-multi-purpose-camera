@@ -35,6 +35,7 @@
         <activity android:name=".Camera_Page" />
         <activity android:name=".Library_Videos_Page" />
         <activity android:name=".Account_Page" />
+        <activity android:name=".Account_Page_Signup" />
     </application>
 
 </manifest>
