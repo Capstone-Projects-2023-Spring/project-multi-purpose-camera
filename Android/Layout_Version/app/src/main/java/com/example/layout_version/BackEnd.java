@@ -11,6 +11,10 @@ public class BackEnd {
         this.notifications = notifications;
     }
 
+    public static void get_backend_from_database(){
+        main = Database_Manager.create_BackEnd();
+    }
+
     private ArrayList<Camera> cameras = new ArrayList<>();
     public ArrayList<Camera> get_cameras(){
         ArrayList<Camera> result = new ArrayList<>();
@@ -34,6 +38,10 @@ public class BackEnd {
             result.add(notifications.get(i));
         return result;
     }
+    public static void init(){
+        //main = Database_Manager.create_BackEnd();
+        init_test_objects();
+    }
     public static void init_test_objects(){
         ArrayList<Saving_Policy> savings = new ArrayList<>();
         ArrayList<Notification_Policy> notifications = new ArrayList<>();
@@ -41,17 +49,17 @@ public class BackEnd {
 
         Resolution.init_resolutions();
 
-        cameras.add(new Camera("camera 1", Resolution.name_to_resolution("1080p"), 1));
-        cameras.add(new Camera("camera 2", Resolution.name_to_resolution("1080p"), 2));
-        cameras.add(new Camera("camera 3", Resolution.name_to_resolution("1080p"), 3));
-        cameras.add(new Camera("camera 4", Resolution.name_to_resolution("1080p"), 4));
-        Criteria criteria = new Criteria(Criteria.type_brightness, 10, 10);
-        notifications.add(new Notification_Policy(criteria, cameras.get(0), Notification_Policy.type_buzz));
-        savings.add(new Saving_Policy(cameras.get(0), 10, Resolution.name_to_resolution("1080p")));
-        Saving_Policy saving = new Saving_Policy(cameras.get(3), 30, Resolution.name_to_resolution("1080p"));
+        cameras.add(new Camera("camera 1", Resolution.name_to_resolution("1080p"), 1, 1));
+        cameras.add(new Camera("camera 2", Resolution.name_to_resolution("1080p"), 2, 1));
+        cameras.add(new Camera("camera 3", Resolution.name_to_resolution("1080p"), 3, 1));
+        cameras.add(new Camera("camera 4", Resolution.name_to_resolution("1080p"), 4, 1));
+        Criteria criteria = new Criteria(Criteria.type_brightness, 10, 10, 1);
+        notifications.add(new Notification_Policy(criteria, cameras.get(0), Notification_Policy.type_buzz, 1));
+        savings.add(new Saving_Policy(cameras.get(0), 10, Resolution.name_to_resolution("1080p"), 1));
+        Saving_Policy saving = new Saving_Policy(cameras.get(3), 30, Resolution.name_to_resolution("1080p"), 2);
         saving.add_camera(cameras.get(2));
         savings.add(saving);
-        savings.add(new Saving_Policy(cameras.get(1), 20, Resolution.name_to_resolution("1080p")));
+        savings.add(new Saving_Policy(cameras.get(1), 20, Resolution.name_to_resolution("1080p"), 3));
         savings.add(savings.get(savings.size() - 1));
         savings.add(savings.get(savings.size() - 1));
 

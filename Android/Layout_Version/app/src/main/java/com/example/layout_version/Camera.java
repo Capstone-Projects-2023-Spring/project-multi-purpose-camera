@@ -6,10 +6,12 @@ public class Camera {
     public int id;
     public String name;
     public Resolution resolution;
-    public Camera(String name, Resolution resolution, int id){
+    public int account_id;
+    public Camera(String name, Resolution resolution, int id, int account_id){
         this.resolution = resolution;
         this.name = name;
         this.id = id;
+        this.account_id = account_id;
     }
 
     public static ArrayList<String> names (ArrayList<Camera> cameras) {

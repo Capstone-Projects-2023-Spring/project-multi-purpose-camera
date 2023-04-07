@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 
 public class Saving_Policy implements Displayable_Policy{
+    public int id;
     private int max_time;
     public int get_max_time(){
         return max_time;
@@ -27,17 +28,19 @@ public class Saving_Policy implements Displayable_Policy{
         return resolution;
     }
 
-    public Saving_Policy(Camera parent, int time, Resolution resolution){
+    public Saving_Policy(Camera parent, int time, Resolution resolution, int id){
         this.resolution = resolution;
         max_time = time;
         cameras = new ArrayList<>();
         cameras.add(parent);
+        this.id = id;
     }
 
-    public Saving_Policy(ArrayList<Camera> parent, int time, Resolution resolution){
+    public Saving_Policy(ArrayList<Camera> parent, int time, Resolution resolution, int id){
         this.resolution = resolution;
         max_time = time;
         cameras = parent;
+        this.id = id;
     }
 
     public void add_camera(Camera camera){

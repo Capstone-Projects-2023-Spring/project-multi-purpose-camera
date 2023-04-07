@@ -6,10 +6,16 @@ public class Criteria {
     public int type;
     public int magnitude;
     public int duration;
+    public int id;
 
-    public Criteria(int type, int magnitude, int duration){
+    public Criteria(int type, int magnitude, int duration, int id){
         this.type = type;
         this.magnitude = magnitude;
         this.duration = duration;
+        this.id = id;
+    }
+
+    public String toString(){
+        return "type: " + type + ", mag: " + magnitude + ", duration: " + duration + ", id: " + id;
     }
 }

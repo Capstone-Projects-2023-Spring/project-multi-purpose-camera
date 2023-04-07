@@ -1,6 +1,12 @@
 package com.example.layout_version;
+
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
+import android.os.Build;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +28,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Base64;
 
-public class Receiver_Client implements Runnable{
+public class Receiver_Client extends AsyncTask {
+    public static VideoViewOpencv my_videoview;
     static String address = "44.212.17.188";
     static int port = 9999;
     static String ID = "ABCDEFGH";
@@ -32,10 +39,24 @@ public class Receiver_Client implements Runnable{
     public Receiver_Client(){
         //super.onCreate(savedInstanceState);
         //Client client = new Client( ip address, port);
+
+    }
+
+    @Override
+    protected Object doInBackground(Object[] objects) {
+        custom_run();
+        return null;
+    }
+
+    public static void custom_run(){
         System.out.println("Start of program");
+        // System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         connect(address, port);
     }
-    public static void connect( String address, int port) {
+
+    @SuppressLint("NewApi")
+    public static void connect(String address, int port) {
+
         try {
             System.out.println("Start of connect method");
             DatagramSocket clientSocket = new DatagramSocket();
@@ -69,6 +90,7 @@ public class Receiver_Client implements Runnable{
                 System.out.println(receiveVideoPacket);
                 byte[] byte_arr = trim(receivevideobytes);
                 //receivevideobytes = receiveAudioPacket.getData();
+
                 ByteArrayInputStream inStreambj = new ByteArrayInputStream(byte_arr);
                 ByteArrayInputStream bis = new ByteArrayInputStream(byte_arr);
                 Bitmap bp = BitmapFactory.decodeStream(bis); //decode stream to a bitmap image
@@ -81,6 +103,7 @@ public class Receiver_Client implements Runnable{
 //                BufferedImage bImage2 = ImageIO.read(bis);
 //                ImageIO.write(bImage2, "jpg", new File("output.jpg") );
                 System.out.println("image created");
+
                 //byte[] v_result = trim(receivevideobytes);
                 //byte[] a_result = trim(receivevideobytes);
                 //audioSocket.receive(receiveAudioPacket);
@@ -117,14 +140,12 @@ public class Receiver_Client implements Runnable{
     public static byte[] trim(byte[] data) {
         byte[] input = data;
         int i = input.length;
-        while (i-- > 0 && input[i] == 0) {}
+        while (i-- > 0 && input[i] == 0) {
+        }
 
-        byte[] output = new byte[i+1];
-        System.arraycopy(input, 0, output, 0, i+1);
+        byte[] output = new byte[i + 1];
+        System.arraycopy(input, 0, output, 0, i + 1);
         return output;
     }
-
-    @Override
-    public void run() {
-    }
 }
+
