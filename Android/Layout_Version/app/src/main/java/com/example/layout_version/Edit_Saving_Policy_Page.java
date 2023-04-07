@@ -62,7 +62,7 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
                 System.out.println("\ntrying time setting string: "+s + "\n");
                 try{
                     int temp = Integer.parseInt(text);
-                    Saving_Policy new_policy = new Saving_Policy(current_policy.get_cameras(), temp, current_policy.get_resolution());
+                    Saving_Policy new_policy = new Saving_Policy(current_policy.get_cameras(), temp, current_policy.get_resolution(), 1);
                     int index = policy_list.indexOf(current_policy);
                     policy_list.set(index, new_policy);
                     current_policy = new_policy;
@@ -102,7 +102,7 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
                 ArrayList<Camera> cameras = current_policy.get_cameras();
                 cameras.add(chosen_camera);
 
-                Saving_Policy new_policy = new Saving_Policy(cameras, current_policy.get_max_time(), current_policy.get_resolution());
+                Saving_Policy new_policy = new Saving_Policy(cameras, current_policy.get_max_time(), current_policy.get_resolution(), 1);
                 int index = policy_list.indexOf(current_policy);
                 policy_list.set(index, new_policy);
                 current_policy = new_policy;
@@ -121,7 +121,7 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
                 Resolution chosen_resolution = Resolution.name_to_resolution(item);
                 if(chosen_resolution!= null)
                     set_resolution_label(item, linearLayout);
-                Saving_Policy new_policy = new Saving_Policy(current_policy.get_cameras(), current_policy.get_max_time(), chosen_resolution);
+                Saving_Policy new_policy = new Saving_Policy(current_policy.get_cameras(), current_policy.get_max_time(), chosen_resolution, 1);
 
                 int index = policy_list.indexOf(current_policy);
                 policy_list.set(index, new_policy);
@@ -154,7 +154,7 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
                 linearLayout.removeView(camera_layout);
                 ArrayList<Camera> cameras = policy.get_cameras();
                 cameras.remove(camera);
-                Saving_Policy new_policy = new Saving_Policy(cameras, policy.get_max_time(), policy.get_resolution());
+                Saving_Policy new_policy = new Saving_Policy(cameras, policy.get_max_time(), policy.get_resolution(), 1);
 
                 int index = policy_list.indexOf(current_policy);
                 policy_list.set(index, new_policy);

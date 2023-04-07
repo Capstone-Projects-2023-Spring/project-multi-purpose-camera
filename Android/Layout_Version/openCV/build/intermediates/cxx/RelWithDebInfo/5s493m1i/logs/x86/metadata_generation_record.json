@@ -11,11 +11,11 @@
       "fieldsDescending": {}
     },
     "memoizedSize": -1,
-    "memoizedHashCode": -1046093890
+    "memoizedHashCode": 1415274033
   },
   {
     "level_": 0,
-    "message_": "rebuilding JSON C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\RelWithDebInfo\\5s493m1i\\x86\\android_gradle_build.json due to:",
+    "message_": "JSON \u0027C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\RelWithDebInfo\\5s493m1i\\x86\\android_gradle_build.json\u0027 was up-to-date",
     "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
     "tag_": "release|x86",
     "diagnosticCode_": 0,
@@ -25,119 +25,7 @@
       "fieldsDescending": {}
     },
     "memoizedSize": -1,
-    "memoizedHashCode": 797761574
-  },
-  {
-    "level_": 0,
-    "message_": "- no fingerprint file, will remove stale configuration folder",
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-    "tag_": "release|x86",
-    "diagnosticCode_": 0,
-    "memoizedIsInitialized": 1,
-    "unknownFields": {
-      "fields": {},
-      "fieldsDescending": {}
-    },
-    "memoizedSize": -1,
-    "memoizedHashCode": -782266289
-  },
-  {
-    "level_": 0,
-    "message_": "removing stale contents from \u0027C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\RelWithDebInfo\\5s493m1i\\x86\u0027",
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-    "tag_": "release|x86",
-    "diagnosticCode_": 0,
-    "memoizedIsInitialized": 1,
-    "unknownFields": {
-      "fields": {},
-      "fieldsDescending": {}
-    },
-    "memoizedSize": -1,
-    "memoizedHashCode": 1185829382
-  },
-  {
-    "level_": 0,
-    "message_": "created folder \u0027C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\RelWithDebInfo\\5s493m1i\\x86\u0027",
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-    "tag_": "release|x86",
-    "diagnosticCode_": 0,
-    "memoizedIsInitialized": 1,
-    "unknownFields": {
-      "fields": {},
-      "fieldsDescending": {}
-    },
-    "memoizedSize": -1,
-    "memoizedHashCode": -1354526958
-  },
-  {
-    "level_": 0,
-    "message_": "executing cmake @echo off\n\"C:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\cmake\\\\3.22.1\\\\bin\\\\cmake.exe\" ^\n  \"-HC:\\\\Users\\\\admin\\\\Documents\\\\GitHub\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\libcxx_helper\" ^\n  \"-DCMAKE_SYSTEM_NAME\u003dAndroid\" ^\n  \"-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\" ^\n  \"-DCMAKE_SYSTEM_VERSION\u003d21\" ^\n  \"-DANDROID_PLATFORM\u003dandroid-21\" ^\n  \"-DANDROID_ABI\u003dx86\" ^\n  \"-DCMAKE_ANDROID_ARCH_ABI\u003dx86\" ^\n  \"-DANDROID_NDK\u003dC:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\23.1.7779620\" ^\n  \"-DCMAKE_ANDROID_NDK\u003dC:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\23.1.7779620\" ^\n  \"-DCMAKE_TOOLCHAIN_FILE\u003dC:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\23.1.7779620\\\\build\\\\cmake\\\\android.toolchain.cmake\" ^\n  \"-DCMAKE_MAKE_PROGRAM\u003dC:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\cmake\\\\3.22.1\\\\bin\\\\ninja.exe\" ^\n  \"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003dC:\\\\Users\\\\admin\\\\Documents\\\\GitHub\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\build\\\\intermediates\\\\cxx\\\\RelWithDebInfo\\\\5s493m1i\\\\obj\\\\x86\" ^\n  \"-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003dC:\\\\Users\\\\admin\\\\Documents\\\\GitHub\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\build\\\\intermediates\\\\cxx\\\\RelWithDebInfo\\\\5s493m1i\\\\obj\\\\x86\" ^\n  \"-DCMAKE_BUILD_TYPE\u003dRelWithDebInfo\" ^\n  \"-BC:\\\\Users\\\\admin\\\\Documents\\\\GitHub\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\.cxx\\\\RelWithDebInfo\\\\5s493m1i\\\\x86\" ^\n  -GNinja ^\n  \"-DANDROID_STL\u003dc++_shared\"\n",
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-    "tag_": "release|x86",
-    "diagnosticCode_": 0,
-    "memoizedIsInitialized": 1,
-    "unknownFields": {
-      "fields": {},
-      "fieldsDescending": {}
-    },
-    "memoizedSize": -1,
-    "memoizedHashCode": 1958776992
-  },
-  {
-    "level_": 0,
-    "message_": "@echo off\n\"C:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\cmake\\\\3.22.1\\\\bin\\\\cmake.exe\" ^\n  \"-HC:\\\\Users\\\\admin\\\\Documents\\\\GitHub\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\libcxx_helper\" ^\n  \"-DCMAKE_SYSTEM_NAME\u003dAndroid\" ^\n  \"-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\" ^\n  \"-DCMAKE_SYSTEM_VERSION\u003d21\" ^\n  \"-DANDROID_PLATFORM\u003dandroid-21\" ^\n  \"-DANDROID_ABI\u003dx86\" ^\n  \"-DCMAKE_ANDROID_ARCH_ABI\u003dx86\" ^\n  \"-DANDROID_NDK\u003dC:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\23.1.7779620\" ^\n  \"-DCMAKE_ANDROID_NDK\u003dC:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\23.1.7779620\" ^\n  \"-DCMAKE_TOOLCHAIN_FILE\u003dC:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\ndk\\\\23.1.7779620\\\\build\\\\cmake\\\\android.toolchain.cmake\" ^\n  \"-DCMAKE_MAKE_PROGRAM\u003dC:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\cmake\\\\3.22.1\\\\bin\\\\ninja.exe\" ^\n  \"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003dC:\\\\Users\\\\admin\\\\Documents\\\\GitHub\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\build\\\\intermediates\\\\cxx\\\\RelWithDebInfo\\\\5s493m1i\\\\obj\\\\x86\" ^\n  \"-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003dC:\\\\Users\\\\admin\\\\Documents\\\\GitHub\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\build\\\\intermediates\\\\cxx\\\\RelWithDebInfo\\\\5s493m1i\\\\obj\\\\x86\" ^\n  \"-DCMAKE_BUILD_TYPE\u003dRelWithDebInfo\" ^\n  \"-BC:\\\\Users\\\\admin\\\\Documents\\\\GitHub\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\.cxx\\\\RelWithDebInfo\\\\5s493m1i\\\\x86\" ^\n  -GNinja ^\n  \"-DANDROID_STL\u003dc++_shared\"\n",
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-    "tag_": "release|x86",
-    "diagnosticCode_": 0,
-    "memoizedIsInitialized": 1,
-    "unknownFields": {
-      "fields": {},
-      "fieldsDescending": {}
-    },
-    "memoizedSize": -1,
-    "memoizedHashCode": -1204498145
-  },
-  {
-    "level_": 0,
-    "message_": "Exiting generation of C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\RelWithDebInfo\\5s493m1i\\x86\\compile_commands.json.bin normally",
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-    "tag_": "release|x86",
-    "diagnosticCode_": 0,
-    "memoizedIsInitialized": 1,
-    "unknownFields": {
-      "fields": {},
-      "fieldsDescending": {}
-    },
-    "memoizedSize": -1,
-    "memoizedHashCode": 1253561192
-  },
-  {
-    "level_": 0,
-    "message_": "done executing cmake",
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-    "tag_": "release|x86",
-    "diagnosticCode_": 0,
-    "memoizedIsInitialized": 1,
-    "unknownFields": {
-      "fields": {},
-      "fieldsDescending": {}
-    },
-    "memoizedSize": -1,
-    "memoizedHashCode": 1102689487
-  },
-  {
-    "level_": 0,
-    "message_": "hard linked C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\RelWithDebInfo\\5s493m1i\\x86\\compile_commands.json to C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\tools\\release\\x86\\compile_commands.json",
-    "file_": "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\libcxx_helper\\CMakeLists.txt",
-    "tag_": "release|x86",
-    "diagnosticCode_": 0,
-    "memoizedIsInitialized": 1,
-    "unknownFields": {
-      "fields": {},
-      "fieldsDescending": {}
-    },
-    "memoizedSize": -1,
-    "memoizedHashCode": -1387948256
+    "memoizedHashCode": 1329501968
   },
   {
     "level_": 0,
@@ -151,6 +39,6 @@
       "fieldsDescending": {}
     },
     "memoizedSize": -1,
-    "memoizedHashCode": -1254204725
+    "memoizedHashCode": 1207163198
   }
 ]

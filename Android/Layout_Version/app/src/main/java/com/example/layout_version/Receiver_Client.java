@@ -1,4 +1,6 @@
 package com.example.layout_version;
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -19,7 +21,8 @@ import java.sql.Array;
 import java.util.Arrays;
 import java.util.Base64;
 
-public class Receiver_Client implements Runnable{
+public class Receiver_Client extends AsyncTask {
+    public static VideoViewOpencv my_videoview;
     static String address = "44.212.17.188";
     static int port = 9999;
     static String ID = "ABCDEFGH";
@@ -29,12 +32,23 @@ public class Receiver_Client implements Runnable{
     public Receiver_Client(){
         //super.onCreate(savedInstanceState);
         //Client client = new Client( ip address, port);
+
+    }
+
+    @Override
+    protected Object doInBackground(Object[] objects) {
+        custom_run();
+        return null;
+    }
+
+    public static void custom_run(){
         System.out.println("Start of program");
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        // System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         connect(address, port);
     }
 
-    public static void connect( String address, int port) {
+    @SuppressLint("NewApi")
+    public static void connect(String address, int port) {
         try {
             System.out.println("Start of connect method");
             DatagramSocket clientSocket = new DatagramSocket();
@@ -70,13 +84,20 @@ public class Receiver_Client implements Runnable{
                 byte[] byte_arr = trim(receivevideobytes);
                 //receivevideobytes = receiveAudioPacket.getData();
                 System.out.println("Size of video packet: " + byte_arr.length);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    Base64.getDecoder().decode(byte_arr);
-                }
+                byte_arr = Base64.getDecoder().decode(byte_arr);
+
                 Mat mat = Imgcodecs.imdecode(new MatOfByte(byte_arr), Imgcodecs.IMREAD_UNCHANGED);
                 VideoCapture cap = new VideoCapture();
                 cap.open("appsrc ! h264parse ! avdec_h264 ! videoconvert ! appsink");
                 mat.put(0, 0,byte_arr);
+
+                if(my_videoview != null){
+                    System.out.println("setting frame");
+                    my_videoview.setImage(mat);
+                }
+                else
+                    System.out.println("null video view");
+
 //                cap.read(mat, byte_arr.length);
 //                Imgcodecs.imshow("Video Stream", cap);
 //                Imgcodecs.waitKey(1);
@@ -116,14 +137,11 @@ public class Receiver_Client implements Runnable{
     public static byte[] trim(byte[] data) {
         byte[] input = data;
         int i = input.length;
-        while (i-- > 0 && input[i] == 0) {}
+        while (i-- > 0 && input[i] == 0) {
+        }
 
-        byte[] output = new byte[i+1];
-        System.arraycopy(input, 0, output, 0, i+1);
+        byte[] output = new byte[i + 1];
+        System.arraycopy(input, 0, output, 0, i + 1);
         return output;
-    }
-
-    @Override
-    public void run() {
     }
 }

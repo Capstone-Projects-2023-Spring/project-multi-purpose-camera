@@ -14,8 +14,9 @@ public class Resolution {
         this.height = height;
         this.name = name;
     }
-
+    static boolean inited = false;
     public static void init_resolutions(){
+        inited = true;
         Resolution p480 = new Resolution(720, 480, "480p");
         Resolution p720 = new Resolution(1280, 720, "720p");
         Resolution p1080 = new Resolution(1920, 1080, "1080p");
@@ -39,12 +40,21 @@ public class Resolution {
     }
 
     public static Resolution name_to_resolution(String name){
+        if(!inited)
+            init_resolutions();
         Resolution chosen_resolution = null;
+        //System.out.println("# resolutions: " + resolutions.size());
         for(int i = 0; i < resolutions.size(); i++){
             if(resolutions.get(i).name.equals(name)){
                 chosen_resolution = resolutions.get(i);
                 break;
+            }else{
+                //System.out.println(resolutions.get(i).name +"does not equal " + name);
             }
+        }
+        if(chosen_resolution == null){
+            //System.out.println("resolution: ["+name+"] does not exist");
+            throw new RuntimeException();
         }
         return chosen_resolution;
     }

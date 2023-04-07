@@ -45,6 +45,7 @@ android {
         }
     }
     buildToolsVersion '33.0.2'
+
 }
 
 dependencies {
@@ -59,4 +60,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'com.google.code.gson:gson:2.8.9'
     testImplementation 'com.google.code.gson:gson:2.8.9'
+    testImplementation 'org.robolectric:robolectric:4.7.3'
+    testImplementation 'org.mockito:mockito-core:4.1.0'
 }
