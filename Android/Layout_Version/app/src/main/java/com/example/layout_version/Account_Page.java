@@ -11,8 +11,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Account_Page extends AppCompatActivity {
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
+public class Account_Page extends AppCompatActivity {
+    private RequestQueue mRequestQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,16 +69,49 @@ public class Account_Page extends AppCompatActivity {
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (username.getText().toString().equals("JohnSmith@gmail.com") && password.getText().toString().equals("password"))
-                {
-                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
-                    clearEmail.setText("");
-                    clearPassword.setText("");
+                mRequestQueue = Volley.newRequestQueue(Account_Page.this);
+
+                JSONObject jsonBody = new JSONObject();
+                try {
+                    jsonBody.put("username_", username.getText().toString());
+                    jsonBody.put("password_", password.getText().toString());
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
-                else
-                {
-                    Toast.makeText(Account_Page.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
-                }
+
+                final String requestBody = jsonBody.toString();
+
+                String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/account/signin";
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                        response -> Toast.makeText(Account_Page.this, response, Toast.LENGTH_SHORT).show(),
+                        error -> {
+
+                        }){
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json; charset=utf-8";
+                    }
+                    @Override
+                    public byte[] getBody() throws AuthFailureError {
+                        try {
+                            return requestBody == null ? null : requestBody.getBytes("utf-8");
+                        } catch (UnsupportedEncodingException uee) {
+                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                            return null;
+                        }
+                    }
+                };
+                mRequestQueue.add(stringRequest);
+//                if (username.getText().toString().equals("JohnSmith@gmail.com") && password.getText().toString().equals("password"))
+//                {
+//                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
+//                    clearEmail.setText("");
+//                    clearPassword.setText("");
+//                }
+//                else
+//                {
+//                    Toast.makeText(Account_Page.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
