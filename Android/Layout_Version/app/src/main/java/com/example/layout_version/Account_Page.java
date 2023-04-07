@@ -12,11 +12,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -73,8 +76,8 @@ public class Account_Page extends AppCompatActivity {
 
                 JSONObject jsonBody = new JSONObject();
                 try {
-                    jsonBody.put("username_", username.getText().toString());
-                    jsonBody.put("password_", password.getText().toString());
+                    jsonBody.put("username", username.getText().toString());
+                    jsonBody.put("password", password.getText().toString());
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -83,9 +86,24 @@ public class Account_Page extends AppCompatActivity {
 
                 String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/account/signin";
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                        response -> Toast.makeText(Account_Page.this, response, Toast.LENGTH_SHORT).show(),
+                        response -> Toast.makeText(Account_Page.this, "Log in success", Toast.LENGTH_SHORT).show(),
                         error -> {
-
+                            NetworkResponse response = error.networkResponse;
+                            if (error instanceof ServerError && response != null) {
+                                try {
+                                    String res = new String(response.data,
+                                            HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                                    // Now you can use any deserializer to make sense of data
+                                    JSONObject obj = new JSONObject(res);
+                                    Toast.makeText(Account_Page.this, obj.toString(), Toast.LENGTH_SHORT).show();
+                                } catch (UnsupportedEncodingException e1) {
+                                    // Couldn't properly decode data to string
+                                    e1.printStackTrace();
+                                } catch (JSONException e2) {
+                                    // returned data is not JSONObject?
+                                    e2.printStackTrace();
+                                }
+                            }
                         }){
                     @Override
                     public String getBodyContentType() {
@@ -94,11 +112,20 @@ public class Account_Page extends AppCompatActivity {
                     @Override
                     public byte[] getBody() throws AuthFailureError {
                         try {
-                            return requestBody == null ? null : requestBody.getBytes("utf-8");
+                            return requestBody.getBytes("utf-8");
                         } catch (UnsupportedEncodingException uee) {
                             VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
                             return null;
                         }
+                    }
+                    @Override
+                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                        String responseString = "";
+                        if (response != null) {
+                            responseString = String.valueOf(response.statusCode);
+                            // can get more details such as response.headers
+                        }
+                        return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
                     }
                 };
                 mRequestQueue.add(stringRequest);
