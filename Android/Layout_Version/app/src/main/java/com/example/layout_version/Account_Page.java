@@ -130,16 +130,35 @@ public class Account_Page extends AppCompatActivity {
                     }
                 };
                 mRequestQueue.add(stringRequest);
-//                if (username.getText().toString().equals("JohnSmith@gmail.com") && password.getText().toString().equals("password"))
-//                {
-//                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
-//                    clearEmail.setText("");
-//                    clearPassword.setText("");
-//                }
-//                else
-//                {
-//                    Toast.makeText(Account_Page.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
-//                }
+
+                if (username.getText().toString().equals("John Smith") && password.getText().toString().equals("Password"))
+                {
+                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
+                    clearEmail.setText("");
+                    clearPassword.setText("");
+                }
+                else if (username.getText().toString().equals("Keita Nakashima") && password.getText().toString().equals("Password"))
+                {
+                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
+                    clearEmail.setText("");
+                    clearPassword.setText("");
+                }
+                else if (username.getText().toString().equals("Tom Morgan") && password.getText().toString().equals("Password"))
+                {
+                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
+                    clearEmail.setText("");
+                    clearPassword.setText("");
+                }
+                else if (username.getText().toString().equals("username") && password.getText().toString().equals("password"))
+                {
+                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
+                    clearEmail.setText("");
+                    clearPassword.setText("");
+                }
+                else
+                {
+                    Toast.makeText(Account_Page.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

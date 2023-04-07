@@ -126,7 +126,7 @@
         "rootBuildGradleFolder": "C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version",
         "sdkFolder": "C:\\Users\\jpax2\\AppData\\Local\\Android\\Sdk",
         "isBuildOnlyTargetAbiEnabled": true,
-        "ideBuildTargetAbi": "x86",
+        "ideBuildTargetAbi": "x86,armeabi-v7a,armeabi",
         "isCmakeBuildCohabitationEnabled": false,
         "isPrefabEnabled": false
       },
