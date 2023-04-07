@@ -1,12 +1,12 @@
 package com.example.layout_version;
-<<<<<<< HEAD
+
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Build;
-=======
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
+
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,18 +50,13 @@ public class Receiver_Client extends AsyncTask {
 
     public static void custom_run(){
         System.out.println("Start of program");
-<<<<<<< HEAD
         // System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         connect(address, port);
     }
 
     @SuppressLint("NewApi")
     public static void connect(String address, int port) {
-=======
-        connect(address, port);
-    }
-    public static void connect( String address, int port) {
->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
+
         try {
             System.out.println("Start of connect method");
             DatagramSocket clientSocket = new DatagramSocket();
@@ -95,26 +90,7 @@ public class Receiver_Client extends AsyncTask {
                 System.out.println(receiveVideoPacket);
                 byte[] byte_arr = trim(receivevideobytes);
                 //receivevideobytes = receiveAudioPacket.getData();
-<<<<<<< HEAD
-                System.out.println("Size of video packet: " + byte_arr.length);
-                byte_arr = Base64.getDecoder().decode(byte_arr);
 
-                Mat mat = Imgcodecs.imdecode(new MatOfByte(byte_arr), Imgcodecs.IMREAD_UNCHANGED);
-                VideoCapture cap = new VideoCapture();
-                cap.open("appsrc ! h264parse ! avdec_h264 ! videoconvert ! appsink");
-                mat.put(0, 0,byte_arr);
-
-                if(my_videoview != null){
-                    System.out.println("setting frame");
-                    my_videoview.setImage(mat);
-                }
-                else
-                    System.out.println("null video view");
-
-//                cap.read(mat, byte_arr.length);
-//                Imgcodecs.imshow("Video Stream", cap);
-//                Imgcodecs.waitKey(1);
-=======
                 ByteArrayInputStream inStreambj = new ByteArrayInputStream(byte_arr);
                 ByteArrayInputStream bis = new ByteArrayInputStream(byte_arr);
                 Bitmap bp = BitmapFactory.decodeStream(bis); //decode stream to a bitmap image
@@ -127,7 +103,7 @@ public class Receiver_Client extends AsyncTask {
 //                BufferedImage bImage2 = ImageIO.read(bis);
 //                ImageIO.write(bImage2, "jpg", new File("output.jpg") );
                 System.out.println("image created");
->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
+
                 //byte[] v_result = trim(receivevideobytes);
                 //byte[] a_result = trim(receivevideobytes);
                 //audioSocket.receive(receiveAudioPacket);
@@ -171,12 +147,5 @@ public class Receiver_Client extends AsyncTask {
         System.arraycopy(input, 0, output, 0, i + 1);
         return output;
     }
-<<<<<<< HEAD
 }
-=======
 
-    @Override
-    public void run() {
-    }
-}
->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d

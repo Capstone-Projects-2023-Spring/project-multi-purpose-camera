@@ -12,22 +12,20 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-<<<<<<< HEAD
-=======
+
 import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebSettings;
->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
+
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
-<<<<<<< HEAD
-=======
+
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
+
 import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
@@ -110,17 +108,17 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
             }
         });
 
-<<<<<<< HEAD
-        vid.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
-                startActivity(intent);
-            }
-        });
+
+//        vid.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
+//                startActivity(intent);
+//            }
+//        });
         Uri uri = Uri.parse("http://10.0.2.2:9999/");
-=======
+
 //        vid.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
@@ -181,7 +179,7 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
 //        AsyncTaskRunner thread = new AsyncTaskRunner();
 //        thread.execute("");
 
->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
+
     }
 
 
@@ -193,7 +191,7 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
             return false;
         }
     }
-<<<<<<< HEAD
+
 
 
     private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -222,28 +220,5 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
             progressDialog.dismiss();
         }
     }
-=======
-//
-//    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
-//        //call doInBackGround with execute()
-//        private String resp;
-//        ProgressDialog progressDialog;
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//
-//            Receiver_Client.custom_run();
-//
-//            return null;
-//        }
-//
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            // execution of result of Long time consuming operation
-//            //progressDialog.dismiss();
-//            //finalResult.setText(result);
-//        }
-//    }
->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
+
 }
