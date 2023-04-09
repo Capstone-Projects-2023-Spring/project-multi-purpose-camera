@@ -225,7 +225,7 @@ public class Database_Manager {
      * Convert_cameras changesthe amount of cameras
      *
      * @param old  the old.
-     * @return ArrayList<Camera>
+     * @return ArrayList
      */
     public static ArrayList<Camera> convert_cameras(List<Camera_Configuration> old){
 
@@ -242,7 +242,7 @@ public class Database_Manager {
      *
      * @param old  the old.
      * @param cameras  the cameras.
-     * @return ArrayList<Saving_Policy>
+     * @return ArrayList
      */
     public static ArrayList<Saving_Policy> convert_saving_policies(List<Saving_Policy_Configuration> old, ArrayList<Camera> cameras){
 
@@ -260,7 +260,7 @@ public class Database_Manager {
      * @param old  the old.
      * @param cameras  the cameras.
      * @param criterias  the criterias.
-     * @return ArrayList<Notification_Policy>
+     * @return ArrayList
      */
     public static ArrayList<Notification_Policy> convert_noitification_policies(List<Notification_Configuration> old, ArrayList<Camera> cameras, ArrayList<Criteria> criterias){
 
@@ -276,7 +276,7 @@ public class Database_Manager {
      * Convert_criterias changes the amount of criterias
      *
      * @param old  the old.
-     * @return ArrayList<Criteria>
+     * @return ArrayList
      */
     public static ArrayList<Criteria> convert_criterias(List<Criteria_Configuration> old){
 

@@ -45,7 +45,6 @@ public class Receiver_Client extends AsyncTask {
      *
      * Receiver_ client
      *
-     * @return public
      */
     public Receiver_Client(){
 

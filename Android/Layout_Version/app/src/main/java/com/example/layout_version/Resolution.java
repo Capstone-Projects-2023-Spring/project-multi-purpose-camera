@@ -3,6 +3,7 @@ package com.example.layout_version;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
+import java.lang.String;
 
 
 /**
@@ -66,7 +67,7 @@ public class Resolution {
      * Names
      *
      * @param resolutions  the resolutions.
-     * @return ArrayList<String>
+     * @return ArrayList
      */
     public static ArrayList<String> names(ArrayList<Resolution> resolutions){
 
