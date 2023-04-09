@@ -32,13 +32,23 @@ import java.util.concurrent.ExecutionException;
 
 //import org.opencv.highgui.HighGui;
 
-
+/**
+ * The class MainActivity is the main home page for the app. This is also where the livestream will be live.
+ */
 public class MainActivity extends AppCompatActivity /*implements CameraBridgeViewBase.CvCameraViewListener2*/{
 
     public ConstraintLayout main_layout;
 
     @Override
+
+/**
+ *
+ * On create creates the home page for the app as well as the livestream
+ *
+ * @param savedInstanceState  the saved instance state.
+ */
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -84,7 +94,15 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
         btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click sends user from the current page to settings
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (MainActivity.this,Settings.class);
                 startActivity(intent);
             }
@@ -93,7 +111,15 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
         account.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click sends user from the current page to the account page
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (MainActivity.this,Account_Page.class);
                 startActivity(intent);
             }
@@ -102,7 +128,15 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
         lib.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click sends user from the current page to the library
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (MainActivity.this,Library.class);
                 startActivity(intent);
             }
@@ -147,7 +181,17 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
 
     private class Callback extends WebViewClient {
         @Override
+
+/**
+ *
+ * Should override key event
+ *
+ * @param view  the view.
+ * @param event  the event.
+ * @return boolean
+ */
         public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
+
             return false;
         }
     }
@@ -158,7 +202,16 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
             this.task = task;
         }
         @Override
+
+/**
+ *
+ * Do in background
+ *
+ * @param voids  the voids.
+ * @return Void
+ */
         protected Void doInBackground(Void... voids) {
+
             System.out.println("doing in background");
             task.run();
             return null;
@@ -169,12 +222,29 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
         private String resp;
         ProgressDialog progressDialog;
         @Override
+
+/**
+ *
+ * Do in background
+ *
+ * @param params  the params.
+ * @return String
+ */
         protected String doInBackground(String... params) {
+
             System.out.println("asnc task working");
             return resp;
         }
         @Override
+
+/**
+ *
+ * On post execute
+ *
+ * @param result  the result.
+ */
         protected void onPostExecute(String result) {
+
             progressDialog.dismiss();
         }
     }

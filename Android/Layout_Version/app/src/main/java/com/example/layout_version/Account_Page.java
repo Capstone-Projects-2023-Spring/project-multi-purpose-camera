@@ -29,8 +29,12 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+/**
+ * The class Account_ page extends application compat activity. It creates the account page for the user to login as well as give action to its buttons.
+ */
 public class Account_Page extends AppCompatActivity {
     private RequestQueue mRequestQueue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,13 @@ public class Account_Page extends AppCompatActivity {
 
         back_home_im.setOnClickListener(new View.OnClickListener()
         {
+
+            /**
+             *
+             * On click that directs the user back to the main page
+             *
+             * @param view  the view.
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (Account_Page.this,MainActivity.class);
@@ -60,6 +71,12 @@ public class Account_Page extends AppCompatActivity {
             }
         });
 
+        /**
+         *
+         * On click that directs the user back to the main page
+         *
+         * @param view  the view.
+         */
         back_home_txt.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -69,8 +86,14 @@ public class Account_Page extends AppCompatActivity {
             }
         });
 
-        // Account U: 'JohnSmith@google.com' & P: 'password'
         loginbtn.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             *
+             * On click submits and connects the username/email and password to the server
+             *
+             * @param v  the v.
+             */
             @Override
             public void onClick(View v) {
                 mRequestQueue = Volley.newRequestQueue(Account_Page.this);
@@ -106,10 +129,26 @@ public class Account_Page extends AppCompatActivity {
                                 }
                             }
                         }){
+
+                    /**
+                     *
+                     * Gets the body content type of the json from the server
+                     *
+                     * @return the body content type
+                     */
                     @Override
                     public String getBodyContentType() {
                         return "application/json; charset=utf-8";
                     }
+
+                    /**
+                     *
+                     * Gets the body in bytes
+                     *
+                     * @param {  the {.  It is throws
+                     * @return the body
+                     * @throws   AuthFailureError
+                     */
                     @Override
                     public byte[] getBody() throws AuthFailureError {
                         try {
@@ -119,6 +158,14 @@ public class Account_Page extends AppCompatActivity {
                             return null;
                         }
                     }
+
+                    /**
+                     *
+                     * Parse network response
+                     *
+                     * @param response  the response.
+                     * @return Response<String>
+                     */
                     @Override
                     protected Response<String> parseNetworkResponse(NetworkResponse response) {
                         String responseString = "";
@@ -162,6 +209,12 @@ public class Account_Page extends AppCompatActivity {
             }
         });
 
+        /**
+         *
+         * On click that directs the user back to the signup page.
+         *
+         * @param v  the v.
+         */
         signupbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

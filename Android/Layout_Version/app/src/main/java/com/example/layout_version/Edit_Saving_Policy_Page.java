@@ -17,6 +17,10 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
+
+/**
+ * The class Edit_ saving_ policy_ page extends application compat activity
+ */
 public class Edit_Saving_Policy_Page extends AppCompatActivity {
     public static ArrayList<Saving_Policy> policy_list = null;
     public static Saving_Policy current_policy = null;
@@ -24,7 +28,15 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
     public static boolean edited = false;
     public static final int number_views_below_cameras = 3;
     @Override
+
+/**
+ *
+ * On create creates the page for the edit savings page
+ *
+ * @param savedInstanceState  the saved instance state.
+ */
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_policy);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.edit_policy_linear_layout);
@@ -42,22 +54,50 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
         setup_time_input();
     }
 
+
+    /**
+     *
+     * Setup_time_input
+     *
+     */
     public void setup_time_input(){
+
         TextInputEditText text_input = findViewById(R.id.time_input_text);
 
         text_input.addTextChangedListener(new TextWatcher() {
 
             @Override
+
+
+/**
+ *
+ * After text changed
+ *
+ * @param s  the s.
+ */
             public void afterTextChanged(Editable s) {}
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
+
             }
 
             @Override
+
+
+/**
+ *
+ * On text changed
+ *
+ * @param s  the s.
+ * @param start  the start.
+ * @param before  the before.
+ * @param count  the count.
+ */
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
+
                 String text = s.toString();
                 System.out.println("\ntrying time setting string: "+s + "\n");
                 try{
@@ -76,24 +116,54 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
     }
     Spinner spinner_camera;
     Spinner spinner_resolution;
+
+    /**
+     *
+     * Set_entries_camera
+     *
+     */
     public void set_entries_camera(){
+
         ArrayList<Camera> camera_entries = current_policy.get_available_cameras_to_add();
         ArrayList<String> camera_entry_names = Camera.names(camera_entries);
         View_Factory.set_entries(camera_entry_names, spinner_camera, Edit_Saving_Policy_Page.this);
     }
 
+
+    /**
+     *
+     * Set_entries_resolution
+     *
+     */
     public void set_entries_resolution(){
+
         ArrayList<Resolution> camera_entries = current_policy.get_available_resoltions_to_add();
         ArrayList<String> camera_entry_names = Resolution.names(camera_entries);
         View_Factory.set_entries(camera_entry_names, spinner_resolution, Edit_Saving_Policy_Page.this);
         //System.out.println(BackEnd.resolutions);
     }
 
+
+    /**
+     *
+     * Add_camera_add_button
+     *
+     * @param linearLayout  the linear layout.
+     */
     public void add_camera_add_button(LinearLayout linearLayout){
+
         ImageView add_camera_view = findViewById(R.id.add_camera_view);
         add_camera_view.setOnClickListener(new View.OnClickListener() {
             @Override
+
+/**
+ *
+ * On click to add the camera
+ *
+ * @param v  the v.
+ */
             public void onClick(View v) {
+
                 String item = (String) spinner_camera.getSelectedItem();
                 Camera chosen_camera = BackEnd.main.name_to_camera(item);
                 if(chosen_camera!= null)
@@ -112,11 +182,27 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
         });
     }
 
+
+    /**
+     *
+     * Add_resolution_add_button
+     *
+     * @param linearLayout  the linear layout.
+     */
     public void add_resolution_add_button(LinearLayout linearLayout){
+
         ImageView add_resolution_view = findViewById(R.id.add_resolution_view);
         add_resolution_view.setOnClickListener(new View.OnClickListener() {
             @Override
+
+/**
+ *
+ * On click to affect the changes for the resolution
+ *
+ * @param v  the v.
+ */
             public void onClick(View v) {
+
                 String item = (String) spinner_resolution.getSelectedItem();
                 Resolution chosen_resolution = Resolution.name_to_resolution(item);
                 if(chosen_resolution!= null)
@@ -132,25 +218,61 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
         });
     }
 
+
+    /**
+     *
+     * Set_resolution_label
+     *
+     * @param resolution  the resolution.
+     * @param linearLayout  the linear layout.
+     */
     public void set_resolution_label(String resolution, LinearLayout linearLayout){
+
         TextView view = findViewById(R.id.resolution_text_view);
         view.setText(resolution);
     }
 
+
+    /**
+     *
+     * Add_policies_using_template
+     *
+     * @param linearLayout  the linear layout.
+     * @param policy  the policy.
+     */
     public void add_policies_using_template(LinearLayout linearLayout, Saving_Policy policy) {
+
         for(int i = 0; i < policy.get_cameras().size(); i++){
             add_camera_view(linearLayout, policy.get_cameras().get(i), policy);
         }
     }
 
+
+    /**
+     *
+     * Add_camera_view
+     *
+     * @param linearLayout  the linear layout.
+     * @param camera  the camera.
+     * @param policy  the policy.
+     */
     public void add_camera_view(LinearLayout linearLayout, Camera camera, Saving_Policy policy){
+
         ConstraintLayout camera_layout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.camera_of_policy_template, null);
         TextView camera_view = (TextView)((ConstraintLayout)camera_layout.getChildAt(0)).getChildAt(0);
         camera_view.setText(camera.name);
         ImageView delete_view = (ImageView)((ConstraintLayout)camera_layout.getChildAt(0)).getChildAt(1);
         delete_view.setOnClickListener(new View.OnClickListener() {
             @Override
+
+/**
+ *
+ * On click to remove camera
+ *
+ * @param v  the v.
+ */
             public void onClick(View v) {
+
                 linearLayout.removeView(camera_layout);
                 ArrayList<Camera> cameras = policy.get_cameras();
                 cameras.remove(camera);

@@ -13,13 +13,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+
+/**
+ * The class Settings extends application compat activity. This is displays the settings page
+ */
 public class Settings extends AppCompatActivity {
 
     public static int background_color1;
     public static int background_color2;
 
     @Override
+
+/**
+ *
+ * On create renders the settings page
+ *
+ * @param savedInstanceState  the saved instance state.
+ */
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
@@ -32,7 +44,15 @@ public class Settings extends AppCompatActivity {
         TextView saving_policy = (TextView) findViewById(R.id.cloud_saving_settings);
         saving_policy.setOnClickListener(new View.OnClickListener() {
             @Override
+
+/**
+ *
+ * On click sends the user from the settings to the saving policy page.
+ *
+ * @param v  the v.
+ */
             public void onClick(View v) {
+
                 Intent intent = new Intent (Settings.this,Saving_Policy_Page.class);
                 startActivity(intent);
             }
@@ -41,7 +61,15 @@ public class Settings extends AppCompatActivity {
         back_home_im.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click sends the user from the settings to the main home page.
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (Settings.this,MainActivity.class);
                 startActivity(intent);
             }
@@ -50,7 +78,15 @@ public class Settings extends AppCompatActivity {
         back_home_txt.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click sends the user from the settings to the main home page
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (Settings.this,MainActivity.class);
                 startActivity(intent);
             }
@@ -60,7 +96,16 @@ public class Settings extends AppCompatActivity {
 
 
 
+
+    /**
+     *
+     * Construct settings layout
+     *
+     * @param main_layout  the main_layout.
+     * @return ConstraintLayout
+     */
     public ConstraintLayout construct_settings_layout(ConstraintLayout main_layout){
+
         ConstraintLayout settings_layout = new ConstraintLayout(this);
         main_layout.addView(settings_layout);
 
@@ -99,10 +144,27 @@ public class Settings extends AppCompatActivity {
         return settings_layout;
     }
 
+
+    /**
+     *
+     * Fill rectangle
+     *
+     * @param color  the color.
+     * @return View
+     */
     public View fill_rectangle(int color){
+
         return new View(this){
             @Override
+
+/**
+ *
+ * On draw
+ *
+ * @param canvas  the canvas.
+ */
             protected void onDraw(Canvas canvas) {
+
                 int padding = 0;
 
                 System.out.println("bounds: " + canvas.getClipBounds());
@@ -122,17 +184,41 @@ public class Settings extends AppCompatActivity {
         };
     }
 
+
+    /**
+     *
+     * Paint fill
+     *
+     * @param color  the color.
+     * @return Paint
+     */
     public static Paint paint_fill(int color){
+
         Paint paint = new Paint();
         paint.setColor(color);
         //paint.setAlpha(128);
         return paint;
     }
 
+
+
+    /**
+     *
+     * Create layout params
+     *
+     * @param top  the top.
+     * @param bottom  the bottom.
+     * @param right  the right.
+     * @param left  the left.
+     * @param width  the width.
+     * @param height  the height.
+     * @return ConstraintLayout.LayoutParams
+     */
     public static ConstraintLayout.LayoutParams createLayoutParams(
             int top, int  bottom, int right, int left,
             int width, int height
     ){
+
         // Create a new ConstraintLayout.LayoutParams object
         ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.WRAP_CONTENT,

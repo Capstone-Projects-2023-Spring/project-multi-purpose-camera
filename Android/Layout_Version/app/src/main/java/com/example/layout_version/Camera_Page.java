@@ -11,10 +11,22 @@ import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+
+/**
+ * The class Camera_ page extends application compat activity. It displays the camera page for the users which enables them to capture clips needed if anything is captured.
+ */
 public class Camera_Page extends AppCompatActivity {
 
+    /**
+     *
+     * On create displays the camera page to the app
+     *
+     * @param savedInstanceState  the saved instance state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera);
 
@@ -26,8 +38,15 @@ public class Camera_Page extends AppCompatActivity {
 
         back_home_im.setOnClickListener(new View.OnClickListener()
         {
+            /**
+             *
+             * On click sends the user from the camera page back to the main page.
+             *
+             * @param view  the view.
+             */
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent (Camera_Page.this,MainActivity.class);
                 startActivity(intent);
             }
@@ -35,8 +54,15 @@ public class Camera_Page extends AppCompatActivity {
 
         back_home_txt.setOnClickListener(new View.OnClickListener()
         {
+            /**
+             *
+             * On click sends the user from the camera page back to the main page.
+             *
+             * @param view  the view.
+             */
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent (Camera_Page.this,MainActivity.class);
                 startActivity(intent);
             }

@@ -28,6 +28,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Base64;
 
+
+/**
+ * The class Receiver_ client extends async task. This is to connect the video from the server to the app.
+ */
 public class Receiver_Client extends AsyncTask {
     public static VideoViewOpencv my_videoview;
     static String address = "44.212.17.188";
@@ -36,26 +40,59 @@ public class Receiver_Client extends AsyncTask {
     //static Socket socket = new Socket(address, port);
     //static DataInputStream input = new DataInputStream(socket.getInputStream());
     //static DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+
+    /**
+     *
+     * Receiver_ client
+     *
+     * @return public
+     */
     public Receiver_Client(){
+
         //super.onCreate(savedInstanceState);
         //Client client = new Client( ip address, port);
 
     }
 
     @Override
+
+/**
+ *
+ * Do in background
+ *
+ * @param objects  the objects.
+ * @return Object
+ */
     protected Object doInBackground(Object[] objects) {
+
         custom_run();
         return null;
     }
 
+
+    /**
+     *
+     * Custom_run
+     *
+     */
     public static void custom_run(){
+
         System.out.println("Start of program");
         // System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         connect(address, port);
     }
 
     @SuppressLint("NewApi")
+
+/**
+ *
+ * Connect
+ *
+ * @param address  the address.
+ * @param port  the port.
+ */
     public static void connect(String address, int port) {
+
 
         try {
             System.out.println("Start of connect method");
@@ -137,7 +174,16 @@ public class Receiver_Client extends AsyncTask {
                 System.out.println(i);
             }
         }*/
+
+    /**
+     *
+     * Trim
+     *
+     * @param data  the data.
+     * @return byte[]
+     */
     public static byte[] trim(byte[] data) {
+
         byte[] input = data;
         int i = input.length;
         while (i-- > 0 && input[i] == 0) {

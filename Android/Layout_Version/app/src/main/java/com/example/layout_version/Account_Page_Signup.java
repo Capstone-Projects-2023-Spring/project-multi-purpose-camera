@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Account_Page_Signup extends AppCompatActivity {
 
+    /**
+     * The class Account_ page_ signup extends application compat activity. It creates the account signup page for the user to signup as well as give action to its buttons.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +29,13 @@ public class Account_Page_Signup extends AppCompatActivity {
 
         back_im.setOnClickListener(new View.OnClickListener()
         {
+
+            /**
+             *
+             * On click that sends the user from the signup page to the account page.
+             *
+             * @param view  the view.
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (Account_Page_Signup.this,Account_Page.class);
@@ -33,6 +43,12 @@ public class Account_Page_Signup extends AppCompatActivity {
             }
         });
 
+        /**
+         *
+         * On click that sends the user from the signup page to the account page.
+         *
+         * @param view  the view.
+         */
         back_txt.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -42,12 +58,18 @@ public class Account_Page_Signup extends AppCompatActivity {
             }
         });
 
-        signupbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        signupbtn.setOnClickListener(new View.OnClickListener() {
+//            /**
+//             *
+//             * On click
+//             *
+//             * @param v  the v.
+//             */
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
     }
 

@@ -2,20 +2,43 @@ package com.example.layout_version;
 
 import java.util.ArrayList;
 
+/**
+ *  The class Backend sets up the settings for the cameras and its custom notifications desired by the user.
+ */
 public class BackEnd {
+
     public static BackEnd main;
 
+    /**
+     * Sets the cameras, savings, and notifications to equal to the class's camera, savings, notifications
+     *
+     * @param cameras
+     * @param savings
+     * @param notifications
+     */
     public BackEnd(ArrayList<Camera> cameras, ArrayList<Saving_Policy> savings, ArrayList<Notification_Policy> notifications){
         this.cameras = cameras;
         this.savings = savings;
         this.notifications = notifications;
     }
 
+    /**
+     * gets the backend from the database
+     */
     public static void get_backend_from_database(){
         main = Database_Manager.create_BackEnd();
     }
 
+    /**
+     * Sets cameras to a new Array List
+     */
     private ArrayList<Camera> cameras = new ArrayList<>();
+
+    /**
+     * Gets the new cameras
+     *
+     * @return
+     */
     public ArrayList<Camera> get_cameras(){
         ArrayList<Camera> result = new ArrayList<>();
         for(int i = 0; i < cameras.size(); i++)
@@ -23,25 +46,51 @@ public class BackEnd {
         return result;
     }
 
-
+    /**
+     * Sets the ArrayList savings equal to a new ArrayList
+     */
     private ArrayList<Saving_Policy> savings = new ArrayList<>();
+
+    /**
+     * Gets the new savings
+     *
+     * @return
+     */
     public ArrayList<Saving_Policy> get_savings(){
         ArrayList<Saving_Policy> result = new ArrayList<>();
         for(int i = 0; i < savings.size(); i++)
             result.add(savings.get(i));
         return result;
     }
+
+    /**
+     * Sets the ArrayList notifications equal to a new ArrayList
+     */
     private ArrayList<Notification_Policy> notifications = new ArrayList<>();
+
+    /**
+     * Gets the new notifications
+     *
+     * @return
+     */
     public ArrayList<Notification_Policy> get_notifications(){
         ArrayList<Notification_Policy> result = new ArrayList<>();
         for(int i = 0; i < notifications.size(); i++)
             result.add(notifications.get(i));
         return result;
     }
+
+    /**
+     * Initializes test for objects
+     */
     public static void init(){
         //main = Database_Manager.create_BackEnd();
         init_test_objects();
     }
+
+    /**
+     * Making the test for objects
+     */
     public static void init_test_objects(){
         ArrayList<Saving_Policy> savings = new ArrayList<>();
         ArrayList<Notification_Policy> notifications = new ArrayList<>();
@@ -66,7 +115,12 @@ public class BackEnd {
         main = new BackEnd(cameras, savings, notifications);
     }
 
-
+    /**
+     * Creates a name to the camera
+     *
+     * @param name
+     * @return
+     */
     public Camera name_to_camera(String name){
         Camera chosen_camera = null;
         for(int i = 0; i < cameras.size(); i++){
@@ -78,12 +132,22 @@ public class BackEnd {
         return chosen_camera;
     }
 
-
+    /**
+     * Makes a copy of the data for camera, savings, and notifications
+     *
+     * @return
+     */
     public BackEnd get_copy_data(){
         BackEnd copy = new BackEnd(get_cameras(), get_savings(),get_notifications());
         return copy;
     }
 
+    /**
+     * Makes a savings list
+     *
+     * @param list
+     * @return
+     */
     public boolean saving_lists_same(ArrayList<Saving_Policy> list){
         if(savings.size() != list.size())
             return false;
@@ -94,6 +158,12 @@ public class BackEnd {
         return true;
     }
 
+    /**
+     * Makes a notification list
+     *
+     * @param list
+     * @return
+     */
     public boolean notification_lists_same(ArrayList<Notification_Policy> list){
         if(notifications.size() != list.size())
             return false;
@@ -104,6 +174,13 @@ public class BackEnd {
         return true;
     }
 
+    /**
+     * Updating the savings to delete or add.
+     *
+     * @param list
+     * @param to_delete
+     * @param to_add
+     */
     public void get_different_saving(ArrayList<Saving_Policy> list, ArrayList<Saving_Policy> to_delete, ArrayList<Saving_Policy> to_add){
 
 

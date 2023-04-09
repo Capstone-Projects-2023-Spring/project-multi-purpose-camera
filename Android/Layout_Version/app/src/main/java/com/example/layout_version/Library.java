@@ -24,10 +24,22 @@ import org.w3c.dom.Text;
 
 import java.net.URI;
 
+
+/**
+ * The class Library extends application compat activity. This is the page where the recorded videos go to.
+ */
 public class Library extends AppCompatActivity {
 
     @Override
+
+/**
+ *
+ * On create displays the page for library
+ *
+ * @param savedInstanceState  the saved instance state.
+ */
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.library);
 
@@ -39,19 +51,18 @@ public class Library extends AppCompatActivity {
         account = (ImageView) findViewById(R.id.account);
         view = (Button) findViewById(R.id.view);
 
-//        VideoView videoView = findViewById(R.id.video);
-//        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.pain;
-//        Uri uri = Uri.parse(videoPath);
-//        videoView.setVideoURI(uri);
-//
-//        MediaController mediaController = new MediaController (this);
-//        videoView.setMediaController(mediaController);
-//        mediaController.setAnchorView(videoView);
-
         account.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click enter into video view
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (Library.this,Account_Page.class);
                 startActivity(intent);
             }
@@ -60,7 +71,15 @@ public class Library extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click enter into video view
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (Library.this,Settings.class);
                 startActivity(intent);
             }
@@ -69,7 +88,15 @@ public class Library extends AppCompatActivity {
         view.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click enter into video view
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (Library.this,MainActivity.class);
                 startActivity(intent);
             }
@@ -88,7 +115,15 @@ public class Library extends AppCompatActivity {
         myLayout.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click enter into video view
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (Library.this, Library_Videos_Page.class);
                 startActivity(intent);
             }
@@ -105,7 +140,15 @@ public class Library extends AppCompatActivity {
         myLayout2.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click enter into video view
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (Library.this, Library_Videos_Page.class);
                 startActivity(intent);
             }
@@ -122,7 +165,15 @@ public class Library extends AppCompatActivity {
         myLayout3.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click enter into video view
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (Library.this, Library_Videos_Page.class);
                 startActivity(intent);
             }
@@ -139,7 +190,15 @@ public class Library extends AppCompatActivity {
         myLayout4.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click enter into video view
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (Library.this, Library_Videos_Page.class);
                 startActivity(intent);
             }
@@ -156,7 +215,15 @@ public class Library extends AppCompatActivity {
         myLayout5.setOnClickListener(new View.OnClickListener()
         {
             @Override
+
+/**
+ *
+ * On click enter into video view
+ *
+ * @param view  the view.
+ */
             public void onClick(View view) {
+
                 Intent intent = new Intent (Library.this, Library_Videos_Page.class);
                 startActivity(intent);
             }
@@ -166,33 +233,6 @@ public class Library extends AppCompatActivity {
         TextView timestamp5 = myLayout5.findViewById(R.id.timeStamp);
         timestamp5.setText("2023-04-05 19:02:11");
         container.addView(myLayout5);
-
-
-//        String url = "http://example.com/data.json";
-//        HttpClient client = HttpClient.newHttpClient();
-//        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
-//        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//        String json = response.body();
-
-//        VideoView videoView = new VideoView(this);
-//        MediaController mediaController = new MediaController (this);
-//        videoView.setMediaController(mediaController);
-//        mediaController.setAnchorView(videoView);
-//        Uri uri = Uri.parse("https://mpc-capstone.s3.amazonaws.com/gatoilse-cat-love.mp4");
-//        videoView.setVideoURI(uri);
-//        videoView.requestFocus();
-//        videoView.start();
-//        myLayout.addView(videoView);
-
-
-//        for (int i = 0; i < 5; i++)
-//        {
-//            ViewGroup myLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.library_videos, null);
-//            params.setMargins(0, marg, 0, 0);
-//            myLayout.setLayoutParams(params);
-//            container.addView(myLayout);
-//            params.setMargins(0, marg+230, 0, 0);
-//        }
 
     }
 

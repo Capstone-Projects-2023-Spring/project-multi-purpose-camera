@@ -17,11 +17,33 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 
+
+/**
+ * The class View_ factory. It list out the different methods to use.
+ */
 public class View_Factory {
+
+    /**
+     *
+     * Fill rectangle
+     *
+     * @param activity  the activity.
+     * @param color  the color.
+     * @return View
+     */
     public static View fill_rectangle(AppCompatActivity activity, int color){
+
         return new View(activity){
             @Override
+
+/**
+ *
+ * On draw
+ *
+ * @param canvas  the canvas.
+ */
             protected void onDraw(Canvas canvas) {
+
                 int padding = 0;
 
                 System.out.println("bounds: " + canvas.getClipBounds());
@@ -41,14 +63,33 @@ public class View_Factory {
         };
     }
 
+
+    /**
+     *
+     * Paint fill
+     *
+     * @param color  the color.
+     * @return Paint
+     */
     public static Paint paint_fill(int color){
+
         Paint paint = new Paint();
         paint.setColor(color);
         //paint.setAlpha(128);
         return paint;
     }
 
+
+    /**
+     *
+     * Paint stroke
+     *
+     * @param color  the color.
+     * @param thickness  the thickness.
+     * @return Paint
+     */
     public static Paint paint_stroke(int color, int thickness){
+
         Paint paint_stroke = new Paint();
         paint_stroke.setStyle(Paint.Style.STROKE);
         paint_stroke.setStrokeWidth(thickness);
@@ -57,10 +98,29 @@ public class View_Factory {
         return paint_stroke;
     }
 
+
+    /**
+     *
+     * Rectangle
+     *
+     * @param activity  the activity.
+     * @param color  the color.
+     * @param thickness  the thickness.
+     * @return View
+     */
     public static View rectangle(AppCompatActivity activity, int color, int thickness){
+
         return new View(activity){
             @Override
+
+/**
+ *
+ * On draw
+ *
+ * @param canvas  the canvas.
+ */
             protected void onDraw(Canvas canvas) {
+
                 int padding = 0;
 
                 System.out.println("bounds: " + canvas.getClipBounds());
@@ -81,7 +141,16 @@ public class View_Factory {
         };
     }
 
+
+    /**
+     *
+     * Get width of screen
+     *
+     * @param activity  the activity.
+     * @return the _width_of_screen
+     */
     public static int get_width_of_screen(AppCompatActivity activity){
+
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -90,7 +159,17 @@ public class View_Factory {
         return screenWidth;
     }
 
+
+    /**
+     *
+     * Construct camera layout
+     *
+     * @param main_layout  the main_layout.
+     * @param activity  the activity.
+     * @return ConstraintLayout
+     */
     public static ConstraintLayout construct_camera_layout(ConstraintLayout main_layout, AppCompatActivity activity){
+
         int background_color2 = 0;
         int background_color1 = 0;
         int width = get_width_of_screen(activity);
@@ -121,16 +200,16 @@ public class View_Factory {
 
         //array of 4 layouts
         //each layout
-            //Video View
-            //button
+        //Video View
+        //button
 
         //video view = findview
 
 
         //array of 4 layouts
         //each layout
-            //video view.copy
-            //button
+        //video view.copy
+        //button
 
 
 
@@ -153,7 +232,15 @@ public class View_Factory {
             Button settings = new Button(activity);
             settings.setOnClickListener(new View.OnClickListener() {
                 @Override
+
+/**
+ *
+ * On click to change the view for the page into a temporary layout.
+ *
+ * @param view  the view.
+ */
                 public void onClick(View view) {
+
 
                 }
             });
@@ -163,10 +250,28 @@ public class View_Factory {
         return camera_layout;
     }
 
+
+    /**
+     *
+     * Round rectangle
+     *
+     * @param activity  the activity.
+     * @param color  the color.
+     * @return View
+     */
     public static View round_rectangle(AppCompatActivity activity, int color){
+
         return new View(activity){
             @Override
+
+/**
+ *
+ * On draw
+ *
+ * @param canvas  the canvas.
+ */
             protected void onDraw(Canvas canvas) {
+
                 float radius = 20.0f;
                 Paint paint = new Paint();
                 paint.setColor(color);
@@ -179,8 +284,18 @@ public class View_Factory {
 
         };
     }
-    
+
+
+    /**
+     *
+     * Set entries
+     *
+     * @param entries  the entries.
+     * @param spinner  the spinner.
+     * @param context  the context.
+     */
     public static void set_entries(ArrayList<String> entries, Spinner spinner, Context context){
+
         String[] final_entries = new String[entries.size()];
         for(int j = 0; j < entries.size(); j++)
             final_entries[j] = entries.get(j);
@@ -191,15 +306,23 @@ public class View_Factory {
     }
 
 
-
-
-
-
-
+    /**
+     *
+     * Create layout params
+     *
+     * @param top  the top.
+     * @param bottom  the bottom.
+     * @param right  the right.
+     * @param left  the left.
+     * @param width  the width.
+     * @param height  the height.
+     * @return ConstraintLayout.LayoutParams
+     */
     public static ConstraintLayout.LayoutParams createLayoutParams(
             int top, int  bottom, int right, int left,
             int width, int height
     ){
+
         // Create a new ConstraintLayout.LayoutParams object
         ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.WRAP_CONTENT,
