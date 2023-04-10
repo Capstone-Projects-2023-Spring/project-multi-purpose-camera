@@ -17,10 +17,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
-import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -36,14 +34,11 @@ public class Account_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_login_signup_page);
 
-        TextView username = (TextView) findViewById(R.id.EmailAddress);
-        TextView password = (TextView) findViewById(R.id.Password);
+        TextView username = (TextView) findViewById(R.id.emailAddress);
+        TextView password = (TextView) findViewById(R.id.password);
 
         Button loginbtn = (Button) findViewById(R.id.login);
         Button signupbtn = (Button) findViewById(R.id.signup);
-
-        EditText clearEmail = (EditText) findViewById(R.id.EmailAddress);
-        EditText clearPassword = (EditText) findViewById(R.id.Password);
 
         ImageView back_home_im;
         TextView back_home_txt;
@@ -129,35 +124,6 @@ public class Account_Page extends AppCompatActivity {
                     }
                 };
                 mRequestQueue.add(stringRequest);
-
-                if (username.getText().toString().equals("John Smith") && password.getText().toString().equals("Password"))
-                {
-                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
-                    clearEmail.setText("");
-                    clearPassword.setText("");
-                }
-                else if (username.getText().toString().equals("Keita Nakashima") && password.getText().toString().equals("Password"))
-                {
-                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
-                    clearEmail.setText("");
-                    clearPassword.setText("");
-                }
-                else if (username.getText().toString().equals("Tom Morgan") && password.getText().toString().equals("Password"))
-                {
-                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
-                    clearEmail.setText("");
-                    clearPassword.setText("");
-                }
-                else if (username.getText().toString().equals("username") && password.getText().toString().equals("password"))
-                {
-                    Toast.makeText(Account_Page.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
-                    clearEmail.setText("");
-                    clearPassword.setText("");
-                }
-                else
-                {
-                    Toast.makeText(Account_Page.this, "LOGIN FAILED", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
