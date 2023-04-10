@@ -28,11 +28,12 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 
 public class Account_Page extends AppCompatActivity {
-    private RequestQueue mRequestQueue;
+    private Account account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_login_signup_page);
+        account = Account.getInstance();
 
         TextView username = (TextView) findViewById(R.id.emailAddress);
         TextView password = (TextView) findViewById(R.id.password);
@@ -67,63 +68,7 @@ public class Account_Page extends AppCompatActivity {
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequestQueue = Volley.newRequestQueue(Account_Page.this);
-
-                JSONObject jsonBody = new JSONObject();
-                try {
-                    jsonBody.put("username", username.getText().toString());
-                    jsonBody.put("password", password.getText().toString());
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-
-                final String requestBody = jsonBody.toString();
-
-                String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/account/signin";
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                        response -> Toast.makeText(Account_Page.this, "Log in success", Toast.LENGTH_SHORT).show(),
-                        error -> {
-                            NetworkResponse response = error.networkResponse;
-                            if (error instanceof ServerError && response != null) {
-                                try {
-                                    String res = new String(response.data,
-                                            HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                                    // Now you can use any deserializer to make sense of data
-                                    JSONObject obj = new JSONObject(res);
-                                    Toast.makeText(Account_Page.this, obj.toString(), Toast.LENGTH_SHORT).show();
-                                } catch (UnsupportedEncodingException e1) {
-                                    // Couldn't properly decode data to string
-                                    e1.printStackTrace();
-                                } catch (JSONException e2) {
-                                    // returned data is not JSONObject?
-                                    e2.printStackTrace();
-                                }
-                            }
-                        }){
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json; charset=utf-8";
-                    }
-                    @Override
-                    public byte[] getBody() throws AuthFailureError {
-                        try {
-                            return requestBody.getBytes("utf-8");
-                        } catch (UnsupportedEncodingException uee) {
-                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                            return null;
-                        }
-                    }
-                    @Override
-                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                        String responseString = "";
-                        if (response != null) {
-                            responseString = String.valueOf(response.statusCode);
-                            // can get more details such as response.headers
-                        }
-                        return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                    }
-                };
-                mRequestQueue.add(stringRequest);
+                account.signin(Account_Page.this, username.getText().toString(), password.getText().toString());
             }
         });
 

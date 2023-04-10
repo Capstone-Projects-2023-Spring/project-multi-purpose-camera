@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Layout_Version</string>
+    <string name="db_base_url">https://nk0fs4t630.execute-api.us-east-1.amazonaws.com</string>
+    <string name="db_stage">/product2</string>
+    <string name="account_signup_endpoint">/account/signup</string>
+    <string name="account_signin_endpoint">/account/signin</string>
 </resources>
