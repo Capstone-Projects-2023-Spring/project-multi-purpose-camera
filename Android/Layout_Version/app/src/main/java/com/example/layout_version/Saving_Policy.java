@@ -65,7 +65,6 @@ public class Saving_Policy implements Displayable_Policy{
      * @param time  the time.
      * @param resolution  the resolution.
      * @param id  the id.
-     * @return public
      */
     public Saving_Policy(Camera parent, int time, Resolution resolution, int id){
 
@@ -84,8 +83,6 @@ public class Saving_Policy implements Displayable_Policy{
      * @param parent  the parent.
      * @param time  the time.
      * @param resolution  the resolution.
-     * @param id  the id.
-     * @return public
      */
     public Saving_Policy(ArrayList<Camera> parent, int time, Resolution resolution, int id){
 
@@ -184,7 +181,7 @@ public class Saving_Policy implements Displayable_Policy{
      * List to string
      *
      * @param savings  the savings.
-     * @return ArrayList<String>
+     * @return ArrayList
      */
     public static ArrayList<String> list_to_string(ArrayList<Saving_Policy> savings){
 

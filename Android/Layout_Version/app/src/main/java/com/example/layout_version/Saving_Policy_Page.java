@@ -32,7 +32,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
      *
      * Checks if policies are valid
      *
-     * @return ArrayList<Saving_Policy>
+     * @return ArrayList
      */
     public ArrayList<Saving_Policy> is_policies_valid(){
 
