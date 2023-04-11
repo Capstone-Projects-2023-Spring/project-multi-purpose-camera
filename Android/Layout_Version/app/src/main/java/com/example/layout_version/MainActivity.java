@@ -5,16 +5,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 
-import android.view.ViewGroup;
-import android.view.Window;
 import android.webkit.WebSettings;
 
 import android.webkit.WebView;
@@ -22,13 +17,9 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import android.widget.MediaController;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-
 import android.widget.TextView;
 
-import java.util.concurrent.ExecutionException;
+import com.example.layout_version.Account.Account_Page;
 
 //import org.opencv.highgui.HighGui;
 
@@ -94,7 +85,7 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
         {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (MainActivity.this,Account_Page.class);
+                Intent intent = new Intent (MainActivity.this, Account_Page.class);
                 startActivity(intent);
             }
         });
