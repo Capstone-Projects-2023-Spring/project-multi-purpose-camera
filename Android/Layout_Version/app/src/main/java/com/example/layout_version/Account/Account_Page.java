@@ -40,13 +40,9 @@ public class Account_Page extends AppCompatActivity {
                 )
         );
 
-        back_home_im.setOnClickListener(view -> {
-            startActivity(new Intent (Account_Page.this, MainActivity.class));
-        });
+        back_home_im.setOnClickListener(view -> onBackPressed());
 
-        back_home_txt.setOnClickListener(view -> {
-            startActivity(new Intent (Account_Page.this,MainActivity.class));
-        });
+        back_home_txt.setOnClickListener(view -> onBackPressed());
 
         signupbtn.setOnClickListener(view -> {
             startActivity(new Intent (Account_Page.this,Account_Page_Signup.class));

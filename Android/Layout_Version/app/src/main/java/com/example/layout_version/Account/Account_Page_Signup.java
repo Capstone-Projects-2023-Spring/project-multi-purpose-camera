@@ -49,15 +49,9 @@ public class Account_Page_Signup extends AppCompatActivity {
             }
         });
 
-        back_im.setOnClickListener(view -> {
-            Intent intent = new Intent (Account_Page_Signup.this,Account_Page.class);
-            startActivity(intent);
-        });
+        back_im.setOnClickListener(view -> onBackPressed());
 
-        back_txt.setOnClickListener(view -> {
-            Intent intent = new Intent (Account_Page_Signup.this,Account_Page.class);
-            startActivity(intent);
-        });
+        back_txt.setOnClickListener(view -> onBackPressed());
     }
 
 }

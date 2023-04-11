@@ -26,10 +26,7 @@ public class Account {
     private String email;
     private String token;
 
-    private Account()
-    {
-
-    }
+    private Account(){}
 
     public void setUsername(String username)
     {
@@ -46,8 +43,15 @@ public class Account {
         this.token = token;
     }
 
-    public boolean isSignedIn()
-    {
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public boolean isSignedIn(){
         return token != null;
     }
 
@@ -113,9 +117,6 @@ public class Account {
                 }
         );
     }
-
-    // Static method
-    // Static method to create instance of Singleton class
     public static synchronized Account getInstance()
     {
         if (single_instance == null)
