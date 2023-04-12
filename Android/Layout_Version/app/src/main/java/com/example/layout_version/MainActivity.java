@@ -117,6 +117,12 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
 //            }
 //        });
 
+        // LIVESTREAM STUFF
+        ImageView livestream = findViewById(R.id.livestreamImageView);
+        livestream.setImageDrawable(getResources().getDrawable(R.drawable.account_setting));
+        Receiver_Client client = new Receiver_Client(livestream);
+        client.execute();
+
         // ------------- Web Page from online and Local -------------
         mWebView = (WebView) findViewById(R.id.video_web);
         WebSettings webSettings = mWebView.getSettings();
