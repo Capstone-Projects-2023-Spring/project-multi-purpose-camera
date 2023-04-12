@@ -34,8 +34,22 @@
         <activity android:name=".Edit_Saving_Policy_Page" />
         <activity android:name=".Camera_Page" />
         <activity android:name=".Library_Videos_Page" />
-        <activity android:name=".Account.Account_Page" />
-        <activity android:name=".Account.Account_Page_Signup" />
+        <activity
+            android:name=".Account.Account_Page"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Account.Account_Page_Signup"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Account.Account_Page_Forgot_Password"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Account.Account_Page_Verify_Code"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".Account.Account_Page_Password_Change"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

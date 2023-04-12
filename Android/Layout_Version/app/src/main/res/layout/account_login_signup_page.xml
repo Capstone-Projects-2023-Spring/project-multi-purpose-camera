@@ -70,7 +70,7 @@
             android:gravity="center">
 
             <EditText
-                android:id="@+id/emailAddress"
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="15"
@@ -87,6 +87,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="210dp"
             android:gravity="center">
+
             <EditText
                 android:id="@+id/password"
                 android:layout_width="wrap_content"
@@ -101,22 +102,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="270dp"
+            android:gravity="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/resetPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="Forgot password ?"
+                android:textColor="@color/blue" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="300dp"
             android:gravity="center">
 
-        <Button
-            android:id="@+id/login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log In"
-            android:layout_marginRight="55dp"
-            android:layout_marginLeft="55dp"
-            android:backgroundTint="@color/blue"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="161dp"
-            tools:layout_editor_absoluteY="401dp" />
+            <Button
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="55dp"
+                android:backgroundTint="@color/blue"
+                android:text="Log In"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteX="161dp"
+                tools:layout_editor_absoluteY="401dp" />
         </LinearLayout>
 
         <LinearLayout

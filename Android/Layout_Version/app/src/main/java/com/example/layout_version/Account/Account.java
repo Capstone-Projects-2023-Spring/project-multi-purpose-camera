@@ -19,12 +19,19 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+interface AccountActionInterface
+{
+    void action(Account account);
+}
+
 public class Account {
     private static Account single_instance = null;
 
     private String username;
     private String email;
     private String token;
+
+    private String code;
 
     private Account(){}
 
@@ -43,6 +50,11 @@ public class Account {
         this.token = token;
     }
 
+    public void setCode(String code)
+    {
+        this.code = code;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -55,7 +67,8 @@ public class Account {
         return token != null;
     }
 
-    public void signup(Context context, String username, String email, String password)
+    public void signup(Context context, String username, String email, String password,
+                       AccountActionInterface success, AccountActionInterface fail)
     {
         JSONObject jsonBody = new JSONObject();
         try {
@@ -73,20 +86,23 @@ public class Account {
                         this.setUsername(jsonBody.get("username").toString());
                         this.setEmail(jsonBody.get("email").toString());
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        success.action(this);
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        fail.action(this);
                     }
                 },
                 json -> {
                     try {
                         Toast.makeText(context, "Login failed: " + json.get("message"), Toast.LENGTH_SHORT).show();
+                        fail.action(this);
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        fail.action(this);
                     }
                 });
     }
 
-    public void signin(Context context, String username, String password)
+    public void signin(Context context, String username, String password,
+                       AccountActionInterface success, AccountActionInterface fail)
     {
         JSONObject jsonBody = new JSONObject();
         try {
@@ -104,19 +120,124 @@ public class Account {
                         this.setEmail(json.get("email").toString());
                         this.setToken(json.get("token").toString());
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        success.action(this);
+                    } catch (JSONException e) {
+                        fail.action(this);
+                    }
+                },
+                json -> {
+                    fail.action(this);
+                    try {
+                        Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException ignored) {
+
+                    }
+                }
+        );
+    }
+
+
+
+    public void reset(Context context, String username,
+                      AccountActionInterface success, AccountActionInterface fail)
+    {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("username", username);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        NetworkRequestManager nrm = new NetworkRequestManager(context);
+        nrm.Post(R.string.account_reset_endpoint, jsonBody,
+                json -> {
+                    try {
+                        this.setUsername(username);
+                        Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        success.action(this);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
                 },
                 json -> {
+                    fail.action(this);
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                    } catch (JSONException ignored) {
+
                     }
                 }
         );
     }
+
+    public void verifyCode(Context context, String code,
+                           AccountActionInterface success, AccountActionInterface fail)
+    {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("username", username);
+            jsonBody.put("code", code);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        NetworkRequestManager nrm = new NetworkRequestManager(context);
+        nrm.Post(R.string.account_code_endpoint, jsonBody,
+                json -> {
+                    try {
+                        this.setCode(code);
+                        this.setToken(json.get("token").toString());
+                        Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        success.action(this);
+                    } catch (JSONException e) {
+                        fail.action(this);
+                    }
+                },
+                json -> {
+                    fail.action(this);
+                    try {
+                        Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException ignored) {
+
+                    }
+                }
+        );
+    }
+
+    public void changePassword(Context context, String password,
+                               AccountActionInterface success, AccountActionInterface fail)
+    {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("username", username);
+            jsonBody.put("password", password);
+            jsonBody.put("token", token);
+            jsonBody.put("code", code);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        NetworkRequestManager nrm = new NetworkRequestManager(context);
+        nrm.Post(R.string.account_password_endpoint, jsonBody,
+                json -> {
+                    try {
+                        Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        success.action(this);
+                    } catch (JSONException e) {
+                        fail.action(this);
+                    }
+                },
+                json -> {
+                    fail.action(this);
+                    try {
+                        Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException ignored) {
+
+                    }
+                }
+        );
+    }
+
     public static synchronized Account getInstance()
     {
         if (single_instance == null)

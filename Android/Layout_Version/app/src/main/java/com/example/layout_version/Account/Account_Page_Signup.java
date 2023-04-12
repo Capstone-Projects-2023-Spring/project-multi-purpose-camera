@@ -1,8 +1,6 @@
 package com.example.layout_version.Account;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,7 +8,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.RequestQueue;
 import com.example.layout_version.R;
 
 public class Account_Page_Signup extends AppCompatActivity {
@@ -41,7 +38,9 @@ public class Account_Page_Signup extends AppCompatActivity {
                         Account_Page_Signup.this,
                         username.getText().toString(),
                         email.getText().toString(),
-                        password.getText().toString()
+                        password.getText().toString(),
+                        a -> {},
+                        a -> {}
                 );
             }
             else{
