@@ -72,6 +72,15 @@ public class Receiver_Client extends AsyncTask {
             clientSocket.receive(receivePacket);
             receivebytes = receivePacket.getData();
             String decoded = new String(receivebytes, "UTF-8");
+            // SID CHANGES BEGIN
+            if(decoded == "CWAIT")
+            {
+                System.out.println("Received " + decoded + " instruction. Waiting...");
+                clientSocket.receive(receivePacket);
+                receivebytes = receivePacket.getData();
+                decoded = new String(receivebytes, "UTF-8");
+            }
+            // SID CHANGES END
             System.out.println("From server: " + decoded);
             int port_num = Integer.parseInt(decoded);
             clientSocket.close();
