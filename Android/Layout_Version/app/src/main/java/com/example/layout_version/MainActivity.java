@@ -19,7 +19,9 @@ import android.widget.ImageView;
 
 import android.widget.TextView;
 
+import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
+import com.example.layout_version.Account.Account_Page_Profile;
 
 //import org.opencv.highgui.HighGui;
 
@@ -85,7 +87,13 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
         {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (MainActivity.this, Account_Page.class);
+                Account account = Account.getInstance();
+                Intent intent;
+                if(account.isSignedIn())
+                    intent = new Intent (MainActivity.this, Account_Page_Profile.class);
+                else
+                    intent = new Intent (MainActivity.this, Account_Page.class);
+
                 startActivity(intent);
             }
         });

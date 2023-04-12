@@ -33,6 +33,8 @@ public class Account {
 
     private String code;
 
+    private String status;
+
     private Account(){}
 
     public void setUsername(String username)
@@ -55,6 +57,11 @@ public class Account {
         this.code = code;
     }
 
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -65,6 +72,52 @@ public class Account {
 
     public boolean isSignedIn(){
         return token != null;
+    }
+
+    public void clear()
+    {
+        username = null;
+        email = null;
+        token = null;
+        status = null;
+    }
+
+    public void profile(Context context, AccountActionInterface success, AccountActionInterface fail)
+    {
+        if(token == null)
+        {
+            Toast.makeText(context, "Log in first", Toast.LENGTH_SHORT).show();
+            fail.action(this);
+            return;
+        }
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("token", token);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        NetworkRequestManager nrm = new NetworkRequestManager(context);
+        nrm.Post(R.string.account_profile_endpoint, jsonBody,
+                json -> {
+                    try {
+                        this.setUsername(json.get("username").toString());
+                        this.setEmail(json.get("email").toString());
+                        this.setStatus(json.get("status").toString());
+                        success.action(this);
+                    } catch (JSONException e) {
+                        fail.action(this);
+                    }
+                },
+                json -> {
+                    try {
+                        Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        fail.action(this);
+                    } catch (JSONException e) {
+                        fail.action(this);
+                    }
+                });
     }
 
     public void signup(Context context, String username, String email, String password,
@@ -83,8 +136,8 @@ public class Account {
         nrm.Post(R.string.account_signup_endpoint, jsonBody,
                 json -> {
                     try {
-                        this.setUsername(jsonBody.get("username").toString());
-                        this.setEmail(jsonBody.get("email").toString());
+//                        this.setUsername(jsonBody.get("username").toString());
+//                        this.setEmail(jsonBody.get("email").toString());
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
                         success.action(this);
                     } catch (JSONException e) {
@@ -237,6 +290,43 @@ public class Account {
                 }
         );
     }
+
+    public void delete(Context context, AccountActionInterface success, AccountActionInterface fail)
+    {
+        if(token == null)
+        {
+            Toast.makeText(context, "Log in first", Toast.LENGTH_SHORT).show();
+            fail.action(this);
+            return;
+        }
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("token", token);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        NetworkRequestManager nrm = new NetworkRequestManager(context);
+        nrm.Post(R.string.account_delete_endpoint, jsonBody,
+                json -> {
+                    try {
+                        Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        success.action(this);
+                    } catch (JSONException e) {
+                        fail.action(this);
+                    }
+                },
+                json -> {
+                    try {
+                        Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        fail.action(this);
+                    } catch (JSONException e) {
+                        fail.action(this);
+                    }
+                });
+    }
+
 
     public static synchronized Account getInstance()
     {

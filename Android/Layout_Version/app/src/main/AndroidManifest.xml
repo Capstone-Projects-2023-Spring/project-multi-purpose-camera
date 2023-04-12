@@ -50,6 +50,10 @@
             android:name=".Account.Account_Page_Password_Change"
             android:launchMode="singleTask"
             />
+        <activity
+            android:name=".Account.Account_Page_Profile"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>
