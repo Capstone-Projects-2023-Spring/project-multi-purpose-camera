@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,17 +31,18 @@ import java.nio.file.Path;
 import java.util.Base64;
 
 public class Receiver_Client extends AsyncTask {
-    public static VideoViewOpencv my_videoview;
     static String address = "44.212.17.188";
     static int port = 9999;
     static String ID = "ABCDEFGH";
     //static Socket socket = new Socket(address, port);
     //static DataInputStream input = new DataInputStream(socket.getInputStream());
     //static DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-    public Receiver_Client(){
+
+    private ImageView imageView;
+    public Receiver_Client(ImageView view){
         //super.onCreate(savedInstanceState);
         //Client client = new Client( ip address, port);
-
+        imageView = view;
     }
 
     @Override
@@ -48,14 +51,14 @@ public class Receiver_Client extends AsyncTask {
         return null;
     }
 
-    public static void custom_run(){
+    public void custom_run(){
         System.out.println("Start of program");
         // System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         connect(address, port);
     }
 
     @SuppressLint("NewApi")
-    public static void connect(String address, int port) {
+    public void connect(String address, int port) {
 
         try {
             System.out.println("Start of connect method");
@@ -99,10 +102,13 @@ public class Receiver_Client extends AsyncTask {
                 System.out.println(receiveVideoPacket);
                 byte[] byte_arr = trim(receivevideobytes);
                 //receivevideobytes = receiveAudioPacket.getData();
-
-                ByteArrayInputStream inStreambj = new ByteArrayInputStream(byte_arr);
-                ByteArrayInputStream bis = new ByteArrayInputStream(byte_arr);
-                Bitmap bp = BitmapFactory.decodeStream(bis); //decode stream to a bitmap image
+                System.out.println( new String(byte_arr));
+                byte[] decodedString = Base64.getDecoder().decode(byte_arr);
+//                ByteArrayInputStream bis = new ByteArrayInputStream(byte_arr);
+//                Bitmap bp = BitmapFactory.decodeStream(bis); //decode stream to a bitmap image
+                Bitmap bmp = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                System.out.println(bmp);
+                imageView.setImageBitmap(bmp);
 //                yourImageView.setImageBitmap(bp); //set the JPEG image in your image view
 //                BufferedImage bImage = ImageIO.read(inStreambj);
 //                ByteArrayOutputStream bos = new ByteArrayOutputStream();
