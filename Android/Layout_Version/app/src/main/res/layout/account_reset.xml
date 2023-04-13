@@ -50,15 +50,15 @@
             android:layout_marginTop="75dp"
             android:gravity="center">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sign In"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    tools:layout_editor_absoluteX="176dp"
-                    tools:layout_editor_absoluteY="116dp" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forgot Password"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="176dp"
+                tools:layout_editor_absoluteY="116dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,76 +83,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="210dp"
-            android:gravity="center">
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                android:ems="15"
-                android:inputType="textPassword"
-                tools:layout_editor_absoluteX="100dp"
-                tools:layout_editor_absoluteY="195dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="270dp"
+            android:layout_marginTop="240dp"
             android:gravity="center"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
 
-            <TextView
-                android:id="@+id/resetPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="Forgot password ?"
-                android:textColor="@color/blue" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="300dp"
-            android:gravity="center">
-
             <Button
-                android:id="@+id/login"
+                android:id="@+id/send"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="55dp"
                 android:layout_marginRight="55dp"
                 android:backgroundTint="@color/blue"
-                android:text="Log In"
+                android:text="Send"
                 android:textColor="@color/white"
-                tools:layout_editor_absoluteX="161dp"
-                tools:layout_editor_absoluteY="401dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="350dp"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/signup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sign Up"
-                android:layout_marginRight="55dp"
-                android:layout_marginLeft="55dp"
                 tools:layout_editor_absoluteX="161dp"
                 tools:layout_editor_absoluteY="401dp" />
         </LinearLayout>

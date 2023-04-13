@@ -1,28 +1,19 @@
 package com.example.layout_version;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
-
-import java.net.URI;
+import com.example.layout_version.Account.Account_Page;
 
 public class Library extends AppCompatActivity {
 
@@ -52,7 +43,7 @@ public class Library extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (Library.this,Account_Page.class);
+                Intent intent = new Intent (Library.this, Account_Page.class);
                 startActivity(intent);
             }
         });
