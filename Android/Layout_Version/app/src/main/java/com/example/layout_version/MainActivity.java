@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
 //        });
 
         // LIVESTREAM STUFF
+        /*
         ImageView livestream = findViewById(R.id.livestreamImageView);
         livestream.setImageDrawable(getResources().getDrawable(R.drawable.account_setting));
         Receiver_Client client = new Receiver_Client(livestream);
@@ -136,6 +137,7 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
         //        String targetServer = "http://10.0.2.2:9999/";
         //        AsyncTaskRunner ad = new AsyncTaskRunner();
         //        ad.execute(targetServer);
+        */
 //        try {
 //            Thread.sleep(5000);
 //        } catch (InterruptedException e) {
