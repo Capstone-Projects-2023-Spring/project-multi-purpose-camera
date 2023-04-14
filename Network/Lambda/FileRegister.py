@@ -1,24 +1,66 @@
+import requests
+from mimetypes import MimeTypes
 import boto3
 import settings
-from botocore.config import Config
 
 session = boto3.Session(
     aws_access_key_id=settings.AWS_SERVER_PUBLIC_KEY,
     aws_secret_access_key=settings.AWS_SERVER_SECRET_KEY
 )
 
-s3 = session.client('s3', config=Config(signature_version='s3v4'))
+s3 = session.client('s3')
 
 
-# Generate the presigned URL for put requests
-presigned_url = s3.generate_presigned_url(
-    ClientMethod='put_object',
-    Params={
-        'Bucket': 'mpc-capstone',
-        'Key': "MPCDatabaseAPI.docx"
-    },
-    ExpiresIn=3600,
-    HttpMethod='PUT'
-)
+def pre_signed_url_post(bucket: str, key: str, expire: int = 3600):
+    response = s3.generate_presigned_post(
+        Bucket=bucket,
+        Key=key,
+        ExpiresIn=expire,
+    )
 
-print(presigned_url)
+    return {
+        "url": response['url'],
+        "key": response['fields']["key"],
+        "AWSAccessKeyId": response['fields']["AWSAccessKeyId"],
+        "policy": response['fields']["policy"],
+        "signature": response['fields']["signature"]
+    }
+
+
+def post(response: dict, data):
+    files = {'file': data}
+    r = requests.post(
+        response["url"],
+        data={
+            "key": response["key"],
+            "AWSAccessKeyId": response["AWSAccessKeyId"],
+            "policy": response["policy"],
+            "signature": response["signature"]
+        },
+        files=files)
+    print(r.status_code)
+
+
+def pre_signed_url_get(bucket: str, key: str, expire: int):
+    mime = MimeTypes()
+    content_type = mime.guess_type(key)[0]
+
+    return s3.generate_presigned_url(
+        ClientMethod='get_object',
+        Params={
+            'Bucket': bucket,
+            'Key': key,
+            'ResponseContentType': content_type
+        },
+        ExpiresIn=expire
+    )
+
+
+if __name__ == "__main__":
+    bucket = "mpc-capstone"
+    response = pre_signed_url_post(bucket, "bird_extra.jpg", 3600)
+    data = open("assets/bird-thumbnail.jpg", "rb").read()
+    print(data)
+    post(response, data)
+    url = pre_signed_url_get(bucket, "bird_extra.jpg", 3600)
+    print(url)
