@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.chaquo.python'
 }
 
 android {
@@ -13,6 +14,9 @@ android {
     }
 
     defaultConfig {
+        python{
+            version "3.8"
+        }
         applicationId "com.example.layout_version"
         minSdk 21
         targetSdk 33
@@ -21,7 +25,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
     }
 
