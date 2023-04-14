@@ -58,7 +58,7 @@ class MPCDatabase:
         self.connection = mysql.connector.connect(host='mpc.c7s8y7an5gv1.us-east-1.rds.amazonaws.com',
                                                   user='admin',
                                                   password='1234567890',
-                                                  database="mydb2")
+                                                  database="mydb")
         """Reference for my sql instance. Used to perform query in database"""
 
         print("Connected")
@@ -744,6 +744,8 @@ class MPCDatabase:
 
         payload = self.select_payload(
             table_name.TABLE, [key], [MatchItem(field, value)])
+        if len(payload["data"]) == 0:
+            return False
         return int(payload["data"][0][key]) == 1
 
 
@@ -761,106 +763,111 @@ if __name__ == "__main__":
     #
 
     database = MPCDatabase()
-    # account = Account("John Smith", "Password", "default@exmple.com")
-    # account1 = Account("Tom Morgan", "Password", "default@exmple.com")
-    # account2 = Account("Tan Pen", "Password", "default@exmple.com")
-    # for a in [account, account1, account2]:
-    #     database.insert(a, ignore=True)
+    account = Account("John Smith", "Password", "john@exmple.com")
+    account1 = Account("Tom Morgan", "Password", "tom@exmple.com")
+    account2 = Account("Tan Pen", "Password", "tan@exmple.com")
+    for a in [account, account1, account2]:
+        database.insert(a, ignore=True)
+    data = database.get_all(Account)
+    for a in data:
+        print(a)
+
+    id_a = database.get_id_by_name(Account, "John Smith")
+    id_a1 = database.get_id_by_name(Account, "Tom Morgan")
+    id_a2 = database.get_id_by_name(Account, "Tan Pen")
+
+    resolution720 = Resolution("720p", 1280, 720)
+    resolution1080 = Resolution("1080p", 1920, 1080)
+    resolution1440 = Resolution("1440p", 2560, 1440)
+    database.insert(resolution720, ignore=True)
+    database.insert(resolution1080, ignore=True)
+    database.insert(resolution1440, ignore=True)
+    data = database.get_all(Resolution)
+    for d in data:
+        print(str(d))
+
+    policy10mins720 = Saving_Policy(600, "720p")
+    policy20mins720 = Saving_Policy(1200, "720p")
+    policy10mins1080 = Saving_Policy(600, "1080p")
+    policy12mins1080 = Saving_Policy(720, "720p")
     #
-    # id_a = database.get_id_by_name(Account, "John Smith")
-    # id_a1 = database.get_id_by_name(Account, "Tom Morgan")
-    # id_a2 = database.get_id_by_name(Account, "Tan Pen")
-    #
-    # resolution720 = Resolution("720p", 1280, 720)
-    # resolution1080 = Resolution("1080p", 1920, 1080)
-    # resolution1440 = Resolution("1440p", 2560, 1440)
-    # database.insert(resolution720, ignore=True)
-    # database.insert(resolution1080, ignore=True)
-    # database.insert(resolution1440, ignore=True)
-    # data = database.get_all(Resolution)
-    # for d in data:
-    #     print(str(d))
-    #
-    # policy10mins720 = Saving_Policy(600, "720p")
-    # policy20mins720 = Saving_Policy(1200, "720p")
-    # policy10mins1080 = Saving_Policy(600, "1080p")
-    # policy12mins1080 = Saving_Policy(720, "720p")
-    #
-    # for p in [policy10mins720, policy20mins720, policy10mins1080, policy12mins1080]:
-    #     database.insert(p)
-    #
-    # data = database.get_all(Saving_Policy)
-    # for d in data:
-    #     print(str(d))
-    #
+    for p in [policy10mins720, policy20mins720, policy10mins1080, policy12mins1080]:
+        database.insert(p)
+
+    data = database.get_all(Saving_Policy)
+    for d in data:
+        print(str(d))
+
     # database.truncate(Hardware)
-    # hardware1 = Hardware("Hardware-1", "720p", account_id=id_a1)
-    # hardware2 = Hardware("Hardware-2", "1080p", account_id=id_a1)
-    # hardware3 = Hardware("Hardware-3", "1080p", account_id=id_a)
-    # hardware4 = Hardware("Hardware-4", "1080p", account_id=id_a)
-    # hardware5 = Hardware("Hardware-5", "720p", account_id=id_a)
-    # hardware6 = Hardware("Hardware-6", "720p", account_id=id_a2)
-    # hardware7 = Hardware("Hardware-7", "720p", account_id=id_a2)
-    #
-    # id_a_h = database.get_ids_by_account_name(Hardware, "John Smith")
-    # id_a1_h = database.get_ids_by_account_name(Hardware, "Tom Morgan")
-    # id_a2_h = database.get_ids_by_account_name(Hardware, "Tan Pen")
-    #
-    # for h in [hardware1, hardware2, hardware3, hardware4, hardware5, hardware6, hardware7]:
-    #     database.insert(h, ignore=True)
-    #
-    # data = database.get_all(Hardware)
-    # for d in data:
-    #     print(str(d))
-    #
-    # criteria = Criteria(1001, 100, 100)
-    # criteria1 = Criteria(1002, 100, 100)
-    # database.insert(criteria, ignore=True)
-    # database.insert(criteria1, ignore=True)
-    # data = database.get_all(Criteria)
-    # for d in data:
-    #     print(str(d))
-    #
-    # id_c = database.get_id_by_type(Criteria, 1001)
-    # id1_c = database.get_id_by_type(Criteria, 1002)
-    #
-    # notification = Notification(101, id_c)
-    # notification1 = Notification(101, id1_c)
-    # database.insert(notification, ignore=True)
-    # database.insert(notification1, ignore=True)
-    # data = database.get_all(Notification)
-    # for d in data:
-    #     print(str(d))
-    # print("EXPLICIT_"[:len("EXPLICIT")] != "EXPLICIT")
-    # data = database.get_all_by_join_id(Hardware, Hardware_has_Saving_Policy,
-    #                                    "EXPLICIT_HARDWARE_ID", "EXPLICIT_SAVING_POLICY_ID", 69)
-    #
-    # for d in data:
-    #     print(str(d))
-    #
-    # recording1 = Recording("_import_616e5dcf2a2362.07330217_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
-    #                        hardware_id=random.choice(id_a_h))
-    # recording2 = Recording("_import_616e710b7f2ff0.35776522_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
-    #                        hardware_id=random.choice(id_a_h))
-    # recording3 = Recording("_import_616e7d55dc7db8.56370719_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
-    #                        hardware_id=random.choice(id_a1_h))
-    # recording4 = Recording("Cat_Eye_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
-    #                        hardware_id=random.choice(id_a1_h))
-    # recording5 = Recording("cat.mp4", "CURDATE()", "NOW()", account_id=id_a2,
-    #                        hardware_id=random.choice(id_a2_h))
-    #
-    # for f in [recording1, recording2, recording3, recording4, recording5]:
-    #     database.insert(f)
-    # data = database.get_all(Recording)
-    # for d in data:
-    #     print(str(d))
-    #
-    # a = Account("Keita Nakashima", "Password", "tun05036@temple.edu")
-    # database.insert(a, ignore=True)
-    #
-    # database.update(Account, MatchItem(Account.ID, 4), [MatchItem(Account.TOKEN, "md5(ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000))")])
-    # a = database.get_by_name(Account, "Keita Nakashima")
-    # print(a)
+    hardware1 = Hardware("Hardware-1", "720p", account_id=id_a1)
+    hardware2 = Hardware("Hardware-2", "1080p", account_id=id_a1)
+    hardware3 = Hardware("Hardware-3", "1080p", account_id=id_a)
+    hardware4 = Hardware("Hardware-4", "1080p", account_id=id_a)
+    hardware5 = Hardware("Hardware-5", "720p", account_id=id_a)
+    hardware6 = Hardware("Hardware-6", "720p", account_id=id_a2)
+    hardware7 = Hardware("Hardware-7", "720p", account_id=id_a2)
+
+
+
+    for h in [hardware1, hardware2, hardware3, hardware4, hardware5, hardware6, hardware7]:
+        database.insert(h, ignore=True)
+
+    id_a_h = database.get_ids_by_account_name(Hardware, "John Smith")
+    id_a1_h = database.get_ids_by_account_name(Hardware, "Tom Morgan")
+    id_a2_h = database.get_ids_by_account_name(Hardware, "Tan Pen")
+
+    data = database.get_all(Hardware)
+    for d in data:
+        print(str(d))
+
+    criteria = Criteria(1001, 100, 100)
+    criteria1 = Criteria(1002, 100, 100)
+    database.insert(criteria, ignore=True)
+    database.insert(criteria1, ignore=True)
+    data = database.get_all(Criteria)
+    for d in data:
+        print(str(d))
+
+    id_c = database.get_id_by_type(Criteria, 1001)
+    id1_c = database.get_id_by_type(Criteria, 1002)
+
+    notification = Notification(101, id_c)
+    notification1 = Notification(101, id1_c)
+    database.insert(notification, ignore=True)
+    database.insert(notification1, ignore=True)
+    data = database.get_all(Notification)
+    for d in data:
+        print(str(d))
+
+    data = database.get_all_by_join_id(Hardware, Hardware_has_Saving_Policy,
+                                       "EXPLICIT_HARDWARE_ID", "EXPLICIT_SAVING_POLICY_ID", 69)
+
+    for d in data:
+        print(str(d))
+    print(id_a_h)
+    recording1 = Recording("_import_616e5dcf2a2362.07330217_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
+                           hardware_id=random.choice(id_a_h))
+    recording2 = Recording("_import_616e710b7f2ff0.35776522_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
+                           hardware_id=random.choice(id_a_h))
+    recording3 = Recording("_import_616e7d55dc7db8.56370719_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
+                           hardware_id=random.choice(id_a1_h))
+    recording4 = Recording("Cat_Eye_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
+                           hardware_id=random.choice(id_a1_h))
+    recording5 = Recording("cat.mp4", "CURDATE()", "NOW()", account_id=id_a2,
+                           hardware_id=random.choice(id_a2_h))
+
+    for f in [recording1, recording2, recording3, recording4, recording5]:
+        database.insert(f)
+    data = database.get_all(Recording)
+    for d in data:
+        print(str(d))
+
+    a = Account("Keita Nakashima", "Password", "tun05036@temple.edu")
+    database.insert(a, ignore=True)
+
+    database.update(Account, MatchItem(Account.ID, 4), [MatchItem(Account.TOKEN, "md5(ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000))")])
+    a = database.get_by_name(Account, "Keita Nakashima")
+    print(a)
     max = database.get_max_id(Account)
     print(database.get_field_by_name(Account, Account.TOKEN, "Keita Nakashima"))
     print(max)

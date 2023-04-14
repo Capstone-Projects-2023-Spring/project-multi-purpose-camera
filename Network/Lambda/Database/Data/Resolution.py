@@ -27,7 +27,7 @@ class Resolution(Data):
 
     def __init__(self, resolution_name: str, width: int, height: int):
         """Initializes the resolution name, width, and height variables"""
-        self.resolution_name = resolution_name
+        self.resolution_name = str(resolution_name)
         """resolution_name  : string<   Store the resolution_name of the resolution"""
         self.width = int(width)
         """width            : int<      Store the width of the resolution"""

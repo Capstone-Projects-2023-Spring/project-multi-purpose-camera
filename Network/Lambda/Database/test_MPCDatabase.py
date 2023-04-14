@@ -1,6 +1,5 @@
 from unittest import TestCase
 
-import mysql.connector
 
 from Lambda.Database.Data.Criteria import Criteria
 from Lambda.Database.Data.Hardware import Hardware
