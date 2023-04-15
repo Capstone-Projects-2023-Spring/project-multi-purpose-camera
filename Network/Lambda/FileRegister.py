@@ -1,4 +1,4 @@
-
+import base64
 from mimetypes import MimeTypes
 import boto3
 import settings
@@ -59,11 +59,17 @@ def pre_signed_url_get(bucket: str, key: str, expire: int):
 
 if __name__ == "__main__":
 
-    bucket = "mpc-capstone"
-    response = pre_signed_url_post(bucket, "bird_extra.jpg", 3600)
-    print(response)
     # data = open("assets/bird-thumbnail.jpg", "rb").read()
     # print(data)
-    # post(response, data)
+    response = {
+    "url": "https://mpc-capstone.s3.amazonaws.com/",
+    "key": "test_url.txt",
+    "AWSAccessKeyId": "AKIAQYOVQX7RESALYLKX",
+    "policy": "eyJleHBpcmF0aW9uIjogIjIwMjMtMDQtMTVUMDQ6MDQ6MzdaIiwgImNvbmRpdGlvbnMiOiBbeyJidWNrZXQiOiAibXBjLWNhcHN0b25lIn0sIHsia2V5IjogInRlc3RfdXJsLnR4dCJ9XX0=",
+    "signature": "T42uGlosogs7npnOX+lTRjatf2M="
+}
+    data = "Secret message".encode("ascii")
+    print("Secret message".encode("ascii"))
+    post(response, data)
     # url = pre_signed_url_get(bucket, "bird_extra.jpg", 3600)
     # print(url)
