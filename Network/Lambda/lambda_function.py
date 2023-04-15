@@ -21,10 +21,10 @@ from mpc_api import MPC_API
 import boto3
 import re
 
-
 try:
     from settings import AWS_SERVER_PUBLIC_KEY, AWS_SERVER_SECRET_KEY, BUCKET
 except:
+
     BUCKET = os.environ['BUCKET']
     AWS_SERVER_SECRET_KEY = os.environ['AWS_SERVER_SECRET_KEY']
     AWS_SERVER_PUBLIC_KEY = os.environ['AWS_SERVER_PUBLIC_KEY']
@@ -32,7 +32,6 @@ except:
 
 
 api = MPC_API()
-s3 = boto3.client('s3')
 database = MPCDatabase()
 
 
@@ -181,91 +180,6 @@ def home(event, pathPara, queryPara):
         'statusCode': 200,
         'headers': {'Content-Type': 'application/json'},
         'body': json.dumps(event)
-    }
-
-
-@api.handle("/image")
-def image_request(event, pathPara, queryPara):
-    """Handles query events using the json libraries and handles images in jpeg format"""
-    image_name = "bird-thumbnail.jpg"
-    response = s3.get_object(
-        Bucket='mpc-capstone',
-        Key=image_name,
-    )
-    content_type = "image/jpeg"
-    image = response['Body'].read()
-    print(base64.b64encode(image).decode('utf-8'))
-    return {
-        'headers': {"Content-Type": content_type},
-        'statusCode': 200,
-        'body': base64.b64encode(image).decode('utf-8'),
-        'isBase64Encoded': True
-    }
-
-
-@api.handle("/image/{image_name}")
-def image_request(event, pathPara, queryPara):
-    """Requests an image from the server and makes sure it's in the right format"""
-    image_name = pathPara["image_name"]
-    response = s3.get_object(
-        Bucket='mpc-capstone',
-        Key=image_name,
-    )
-    if image_name[-4:] == ".png":
-        content_type = "image/png"
-    elif image_name[-4:] == ".jpg" or image_name[-4:] == ".jpeg":
-        content_type = "image/jpeg"
-    else:
-        raise ValueError("Invalid image name: " + image_name)
-    image = response['Body'].read()
-    print(base64.b64encode(image).decode('utf-8'))
-    return {
-        'headers': {"Content-Type": content_type},
-        'statusCode': 200,
-        'body': base64.b64encode(image).decode('utf-8'),
-        'isBase64Encoded': True
-    }
-
-
-@api.handle("/video")
-def video_request(event, pathPara, queryPara):
-    """Requests video from the server and makes sure it's in the correct format"""
-    video_name = "cat.mp4"
-    response = s3.get_object(
-        Bucket='mpc-capstone',
-        Key=video_name,
-    )
-    content_type = "video/mp4"
-    image = response['Body'].read()
-    print(base64.b64encode(image).decode('utf-8'))
-    return {
-        'headers': {"Content-Type": content_type},
-        'statusCode': 200,
-        'body': base64.b64encode(image).decode('utf-8'),
-        'isBase64Encoded': True
-    }
-
-
-@api.handle("/video/{video_name}")
-def video_request_by_filename(event, pathPara, queryPara):
-    """Requests video based on the given file path"""
-    video_name = pathPara["video_name"]
-
-    response = s3.get_object(
-        Bucket='mpc-capstone',
-        Key=video_name,
-    )
-    if video_name[-4:] == ".mp4":
-        content_type = "video/mp4"
-    else:
-        raise ValueError("Invalid image name: " + video_name)
-    image = response['Body'].read()
-    print(base64.b64encode(image).decode('utf-8'))
-    return {
-        'headers': {"Content-Type": content_type},
-        'statusCode': 200,
-        'body': base64.b64encode(image).decode('utf-8'),
-        'isBase64Encoded': True
     }
 
 
@@ -733,12 +647,11 @@ def download_url(event, pathPara, queryPara):
 
 
 if __name__ == "__main__":
-    import urllib
 
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
     max = database.get_max_id(Notification)
     event = {
-        "resource": "/account/code",
+        "resource": "/file/{key}/upload-url",
         "httpMethod": "POST",
         "body": """{
             "username": "tun05036@temple.edu",
@@ -747,7 +660,7 @@ if __name__ == "__main__":
             "code": "658186"
         }""",
         "pathParameters": {
-            "id": max
+            "key": "sample.txt"
         },
         "queryStringParameters": {
             "notification_type": 10

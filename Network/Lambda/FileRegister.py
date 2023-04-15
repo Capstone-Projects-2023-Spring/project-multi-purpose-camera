@@ -1,12 +1,12 @@
-import requests
+
 from mimetypes import MimeTypes
 import boto3
 import settings
 
 session = boto3.Session(
-    aws_access_key_id=settings.AWS_SERVER_PUBLIC_KEY,
-    aws_secret_access_key=settings.AWS_SERVER_SECRET_KEY
-)
+        aws_access_key_id=settings.AWS_SERVER_PUBLIC_KEY,
+        aws_secret_access_key=settings.AWS_SERVER_SECRET_KEY
+    )
 
 s3 = session.client('s3')
 
@@ -28,6 +28,7 @@ def pre_signed_url_post(bucket: str, key: str, expire: int = 3600):
 
 
 def post(response: dict, data):
+    import requests
     files = {'file': data}
     r = requests.post(
         response["url"],
@@ -57,6 +58,7 @@ def pre_signed_url_get(bucket: str, key: str, expire: int):
 
 
 if __name__ == "__main__":
+
     bucket = "mpc-capstone"
     response = pre_signed_url_post(bucket, "bird_extra.jpg", 3600)
     print(response)

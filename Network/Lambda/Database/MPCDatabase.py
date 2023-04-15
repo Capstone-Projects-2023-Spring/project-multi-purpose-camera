@@ -61,6 +61,10 @@ class JoinItem:
 class MPCDatabase:
     def __init__(self):
         """Reference for my sql instance. Used to perform query in database"""
+        # self.connection = mysql.connector.connect(host='mpc.c7s8y7an5gv1.us-east-1.rds.amazonaws.com',
+        #                                           user='admin',
+        #                                           password='WqshO7SqSssZ25iy6d4wAw==',
+        #                                           database="mydb")
         self.connection = mysql.connector.connect(host=DBUrl,
                                                   user=DBUser,
                                                   password=DBPassword,
