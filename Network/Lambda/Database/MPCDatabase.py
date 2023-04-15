@@ -1,12 +1,18 @@
+import os
 import sys
 
 import mysql.connector
 from Database.Data.Configuration import Configuration
+from Database.Data.Account import Account
 
 try:
-    from Database.Data.Account import Account
+    from settings import DBPassword, DBUrl, DBUser, DBTable
+    PASSWORD, URL, USER, TABLE = (DBPassword, DBUrl, DBUser, DBTable)
 except:
-    from Lambda.Database.Data.Account import Account
+    PASSWORD = os.environ['DBPassword']
+    URL = os.environ['DBUrl']
+    USER = os.environ['DBUser']
+    TABLE = os.environ['DBTable']
 
 
 class MatchItem:
@@ -55,10 +61,10 @@ class JoinItem:
 class MPCDatabase:
     def __init__(self):
         """Reference for my sql instance. Used to perform query in database"""
-        self.connection = mysql.connector.connect(host='mpc.c7s8y7an5gv1.us-east-1.rds.amazonaws.com',
-                                                  user='admin',
-                                                  password='1234567890',
-                                                  database="mydb")
+        self.connection = mysql.connector.connect(host=DBUrl,
+                                                  user=DBUser,
+                                                  password=DBPassword,
+                                                  database=DBTable)
         """Reference for my sql instance. Used to perform query in database"""
 
         print("Connected")

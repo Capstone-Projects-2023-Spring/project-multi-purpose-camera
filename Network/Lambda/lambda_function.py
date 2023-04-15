@@ -1,5 +1,6 @@
 import base64
 import json
+import os
 import random
 
 import EmailSender
@@ -14,10 +15,21 @@ from Database.Data.Saving_Policy import Saving_Policy
 from Database.Data.Hardware_has_Saving_Policy import Hardware_has_Saving_Policy
 from Database.Data.Hardware_has_Notification import Hardware_has_Notification
 from Error import Error
+from FileRegister import pre_signed_url_post, pre_signed_url_get
 
 from mpc_api import MPC_API
 import boto3
 import re
+
+
+try:
+    from settings import AWS_SERVER_PUBLIC_KEY, AWS_SERVER_SECRET_KEY, BUCKET
+except:
+    BUCKET = os.environ['BUCKET']
+    AWS_SERVER_SECRET_KEY = os.environ['AWS_SERVER_SECRET_KEY']
+    AWS_SERVER_PUBLIC_KEY = os.environ['AWS_SERVER_PUBLIC_KEY']
+
+
 
 api = MPC_API()
 s3 = boto3.client('s3')
@@ -706,6 +718,18 @@ def saving_policy_hardware_delete_by_id(event, pathPara, queryPara):
 def send_email(event, pathPara, queryPara):
     request_body = event["body"]
     return EmailSender.send(request_body["ToMail"], request_body["Subject"], request_body["LetterBody"])
+
+
+@api.handle("/file/{key}/upload-url", httpMethod="POST")
+def upload_url(event, pathPara, queryPara):
+    response = pre_signed_url_post(BUCKET, pathPara["key"], 10)
+    return json_payload(response)
+
+
+@api.handle("/file/{key}/download-url", httpMethod="POST")
+def download_url(event, pathPara, queryPara):
+    response = pre_signed_url_get(BUCKET, pathPara["key"], 10)
+    return json_payload(response)
 
 
 if __name__ == "__main__":

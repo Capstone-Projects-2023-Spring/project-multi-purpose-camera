@@ -59,8 +59,9 @@ def pre_signed_url_get(bucket: str, key: str, expire: int):
 if __name__ == "__main__":
     bucket = "mpc-capstone"
     response = pre_signed_url_post(bucket, "bird_extra.jpg", 3600)
-    data = open("assets/bird-thumbnail.jpg", "rb").read()
-    print(data)
-    post(response, data)
-    url = pre_signed_url_get(bucket, "bird_extra.jpg", 3600)
-    print(url)
+    print(response)
+    # data = open("assets/bird-thumbnail.jpg", "rb").read()
+    # print(data)
+    # post(response, data)
+    # url = pre_signed_url_get(bucket, "bird_extra.jpg", 3600)
+    # print(url)
