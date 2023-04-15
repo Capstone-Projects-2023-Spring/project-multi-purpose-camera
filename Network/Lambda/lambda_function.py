@@ -634,13 +634,13 @@ def send_email(event, pathPara, queryPara):
     return EmailSender.send(request_body["ToMail"], request_body["Subject"], request_body["LetterBody"])
 
 
-@api.handle("/file/{key}/upload-url", httpMethod="POST")
+@api.handle("/file/upload-url/{key}")
 def upload_url(event, pathPara, queryPara):
     response = pre_signed_url_post(BUCKET, pathPara["key"], 10)
     return json_payload(response)
 
 
-@api.handle("/file/{key}/download-url", httpMethod="POST")
+@api.handle("/file/download-url/{key}")
 def download_url(event, pathPara, queryPara):
     response = pre_signed_url_get(BUCKET, pathPara["key"], 10)
     return json_payload(response)
