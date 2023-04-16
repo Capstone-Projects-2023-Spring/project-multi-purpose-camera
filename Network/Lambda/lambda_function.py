@@ -29,8 +29,6 @@ except:
     AWS_SERVER_SECRET_KEY = os.environ['AWS_SERVER_SECRET_KEY']
     AWS_SERVER_PUBLIC_KEY = os.environ['AWS_SERVER_PUBLIC_KEY']
 
-
-
 api = MPC_API()
 database = MPCDatabase()
 
@@ -474,12 +472,12 @@ def notification_request(event, pathPara, queryPara):
 @api.handle("/notification", httpMethod="POST")
 def notification_insert(event, pathPara, queryPara):
     """Inserts rows into the notification table"""
-    notification = Notification(queryPara["notification_type"], queryPara["criteria_id"])
+    notification = Notification(queryPara[Notification.TYPE], queryPara[Notification.CRITERIA_ID])
     database.insert(notification)
     # id = database.get_id_by_type(Notification, queryPara["notification_type"])
     id = database.get_max_id(Notification)
     if "hardware_id" in queryPara:
-        hardware_notification = Hardware_has_Notification(queryPara["hardware_id"], id)
+        hardware_notification = Hardware_has_Notification(queryPara[Hardware_has_Notification.HARDWARE_ID], id)
         database.insert(hardware_notification)
     return json_payload({"id": id})
 
@@ -511,7 +509,7 @@ def notification_update_by_id(event, pathPara, queryPara):
 @api.handle("/notification/{id}/add/{hardware_id}", httpMethod="POST")
 def notification_insert_hardware(event, pathPara, queryPara):
     """Adds new notification into the into the system from a hardware component"""
-    hardware_notification = Hardware_has_Notification(pathPara["hardware_id"], pathPara["id"])
+    hardware_notification = Hardware_has_Notification(pathPara[Hardware_has_Notification.HARDWARE_ID], pathPara["id"])
     database.insert(hardware_notification)
     return json_payload({})
 
@@ -519,8 +517,10 @@ def notification_insert_hardware(event, pathPara, queryPara):
 @api.handle("/notification/{id}/hardware")
 def notification_hardware_request(event, pathPara, queryPara):
     """Gets notification from specified hardware component based on id"""
-    data = database.get_all_by_join_id(Hardware, Hardware_has_Notification,
-                                       "EXPLICIT_HARDWARE_ID", "EXPLICIT_NOTIFICATION_ID", pathPara["id"])
+    data = database.get_all_join_field_by_field(Hardware, Hardware_has_Notification,
+                                                Hardware.EXPLICIT_HARDWARE_ID,
+                                                Hardware_has_Notification.EXPLICIT_HARDWARE_ID,
+                                                Hardware_has_Notification.NOTIFICATION_ID, pathPara["id"])
     return json_payload(Hardware.list_object_to_dict_list(data))
 
 
@@ -539,7 +539,7 @@ def resolution_request(event, pathPara, queryPara):
 @api.handle("/resolution", httpMethod="POST")
 def resolution_insert(event, pathPara, queryPara):
     """Inserts new rows into the resolution table"""
-    resolution = Resolution(queryPara["resolution_name"], queryPara["width"], queryPara["height"])
+    resolution = Resolution(queryPara[Resolution.NAME], queryPara[Resolution.WIDTH], queryPara[Resolution.HEIGHT])
     database.insert(resolution)
     return json_payload({})
 
@@ -577,7 +577,7 @@ def saving_policy_request(event, pathPara, queryPara):
 @api.handle("/saving_policy", httpMethod="POST")
 def saving_policy_insert(event, pathPara, queryPara):
     """Inserts new saving policy into saving_policy table"""
-    saving_policy = Saving_Policy(queryPara["max_time"], queryPara["resolution_name"])
+    saving_policy = Saving_Policy(queryPara[Saving_Policy.MAX_TIME], queryPara[Saving_Policy.RESOLUTION_NAME])
     database.insert(saving_policy)
     return json_payload({})
 
@@ -617,8 +617,10 @@ def saving_policy_add_hardware(event, pathPara, queryPara):
 @api.handle("/saving_policy/{id}/hardware")
 def saving_policy_hardware_request(event, pathPara, queryPara):
     """Gets information from saving policy and hardware table with a join"""
-    data = database.get_all_by_join_id(Hardware, Hardware_has_Saving_Policy,
-                                       "EXPLICIT_HARDWARE_ID", "EXPLICIT_SAVING_POLICY_ID", pathPara["id"])
+    data = database.get_all_join_field_by_field(Hardware, Hardware_has_Saving_Policy,
+                                                Hardware.EXPLICIT_HARDWARE_ID,
+                                                Hardware_has_Saving_Policy.EXPLICIT_HARDWARE_ID,
+                                                Hardware_has_Saving_Policy.SAVING_POLICY_ID, pathPara["id"])
     return json_payload(Hardware.list_object_to_dict_list(data))
 
 
@@ -634,6 +636,15 @@ def send_email(event, pathPara, queryPara):
     return EmailSender.send(request_body["ToMail"], request_body["Subject"], request_body["LetterBody"])
 
 
+@api.handle("/file")
+def upload_url(event, pathPara, queryPara):
+    token = event["body"]["token"]
+    recordings = database.get_all_join_field_by_field(Recording, Account,
+                                                      Account.EXPLICIT_ID, Recording.EXPLICIT_ACCOUNT_ID,
+                                                      Account.TOKEN, token)
+    return json_payload(Hardware.list_object_to_dict_list(recordings))
+
+
 @api.handle("/file/upload-url/{key}")
 def upload_url(event, pathPara, queryPara):
     response = pre_signed_url_post(BUCKET, pathPara["key"], 10)
@@ -647,20 +658,38 @@ def download_url(event, pathPara, queryPara):
 
 
 if __name__ == "__main__":
-
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
     max = database.get_max_id(Notification)
+    # event = {
+    #     "resource": "/file/{key}/upload-url",
+    #     "httpMethod": "POST",
+    #     "body": """{
+    #         "username": "tun05036@temple.edu",
+    #         "password": "password",
+    #         "email": "default@temple.edu",
+    #         "code": "658186"
+    #     }""",
+    #     "pathParameters": {
+    #         "key": "sample.txt"
+    #     },
+    #     "queryStringParameters": {
+    #         "notification_type": 10
+    #     }
+    # }
+    # print(lambda_handler(event, None))
+
     event = {
-        "resource": "/file/{key}/upload-url",
-        "httpMethod": "POST",
+        "resource": "/file",
+        "httpMethod": "GET",
         "body": """{
             "username": "tun05036@temple.edu",
             "password": "password",
             "email": "default@temple.edu",
-            "code": "658186"
+            "code": "658186",
+            "token": "c0d12f97a5989f6852603badff33ceb6"
         }""",
         "pathParameters": {
-            "key": "sample.txt"
+            "token": "c0d12f97a5989f6852603badff33ceb6"
         },
         "queryStringParameters": {
             "notification_type": 10
