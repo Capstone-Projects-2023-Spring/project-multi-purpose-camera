@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
+import com.example.layout_version.Library.Library;
 
 //import org.opencv.highgui.HighGui;
 
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
         {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (MainActivity.this,Library.class);
+                Intent intent = new Intent (MainActivity.this, Library.class);
                 startActivity(intent);
             }
         });

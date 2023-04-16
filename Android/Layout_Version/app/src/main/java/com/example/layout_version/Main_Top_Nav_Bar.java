@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.layout_version.Library.Library;
 
 public class Main_Top_Nav_Bar extends AppCompatActivity {
 
@@ -37,7 +38,7 @@ public class Main_Top_Nav_Bar extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (Main_Top_Nav_Bar.this,Library.class);
+                Intent intent = new Intent (Main_Top_Nav_Bar.this, Library.class);
                 startActivity(intent);
                 System.out.println("--------Entering library");
             }
