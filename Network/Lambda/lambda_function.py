@@ -170,7 +170,7 @@ def home(event, pathPara, queryPara):
     }
 
 
-@api.handle("/", httpMethod="POST")
+@api.handle("/", httpMethod=MPC_API.POST)
 def home(event, pathPara, queryPara):
     """Handles Query events using the json libraries and returns a labeled array"""
 
@@ -187,7 +187,7 @@ def accounts_request(event, pathPara, queryPara):
     return get_all(Account)
 
 
-@api.handle("/account/signup", httpMethod="POST")
+@api.handle("/account/signup", httpMethod=MPC_API.POST)
 def account_signup(event, pathPara, queryPara):
     """Handles new accounts from users and makes sure user information is in the correct format"""
     body = event["body"]
@@ -207,7 +207,7 @@ def account_signup(event, pathPara, queryPara):
     return json_payload({"message": "\n".join(error)}, True)
 
 
-@api.handle("/account/signin", httpMethod="POST")
+@api.handle("/account/signin", httpMethod=MPC_API.POST)
 def account_signin(event, pathPara, queryPara):
     """Handles users signing into their account by verifying their username and password in the database"""
     body: dict = event["body"]
@@ -234,7 +234,7 @@ def account_signin(event, pathPara, queryPara):
                          Account.TOKEN: account.token, Account.NAME: account.username, Account.EMAIL: account.email})
 
 
-@api.handle("/account/reset", httpMethod="POST")
+@api.handle("/account/reset", httpMethod=MPC_API.POST)
 def account_signin(event, pathPara, queryPara):
     """Handles users reset their account by verifying their username in the database"""
     body: dict = event["body"]
@@ -258,7 +258,7 @@ def account_signin(event, pathPara, queryPara):
         return json_payload({"message": "Failed to send code"})
 
 
-@api.handle("/account/code", httpMethod="POST")
+@api.handle("/account/code", httpMethod=MPC_API.POST)
 def account_signin(event, pathPara, queryPara):
     """Handles users reset their account by verifying their username in the database"""
     body: dict = event["body"]
@@ -286,7 +286,7 @@ def account_signin(event, pathPara, queryPara):
     return json_payload({"message": Error.INCORRECT_CODE}, True)
 
 
-@api.handle("/account/password", httpMethod="POST")
+@api.handle("/account/password", httpMethod=MPC_API.POST)
 def account_signin(event, pathPara, queryPara):
     """Handles users reset their account by verifying their username in the database"""
     body: dict = event["body"]
@@ -318,7 +318,7 @@ def account_signin(event, pathPara, queryPara):
     return json_payload({"message": "Password reset successful", Account.TOKEN: token})
 
 
-@api.handle("/account", httpMethod="POST")
+@api.handle("/account", httpMethod=MPC_API.POST)
 def account_insert(event, pathPara, queryPara):
     """Inserts new row into the account table which represents a new user"""
     account: Account = Account(queryPara["username"], queryPara["password"], queryPara["email"], "C")
@@ -339,7 +339,7 @@ def hardware_request(event, pathPara, queryPara):
     return get_all(Hardware)
 
 
-@api.handle("/hardware", httpMethod="POST")
+@api.handle("/hardware", httpMethod=MPC_API.POST)
 def hardware_insert(event, pathPara, queryPara):
     """Inserts new rows into the hardware table based on account id"""
     if "account_id" in queryPara:
@@ -357,13 +357,13 @@ def hardware_request_by_id(event, pathPara, queryPara):
     return get_by_id(Hardware, pathPara)
 
 
-@api.handle("/hardware/{id}", httpMethod="DELETE")
+@api.handle("/hardware/{id}", httpMethod=MPC_API.POST)
 def hardware_delete_by_id(event, pathPara, queryPara):
     """Deletes rows from the hardware table of the specified id"""
     return delete_by_id(Hardware, pathPara)
 
 
-@api.handle("/hardware/{id}", httpMethod="PUT")
+@api.handle("/hardware/{id}", httpMethod=MPC_API.POST)
 def hardware_update_by_id(event, pathPara, queryPara):
     """Updates the hardware table based on the specified id"""
     return update_by_id(Hardware, pathPara, queryPara)
@@ -386,7 +386,7 @@ def recordings_request(event, pathPara, queryPara):
     return json_payload(dict_list)
 
 
-@api.handle("/recording", httpMethod="POST")
+@api.handle("/recording", httpMethod=MPC_API.POST)
 def recording_insert(event, pathPara, queryPara):
     """Inserts a recording into the database of the specified account id"""
     recording = Recording(queryPara["file_name"], "CURDATE()", "NOW()",
@@ -413,13 +413,13 @@ def recording_request_by_id(event, pathPara, queryPara):
     return json_payload(body)
 
 
-@api.handle("/recording/{id}", httpMethod="DELETE")
+@api.handle("/recording/{id}", httpMethod=MPC_API.POST)
 def recording_delete_by_id(event, pathPara, queryPara):
     """Deletes recording from table based on specified id"""
     return delete_by_id(Recording, pathPara)
 
 
-@api.handle("/recording/{id}", httpMethod="PUT")
+@api.handle("/recording/{id}", httpMethod=MPC_API.POST)
 def recording_update_by_id(event, pathPara, queryPara):
     """Updates recording table based on specified id"""
     return update_by_id(Recording, pathPara, queryPara)
@@ -431,7 +431,7 @@ def criteria_request(event, pathPara, queryPara):
     return get_all(Criteria)
 
 
-@api.handle("/criteria", httpMethod="POST")
+@api.handle("/criteria", httpMethod=MPC_API.POST)
 def criteria_insert(event, pathPara, queryPara):
     """Inserts new rows into the criteria table"""
     criteria = Criteria(queryPara["criteria_type"], queryPara["magnitude"], queryPara["duration"])
@@ -445,13 +445,13 @@ def criteria_request_by_id(event, pathPara, queryPara):
     return get_by_id(Criteria, pathPara)
 
 
-@api.handle("/criteria/{id}", httpMethod="DELETE")
+@api.handle("/criteria/{id}", httpMethod=MPC_API.POST)
 def criteria_delete_by_id(event, pathPara, queryPara):
     """Deletes rows from the criteria table based on the specified id"""
     return delete_by_id(Criteria, pathPara)
 
 
-@api.handle("/criteria/{id}", httpMethod="PUT")
+@api.handle("/criteria/{id}", httpMethod=MPC_API.POST)
 def criteria_update_by_id(event, pathPara, queryPara):
     """Updates the criteria table rows based on the specified id"""
     return update_by_id(Criteria, pathPara, queryPara)
@@ -469,7 +469,7 @@ def notification_request(event, pathPara, queryPara):
     return json_payload(dict_list)
 
 
-@api.handle("/notification", httpMethod="POST")
+@api.handle("/notification", httpMethod=MPC_API.POST)
 def notification_insert(event, pathPara, queryPara):
     """Inserts rows into the notification table"""
     notification = Notification(queryPara[Notification.TYPE], queryPara[Notification.CRITERIA_ID])
@@ -494,19 +494,19 @@ def notification_request_by_id(event, pathPara, queryPara):
     return json_payload(body)
 
 
-@api.handle("/notification/{id}", httpMethod="DELETE")
+@api.handle("/notification/{id}", httpMethod=MPC_API.POST)
 def notification_delete_by_id(event, pathPara, queryPara):
     """Deletes notification from the table based on specified id"""
     return delete_by_id(Notification, pathPara)
 
 
-@api.handle("/notification/{id}", httpMethod="PUT")
+@api.handle("/notification/{id}", httpMethod=MPC_API.POST)
 def notification_update_by_id(event, pathPara, queryPara):
     """Updates notification table with new information"""
     return update_by_id(Notification, pathPara, queryPara)
 
 
-@api.handle("/notification/{id}/add/{hardware_id}", httpMethod="POST")
+@api.handle("/notification/{id}/add/{hardware_id}", httpMethod=MPC_API.POST)
 def notification_insert_hardware(event, pathPara, queryPara):
     """Adds new notification into the into the system from a hardware component"""
     hardware_notification = Hardware_has_Notification(pathPara[Hardware_has_Notification.HARDWARE_ID], pathPara["id"])
@@ -524,7 +524,7 @@ def notification_hardware_request(event, pathPara, queryPara):
     return json_payload(Hardware.list_object_to_dict_list(data))
 
 
-@api.handle("/notification/{id}/hardware/{hardware_id}", httpMethod="DELETE")
+@api.handle("/notification/{id}/hardware/{hardware_id}", httpMethod=MPC_API.POST)
 def notification_hardware_delete_by_id(event, pathPara, queryPara):
     """Deletes notification based on id"""
     return delete_by_hardware_id(Hardware_has_Notification, pathPara)
@@ -536,7 +536,7 @@ def resolution_request(event, pathPara, queryPara):
     return get_all(Resolution)
 
 
-@api.handle("/resolution", httpMethod="POST")
+@api.handle("/resolution", httpMethod=MPC_API.POST)
 def resolution_insert(event, pathPara, queryPara):
     """Inserts new rows into the resolution table"""
     resolution = Resolution(queryPara[Resolution.NAME], queryPara[Resolution.WIDTH], queryPara[Resolution.HEIGHT])
@@ -550,13 +550,13 @@ def resolution_request_by_name(event, pathPara, queryPara):
     return get_by_name(Resolution, pathPara)
 
 
-@api.handle("/resolution/{name}", httpMethod="DELETE")
+@api.handle("/resolution/{name}", httpMethod=MPC_API.POST)
 def resolution_delete_by_id(event, pathPara, queryPara):
     """Deletes rows from Resolution table based on id"""
     return delete_by_name(Resolution, pathPara)
 
 
-@api.handle("/resolution/{name}", httpMethod="PUT")
+@api.handle("/resolution/{name}", httpMethod=MPC_API.POST)
 def resolution_update_by_id(event, pathPara, queryPara):
     """Updates the resolution table based on specified id"""
     return update_by_id(Notification, pathPara, queryPara)
@@ -574,7 +574,7 @@ def saving_policy_request(event, pathPara, queryPara):
     return json_payload(dict_list)
 
 
-@api.handle("/saving_policy", httpMethod="POST")
+@api.handle("/saving_policy", httpMethod=MPC_API.POST)
 def saving_policy_insert(event, pathPara, queryPara):
     """Inserts new saving policy into saving_policy table"""
     saving_policy = Saving_Policy(queryPara[Saving_Policy.MAX_TIME], queryPara[Saving_Policy.RESOLUTION_NAME])
@@ -594,19 +594,19 @@ def saving_policy_request_by_id(event, pathPara, queryPara):
     return json_payload(body)
 
 
-@api.handle("/saving_policy/{id}", httpMethod="DELETE")
+@api.handle("/saving_policy/{id}", httpMethod=MPC_API.POST)
 def saving_policy_delete_by_id(event, pathPara, queryPara):
     """Deletes saving policy based on specified id"""
     return delete_by_id(Saving_Policy, pathPara)
 
 
-@api.handle("/saving_policy/{id}", httpMethod="PUT")
+@api.handle("/saving_policy/{id}", httpMethod=MPC_API.POST)
 def saving_policy_update_by_id(event, pathPara, queryPara):
     """Updates saving policy table based on id"""
     return update_by_id(Saving_Policy, pathPara, queryPara)
 
 
-@api.handle("/saving_policy/{id}/add/{hardware_id}", httpMethod="POST")
+@api.handle("/saving_policy/{id}/add/{hardware_id}", httpMethod=MPC_API.POST)
 def saving_policy_add_hardware(event, pathPara, queryPara):
     """Adds hardware component to the saving policy table based on hardware id"""
     saving_policy = Hardware_has_Saving_Policy(pathPara["hardware_id"], pathPara["id"])
@@ -624,25 +624,40 @@ def saving_policy_hardware_request(event, pathPara, queryPara):
     return json_payload(Hardware.list_object_to_dict_list(data))
 
 
-@api.handle("/saving_policy/{id}/hardware/{hardware_id}", httpMethod="DELETE")
+@api.handle("/saving_policy/{id}/hardware/{hardware_id}", httpMethod=MPC_API.POST)
 def saving_policy_hardware_delete_by_id(event, pathPara, queryPara):
     """Deletes saving policy based on the specified hardware id"""
     return delete_by_hardware_id(Hardware_has_Saving_Policy, pathPara)
 
 
-@api.handle("/email", httpMethod="POST")
+@api.handle("/email", httpMethod=MPC_API.POST)
 def send_email(event, pathPara, queryPara):
     request_body = event["body"]
     return EmailSender.send(request_body["ToMail"], request_body["Subject"], request_body["LetterBody"])
 
 
-@api.handle("/file")
+@api.handle("/file/all", httpMethod=MPC_API.POST)
 def upload_url(event, pathPara, queryPara):
     token = event["body"]["token"]
+    if not database.verify_field(Account, Account.TOKEN, token):
+        return json_payload({"message": "Account does not exist"})
     recordings = database.get_all_join_field_by_field(Recording, Account,
                                                       Account.EXPLICIT_ID, Recording.EXPLICIT_ACCOUNT_ID,
                                                       Account.TOKEN, token)
     return json_payload(Hardware.list_object_to_dict_list(recordings))
+
+
+# @api.handle("/file/add", httpMethod=MPC_API.POST)
+# def upload_url(event, pathPara, queryPara):
+#     id = event["body"]["token"]
+#
+#     account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
+#     recording = Recording(queryPara["file_name"], "CURDATE()", "NOW()",
+#                           account_id=account_id, hardware_id=queryPara["hardware_id"])
+#     recording.add_date_timestamp_from_query_para(queryPara)
+#     database.insert(recording)
+#     id = database.get_id_by_name(Recording, queryPara["file_name"])
+#     return json_payload({"id": id})
 
 
 @api.handle("/file/upload-url/{key}")
@@ -662,7 +677,7 @@ if __name__ == "__main__":
     max = database.get_max_id(Notification)
     # event = {
     #     "resource": "/file/{key}/upload-url",
-    #     "httpMethod": "POST",
+    #     "httpMethod": MPC_API.POST,
     #     "body": """{
     #         "username": "tun05036@temple.edu",
     #         "password": "password",
@@ -679,8 +694,8 @@ if __name__ == "__main__":
     # print(lambda_handler(event, None))
 
     event = {
-        "resource": "/file",
-        "httpMethod": "GET",
+        "resource": "/file/all",
+        "httpMethod": "POST",
         "body": """{
             "username": "tun05036@temple.edu",
             "password": "password",
