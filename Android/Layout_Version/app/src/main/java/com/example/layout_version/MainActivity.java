@@ -4,21 +4,29 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
 import com.example.layout_version.Library.Library;
 import com.example.layout_version.MainTab.LibraryFragment;
+import com.example.layout_version.MainTab.VideoState;
+import com.example.layout_version.MainTab.VideoViewModel;
 
 //import org.opencv.highgui.HighGui;
 
 
 public class MainActivity extends AppCompatActivity{
+
+    private Fragment libraryFragment;
+    private VideoViewModel videoViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +51,6 @@ public class MainActivity extends AppCompatActivity{
             throw new RuntimeException(e);
         }
 
-        LibraryFragment streamingFragment = new LibraryFragment();
-
-//        if(savedInstanceState == null)
-//        {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction()
-//                    .add(R.id.mainFragmentContainerView, streamingFragment)
-//                    .commit();
-//        }
-
-
-
         ImageView btn = findViewById(R.id.settings);
         ImageView account = findViewById(R.id.account);
         Button lib = findViewById(R.id.library);
@@ -76,12 +72,26 @@ public class MainActivity extends AppCompatActivity{
             startActivity(intent);
         });
 
+
+        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
+        if(savedInstanceState == null) {
+            Log.d("", "New state");
+            libraryFragment =LibraryFragment.newInstance("New", "Instance");
+
+            videoViewModel.setVidState(new VideoState("TitleSamplke" ,"Description"));
+            Log.e("Live Data Created ", "Live Data Hre");
+        }
+        else
+            Log.d("", "Npot New state");
+
+        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
+
         lib.setOnClickListener(view -> {
             camera.setBackgroundColor(Color.parseColor("#ffffff"));
             lib.setBackgroundColor(Color.parseColor("#c4fffd"));
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.mainFragmentContainerView, new LibraryFragment(), "LibraryFragment")
+                    .replace(R.id.mainFragmentContainerView, libraryFragment, "LibraryFragment")
                     .addToBackStack(null)
                     .commit();
         });

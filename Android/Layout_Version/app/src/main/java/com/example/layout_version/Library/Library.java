@@ -34,18 +34,10 @@ public class Library extends AppCompatActivity {
         Button view;
         ImageView account;
 
-        RecyclerView recyclerView = findViewById(R.id.videoRecyclerView);
         btn = findViewById(R.id.settings);
         account = findViewById(R.id.account);
         view = findViewById(R.id.view);
 
-
-        String[] descriptions = {"Test1", "Test2", "Test3", "Test4"};
-
-        VideoAdapter adapter = new VideoAdapter(descriptions);
-        recyclerView.setAdapter(adapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(Library.this);
-        recyclerView.setLayoutManager(layoutManager);
 
         account.setOnClickListener(view13 -> {
             startActivity(new Intent (Library.this, Account_Page.class));

@@ -5,15 +5,20 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.layout_version.Library.VideoAdapter;
 import com.example.layout_version.R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +29,7 @@ public class LibraryFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "New";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
@@ -34,6 +39,7 @@ public class LibraryFragment extends Fragment {
 
     private Context context;
     private RecyclerView videoRecyclerView;
+    private VideoViewModel videoViewModel;
 
 
     public LibraryFragment() {
@@ -65,6 +71,7 @@ public class LibraryFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
     }
 
     @Override
@@ -77,6 +84,7 @@ public class LibraryFragment extends Fragment {
         videoRecyclerView = layout.findViewById(R.id.videoRecyclerView);
         context = container.getContext();
 
+
         return layout;
     }
 
@@ -84,11 +92,21 @@ public class LibraryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String[] titles = {"Test1, Test2", "Test3"};
+        List<String> titles = new ArrayList<>(Arrays.asList("title", "title2", "title3"));
         VideoAdapter adapter = new VideoAdapter(titles);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         videoRecyclerView.setAdapter(adapter);
         videoRecyclerView.setLayoutManager(layoutManager);
 
+        videoViewModel.getVideoState().observe(getViewLifecycleOwner(), videoState -> {
+            Log.e("Erorr" ,"Entered");
+            if(videoState.getTitle() != null)
+            {
+                titles.clear();
+                titles.add((videoState.getTitle()));
+                adapter.notifyDataSetChanged();
+            }
+
+        });
     }
 }

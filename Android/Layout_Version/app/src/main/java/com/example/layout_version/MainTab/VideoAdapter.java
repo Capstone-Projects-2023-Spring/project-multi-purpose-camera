@@ -1,4 +1,4 @@
-package com.example.layout_version.Library;
+package com.example.layout_version.MainTab;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.layout_version.R;
 
+import java.util.List;
+
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 
-    private String[] localDataSet;
+    private List<String> localDataSet;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -44,7 +46,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView
      */
-    public VideoAdapter(String[] dataSet) {
+    public VideoAdapter(List<String> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -64,12 +66,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getDescriptionView().setText(localDataSet[position]);
+        viewHolder.getDescriptionView().setText(localDataSet.get(position));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return localDataSet.length;
+        return localDataSet.size();
     }
 }
