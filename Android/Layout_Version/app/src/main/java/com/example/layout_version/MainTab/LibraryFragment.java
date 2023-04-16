@@ -29,12 +29,10 @@ public class LibraryFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "New";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String FIRST_TIME = "FIRST_TIME";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Boolean mParam1;
 
 
     private Context context;
@@ -50,17 +48,15 @@ public class LibraryFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment LibraryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LibraryFragment newInstance(String param1, String param2) {
+    public static LibraryFragment newInstance(Boolean firstTime) {
         LibraryFragment fragment = new LibraryFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putBoolean(FIRST_TIME, firstTime);
         fragment.setArguments(args);
+        Log.e("", "New instance");
         return fragment;
     }
 
@@ -68,10 +64,27 @@ public class LibraryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
+            mParam1 = getArguments().getBoolean(FIRST_TIME);
+
+            if(mParam1)
+            {
+                Log.e("", "Load video list");
+                videoViewModel.setVideoList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        new VideoItem("Test1", "Des1"),
+                                        new VideoItem("Test2", "Des2"),
+                                        new VideoItem("Test3", "Des3")
+                                )
+                        )
+                );
+            }
+            else
+                Log.e("", "no loading");
+            getArguments().putBoolean(FIRST_TIME, false);
         }
-        videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
+
     }
 
     @Override
@@ -92,21 +105,13 @@ public class LibraryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<String> titles = new ArrayList<>(Arrays.asList("title", "title2", "title3"));
-        VideoAdapter adapter = new VideoAdapter(titles);
+        VideoAdapter adapter = new VideoAdapter(videoViewModel.getVideoList());
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         videoRecyclerView.setAdapter(adapter);
         videoRecyclerView.setLayoutManager(layoutManager);
 
-        videoViewModel.getVideoState().observe(getViewLifecycleOwner(), videoState -> {
-            Log.e("Erorr" ,"Entered");
-            if(videoState.getTitle() != null)
-            {
-                titles.clear();
-                titles.add((videoState.getTitle()));
-                adapter.notifyDataSetChanged();
-            }
-
+        videoViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), videoState -> {
+            adapter.notifyDataSetChanged();
         });
     }
 }

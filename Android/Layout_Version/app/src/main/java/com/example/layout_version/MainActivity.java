@@ -15,9 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
-import com.example.layout_version.Library.Library;
 import com.example.layout_version.MainTab.LibraryFragment;
-import com.example.layout_version.MainTab.VideoState;
+import com.example.layout_version.MainTab.VideoItem;
 import com.example.layout_version.MainTab.VideoViewModel;
 
 //import org.opencv.highgui.HighGui;
@@ -76,10 +75,7 @@ public class MainActivity extends AppCompatActivity{
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
         if(savedInstanceState == null) {
             Log.d("", "New state");
-            libraryFragment =LibraryFragment.newInstance("New", "Instance");
-
-            videoViewModel.setVidState(new VideoState("TitleSamplke" ,"Description"));
-            Log.e("Live Data Created ", "Live Data Hre");
+            libraryFragment =LibraryFragment.newInstance(true);
         }
         else
             Log.d("", "Npot New state");

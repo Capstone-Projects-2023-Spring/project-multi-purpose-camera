@@ -1,10 +1,10 @@
 package com.example.layout_version.MainTab;
 
-public class VideoState {
+public class VideoItem {
     private final String title;
     private final String description;
 
-    public VideoState(String title, String description) {
+    public VideoItem(String title, String description) {
         this.title = title;
         this.description = description;
     }
