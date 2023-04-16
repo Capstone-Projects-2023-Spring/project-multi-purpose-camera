@@ -79,8 +79,19 @@ public class MainActivity extends AppCompatActivity{
         lib.setOnClickListener(view -> {
             camera.setBackgroundColor(Color.parseColor("#ffffff"));
             lib.setBackgroundColor(Color.parseColor("#c4fffd"));
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.mainFragmentContainerView, new LibraryFragment(), "LibraryFragment")
+                    .addToBackStack(null)
+                    .commit();
         });
+
         camera.setOnClickListener(view -> {
+            LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
+            if (fragment != null && fragment.isVisible()) {
+                getSupportFragmentManager().popBackStack();
+            }
+
             lib.setBackgroundColor(Color.parseColor("#ffffff"));
             camera.setBackgroundColor(Color.parseColor("#c4fffd"));
         });

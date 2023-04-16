@@ -76,15 +76,15 @@
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView5"
-        android:name="com.example.layout_version.MainTab.LibraryFragment"
+        android:id="@+id/mainFragmentContainerView"
+        android:name="com.example.layout_version.MainTab.StreamingFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nav_bar_bottom"
-        tools:layout="@layout/fragment_library" />
+        tools:layout="@layout/fragment_blank" />
 
     <!--        <TextView-->
     <!--            android:id="@+id/cam_vid_clip"-->
