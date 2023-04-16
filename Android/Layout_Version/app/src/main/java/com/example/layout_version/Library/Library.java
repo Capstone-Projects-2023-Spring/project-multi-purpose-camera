@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.layout_version.Account.Account_Page;
@@ -34,41 +35,28 @@ public class Library extends AppCompatActivity {
         ImageView account;
 
         RecyclerView recyclerView = findViewById(R.id.videoRecyclerView);
-        btn = (ImageView) findViewById(R.id.settings);
-        account = (ImageView) findViewById(R.id.account);
-        view = (Button) findViewById(R.id.view);
+        btn = findViewById(R.id.settings);
+        account = findViewById(R.id.account);
+        view = findViewById(R.id.view);
 
 
         String[] descriptions = {"Test1", "Test2", "Test3", "Test4"};
 
         VideoAdapter adapter = new VideoAdapter(descriptions);
         recyclerView.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(Library.this);
+        recyclerView.setLayoutManager(layoutManager);
 
-        account.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (Library.this, Account_Page.class);
-                startActivity(intent);
-            }
+        account.setOnClickListener(view13 -> {
+            startActivity(new Intent (Library.this, Account_Page.class));
         });
 
-        btn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (Library.this, Settings.class);
-                startActivity(intent);
-            }
+        btn.setOnClickListener(view1 -> {
+            startActivity(new Intent (Library.this, Settings.class));
         });
 
-        view.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (Library.this, MainActivity.class);
-                startActivity(intent);
-            }
+        view.setOnClickListener(view12 -> {
+            startActivity( new Intent (Library.this, MainActivity.class));
         });
 
 

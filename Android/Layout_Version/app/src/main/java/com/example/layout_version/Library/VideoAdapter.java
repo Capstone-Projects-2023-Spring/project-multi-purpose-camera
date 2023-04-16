@@ -18,18 +18,24 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
      * (custom ViewHolder)
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
+        private final TextView titleView;
+        private final TextView descriptionView;
+
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
+            titleView = view.findViewById(R.id.video_description);
+            descriptionView = view.findViewById(R.id.video_description);
 
-            textView = (TextView) view.findViewById(R.id.video_description);
+        }
+        public TextView getTitleView() {
+            return titleView;
+        }
+        public TextView getDescriptionView() {
+            return descriptionView;
         }
 
-        public TextView getTextView() {
-            return textView;
-        }
     }
 
     /**
@@ -58,7 +64,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getTextView().setText(localDataSet[position]);
+        viewHolder.getDescriptionView().setText(localDataSet[position]);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
