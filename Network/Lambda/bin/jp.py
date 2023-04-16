@@ -1,4 +1,4 @@
-#!C:\Python311\python.exe
+#!c:\users\fes77\appdata\local\programs\python\python39\python.exe
 
 import sys
 import json

@@ -6,7 +6,6 @@ def send(to_mail, subject, letter_body):
 
     smtp_host = 'smtp.gmail.com'
     smtp_port = 587
-    body = json.dumps('Hello from Lambda!')
     try:
         smtp_account_id = os.environ.get('SmtpAccountID', '')
         smtp_account_pass = os.environ.get('SmtpAccountPass', '')

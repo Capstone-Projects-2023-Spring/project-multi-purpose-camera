@@ -34,7 +34,7 @@ class Hardware(Data):
         """Initializes the name, max resolution, hardware id, and account id variables"""
         self.name = name
         """name         : string<   Store the name of the hardware"""
-        self.max_resolution = max_resolution
+        self.max_resolution = str(max_resolution)
         """name         : string<   Store the name of the hardware"""
         self.hardware_id = int(hardware_id) if hardware_id is not None else None
         """hardware_id  : int<      Specify the hardware_id of the hardware (Optional)."""

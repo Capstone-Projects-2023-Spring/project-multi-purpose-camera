@@ -1,7 +1,4 @@
 
-import inspect
-
-
 class Data:
     """Manages the data from the database"""
     @staticmethod

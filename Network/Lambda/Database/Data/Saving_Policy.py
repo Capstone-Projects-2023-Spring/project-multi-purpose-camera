@@ -28,7 +28,7 @@ class Saving_Policy(Data):
     def __init__(self, max_time: int, resolution_name: str, saving_policy_id: int = None):
         self.max_time = int(max_time)
         """max_time         : string<   Store the max_time of the saving policy"""
-        self.resolution_name = resolution_name
+        self.resolution_name = str(resolution_name)
         """resolution_name  : string<   Store the resolution_name of the saving policy"""
         self.saving_policy_id = int(saving_policy_id) if saving_policy_id is not None else None
         """saving_policy_id : int<      Store the saving_policy_id of the saving policy."""
