@@ -7,11 +7,60 @@
     android:layout_height="match_parent"
     tools:context=".MainTab.StreamingFragment">
 
-    <com.amazonaws.ivs.player.PlayerView
-        android:id="@+id/streamingPlayerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/statusIcon"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/online_icon"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Online"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="409dp"
+        android:layout_height="607dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+        <com.amazonaws.ivs.player.PlayerView
+            android:id="@+id/streamingPlayerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </com.amazonaws.ivs.player.PlayerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
