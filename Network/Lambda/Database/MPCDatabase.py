@@ -680,30 +680,28 @@ class MPCDatabase:
                                       [MatchItem(table_class.NOTIFICATION_ID, notification_id)])
         return [v[table_class.HARDWARE_ID] for v in payload["data"]]
 
-    def get_all_by_join_id(self, table_class, join_table_class, join_field: str, match_field: str, match_id: int):
+    def get_all_join_field_by_field(self, table_class, join_table_class, join_field1: str, join_field2: str, match_field: str, match_value: str):
         """
             Execute query to get the all hardware ids of objects related to the given notification_id in the table
 
             Parameters:
                 >table_class        : class<    : Class that represents the DB table
                 >join_table_class   : string<   : name of table that will be joined to the table
-                >join_field         : string<   : The name of field that the tables will be joined on
+                >join_field1        : string<   : The name of field that the tables will be joined on
+                >join_field2        : string<   : The name of field that the tables will be joined on
                 >match_field        : string<   : The name of field that the tables will be matched with
-                >match_id           : int<      : ID that the match field will be matched to
+                >match_value        : int<      : Value that the match field will be matched to
 
             Returns:
                 >list[object]<      : Objects found in DB
         """
-        match_id = int(match_id)
-        if join_field[:len("EXPLICIT")] != "EXPLICIT":
-            raise ValueError("join_field should be explicit name")
         payload = self.select_payload(
             table_class.TABLE, table_class.EXPLICIT_COLUMNS,
-            match_list=[MatchItem(join_table_class.__dict__[match_field], match_id)],
-            join_list=[JoinItem(JoinItem.INNER, join_table_class.TABLE, table_class.__dict__[join_field],
-                                join_table_class.__dict__[join_field])])["data"]
+            match_list=[MatchItem(match_field, match_value)],
+            join_list=[JoinItem(JoinItem.INNER, join_table_class.TABLE, join_field1, join_field2)])["data"]
 
         return table_class.list_dict_to_object_list(payload, explicit=True)
+
 
     def update_fields(self, table_class, condition_tuple: tuple[str, str], update_list: list[tuple[str, str]]):
         """
