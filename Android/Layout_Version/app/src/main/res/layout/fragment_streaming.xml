@@ -7,12 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".MainTab.StreamingFragment">
 
-    <ImageView
-        android:id="@+id/livestreamImageView"
+    <com.amazonaws.ivs.player.PlayerView
+        android:id="@+id/streamingPlayerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#402C2C"
-        app:layout_constraintStart_toStartOf="@+id/nav_bar_top"
-        app:layout_constraintTop_toTopOf="@+id/nav_bar_top"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
