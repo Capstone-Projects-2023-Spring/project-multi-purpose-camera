@@ -207,6 +207,19 @@ def account_signup(event, pathPara, queryPara):
     return json_payload({"message": "\n".join(error)}, True)
 
 
+@api.handle("/account/profile", httpMethod=MPC_API.POST)
+def account_signup(event, pathPara, queryPara):
+    """Handles get user information request from users and makes sure user information is in the correct format"""
+    body = event["body"]
+    if not database.verify_field(Account, Account.TOKEN, body[Account.TOKEN]):
+        json_payload({"message": Error.UNKNOWN_ACCOUNT}, True)
+
+    account: Account = database.get_by_field(Account, Account.TOKEN, body[Account.TOKEN])
+    return json_payload({"message": "Account found", Account.NAME: account.username,
+                         Account.EMAIL: account.email,
+                         Account.STATUS: account.status})
+
+
 @api.handle("/account/signin", httpMethod=MPC_API.POST)
 def account_signin(event, pathPara, queryPara):
     """Handles users signing into their account by verifying their username and password in the database"""

@@ -156,6 +156,11 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
     public void changed(String token) {
         Log.e("", "Token changed");
         videoViewModel.setToken(token);
+        if(token == null)
+        {
+            videoViewModel.videoListUpdated();
+            return;
+        }
         JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("token", token);

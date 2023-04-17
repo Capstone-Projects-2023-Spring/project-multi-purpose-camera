@@ -76,6 +76,8 @@ public class Account {
         email = null;
         token = null;
         status = null;
+        if(tokenChangeInterface != null)
+            tokenChangeInterface.changed(token);
     }
 
     public void profile(Context context, AccountActionInterface success, AccountActionInterface fail)
