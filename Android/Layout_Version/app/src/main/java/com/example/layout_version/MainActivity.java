@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.layout_version.Account.Account;
@@ -19,6 +20,7 @@ import com.example.layout_version.Account.NetworkRequestManager;
 import com.example.layout_version.Account.TokenChangeInterface;
 import com.example.layout_version.MainTab.LibraryFragment;
 import com.example.layout_version.MainTab.LibraryFragmentInterface;
+import com.example.layout_version.MainTab.VideoDetailFragment;
 import com.example.layout_version.MainTab.VideoItem;
 import com.example.layout_version.MainTab.VideoViewModel;
 
@@ -97,12 +99,21 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
 
         lib.setOnClickListener(view -> {
+            LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
+            if (fragment != null && fragment.isVisible()) {
+                return;
+            }
+            VideoDetailFragment videoDetailFragment = (VideoDetailFragment)getSupportFragmentManager().findFragmentByTag("VideoDetailFragment");
+            if (videoDetailFragment != null && videoDetailFragment.isVisible()) {
+                getSupportFragmentManager().popBackStack();
+                return;
+            }
             camera.setBackgroundColor(Color.parseColor("#ffffff"));
             lib.setBackgroundColor(Color.parseColor("#c4fffd"));
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.mainFragmentContainerView, libraryFragment, "LibraryFragment")
-                    .addToBackStack(null)
+                    .addToBackStack("LibraryFragment")
                     .commit();
         });
 
@@ -110,6 +121,10 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
             LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
             if (fragment != null && fragment.isVisible()) {
                 getSupportFragmentManager().popBackStack();
+            }
+            VideoDetailFragment videoDetailFragment = (VideoDetailFragment)getSupportFragmentManager().findFragmentByTag("VideoDetailFragment");
+            if (videoDetailFragment != null && videoDetailFragment.isVisible()) {
+                getSupportFragmentManager().popBackStack("LibraryFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
 
             lib.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -158,7 +173,11 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
 
     @Override
     public void videoSelected() {
-
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainFragmentContainerView, new VideoDetailFragment(), "VideoDetailFragment")
+                .setReorderingAllowed(true)
+                .addToBackStack(null)
+                .commit();
     }
 
 
