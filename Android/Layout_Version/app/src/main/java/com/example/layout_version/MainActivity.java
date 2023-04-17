@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
     private Fragment libraryFragment;
     private VideoViewModel videoViewModel;
     private Account account;
+    private Button libraryTabButton;
+    private Button cameraTabButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
 
         ImageView btn = findViewById(R.id.settings);
         ImageView accountImageView = findViewById(R.id.account);
-        Button lib = findViewById(R.id.library);
-        Button camera = findViewById(R.id.view);
+        libraryTabButton = findViewById(R.id.library);
+        cameraTabButton = findViewById(R.id.view);
 
         btn.setOnClickListener(view -> {
             Intent intent = new Intent (MainActivity.this,Settings.class);
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
 
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
 
-        lib.setOnClickListener(view -> {
+        libraryTabButton.setOnClickListener(view -> {
             LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
             if (fragment != null && fragment.isVisible()) {
                 return;
@@ -108,8 +110,8 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
                 getSupportFragmentManager().popBackStack();
                 return;
             }
-            camera.setBackgroundColor(Color.parseColor("#ffffff"));
-            lib.setBackgroundColor(Color.parseColor("#c4fffd"));
+            cameraTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
+            libraryTabButton.setBackgroundColor(Color.parseColor("#c4fffd"));
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.mainFragmentContainerView, libraryFragment, "LibraryFragment")
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
                     .commit();
         });
 
-        camera.setOnClickListener(view -> {
+        cameraTabButton.setOnClickListener(view -> {
             LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
             if (fragment != null && fragment.isVisible()) {
                 getSupportFragmentManager().popBackStack();
@@ -127,9 +129,27 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
                 getSupportFragmentManager().popBackStack("LibraryFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
 
-            lib.setBackgroundColor(Color.parseColor("#ffffff"));
-            camera.setBackgroundColor(Color.parseColor("#c4fffd"));
+            libraryTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
+            cameraTabButton.setBackgroundColor(Color.parseColor("#c4fffd"));
         });
+    }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
+        VideoDetailFragment videoDetailFragment = (VideoDetailFragment)getSupportFragmentManager().findFragmentByTag("VideoDetailFragment");
+        if (fragment != null && fragment.isVisible() ||
+                videoDetailFragment != null && videoDetailFragment.isVisible()) {
+            libraryTabButton.setBackgroundColor(Color.parseColor("#c4fffd"));
+            cameraTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+        else{
+            libraryTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
+            cameraTabButton.setBackgroundColor(Color.parseColor("#c4fffd"));
+        }
+
+
     }
 
     @Override
