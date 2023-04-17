@@ -1,0 +1,68 @@
+# 2023-04-12T20:39:26.209Z:
+test_suite_meta_data {
+  scheduled_test_case_count: 1
+}
+test_status: PASSED
+test_result {
+  test_case {
+    test_class: "ExampleInstrumentedTest"
+    test_package: "com.example.layout_version"
+    test_method: "useAppContext"
+    start_time {
+      seconds: 1681331964
+      nanos: 309000000
+    }
+    end_time {
+      seconds: 1681331965
+      nanos: 49000000
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\app\\build\\outputs\\androidTest-results\\connected\\Pixel_2_API_30_3(AVD) - 11\\logcat-com.example.layout_version.ExampleInstrumentedTest-useAppContext.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\app\\build\\outputs\\androidTest-results\\connected\\Pixel_2_API_30_3(AVD) - 11\\device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\app\\build\\outputs\\androidTest-results\\connected\\Pixel_2_API_30_3(AVD) - 11\\meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\app\\build\\outputs\\androidTest-results\\connected\\Pixel_2_API_30_3(AVD) - 11\\cpuinfo"
+    }
+  }
+}
+output_artifact {
+  label {
+    label: "test-results.log"
+    namespace: "com.google.testing.platform.runtime.android.driver.AndroidInstrumentationDriver"
+  }
+  source_path {
+    path: "C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\app\\build\\outputs\\androidTest-results\\connected\\Pixel_2_API_30_3(AVD) - 11\\testlog\\test-results.log"
+  }
+  type: TEST_DATA
+  mime_type: "text/plain"
+}

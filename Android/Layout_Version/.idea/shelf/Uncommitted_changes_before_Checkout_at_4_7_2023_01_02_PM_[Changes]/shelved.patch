@@ -1,0 +1,302 @@
+Index: openCV/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Thu Apr 06 20:06:06 EDT 2023\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/openCV/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties b/openCV/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+--- a/openCV/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties	
++++ b/openCV/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties	
+@@ -1,1 +1,1 @@
+-#Thu Apr 06 20:06:06 EDT 2023
++#Fri Apr 07 11:39:52 EDT 2023
+Index: openCV/build/intermediates/cxx/ndk_locator_record_6y3rj5u2.log
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[\r\n  {\r\n    \"level_\": 0,\r\n    \"message_\": \"android.ndkVersion from module build.gradle is [not set]\",\r\n    \"file_\": \"\",\r\n    \"tag_\": \"\",\r\n    \"diagnosticCode_\": 0,\r\n    \"memoizedIsInitialized\": 1,\r\n    \"unknownFields\": {\r\n      \"fields\": {},\r\n      \"fieldsDescending\": {}\r\n    },\r\n    \"memoizedSize\": -1,\r\n    \"memoizedHashCode\": 1053893584\r\n  },\r\n  {\r\n    \"level_\": 0,\r\n    \"message_\": \"android.ndkPath from module build.gradle is not set\",\r\n    \"file_\": \"\",\r\n    \"tag_\": \"\",\r\n    \"diagnosticCode_\": 0,\r\n    \"memoizedIsInitialized\": 1,\r\n    \"unknownFields\": {\r\n      \"fields\": {},\r\n      \"fieldsDescending\": {}\r\n    },\r\n    \"memoizedSize\": -1,\r\n    \"memoizedHashCode\": 1846081687\r\n  },\r\n  {\r\n    \"level_\": 0,\r\n    \"message_\": \"ndk.dir in local.properties is not set\",\r\n    \"file_\": \"\",\r\n    \"tag_\": \"\",\r\n    \"diagnosticCode_\": 0,\r\n    \"memoizedIsInitialized\": 1,\r\n    \"unknownFields\": {\r\n      \"fields\": {},\r\n      \"fieldsDescending\": {}\r\n    },\r\n    \"memoizedSize\": -1,\r\n    \"memoizedHashCode\": -1744424416\r\n  },\r\n  {\r\n    \"level_\": 0,\r\n    \"message_\": \"Not considering ANDROID_NDK_HOME because support was removed after deprecation period.\",\r\n    \"file_\": \"\",\r\n    \"tag_\": \"\",\r\n    \"diagnosticCode_\": 0,\r\n    \"memoizedIsInitialized\": 1,\r\n    \"unknownFields\": {\r\n      \"fields\": {},\r\n      \"fieldsDescending\": {}\r\n    },\r\n    \"memoizedSize\": -1,\r\n    \"memoizedHashCode\": 118389654\r\n  },\r\n  {\r\n    \"level_\": 0,\r\n    \"message_\": \"sdkFolder is C:\\\\Users\\\\jpax2\\\\AppData\\\\Local\\\\Android\\\\Sdk\",\r\n    \"file_\": \"\",\r\n    \"tag_\": \"\",\r\n    \"diagnosticCode_\": 0,\r\n    \"memoizedIsInitialized\": 1,\r\n    \"unknownFields\": {\r\n      \"fields\": {},\r\n      \"fieldsDescending\": {}\r\n    },\r\n    \"memoizedSize\": -1,\r\n    \"memoizedHashCode\": -475638917\r\n  },\r\n  {\r\n    \"level_\": 0,\r\n    \"message_\": \"Because no explicit NDK was requested, the default version [23.1.7779620] for this Android Gradle Plugin will be used\",\r\n    \"file_\": \"\",\r\n    \"tag_\": \"\",\r\n    \"diagnosticCode_\": 0,\r\n    \"memoizedIsInitialized\": 1,\r\n    \"unknownFields\": {\r\n      \"fields\": {},\r\n      \"fieldsDescending\": {}\r\n    },\r\n    \"memoizedSize\": -1,\r\n    \"memoizedHashCode\": 1052011943\r\n  }\r\n]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/openCV/build/intermediates/cxx/ndk_locator_record_6y3rj5u2.log b/openCV/build/intermediates/cxx/ndk_locator_record_6y3rj5u2.log
+--- a/openCV/build/intermediates/cxx/ndk_locator_record_6y3rj5u2.log	
++++ b/openCV/build/intermediates/cxx/ndk_locator_record_6y3rj5u2.log	
+@@ -11,7 +11,7 @@
+       "fieldsDescending": {}
+     },
+     "memoizedSize": -1,
+-    "memoizedHashCode": 1053893584
++    "memoizedHashCode": 2130151815
+   },
+   {
+     "level_": 0,
+@@ -25,7 +25,7 @@
+       "fieldsDescending": {}
+     },
+     "memoizedSize": -1,
+-    "memoizedHashCode": 1846081687
++    "memoizedHashCode": -1372627378
+   },
+   {
+     "level_": 0,
+@@ -39,7 +39,7 @@
+       "fieldsDescending": {}
+     },
+     "memoizedSize": -1,
+-    "memoizedHashCode": -1744424416
++    "memoizedHashCode": -668166185
+   },
+   {
+     "level_": 0,
+@@ -53,7 +53,7 @@
+       "fieldsDescending": {}
+     },
+     "memoizedSize": -1,
+-    "memoizedHashCode": 118389654
++    "memoizedHashCode": 1194647885
+   },
+   {
+     "level_": 0,
+@@ -67,7 +67,7 @@
+       "fieldsDescending": {}
+     },
+     "memoizedSize": -1,
+-    "memoizedHashCode": -475638917
++    "memoizedHashCode": 600619314
+   },
+   {
+     "level_": 0,
+@@ -81,6 +81,6 @@
+       "fieldsDescending": {}
+     },
+     "memoizedSize": -1,
+-    "memoizedHashCode": 1052011943
++    "memoizedHashCode": 2128270174
+   }
+ ]
+\ No newline at end of file
+Index: openCV/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>1<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n2<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n3    package=\"org.opencv\" >\r\n4\r\n5    <uses-sdk android:minSdkVersion=\"21\" />\r\n5-->C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\n6\r\n7</manifest>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/openCV/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt b/openCV/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
+--- a/openCV/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt	
++++ b/openCV/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt	
+@@ -3,6 +3,6 @@
+ 3    package="org.opencv" >
+ 4
+ 5    <uses-sdk android:minSdkVersion="21" />
+-5-->C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++5-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+ 6
+ 7</manifest>
+Index: openCV/build/outputs/logs/manifest-merger-debug-report.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>-- Merging decision tree log ---\r\nmanifest\r\nADDED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml:2:1-4:12\r\nINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml:2:1-4:12\r\nINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml:2:1-4:12\r\n\tpackage\r\n\t\tADDED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml:3:7-27\r\n\t\tINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\n\t\tINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\n\txmlns:android\r\n\t\tADDED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml:2:11-69\r\nuses-sdk\r\nINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml reason: use-sdk injection requested\r\nINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\nINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\nINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\nINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\n\tandroid:targetSdkVersion\r\n\t\tINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\n\t\tADDED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\n\t\tINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\n\tandroid:minSdkVersion\r\n\t\tINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\n\t\tADDED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\n\t\tINJECTED from C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\AndroidManifest.xml\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/openCV/build/outputs/logs/manifest-merger-debug-report.txt b/openCV/build/outputs/logs/manifest-merger-debug-report.txt
+--- a/openCV/build/outputs/logs/manifest-merger-debug-report.txt	
++++ b/openCV/build/outputs/logs/manifest-merger-debug-report.txt	
+@@ -1,25 +1,25 @@
+ -- Merging decision tree log ---
+ manifest
+-ADDED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml:2:1-4:12
+-INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml:2:1-4:12
+-INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml:2:1-4:12
++ADDED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml:2:1-4:12
++INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml:2:1-4:12
++INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml:2:1-4:12
+ 	package
+-		ADDED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml:3:7-27
+-		INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+-		INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++		ADDED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml:3:7-27
++		INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++		INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+ 	xmlns:android
+-		ADDED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml:2:11-69
++		ADDED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml:2:11-69
+ uses-sdk
+-INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml reason: use-sdk injection requested
+-INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+-INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+-INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+-INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+ 	android:targetSdkVersion
+-		INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+-		ADDED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+-		INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++		INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++		ADDED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++		INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+ 	android:minSdkVersion
+-		INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+-		ADDED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+-		INJECTED from C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++		INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++		ADDED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
++		INJECTED from C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\AndroidManifest.xml
+Index: openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/build_stdout_opencv_jni_shared.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><<<<<<< HEAD\r\nninja: Entering directory `C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\Debug\\2h115o65\\x86'\r\n[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o\r\n[2/2] Linking CXX static library libopencv_jni_shared.a\r\n=======\r\nninja: Entering directory `C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\Debug\\2h115o65\\x86'\r\nninja: no work to do.\r\n>>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/build_stdout_opencv_jni_shared.txt b/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/build_stdout_opencv_jni_shared.txt
+--- a/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/build_stdout_opencv_jni_shared.txt	
++++ b/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/build_stdout_opencv_jni_shared.txt	
+@@ -1,8 +1,2 @@
+-<<<<<<< HEAD
+-ninja: Entering directory `C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\.cxx\Debug\2h115o65\x86'
+-[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
+-[2/2] Linking CXX static library libopencv_jni_shared.a
+-=======
+ ninja: Entering directory `C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\.cxx\Debug\2h115o65\x86'
+ ninja: no work to do.
+->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
+Index: openCV/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<merger version=\"3\"><dataSet aapt-namespace=\"http://schemas.android.com/apk/res-auto\" config=\"main$Generated\" generated=\"true\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"><source path=\"C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\res\"/><source path=\"C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\build\\generated\\res\\rs\\debug\"/><source path=\"C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\build\\generated\\res\\resValues\\debug\"/></dataSet><dataSet aapt-namespace=\"http://schemas.android.com/apk/res-auto\" config=\"main\" generated-set=\"main$Generated\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"><source path=\"C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\res\"><file path=\"C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\java\\res\\values\\attrs.xml\" qualifiers=\"\"><declare-styleable name=\"CameraBridgeViewBase\">\r\n       <attr format=\"boolean\" name=\"show_fps\"/>\r\n       <attr format=\"integer\" name=\"camera_id\">\r\n          <enum name=\"any\" value=\"-1\"/>\r\n          <enum name=\"back\" value=\"99\"/>\r\n          <enum name=\"front\" value=\"98\"/>\r\n       </attr>\r\n    </declare-styleable></file></source><source path=\"C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\build\\generated\\res\\rs\\debug\"/><source path=\"C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\build\\generated\\res\\resValues\\debug\"/></dataSet><dataSet aapt-namespace=\"http://schemas.android.com/apk/res-auto\" config=\"debug$Generated\" generated=\"true\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"><source path=\"C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\src\\debug\\res\"/></dataSet><dataSet aapt-namespace=\"http://schemas.android.com/apk/res-auto\" config=\"debug\" generated-set=\"debug$Generated\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"><source path=\"C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\src\\debug\\res\"/></dataSet><dataSet aapt-namespace=\"http://schemas.android.com/apk/res-auto\" config=\"generated$Generated\" generated=\"true\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"/><dataSet aapt-namespace=\"http://schemas.android.com/apk/res-auto\" config=\"generated\" generated-set=\"generated$Generated\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"/><mergedItems><configuration qualifiers=\"\"><declare-styleable name=\"CameraBridgeViewBase\">\r\n       <attr format=\"boolean\" name=\"show_fps\"/>\r\n       <attr format=\"integer\" name=\"camera_id\">\r\n          <enum name=\"any\" value=\"-1\"/>\r\n          <enum name=\"back\" value=\"99\"/>\r\n          <enum name=\"front\" value=\"98\"/>\r\n       </attr>\r\n    </declare-styleable></configuration></mergedItems></merger>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/openCV/build/intermediates/incremental/debug/packageDebugResources/merger.xml b/openCV/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+--- a/openCV/build/intermediates/incremental/debug/packageDebugResources/merger.xml	
++++ b/openCV/build/intermediates/incremental/debug/packageDebugResources/merger.xml	
+@@ -1,12 +1,12 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\res"/><source path="C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\build\generated\res\rs\debug"/><source path="C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\res"><file path="C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\java\res\values\attrs.xml" qualifiers=""><declare-styleable name="CameraBridgeViewBase">
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\res"/><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\build\generated\res\rs\debug"/><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\res"><file path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\java\res\values\attrs.xml" qualifiers=""><declare-styleable name="CameraBridgeViewBase">
+        <attr format="boolean" name="show_fps"/>
+        <attr format="integer" name="camera_id">
+           <enum name="any" value="-1"/>
+           <enum name="back" value="99"/>
+           <enum name="front" value="98"/>
+        </attr>
+-    </declare-styleable></file></source><source path="C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\build\generated\res\rs\debug"/><source path="C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"/><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"/><mergedItems><configuration qualifiers=""><declare-styleable name="CameraBridgeViewBase">
++    </declare-styleable></file></source><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\build\generated\res\rs\debug"/><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"/><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"/><mergedItems><configuration qualifiers=""><declare-styleable name="CameraBridgeViewBase">
+        <attr format="boolean" name="show_fps"/>
+        <attr format="integer" name="camera_id">
+           <enum name="any" value="-1"/>
+Index: openCV/build/intermediates/cxx/create_cxx_tasks_21_timing.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># C/C++ build system timings\r\ncreate_cxx_tasks\r\n  create-initial-cxx-model\r\n    create-module-model 16ms\r\n    [gap of 13ms]\r\n    create-variant-model 50ms\r\n    [gap of 47ms]\r\n    create-ARMEABI_V7A-model 24ms\r\n    [gap of 11ms]\r\n    create-X86-model 10ms\r\n    [gap of 11ms]\r\n    create-module-model 15ms\r\n    [gap of 19ms]\r\n    create-ARM64_V8A-model 11ms\r\n    [gap of 20ms]\r\n  create-initial-cxx-model completed in 247ms\r\n  [gap of 33ms]\r\ncreate_cxx_tasks completed in 280ms\r\n\r\n# C/C++ build system timings\r\ncreate_cxx_tasks\r\n  create-initial-cxx-model\r\n    create-module-model 10ms\r\n    [gap of 33ms]\r\n    create-module-model 12ms\r\n    [gap of 36ms]\r\n  create-initial-cxx-model completed in 91ms\r\ncreate_cxx_tasks completed in 94ms\r\n\r\n# C/C++ build system timings\r\ncreate_cxx_tasks\r\n  create-initial-cxx-model\r\n    create-module-model 13ms\r\n    create-variant-model 16ms\r\n    create-module-model\r\n      create-cmake-model 12ms\r\n      [gap of 13ms]\r\n    create-module-model completed in 31ms\r\n    create-variant-model 18ms\r\n    create-ARMEABI_V7A-model 35ms\r\n    create-ARM64_V8A-model 11ms\r\n    create-X86-model 32ms\r\n    [gap of 68ms]\r\n  create-initial-cxx-model completed in 273ms\r\n  [gap of 10ms]\r\ncreate_cxx_tasks completed in 283ms\r\n\r\n# C/C++ build system timings\r\ncreate_cxx_tasks\r\n  create-initial-cxx-model\r\n    create-module-model 15ms\r\n    [gap of 11ms]\r\n    create-variant-model 10ms\r\n    [gap of 20ms]\r\n    create-X86-model 14ms\r\n    [gap of 11ms]\r\n    create-module-model 13ms\r\n    create-variant-model 13ms\r\n    [gap of 33ms]\r\n  create-initial-cxx-model completed in 142ms\r\n  [gap of 27ms]\r\ncreate_cxx_tasks completed in 170ms\r\n\r\n# C/C++ build system timings\r\ncreate_cxx_tasks\r\n  create-initial-cxx-model\r\n    create-module-model 19ms\r\n    create-variant-model 16ms\r\n    [gap of 17ms]\r\n    create-X86-model 28ms\r\n    create-module-model\r\n      create-cmake-model 12ms\r\n      [gap of 22ms]\r\n    create-module-model completed in 41ms\r\n    [gap of 42ms]\r\n    create-variant-model 75ms\r\n    [gap of 16ms]\r\n    create-ARM64_V8A-model 11ms\r\n    [gap of 19ms]\r\n    create-X86_64-model 10ms\r\n  create-initial-cxx-model completed in 318ms\r\ncreate_cxx_tasks completed in 321ms\r\n\r\n# C/C++ build system timings\r\ncreate_cxx_tasks\r\n  create-initial-cxx-model\r\n    create-module-model 15ms\r\n    [gap of 12ms]\r\n    create-variant-model 28ms\r\n    create-ARMEABI_V7A-model 20ms\r\n    create-ARM64_V8A-model 14ms\r\n    create-X86-model 15ms\r\n    create-X86_64-model 16ms\r\n    create-module-model\r\n      create-cmake-model 18ms\r\n      [gap of 12ms]\r\n    create-module-model completed in 39ms\r\n    [gap of 18ms]\r\n    create-variant-model 17ms\r\n    create-ARMEABI_V7A-model 14ms\r\n    create-ARM64_V8A-model 12ms\r\n    create-X86-model 22ms\r\n    create-X86_64-model 16ms\r\n  create-initial-cxx-model completed in 301ms\r\n  [gap of 26ms]\r\ncreate_cxx_tasks completed in 328ms\r\n\r\n# C/C++ build system timings\r\ncreate_cxx_tasks\r\n  create-initial-cxx-model\r\n    create-module-model\r\n      create-cmake-model 14ms\r\n      [gap of 12ms]\r\n    create-module-model completed in 35ms\r\n    create-variant-model 15ms\r\n    create-ARMEABI_V7A-model 15ms\r\n    create-ARM64_V8A-model 11ms\r\n    [gap of 15ms]\r\n    create-X86-model 12ms\r\n    [gap of 16ms]\r\n    create-X86_64-model 16ms\r\n    create-module-model 21ms\r\n    [gap of 28ms]\r\n    create-variant-model 47ms\r\n    [gap of 18ms]\r\n    create-X86-model 12ms\r\n    [gap of 19ms]\r\n    create-X86_64-model 13ms\r\n  create-initial-cxx-model completed in 306ms\r\n  [gap of 30ms]\r\ncreate_cxx_tasks completed in 337ms\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/openCV/build/intermediates/cxx/create_cxx_tasks_21_timing.txt b/openCV/build/intermediates/cxx/create_cxx_tasks_21_timing.txt
+--- a/openCV/build/intermediates/cxx/create_cxx_tasks_21_timing.txt	
++++ b/openCV/build/intermediates/cxx/create_cxx_tasks_21_timing.txt	
+@@ -130,3 +130,27 @@
+   [gap of 30ms]
+ create_cxx_tasks completed in 337ms
+ 
++# C/C++ build system timings
++create_cxx_tasks
++  create-initial-cxx-model
++    create-module-model 47ms
++    [gap of 21ms]
++    create-variant-model 29ms
++    create-ARMEABI_V7A-model 15ms
++    create-ARM64_V8A-model 18ms
++    [gap of 23ms]
++    create-X86-model 53ms
++    [gap of 21ms]
++    create-module-model 14ms
++    [gap of 22ms]
++    create-variant-model 45ms
++    create-ARMEABI_V7A-model 10ms
++    [gap of 10ms]
++    create-X86-model 13ms
++    [gap of 11ms]
++    create-X86_64-model 16ms
++    [gap of 12ms]
++  create-initial-cxx-model completed in 390ms
++  [gap of 91ms]
++create_cxx_tasks completed in 482ms
++
+Index: openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/build_command_opencv_jni_shared.bat
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@echo off\r\n<<<<<<< HEAD\r\n\"C:\\\\Users\\\\admin\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\cmake\\\\3.22.1\\\\bin\\\\ninja.exe\" ^\r\n  -C ^\r\n  \"C:\\\\Users\\\\admin\\\\Documents\\\\GitHub\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\.cxx\\\\Debug\\\\2h115o65\\\\x86\" ^\r\n=======\r\n\"C:\\\\Users\\\\jpax2\\\\AppData\\\\Local\\\\Android\\\\Sdk\\\\cmake\\\\3.22.1\\\\bin\\\\ninja.exe\" ^\r\n  -C ^\r\n  \"C:\\\\Users\\\\jpax2\\\\Desktop\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\.cxx\\\\Debug\\\\2h115o65\\\\x86\" ^\r\n>>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d\r\n  opencv_jni_shared\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/build_command_opencv_jni_shared.bat b/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/build_command_opencv_jni_shared.bat
+--- a/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/build_command_opencv_jni_shared.bat	
++++ b/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/build_command_opencv_jni_shared.bat	
+@@ -1,11 +1,5 @@
+ @echo off
+-<<<<<<< HEAD
+-"C:\\Users\\admin\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe" ^
+-  -C ^
+-  "C:\\Users\\admin\\Documents\\GitHub\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\Debug\\2h115o65\\x86" ^
+-=======
+ "C:\\Users\\jpax2\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe" ^
+   -C ^
+   "C:\\Users\\jpax2\\Desktop\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\.cxx\\Debug\\2h115o65\\x86" ^
+->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
+   opencv_jni_shared
+Index: openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/metadata_generation_record.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[\r\n  {\r\n    \"level_\": 0,\r\n    \"message_\": \"Start JSON generation. Platform version: 21 min SDK version: x86\",\r\n    \"file_\": \"C:\\\\Users\\\\jpax2\\\\Desktop\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\libcxx_helper\\\\CMakeLists.txt\",\r\n    \"tag_\": \"debug|x86\",\r\n    \"diagnosticCode_\": 0,\r\n    \"memoizedIsInitialized\": 1,\r\n    \"unknownFields\": {\r\n      \"fields\": {},\r\n      \"fieldsDescending\": {}\r\n    },\r\n    \"memoizedSize\": -1,\r\n<<<<<<< HEAD\r\n    \"memoizedHashCode\": -1225730288\r\n=======\r\n    \"memoizedHashCode\": -1975366331\r\n>>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d\r\n  },\r\n  {\r\n    \"level_\": 0,\r\n    \"message_\": \"JSON \\u0027C:\\\\Users\\\\jpax2\\\\Desktop\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\.cxx\\\\Debug\\\\2h115o65\\\\x86\\\\android_gradle_build.json\\u0027 was up-to-date\",\r\n    \"file_\": \"C:\\\\Users\\\\jpax2\\\\Desktop\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\libcxx_helper\\\\CMakeLists.txt\",\r\n    \"tag_\": \"debug|x86\",\r\n    \"diagnosticCode_\": 0,\r\n    \"memoizedIsInitialized\": 1,\r\n    \"unknownFields\": {\r\n      \"fields\": {},\r\n      \"fieldsDescending\": {}\r\n    },\r\n    \"memoizedSize\": -1,\r\n<<<<<<< HEAD\r\n    \"memoizedHashCode\": 1682860294\r\n=======\r\n    \"memoizedHashCode\": 593146474\r\n>>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d\r\n  },\r\n  {\r\n    \"level_\": 0,\r\n    \"message_\": \"JSON generation completed without problems\",\r\n    \"file_\": \"C:\\\\Users\\\\jpax2\\\\Desktop\\\\project-multi-purpose-camera\\\\Android\\\\Layout_Version\\\\openCV\\\\libcxx_helper\\\\CMakeLists.txt\",\r\n    \"tag_\": \"debug|x86\",\r\n    \"diagnosticCode_\": 0,\r\n    \"memoizedIsInitialized\": 1,\r\n    \"unknownFields\": {\r\n      \"fields\": {},\r\n      \"fieldsDescending\": {}\r\n    },\r\n    \"memoizedSize\": -1,\r\n<<<<<<< HEAD\r\n    \"memoizedHashCode\": -1433841123\r\n=======\r\n    \"memoizedHashCode\": 2111490130\r\n>>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d\r\n  }\r\n]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/metadata_generation_record.json b/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/metadata_generation_record.json
+--- a/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/metadata_generation_record.json	
++++ b/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/metadata_generation_record.json	
+@@ -11,11 +11,7 @@
+       "fieldsDescending": {}
+     },
+     "memoizedSize": -1,
+-<<<<<<< HEAD
+-    "memoizedHashCode": -1225730288
+-=======
+-    "memoizedHashCode": -1975366331
+->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
++    "memoizedHashCode": -899108100
+   },
+   {
+     "level_": 0,
+@@ -29,11 +25,7 @@
+       "fieldsDescending": {}
+     },
+     "memoizedSize": -1,
+-<<<<<<< HEAD
+-    "memoizedHashCode": 1682860294
+-=======
+-    "memoizedHashCode": 593146474
+->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
++    "memoizedHashCode": 1669404705
+   },
+   {
+     "level_": 0,
+@@ -47,10 +39,6 @@
+       "fieldsDescending": {}
+     },
+     "memoizedSize": -1,
+-<<<<<<< HEAD
+-    "memoizedHashCode": -1433841123
+-=======
+-    "memoizedHashCode": 2111490130
+->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d
++    "memoizedHashCode": -1107218935
+   }
+ ]
+\ No newline at end of file
