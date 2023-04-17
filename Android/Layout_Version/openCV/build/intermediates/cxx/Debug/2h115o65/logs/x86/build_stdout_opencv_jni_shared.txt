@@ -1,0 +1,2 @@
+ninja: Entering directory `C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\.cxx\Debug\2h115o65\x86'
+ninja: no work to do.
