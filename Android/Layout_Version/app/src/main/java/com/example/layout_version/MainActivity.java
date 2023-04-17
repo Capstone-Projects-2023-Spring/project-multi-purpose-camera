@@ -16,18 +16,18 @@ import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
 import com.example.layout_version.Account.NetworkRequestManager;
-
-import com.example.layout_version.Account.NetworkInterface;
 import com.example.layout_version.Account.TokenChangeInterface;
 import com.example.layout_version.MainTab.LibraryFragment;
 import com.example.layout_version.MainTab.VideoItem;
 import com.example.layout_version.MainTab.VideoViewModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 //import org.opencv.highgui.HighGui;
 
@@ -131,15 +131,25 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         nrm.Post(R.string.file_all_endpoint, jsonObject,
                 json -> {
                     Log.e("", "Load video list");
-                    videoViewModel.setVideoList(
-                            new ArrayList<>(
-                                    Arrays.asList(
-                                            new VideoItem("Test1", "Des1"),
-                                            new VideoItem("Test2", "Des2"),
-                                            new VideoItem("Test3", "Des3")
-                                    )
-                            )
-                    );
+                    JSONArray fileArray;
+                    try {
+                        fileArray = json.getJSONArray("files");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    List<VideoItem> videos = IntStream.range(0,fileArray.length())
+                            .mapToObj(i -> {
+                                try {
+                                    JSONObject item = fileArray.getJSONObject(i);
+                                    return new VideoItem(item.get("file_name").toString(), item.get("timestamp").toString());
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            })
+                            .collect(Collectors.toList());
+
+                    videoViewModel.setVideoList(videos);
+
                     videoViewModel.videoListUpdated();
                 },
                 json -> {});

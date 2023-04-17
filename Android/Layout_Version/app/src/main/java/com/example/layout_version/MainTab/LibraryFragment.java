@@ -13,11 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.layout_version.Account.Account;
 import com.example.layout_version.R;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,14 +58,6 @@ public class LibraryFragment extends Fragment {
             videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
             mParam1 = getArguments().getBoolean(FIRST_TIME);
 
-//            if(mParam1)
-//            {
-//
-//                getArguments().putBoolean(FIRST_TIME, false);
-//            }
-//            else
-//                Log.e("", "no loading");
-
         }
 
     }
@@ -79,7 +67,7 @@ public class LibraryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-         View layout = inflater.inflate(R.layout.fragment_library, container, false);
+        View layout = inflater.inflate(R.layout.fragment_library, container, false);
 
         videoRecyclerView = layout.findViewById(R.id.videoRecyclerView);
         context = container.getContext();
