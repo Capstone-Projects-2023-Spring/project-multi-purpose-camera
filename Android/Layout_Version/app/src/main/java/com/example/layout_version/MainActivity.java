@@ -20,10 +20,14 @@ import com.example.layout_version.Account.NetworkRequestManager;
 import com.example.layout_version.Account.NetworkInterface;
 import com.example.layout_version.Account.TokenChangeInterface;
 import com.example.layout_version.MainTab.LibraryFragment;
+import com.example.layout_version.MainTab.VideoItem;
 import com.example.layout_version.MainTab.VideoViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 //import org.opencv.highgui.HighGui;
 
@@ -124,8 +128,20 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         }
 
         NetworkRequestManager nrm = new NetworkRequestManager(this);
-        nrm.Post(R.string.account_profile_endpoint, jsonObject,
-                json -> {},
+        nrm.Post(R.string.file_all_endpoint, jsonObject,
+                json -> {
+                    Log.e("", "Load video list");
+                    videoViewModel.setVideoList(
+                            new ArrayList<>(
+                                    Arrays.asList(
+                                            new VideoItem("Test1", "Des1"),
+                                            new VideoItem("Test2", "Des2"),
+                                            new VideoItem("Test3", "Des3")
+                                    )
+                            )
+                    );
+                    videoViewModel.videoListUpdated();
+                },
                 json -> {});
     }
 

@@ -62,22 +62,13 @@ public class LibraryFragment extends Fragment {
             videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
             mParam1 = getArguments().getBoolean(FIRST_TIME);
 
-            if(mParam1)
-            {
-                Log.e("", "Load video list");
-                videoViewModel.setVideoList(
-                        new ArrayList<>(
-                                Arrays.asList(
-                                        new VideoItem("Test1", "Des1"),
-                                        new VideoItem("Test2", "Des2"),
-                                        new VideoItem("Test3", "Des3")
-                                )
-                        )
-                );
-                getArguments().putBoolean(FIRST_TIME, false);
-            }
-            else
-                Log.e("", "no loading");
+//            if(mParam1)
+//            {
+//
+//                getArguments().putBoolean(FIRST_TIME, false);
+//            }
+//            else
+//                Log.e("", "no loading");
 
         }
 
@@ -106,7 +97,7 @@ public class LibraryFragment extends Fragment {
         videoRecyclerView.setAdapter(adapter);
         videoRecyclerView.setLayoutManager(layoutManager);
 
-        videoViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), videoState -> {
+        videoViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
         });
     }

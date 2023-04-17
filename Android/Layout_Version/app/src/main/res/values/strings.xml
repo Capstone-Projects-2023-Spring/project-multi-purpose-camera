@@ -9,6 +9,7 @@
     <string name="account_password_endpoint">/account/password</string>
     <string name="account_profile_endpoint">/account/profile</string>
     <string name="account_delete_endpoint">/account/delete</string>
+    <string name="file_all_endpoint">/file/all</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

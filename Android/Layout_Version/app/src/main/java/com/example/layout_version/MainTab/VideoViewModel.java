@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,6 +19,7 @@ public class VideoViewModel extends ViewModel {
     public VideoViewModel() {
         updateFlag = new MutableLiveData<>(0);
         token = new MutableLiveData<>(null);
+        videos = new ArrayList<>();
         Log.e("LiveViewModel Created", "LiveViewModel Created");
     }
 
@@ -47,7 +49,8 @@ public class VideoViewModel extends ViewModel {
 
     public void setVideoList(List<VideoItem> videos)
     {
-        this.videos = videos;
+        this.videos.clear();
+        this.videos.addAll(videos);
     }
 
 
