@@ -6,9 +6,6 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.opencv.android.Utils;
-import org.opencv.core.Mat;
-
 public class VideoViewOpencv extends View {
     private Bitmap mBitmap;
 
@@ -22,14 +19,6 @@ public class VideoViewOpencv extends View {
 
     public VideoViewOpencv(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-    }
-
-    public void setImage(Mat mat) {
-        if (mBitmap == null || mBitmap.getWidth() != mat.width() || mBitmap.getHeight() != mat.height()) {
-            mBitmap = Bitmap.createBitmap(mat.width(), mat.height(), Bitmap.Config.ARGB_8888);
-        }
-        Utils.matToBitmap(mat, mBitmap);
-        postInvalidate();
     }
 
     @Override

@@ -1,42 +1,52 @@
 package com.example.layout_version;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
-
-import android.webkit.WebSettings;
-
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
+import com.example.layout_version.Account.NetworkRequestManager;
+import com.example.layout_version.Account.TokenChangeInterface;
+import com.example.layout_version.MainTab.LibraryFragment;
+import com.example.layout_version.MainTab.VideoItem;
+import com.example.layout_version.MainTab.VideoViewModel;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 //import org.opencv.highgui.HighGui;
 
 
-public class MainActivity extends AppCompatActivity /*implements CameraBridgeViewBase.CvCameraViewListener2*/{
+public class MainActivity extends AppCompatActivity implements TokenChangeInterface {
 
-    public ConstraintLayout main_layout;
+    private Fragment libraryFragment;
+    private VideoViewModel videoViewModel;
+    private Account account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
+        account = Account.getInstance(this);
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -53,109 +63,98 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
             throw new RuntimeException(e);
         }
 
+        ImageView btn = findViewById(R.id.settings);
+        ImageView accountImageView = findViewById(R.id.account);
+        Button lib = findViewById(R.id.library);
+        Button camera = findViewById(R.id.view);
 
-        //init_camera_view();
-        ImageView btn;
-        ImageView account;
-        Button lib;
-        TextView vid;
-        WebView mWebView;
-
-        ConstraintLayout constraintLayout = findViewById(R.id.main_layout);
-        System.out.println("*******************\n\n\n" + constraintLayout);
-
-        main_layout = new ConstraintLayout(this);
-        main_layout.setLayoutParams(View_Factory.createLayoutParams(0, 0, 0, 0, -1, -1 ));
-        constraintLayout.addView(main_layout);
-
-
-        btn = (ImageView) findViewById(R.id.settings);
-        account = (ImageView) findViewById(R.id.account);
-        lib = (Button) findViewById(R.id.library);
-//        vidclip = (TextView) findViewById(R.id.cam_vid_clip);
-
-        btn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (MainActivity.this,Settings.class);
-                startActivity(intent);
-            }
+        btn.setOnClickListener(view -> {
+            Intent intent = new Intent (MainActivity.this,Settings.class);
+            startActivity(intent);
         });
 
-        account.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Account account = Account.getInstance();
-                Intent intent;
-                if(account.isSignedIn())
-                    intent = new Intent (MainActivity.this, Account_Page_Profile.class);
-                else
-                    intent = new Intent (MainActivity.this, Account_Page.class);
+        accountImageView.setOnClickListener(view -> {
 
-                startActivity(intent);
-            }
-        });
+            Intent intent;
+            if(account.isSignedIn())
+                intent = new Intent (MainActivity.this, Account_Page_Profile.class);
+            else
+                intent = new Intent (MainActivity.this, Account_Page.class);
 
-        lib.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (MainActivity.this,Library.class);
-                startActivity(intent);
-            }
+            startActivity(intent);
         });
 
 
-//        vidclip.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
-//                startActivity(intent);
-//            }
-//        });
 
-        // LIVESTREAM STUFF
-        ImageView livestream = findViewById(R.id.livestreamImageView);
-        livestream.setImageDrawable(getResources().getDrawable(R.drawable.account_setting));
-        Receiver_Client client = new Receiver_Client(livestream);
-        client.execute();
-
-        // ------------- Web Page from online and Local -------------
-        mWebView = (WebView) findViewById(R.id.video_web);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-
-        mWebView.setWebViewClient(new Callback());
-        mWebView.loadUrl("http://192.168.137.247:8082/");
-//          mWebView.loadUrl("http://192.168.87.249:5500/Display-Character.html");
-////        mWebView.loadUrl("http://44.212.17.188:9999/");
-
-        //        String targetServer = "http://10.0.2.2:9999/";
-        //        AsyncTaskRunner ad = new AsyncTaskRunner();
-        //        ad.execute(targetServer);
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-
-//        ImageView image = (ImageView) findViewById(R.id.image);
-//        Receiver_Client.yourImageView = image;
-//        AsyncTaskRunner thread = new AsyncTaskRunner();
-//        thread.execute("");
-
-
-    }
-
-    private class Callback extends WebViewClient {
-        @Override
-        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
-            return false;
+        if(savedInstanceState == null) {
+            Log.d("", "New state");
+            libraryFragment =LibraryFragment.newInstance(true);
         }
+        else
+            Log.d("", "Npot New state");
+
+        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
+
+        lib.setOnClickListener(view -> {
+            camera.setBackgroundColor(Color.parseColor("#ffffff"));
+            lib.setBackgroundColor(Color.parseColor("#c4fffd"));
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.mainFragmentContainerView, libraryFragment, "LibraryFragment")
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        camera.setOnClickListener(view -> {
+            LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
+            if (fragment != null && fragment.isVisible()) {
+                getSupportFragmentManager().popBackStack();
+            }
+
+            lib.setBackgroundColor(Color.parseColor("#ffffff"));
+            camera.setBackgroundColor(Color.parseColor("#c4fffd"));
+        });
     }
+
+    @Override
+    public void changed(String token) {
+        Log.e("", "Token changed");
+        videoViewModel.setToken(token);
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("token", token);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+
+        NetworkRequestManager nrm = new NetworkRequestManager(this);
+        nrm.Post(R.string.file_all_endpoint, jsonObject,
+                json -> {
+                    Log.e("", "Load video list");
+                    JSONArray fileArray;
+                    try {
+                        fileArray = json.getJSONArray("files");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    List<VideoItem> videos = IntStream.range(0,fileArray.length())
+                            .mapToObj(i -> {
+                                try {
+                                    JSONObject item = fileArray.getJSONObject(i);
+                                    return new VideoItem(item.get("file_name").toString(), item.get("timestamp").toString());
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            })
+                            .collect(Collectors.toList());
+
+                    videoViewModel.setVideoList(videos);
+
+                    videoViewModel.videoListUpdated();
+                },
+                json -> {});
+    }
+
 
     private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
         private Runnable task = null;
@@ -167,20 +166,6 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
             System.out.println("doing in background");
             task.run();
             return null;
-        }
-    }
-    //endregion
-    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
-        private String resp;
-        ProgressDialog progressDialog;
-        @Override
-        protected String doInBackground(String... params) {
-            System.out.println("asnc task working");
-            return resp;
-        }
-        @Override
-        protected void onPostExecute(String result) {
-            progressDialog.dismiss();
         }
     }
 
