@@ -22,7 +22,7 @@ public class ExampleUnitTest {
 
     @Test
     public void addition_isCorrect() {
-        System.out.println("starting connection");
+        System.out.println("running python code");
         //Receiver_Client client = new Receiver_Client();
         Receiver_Client.custom_run();
         //client.execute(new Object[1]);
@@ -33,6 +33,4 @@ public class ExampleUnitTest {
         ArrayList<Saving_Policy> policies = new ArrayList<>();
         Saving_Policy_Page.is_policies_valid(policies);
     }
-
-
 }

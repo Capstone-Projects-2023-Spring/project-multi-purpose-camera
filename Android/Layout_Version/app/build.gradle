@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.chaquo.python'
 }
 
 android {
@@ -13,6 +14,9 @@ android {
     }
 
     defaultConfig {
+        python{
+            version "3.8"
+        }
         applicationId "com.example.layout_version"
         minSdk 21
         targetSdk 33
@@ -21,7 +25,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
     }
 
@@ -55,6 +59,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation project(path: ':openCV')
+    implementation 'com.android.volley:volley:1.2.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

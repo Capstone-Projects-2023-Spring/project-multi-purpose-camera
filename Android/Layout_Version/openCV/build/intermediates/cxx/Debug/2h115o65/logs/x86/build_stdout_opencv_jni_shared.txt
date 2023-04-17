@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 ninja: Entering directory `C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\.cxx\Debug\2h115o65\x86'
+=======
+ninja: Entering directory `C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\.cxx\Debug\2h115o65\x86'
+>>>>>>> cb7082011e09ce1f3a32cdbe578f696b588bd88c
 ninja: no work to do.

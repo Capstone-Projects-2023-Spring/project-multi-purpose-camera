@@ -340,7 +340,7 @@ public class Database_Manager {
         }
         return parsedJson;
     }
-    public static List<Camera_Configuration> get_cameras_from_database(){
+    public static List<Camera_Configuration> get_cameras_from_database(/*int accounttoken*/){
         String result = null;
         try{
             result = sendGET(url_hardware, "");
@@ -497,11 +497,12 @@ public class Database_Manager {
         for(int i = 0; i < cameras.size(); i++){
             System.out.println("["+cameras.get(i).name + ", " + cameras.get(i).account_id +"] ");
         }
-
+        //removes cameras that dont belong to account
         for(int i = cameras.size() - 1;  i >= 0; i--){
             if(cameras.get(i).account_id != my_account)
                 cameras.remove(i);
         }
+        //removes policies that dont have my cameras
         for(int i = saving_policies.size() - 1;  i >= 0; i--){
             boolean my_list = false;
             ArrayList<Camera> cameras_of_saving = saving_policies.get(i).get_cameras();
@@ -514,6 +515,7 @@ public class Database_Manager {
             if(!my_list)
                 saving_policies.remove(i);
         }
+        //remove policies that dont have my camera
         for(int i = notification_policies.size() - 1;  i >= 0; i--){
             boolean my_list = false;
             ArrayList<Camera> cameras_of_policy = notification_policies.get(i).get_cameras();

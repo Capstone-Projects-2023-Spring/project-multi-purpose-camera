@@ -7,3 +7,13 @@
 .env.development.local
 .env.test.local
 .env.production.local
+*.bat
+*.bat
+*.txt
+Android/Layout_Version/openCV/build/intermediates/cxx/RelWithDebInfo/5s493m1i/logs/x86/metadata_generation_record.json
+Android/Layout_Version/openCV/build/kotlin/compileDebugKotlin/cacheable/last-build.bin
+Android/Layout_Version/openCV/build/kotlin/compileDebugKotlin/local-state/build-history.bin
+Android/Layout_Version/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/metadata_generation_record.json
+Android/Layout_Version/openCV/build/intermediates/cxx/Debug/2h115o65/logs/x86/metadata_generation_record.json
+*.txt
+*.json
