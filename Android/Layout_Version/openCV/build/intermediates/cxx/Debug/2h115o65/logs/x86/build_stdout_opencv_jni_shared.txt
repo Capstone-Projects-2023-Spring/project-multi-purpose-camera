@@ -1,8 +1,2 @@
-<<<<<<< HEAD
-ninja: Entering directory `C:\Users\admin\Documents\GitHub\project-multi-purpose-camera\Android\Layout_Version\openCV\.cxx\Debug\2h115o65\x86'
-[1/2] Building CXX object CMakeFiles/opencv_jni_shared.dir/dummy.cpp.o
-[2/2] Linking CXX static library libopencv_jni_shared.a
-=======
 ninja: Entering directory `C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\.cxx\Debug\2h115o65\x86'
 ninja: no work to do.
->>>>>>> 38779ed1b00830381ec6c463ccebf16f56c82c1d

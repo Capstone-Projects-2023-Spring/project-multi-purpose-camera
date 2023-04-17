@@ -10,7 +10,12 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.layout_version.Account.Account;
+import com.example.layout_version.Account.Account_Page;
+import com.example.layout_version.Account.Account_Page_Profile;
 
 
 public class Settings extends AppCompatActivity {
@@ -30,6 +35,20 @@ public class Settings extends AppCompatActivity {
         back_home_txt = (TextView) findViewById(R.id.back_home_text_setting);
 
         TextView saving_policy = (TextView) findViewById(R.id.cloud_saving_settings);
+
+        LinearLayout accountLayout = findViewById(R.id.account_layout);
+
+        accountLayout.setOnClickListener(view -> {
+            Account account = Account.getInstance();
+            Intent intent;
+            if(account.isSignedIn())
+                intent = new Intent (Settings.this, Account_Page_Profile.class);
+            else
+                intent = new Intent (Settings.this, Account_Page.class);
+
+            startActivity(intent);
+        });
+
         saving_policy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
