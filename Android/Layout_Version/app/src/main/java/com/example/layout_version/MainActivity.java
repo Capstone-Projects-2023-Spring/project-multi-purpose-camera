@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.layout_version.Account.Account;
@@ -18,6 +19,8 @@ import com.example.layout_version.Account.Account_Page_Profile;
 import com.example.layout_version.Account.NetworkRequestManager;
 import com.example.layout_version.Account.TokenChangeInterface;
 import com.example.layout_version.MainTab.LibraryFragment;
+import com.example.layout_version.MainTab.LibraryFragmentInterface;
+import com.example.layout_version.MainTab.VideoDetailFragment;
 import com.example.layout_version.MainTab.VideoItem;
 import com.example.layout_version.MainTab.VideoViewModel;
 
@@ -32,11 +35,13 @@ import java.util.stream.IntStream;
 //import org.opencv.highgui.HighGui;
 
 
-public class MainActivity extends AppCompatActivity implements TokenChangeInterface {
+public class MainActivity extends AppCompatActivity implements TokenChangeInterface, LibraryFragmentInterface {
 
     private Fragment libraryFragment;
     private VideoViewModel videoViewModel;
     private Account account;
+    private Button libraryTabButton;
+    private Button cameraTabButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
 
         ImageView btn = findViewById(R.id.settings);
         ImageView accountImageView = findViewById(R.id.account);
-        Button lib = findViewById(R.id.library);
-        Button camera = findViewById(R.id.view);
+        libraryTabButton = findViewById(R.id.library);
+        cameraTabButton = findViewById(R.id.view);
 
         btn.setOnClickListener(view -> {
             Intent intent = new Intent (MainActivity.this,Settings.class);
@@ -95,31 +100,67 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
 
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
 
-        lib.setOnClickListener(view -> {
-            camera.setBackgroundColor(Color.parseColor("#ffffff"));
-            lib.setBackgroundColor(Color.parseColor("#c4fffd"));
+        libraryTabButton.setOnClickListener(view -> {
+            LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
+            if (fragment != null && fragment.isVisible()) {
+                return;
+            }
+            VideoDetailFragment videoDetailFragment = (VideoDetailFragment)getSupportFragmentManager().findFragmentByTag("VideoDetailFragment");
+            if (videoDetailFragment != null && videoDetailFragment.isVisible()) {
+                getSupportFragmentManager().popBackStack();
+                return;
+            }
+            cameraTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
+            libraryTabButton.setBackgroundColor(Color.parseColor("#c4fffd"));
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.mainFragmentContainerView, libraryFragment, "LibraryFragment")
-                    .addToBackStack(null)
+                    .addToBackStack("LibraryFragment")
                     .commit();
         });
 
-        camera.setOnClickListener(view -> {
+        cameraTabButton.setOnClickListener(view -> {
             LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
             if (fragment != null && fragment.isVisible()) {
                 getSupportFragmentManager().popBackStack();
             }
+            VideoDetailFragment videoDetailFragment = (VideoDetailFragment)getSupportFragmentManager().findFragmentByTag("VideoDetailFragment");
+            if (videoDetailFragment != null && videoDetailFragment.isVisible()) {
+                getSupportFragmentManager().popBackStack("LibraryFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
 
-            lib.setBackgroundColor(Color.parseColor("#ffffff"));
-            camera.setBackgroundColor(Color.parseColor("#c4fffd"));
+            libraryTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
+            cameraTabButton.setBackgroundColor(Color.parseColor("#c4fffd"));
         });
+    }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
+        VideoDetailFragment videoDetailFragment = (VideoDetailFragment)getSupportFragmentManager().findFragmentByTag("VideoDetailFragment");
+        if (fragment != null && fragment.isVisible() ||
+                videoDetailFragment != null && videoDetailFragment.isVisible()) {
+            libraryTabButton.setBackgroundColor(Color.parseColor("#c4fffd"));
+            cameraTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+        else{
+            libraryTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
+            cameraTabButton.setBackgroundColor(Color.parseColor("#c4fffd"));
+        }
+
+
     }
 
     @Override
     public void changed(String token) {
         Log.e("", "Token changed");
         videoViewModel.setToken(token);
+        if(token == null)
+        {
+            videoViewModel.videoListUpdated();
+            return;
+        }
         JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("token", token);
@@ -141,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
                             .mapToObj(i -> {
                                 try {
                                     JSONObject item = fileArray.getJSONObject(i);
-                                    return new VideoItem(item.get("file_name").toString(), item.get("timestamp").toString());
+                                    return new VideoItem(item.get("file_name").toString(), item.get("timestamp").toString(), item.getString("url"));
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -153,6 +194,15 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
                     videoViewModel.videoListUpdated();
                 },
                 json -> {});
+    }
+
+    @Override
+    public void videoSelected() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainFragmentContainerView, new VideoDetailFragment(), "VideoDetailFragment")
+                .setReorderingAllowed(true)
+                .addToBackStack(null)
+                .commit();
     }
 
 

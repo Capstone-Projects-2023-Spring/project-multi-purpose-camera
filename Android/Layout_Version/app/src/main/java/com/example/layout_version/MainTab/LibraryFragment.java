@@ -13,7 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.layout_version.MainActivity;
 import com.example.layout_version.R;
+
+import java.util.function.Consumer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,8 +57,8 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
         if (getArguments() != null) {
-            videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
             mParam1 = getArguments().getBoolean(FIRST_TIME);
 
         }
@@ -80,7 +83,14 @@ public class LibraryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        VideoAdapter adapter = new VideoAdapter(videoViewModel.getVideoList());
+        Consumer<VideoItem> clickEvent = videoItem -> {
+            videoViewModel.setSelectedVideo(videoItem);
+            if(requireActivity() instanceof MainActivity)
+                ((MainActivity)requireActivity()).videoSelected();
+            Log.e("Video Item", videoItem.getTitle());
+        };
+
+        VideoAdapter adapter = new VideoAdapter(videoViewModel.getVideoList(), clickEvent);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         videoRecyclerView.setAdapter(adapter);
         videoRecyclerView.setLayoutManager(layoutManager);
@@ -88,5 +98,10 @@ public class LibraryFragment extends Fragment {
         videoViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
         });
+    }
+
+    interface LibraryFragmentInterface
+    {
+        void videoSelected();
     }
 }

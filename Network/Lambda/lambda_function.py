@@ -207,6 +207,19 @@ def account_signup(event, pathPara, queryPara):
     return json_payload({"message": "\n".join(error)}, True)
 
 
+@api.handle("/account/profile", httpMethod=MPC_API.POST)
+def account_signup(event, pathPara, queryPara):
+    """Handles get user information request from users and makes sure user information is in the correct format"""
+    body = event["body"]
+    if not database.verify_field(Account, Account.TOKEN, body[Account.TOKEN]):
+        json_payload({"message": Error.UNKNOWN_ACCOUNT}, True)
+
+    account: Account = database.get_by_field(Account, Account.TOKEN, body[Account.TOKEN])
+    return json_payload({"message": "Account found", Account.NAME: account.username,
+                         Account.EMAIL: account.email,
+                         Account.STATUS: account.status})
+
+
 @api.handle("/account/signin", httpMethod=MPC_API.POST)
 def account_signin(event, pathPara, queryPara):
     """Handles users signing into their account by verifying their username and password in the database"""
@@ -641,9 +654,11 @@ def upload_url(event, pathPara, queryPara):
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
         return json_payload({"message": "Account does not exist"})
-    recordings = database.get_all_join_field_by_field(Recording, Account,
+    recordings: list[Recording] = database.get_all_join_field_by_field(Recording, Account,
                                                       Account.EXPLICIT_ID, Recording.EXPLICIT_ACCOUNT_ID,
                                                       Account.TOKEN, token)
+    for recording in recordings:
+        recording.url = pre_signed_url_get(BUCKET, recording.file_name, 3600)
     return json_payload({
         "files": Hardware.list_object_to_dict_list(recordings)
     })
