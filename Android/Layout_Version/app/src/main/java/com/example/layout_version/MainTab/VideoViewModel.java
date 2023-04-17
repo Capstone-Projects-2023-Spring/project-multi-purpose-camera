@@ -20,7 +20,7 @@ public class VideoViewModel extends ViewModel {
         updateFlag = new MutableLiveData<>(0);
         token = new MutableLiveData<>(null);
         videos = new ArrayList<>();
-        videos.add(new VideoItem("Welcome to the Video Library", "Sign in first to view the list of videos"));
+        videos.add(new VideoItem("Welcome to the Video Library", "Sign in first to view a list of videos"));
         Log.e("LiveViewModel Created", "LiveViewModel Created");
     }
 
