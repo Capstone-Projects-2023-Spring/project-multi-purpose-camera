@@ -1,56 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="100dp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="#DA8B8B"
+        android:src="@drawable/baseline_play_arrow_48"
+        app:srcCompat="@drawable/baseline_clip_24" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <VideoView
-                android:id="@+id/saved_video"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="30dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:translationZ="1dp"
-                android:src="@drawable/baseline_play_arrow_48"
-                />
-        </FrameLayout>
+        <TextView
+            android:id="@+id/video_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textSize="25sp"
+            app:flow_wrapMode="aligned"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/video_description"
-                android:layout_width="257dp"
-                android:layout_height="19dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:text="Personal"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:translationZ="90dp" />
-            <TextView
-                android:id="@+id/timeStamp"
-                android:layout_width="257dp"
-                android:layout_height="19dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="50dp"
-                android:text="Personal"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:translationZ="90dp" />
-
-        </RelativeLayout>
-    </LinearLayout>
+        <TextView
+            android:id="@+id/video_description"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/video_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

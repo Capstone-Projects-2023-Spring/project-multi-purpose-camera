@@ -28,34 +28,46 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/Alert"
-        android:layout_width="257dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="130dp"
-        android:text="Video 1"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:translationZ="90dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <TextView
-        android:id="@+id/Date"
-        android:layout_width="257dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="200dp"
-        android:text="Personal"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:translationZ="90dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/VideoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:text="Video 1"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:translationZ="90dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center">
+        <TextView
+            android:id="@+id/Date"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="2023-04-05 19:02:10"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:translationZ="90dp"
+            />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

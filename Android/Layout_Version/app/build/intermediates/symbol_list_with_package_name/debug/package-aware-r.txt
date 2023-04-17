@@ -214,7 +214,6 @@ attr buttonStyle
 attr buttonStyleSmall
 attr buttonTint
 attr buttonTintMode
-attr camera_id
 attr cardBackgroundColor
 attr cardCornerRadius
 attr cardElevation
@@ -996,7 +995,6 @@ attr showMotionSpec
 attr showPaths
 attr showText
 attr showTitle
-attr show_fps
 attr shrinkMotionSpec
 attr sideSheetDialogTheme
 attr sideSheetModalStyle
@@ -2832,16 +2830,13 @@ drawable tooltip_frame_dark
 drawable tooltip_frame_light
 id ALT
 id Account_settings
-id Alert
 id BOTTOM_END
 id BOTTOM_START
 id CTRL
 id Date
-id EmailAddress
 id FUNCTION
 id META
 id NO_DEBUG
-id Password
 id SHIFT
 id SHOW_ALL
 id SHOW_PATH
@@ -2849,6 +2844,7 @@ id SHOW_PROGRESS
 id SYM
 id TOP_END
 id TOP_START
+id VideoTitle
 id accelerate
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
@@ -2885,6 +2881,7 @@ id accessibility_custom_action_8
 id accessibility_custom_action_9
 id account
 id account_description
+id account_layout
 id actionDown
 id actionDownUp
 id actionUp
@@ -2919,7 +2916,6 @@ id animateToEnd
 id animateToStart
 id antiClockwise
 id anticipate
-id any
 id arc
 id asConfigured
 id async
@@ -2927,7 +2923,6 @@ id auto
 id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
-id back
 id back_home_btn_camera
 id back_home_btn_setting
 id back_home_text_setting
@@ -2950,7 +2945,6 @@ id cache_measures
 id callMeasure
 id cam_vid_clip
 id cancel_button
-id captured_videos
 id carryVelocity
 id center
 id centerCrop
@@ -2960,6 +2954,7 @@ id center_vertical
 id chain
 id chain2
 id chains
+id change
 id checkbox
 id checked
 id chronometer
@@ -2971,10 +2966,12 @@ id clockwise
 id closest
 id cloud_saving_description
 id cloud_saving_settings
+id code
 id collapseActionView
 id compress
 id confirm_button
 id constraint
+id constraintLayout
 id container
 id content
 id contentPanel
@@ -2993,6 +2990,7 @@ id decelerate
 id decelerateAndComplete
 id decor_content_parent
 id default_activity_button
+id delete
 id deltaRelative
 id dependency_ordering
 id design_bottom_sheet
@@ -3027,6 +3025,7 @@ id edit_policy_scroll
 id edit_policy_time_layout
 id edit_query
 id elastic
+id emailAddress
 id embed
 id end
 id endToStart
@@ -3050,7 +3049,8 @@ id flip
 id floating
 id forever
 id fragment_container_view_tag
-id front
+id frameLayout
+id frameLayout2
 id frost
 id fullscreen_header
 id ghost_view
@@ -3074,6 +3074,7 @@ id ignore
 id ignoreRequest
 id image
 id imageView
+id imageView2
 id immediateStop
 id included
 id indeterminate
@@ -3093,10 +3094,15 @@ id library
 id line1
 id line3
 id linear
+id linearLayout2
+id linearLayout3
 id listMode
 id list_item
+id livestreamImageView
 id login
+id logout
 id m3_side_sheet
+id mainFragmentContainerView
 id main_layout
 id marquee
 id masked
@@ -3191,12 +3197,14 @@ id parent
 id parentPanel
 id parentRelative
 id parent_matrix
+id password
 id password_toggle
 id path
 id pathRelative
 id peekHeight
 id percent
 id pin
+id playButton
 id position
 id postLayout
 id pressed
@@ -3206,6 +3214,9 @@ id radio
 id ratio
 id rectangles
 id relativeLayout
+id repassword
+id resend
+id resetPassword
 id resolution_layout
 id resolution_text_view
 id reverseSawtooth
@@ -3217,7 +3228,6 @@ id rounded
 id row_index_key
 id save_non_transition_alpha
 id save_overlay_view
-id saved_video
 id saving_constraint_layout_saving_policy
 id saving_policies_container
 id saving_relative_layout
@@ -3260,6 +3270,7 @@ id search_voice_btn
 id select_dialog_listview
 id selected
 id selection_type
+id send
 id settings
 id sharedValueSet
 id sharedValueUnset
@@ -3267,6 +3278,7 @@ id shortcut
 id showCustom
 id showHome
 id showTitle
+id signup
 id sin
 id skipCollapsed
 id skipped
@@ -3302,6 +3314,7 @@ id startVertical
 id staticLayout
 id staticPostLayout
 id stop
+id stopButton
 id stretch
 id submenuarrow
 id submit_area
@@ -3329,6 +3342,7 @@ id textSpacerNoTitle
 id textStart
 id textTop
 id textView
+id textView2
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
@@ -3339,7 +3353,6 @@ id textinput_placeholder
 id textinput_prefix_text
 id textinput_suffix_text
 id time
-id timeStamp
 id time_input_text
 id title
 id titleDividerNoCustom
@@ -3361,10 +3374,14 @@ id uniform
 id unlabeled
 id up
 id useLogo
+id username
 id vertical_only
 id video
+id videoRecyclerView
+id videoTitleView
+id videoView
 id video_description
-id video_web
+id video_title
 id view
 id view2
 id view_offset_helper
@@ -3491,6 +3508,11 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout account_login_signup_page
+layout account_password
+layout account_profile
+layout account_reset
+layout account_signup_page
+layout account_verify
 layout activity_main
 layout camera
 layout camera_of_policy_template
@@ -3513,6 +3535,10 @@ layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout drawable_round_rectangle
 layout edit_policy
+layout fragment_blank
+layout fragment_library
+layout fragment_streaming
+layout fragment_video_detail
 layout library
 layout library_videos
 layout library_videos_page
@@ -3614,6 +3640,13 @@ string abc_searchview_description_voice
 string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
+string account_code_endpoint
+string account_delete_endpoint
+string account_password_endpoint
+string account_profile_endpoint
+string account_reset_endpoint
+string account_signin_endpoint
+string account_signup_endpoint
 string androidx_startup
 string app_name
 string appbar_scrolling_view_behavior
@@ -3627,11 +3660,15 @@ string character_counter_content_description
 string character_counter_overflowed_content_description
 string character_counter_pattern
 string clear_text_end_icon_content_description
+string db_base_url
+string db_stage
 string error_a11y_label
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
+string file_all_endpoint
+string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string item_view_role_description
@@ -4861,7 +4898,6 @@ styleable BottomAppBar addElevationShadow backgroundTint elevation fabAlignmentM
 styleable BottomNavigationView android_minHeight compatShadowEnabled itemHorizontalTranslationEnabled
 styleable BottomSheetBehavior_Layout android_maxWidth android_maxHeight android_elevation backgroundTint behavior_draggable behavior_expandedOffset behavior_fitToContents behavior_halfExpandedRatio behavior_hideable behavior_peekHeight behavior_saveFlags behavior_significantVelocityThreshold behavior_skipCollapsed gestureInsetBottomIgnored marginLeftSystemWindowInsets marginRightSystemWindowInsets marginTopSystemWindowInsets paddingBottomSystemWindowInsets paddingLeftSystemWindowInsets paddingRightSystemWindowInsets paddingTopSystemWindowInsets shapeAppearance shapeAppearanceOverlay shouldRemoveExpandedCorners
 styleable ButtonBarLayout allowStacking
-styleable CameraBridgeViewBase camera_id show_fps
 styleable Capability queryPatterns shortcutMatchRequired
 styleable CardView android_minWidth android_minHeight cardBackgroundColor cardCornerRadius cardElevation cardMaxElevation cardPreventCornerOverlap cardUseCompatPadding contentPadding contentPaddingBottom contentPaddingLeft contentPaddingRight contentPaddingTop
 styleable Carousel carousel_backwardTransition carousel_emptyViewsBehavior carousel_firstView carousel_forwardTransition carousel_infinite carousel_nextState carousel_previousState carousel_touchUpMode carousel_touchUp_dampeningFactor carousel_touchUp_velocityThreshold

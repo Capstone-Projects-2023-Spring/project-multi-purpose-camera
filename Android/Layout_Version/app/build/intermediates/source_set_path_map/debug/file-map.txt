@@ -31,4 +31,3 @@ com.example.layout_version.app-merged_res-29 C:\Users\jpax2\Desktop\project-mult
 com.example.layout_version.app-debug-30 C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\debug\res
 com.example.layout_version.app-main-31 C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\res
 com.example.layout_version.app-res-32 C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\res\2
-com.example.layout_version.app-packaged_res-33 C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\build\intermediates\packaged_res\debug
