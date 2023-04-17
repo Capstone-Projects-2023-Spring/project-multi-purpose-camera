@@ -1,13 +1,23 @@
 package com.example.layout_version.Account;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.layout_version.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 
 interface AccountActionInterface
 {
@@ -16,6 +26,7 @@ interface AccountActionInterface
 
 public class Account {
     private static Account single_instance = null;
+
     private String username;
     private String email;
     private String token;
@@ -23,13 +34,8 @@ public class Account {
     private String code;
 
     private String status;
-    private TokenChangeInterface tokenChangeInterface;
 
     private Account(){}
-
-    private Account(TokenChangeInterface tokenChangeInterface){
-        this.tokenChangeInterface = tokenChangeInterface;
-    }
 
     public void setUsername(String username)
     {
@@ -44,8 +50,6 @@ public class Account {
     public void setToken(String token)
     {
         this.token = token;
-        if(tokenChangeInterface != null)
-            tokenChangeInterface.changed(token);
     }
 
     public void setCode(String code)
@@ -132,6 +136,8 @@ public class Account {
         nrm.Post(R.string.account_signup_endpoint, jsonBody,
                 json -> {
                     try {
+//                        this.setUsername(jsonBody.get("username").toString());
+//                        this.setEmail(jsonBody.get("email").toString());
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
                         success.action(this);
                     } catch (JSONException e) {
@@ -327,13 +333,6 @@ public class Account {
         if (single_instance == null)
             single_instance = new Account();
 
-        return single_instance;
-    }
-
-    public static synchronized Account getInstance(TokenChangeInterface changeInterface)
-    {
-        if (single_instance == null)
-            single_instance = new Account(changeInterface);
         return single_instance;
     }
 }

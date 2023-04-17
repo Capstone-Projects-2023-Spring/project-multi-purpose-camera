@@ -6,8 +6,16 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@android:color/white"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/livestreamImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/nav_bar_top"
+        app:layout_constraintTop_toTopOf="@+id/nav_bar_top"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <RelativeLayout
         android:id="@+id/nav_bar_top"
@@ -72,19 +80,7 @@
             android:background="@color/white"
             android:text="Library"
             android:textColor="@android:color/black" />
-
     </LinearLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/mainFragmentContainerView"
-        android:name="com.example.layout_version.MainTab.StreamingFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nav_bar_bottom"
-        tools:layout="@layout/fragment_blank" />
 
     <!--        <TextView-->
     <!--            android:id="@+id/cam_vid_clip"-->
@@ -97,5 +93,25 @@
     <!--            android:background="#c7c7c7">-->
 
     <!--        </TextView>-->
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <WebView
+            android:id="@+id/video_web"
+            android:layout_width="400dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="40dp">
+
+
+        </WebView>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
