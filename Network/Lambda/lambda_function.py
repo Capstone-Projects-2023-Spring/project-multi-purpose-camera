@@ -654,9 +654,11 @@ def upload_url(event, pathPara, queryPara):
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
         return json_payload({"message": "Account does not exist"})
-    recordings = database.get_all_join_field_by_field(Recording, Account,
+    recordings: list[Recording] = database.get_all_join_field_by_field(Recording, Account,
                                                       Account.EXPLICIT_ID, Recording.EXPLICIT_ACCOUNT_ID,
                                                       Account.TOKEN, token)
+    for recording in recordings:
+        recording.url = pre_signed_url_get(BUCKET, recording.file_name, 3600)
     return json_payload({
         "files": Hardware.list_object_to_dict_list(recordings)
     })

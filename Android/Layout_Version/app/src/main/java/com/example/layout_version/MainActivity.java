@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
                             .mapToObj(i -> {
                                 try {
                                     JSONObject item = fileArray.getJSONObject(i);
-                                    return new VideoItem(item.get("file_name").toString(), item.get("timestamp").toString());
+                                    return new VideoItem(item.get("file_name").toString(), item.get("timestamp").toString(), item.getString("url"));
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
                                 }
