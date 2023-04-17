@@ -49,6 +49,7 @@ public class Test_Video_Page extends AppCompatActivity{
             }
         };
         //return resourceToByteArray(this, R.raw.pain);
+        return null;
     }
 
     private void initializePlayer() {

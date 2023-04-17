@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
 
     }
 
-<<<<<<< HEAD
+
 
 
     private void requestLocationPermissionIfNeeded() {
@@ -210,8 +210,7 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
 
 
 
-=======
->>>>>>> cb7082011e09ce1f3a32cdbe578f696b588bd88c
+
     private class Callback extends WebViewClient {
         @Override
         public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
