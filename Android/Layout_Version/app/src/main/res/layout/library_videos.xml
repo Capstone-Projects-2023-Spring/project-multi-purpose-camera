@@ -12,15 +12,6 @@
         android:src="@drawable/baseline_play_arrow_48"
         app:srcCompat="@drawable/baseline_clip_24" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#DA8B8B"
-        android:src="@drawable/baseline_play_arrow_48"
-        app:srcCompat="@drawable/baseline_clip_24" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -35,6 +26,7 @@
             android:text="TextView"
             android:textSize="25sp"
             app:flow_lastVerticalBias="0.5"
+            app:flow_wrapMode="aligned"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.7"
             app:layout_constraintStart_toStartOf="parent"
