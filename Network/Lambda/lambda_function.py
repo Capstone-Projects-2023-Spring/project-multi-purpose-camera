@@ -644,9 +644,7 @@ def upload_url(event, pathPara, queryPara):
     recordings = database.get_all_join_field_by_field(Recording, Account,
                                                       Account.EXPLICIT_ID, Recording.EXPLICIT_ACCOUNT_ID,
                                                       Account.TOKEN, token)
-    return json_payload({
-        "files": Hardware.list_object_to_dict_list(recordings)
-    })
+    return json_payload(Hardware.list_object_to_dict_list(recordings))
 
 
 # @api.handle("/file/add", httpMethod=MPC_API.POST)

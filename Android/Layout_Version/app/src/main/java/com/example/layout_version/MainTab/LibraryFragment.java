@@ -62,6 +62,14 @@ public class LibraryFragment extends Fragment {
             videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
             mParam1 = getArguments().getBoolean(FIRST_TIME);
 
+//            if(mParam1)
+//            {
+//
+//                getArguments().putBoolean(FIRST_TIME, false);
+//            }
+//            else
+//                Log.e("", "no loading");
+
         }
 
     }

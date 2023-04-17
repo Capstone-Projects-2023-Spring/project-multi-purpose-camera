@@ -27,7 +27,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-            titleView = view.findViewById(R.id.video_title);
+            titleView = view.findViewById(R.id.video_description);
             descriptionView = view.findViewById(R.id.video_description);
 
         }
