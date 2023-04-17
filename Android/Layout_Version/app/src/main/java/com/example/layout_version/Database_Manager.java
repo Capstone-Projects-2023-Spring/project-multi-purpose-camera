@@ -75,10 +75,15 @@ public class Database_Manager {
     class Account_Configuration {
         String username;
         String password;
+        String email;
+        String status;
+        String token;
+        String timestamp;
         int account_id;
 
         public String toString(){
-            return "username: " + username + ", password: " + password + ", account_id: " + account_id;
+            return "username: " + username + ", password: " + password + ", account_id: " + account_id + ", email: " + email + "\n"+
+                    "status: " + status + ", token: " + token + ", timestamp: " + timestamp;
         }
     }
     class Notification_Configuration {
@@ -532,10 +537,13 @@ public class Database_Manager {
     }
 
     public static void test(){
-
-        //database_add_camera_to_saving_policy(7, 12);
-        //database_add_camera_to_saving_policy(8, 12);
-        saving_policy_remove_camera(8, 12);
+        //database_add_camera_to_saving_policy(6, 12);
+        String result = get_string_from_database(url_account);
+        List<Account_Configuration> accounts = get_accounts_from_database();
+        for(int i = 0; i < accounts.size(); i++){
+            System.out.println(accounts.get(i));
+        }
+        System.out.println(result);
     }
 
     public static boolean edit_criteria(int type, int duration, int magnitude, int id){
@@ -599,7 +607,7 @@ public class Database_Manager {
     public static boolean saving_policy_remove_camera(int saving_policy_id, int camera_id){
         String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/saving_policy/"+saving_policy_id+"/hardware/"+camera_id;
         System.out.println(url);
-        boolean result_code = do_put(url);
+        boolean result_code = do_delete(url);
         System.out.println(result_code);
         return result_code;
     }

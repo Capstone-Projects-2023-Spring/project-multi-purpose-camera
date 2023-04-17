@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -27,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
@@ -35,12 +37,20 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity /*implements CameraBridgeViewBase.CvCameraViewListener2*/{
 
-    public ConstraintLayout main_layout;
+    boolean testing_video = true;
 
+
+    public ConstraintLayout main_layout;
+    PermissionHelper permissionHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(testing_video){
+            Intent intent = new Intent (MainActivity.this,Test_Video_Page.class);
+            startActivity(intent);
+        }
 
         try {
             Thread.sleep(5000);
@@ -59,6 +69,36 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        BlueTooth_Manager btConnection = new BlueTooth_Manager();
+        permissionHelper = new PermissionHelper(this);
+
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, "Bluetooth not supported", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        if (!permissionHelper.hasBluetoothConnectPermission()) {
+            permissionHelper.requestBluetoothConnectPermission();
+        }
+
+        if (!permissionHelper.isBluetoothEnabled(bluetoothAdapter)) {
+            permissionHelper.requestBluetoothEnable();
+        } else {
+            requestLocationPermissionIfNeeded();
+        }
+        System.out.println("blue tooth permission: " + permissionHelper.isBluetoothEnabled(bluetoothAdapter));
+
+        String rasberry_IP = "192.168.137.247";
+        String rasberry_MAC = "dc:a6:32:03:e5:79";
+        String rasberry_name = "raspberrypi";
+
+        btConnection.show_bluetooth_devices(this);
+
+
+
 
 
         //init_camera_view();
@@ -179,6 +219,20 @@ public class MainActivity extends AppCompatActivity /*implements CameraBridgeVie
 //        AsyncTaskRunner thread = new AsyncTaskRunner();
 //        thread.execute("");
 
+
+    }
+
+
+
+    private void requestLocationPermissionIfNeeded() {
+        if (!permissionHelper.hasLocationPermission()) {
+            permissionHelper.requestLocationPermission();
+        } else {
+            connectToRaspberryPi();
+        }
+    }
+
+    private void connectToRaspberryPi(){
 
     }
 

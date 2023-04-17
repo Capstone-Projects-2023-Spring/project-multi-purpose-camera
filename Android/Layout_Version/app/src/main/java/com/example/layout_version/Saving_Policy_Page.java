@@ -97,6 +97,17 @@ public class Saving_Policy_Page extends AppCompatActivity {
         super.onStart();
         setup_view();
     }
+    public boolean fake_save_data(){
+        try {
+            Thread.sleep(2000);
+        } catch(InterruptedException e) {
+            // Process exception
+        }
+        BackEnd old = BackEnd.main;
+        BackEnd new_data = new BackEnd(old.get_cameras(), current_saving_policies, old.get_notifications());
+        BackEnd.main = new_data;
+        return true;
+    }
 
     public boolean save_data(){
         ArrayList<Saving_Policy> to_add = new ArrayList<>();
@@ -205,7 +216,12 @@ public class Saving_Policy_Page extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             // Save your data here
-            boolean saved=  save_data();
+
+            boolean saved;
+            if(BackEnd.using_database)
+                saved =  save_data();
+            else
+                saved = fake_save_data();
             data_saved = saved;
             return null;
         }
@@ -305,9 +321,11 @@ public class Saving_Policy_Page extends AppCompatActivity {
             TextView title = (TextView) inner_layout.getChildAt(0);
             TextView time = (TextView) inner_layout.getChildAt(2);
             TextView second = (TextView) inner_layout.getChildAt(4);
+            //TextView third = (TextView) inner_layout.getChildAt(6);
 
             title.setText(tokens[0]);
             time.setText(tokens[1]);
+            second.setText(tokens[2]);
 
             linearLayout.addView(policy_layout);
         }

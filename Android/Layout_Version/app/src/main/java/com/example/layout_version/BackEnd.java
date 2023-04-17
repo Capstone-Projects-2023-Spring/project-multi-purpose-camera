@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class BackEnd {
     public static BackEnd main;
+    public static boolean using_database = true;
 
     public BackEnd(ArrayList<Camera> cameras, ArrayList<Saving_Policy> savings, ArrayList<Notification_Policy> notifications){
         this.cameras = cameras;
@@ -39,8 +40,10 @@ public class BackEnd {
         return result;
     }
     public static void init(){
-        main = Database_Manager.create_BackEnd();
-        //init_test_objects();
+        if(using_database)
+            main = Database_Manager.create_BackEnd();
+        else
+            init_test_objects();
     }
     public static void init_test_objects(){
         ArrayList<Saving_Policy> savings = new ArrayList<>();
