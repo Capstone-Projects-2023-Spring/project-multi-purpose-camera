@@ -1,9 +1,4 @@
 class MPC_API:
-    GET = "GET"
-    POST = "POST"
-    PUT = "PUT"
-    DELETE = "DELETE"
-
     def __init__(self):
         self.handlers = {}
 
@@ -14,11 +9,12 @@ class MPC_API:
         def decorator(func):
             self.add_handler(func, action, httpMethod)
             return func
-
         return decorator
 
     def add_handler(self, fun, action, httpMethod):
         if action in self.handlers:
             self.handlers[self.get_key(action)][self.get_key(httpMethod)] = fun
         else:
-            self.handlers[self.get_key(action)] = {self.get_key(httpMethod): fun}
+            self.handlers[self.get_key(action)] = {self.get_key(httpMethod) : fun}
+
+

@@ -7,15 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.layout_version.MainActivity;
-import com.example.layout_version.MainTab.VideoViewModel;
 import com.example.layout_version.R;
 
 public class Account_Page extends AppCompatActivity {
     private Account account;
-    private VideoViewModel videoViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +34,7 @@ public class Account_Page extends AppCompatActivity {
                         Account_Page.this,
                         username.getText().toString(),
                         password.getText().toString(),
-                        a -> {
-                            onBackPressed();
-
-                        },
+                        a -> onBackPressed(),
                         a -> {}
                 )
         );
