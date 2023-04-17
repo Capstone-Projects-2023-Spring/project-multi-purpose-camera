@@ -127,6 +127,4 @@ pip install pyaudio
     </td>
     </tr>
 </table>
-
-[//]: # ( readme: collaborators -end )
 =======
