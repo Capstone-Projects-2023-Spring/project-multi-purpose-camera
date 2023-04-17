@@ -2,6 +2,10 @@ package com.example.layout_version.MainTab;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -9,16 +13,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.example.layout_version.Account.Account;
 import com.example.layout_version.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,10 +38,6 @@ public class LibraryFragment extends Fragment {
     private RecyclerView videoRecyclerView;
     private VideoViewModel videoViewModel;
 
-
-    public LibraryFragment() {
-        // Required empty public constructor
-    }
 
     /**
      * Use this factory method to create a new instance of
@@ -79,10 +74,11 @@ public class LibraryFragment extends Fragment {
                                 )
                         )
                 );
+                getArguments().putBoolean(FIRST_TIME, false);
             }
             else
                 Log.e("", "no loading");
-            getArguments().putBoolean(FIRST_TIME, false);
+
         }
 
     }

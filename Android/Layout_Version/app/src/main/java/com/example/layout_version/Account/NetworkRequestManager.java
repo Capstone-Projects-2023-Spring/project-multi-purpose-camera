@@ -2,7 +2,6 @@ package com.example.layout_version.Account;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -18,10 +17,6 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
-interface NetworkInterface
-{
-    void action(JSONObject json);
-}
 
 public class NetworkRequestManager {
     private final RequestQueue mRequestQueue;

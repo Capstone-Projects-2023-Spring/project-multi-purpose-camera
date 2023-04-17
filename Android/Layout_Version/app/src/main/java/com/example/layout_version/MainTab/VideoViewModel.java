@@ -13,8 +13,11 @@ public class VideoViewModel extends ViewModel {
     private List<VideoItem> videos;
     private final MutableLiveData<Integer> updateFlag;
 
+    private final MutableLiveData<String> token;
+
     public VideoViewModel() {
         updateFlag = new MutableLiveData<>(0);
+        token = new MutableLiveData<>(null);
         Log.e("LiveViewModel Created", "LiveViewModel Created");
     }
 
@@ -25,6 +28,16 @@ public class VideoViewModel extends ViewModel {
     public void videoListUpdated()
     {
         updateFlag.setValue(updateFlag.getValue() + 1);
+    }
+
+    public LiveData<String> getToken()
+    {
+        return token;
+    }
+
+    public void setToken(String token)
+    {
+        this.token.setValue(token);
     }
 
     public List<VideoItem> getVideoList()

@@ -15,25 +15,34 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
+import com.example.layout_version.Account.NetworkRequestManager;
+
+import com.example.layout_version.Account.NetworkInterface;
+import com.example.layout_version.Account.TokenChangeInterface;
 import com.example.layout_version.MainTab.LibraryFragment;
-import com.example.layout_version.MainTab.VideoItem;
 import com.example.layout_version.MainTab.VideoViewModel;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 //import org.opencv.highgui.HighGui;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements TokenChangeInterface {
 
     private Fragment libraryFragment;
     private VideoViewModel videoViewModel;
+    private Account account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
+        account = Account.getInstance(this);
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -51,7 +60,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
         ImageView btn = findViewById(R.id.settings);
-        ImageView account = findViewById(R.id.account);
+        ImageView accountImageView = findViewById(R.id.account);
         Button lib = findViewById(R.id.library);
         Button camera = findViewById(R.id.view);
 
@@ -60,10 +69,10 @@ public class MainActivity extends AppCompatActivity{
             startActivity(intent);
         });
 
-        account.setOnClickListener(view -> {
-            Account account1 = Account.getInstance();
+        accountImageView.setOnClickListener(view -> {
+
             Intent intent;
-            if(account1.isSignedIn())
+            if(account.isSignedIn())
                 intent = new Intent (MainActivity.this, Account_Page_Profile.class);
             else
                 intent = new Intent (MainActivity.this, Account_Page.class);
@@ -72,7 +81,7 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
-        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
+
         if(savedInstanceState == null) {
             Log.d("", "New state");
             libraryFragment =LibraryFragment.newInstance(true);
@@ -102,6 +111,24 @@ public class MainActivity extends AppCompatActivity{
             camera.setBackgroundColor(Color.parseColor("#c4fffd"));
         });
     }
+
+    @Override
+    public void changed(String token) {
+        Log.e("", "Token changed");
+        videoViewModel.setToken(token);
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("token", token);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+
+        NetworkRequestManager nrm = new NetworkRequestManager(this);
+        nrm.Post(R.string.account_profile_endpoint, jsonObject,
+                json -> {},
+                json -> {});
+    }
+
 
     private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
         private Runnable task = null;
