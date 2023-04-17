@@ -18,6 +18,7 @@ import com.example.layout_version.Account.Account_Page_Profile;
 import com.example.layout_version.Account.NetworkRequestManager;
 import com.example.layout_version.Account.TokenChangeInterface;
 import com.example.layout_version.MainTab.LibraryFragment;
+import com.example.layout_version.MainTab.LibraryFragmentInterface;
 import com.example.layout_version.MainTab.VideoItem;
 import com.example.layout_version.MainTab.VideoViewModel;
 
@@ -32,7 +33,7 @@ import java.util.stream.IntStream;
 //import org.opencv.highgui.HighGui;
 
 
-public class MainActivity extends AppCompatActivity implements TokenChangeInterface {
+public class MainActivity extends AppCompatActivity implements TokenChangeInterface, LibraryFragmentInterface {
 
     private Fragment libraryFragment;
     private VideoViewModel videoViewModel;
@@ -153,6 +154,11 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
                     videoViewModel.videoListUpdated();
                 },
                 json -> {});
+    }
+
+    @Override
+    public void videoSelected() {
+
     }
 
 
