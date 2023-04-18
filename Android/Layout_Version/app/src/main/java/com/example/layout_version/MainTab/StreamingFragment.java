@@ -10,12 +10,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.amazonaws.ivs.player.Cue;
 import com.amazonaws.ivs.player.Player;
-import com.amazonaws.ivs.player.PlayerException;
 import com.amazonaws.ivs.player.PlayerView;
-import com.amazonaws.ivs.player.Quality;
 import com.example.layout_version.R;
 
 public class StreamingFragment extends Fragment{
@@ -23,6 +21,8 @@ public class StreamingFragment extends Fragment{
     private PlayerView streamingPlayerView;
     private Player streamingPlayer;
     private StreamingPlayerListener playerListener;
+    private TextView deviceNameView;
+    private TextView deviceStatusView;
 
     public StreamingFragment() {
         // Required empty public constructor
@@ -41,6 +41,10 @@ public class StreamingFragment extends Fragment{
 
         playerListener = new StreamingPlayerListener(streamingPlayer);
         streamingPlayer.addListener(playerListener);
+
+        deviceNameView = layout.findViewById(R.id.deviceNameView);
+        deviceStatusView = layout.findViewById(R.id.deviceStatusView);
+
         return layout;
     }
 

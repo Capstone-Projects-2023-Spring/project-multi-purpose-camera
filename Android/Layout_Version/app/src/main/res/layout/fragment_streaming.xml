@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/statusIcon"
+            android:id="@+id/deviceStatusView"
             android:layout_width="120dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
@@ -30,7 +30,7 @@
             android:textColor="#FFFFFF" />
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/deviceNameView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
