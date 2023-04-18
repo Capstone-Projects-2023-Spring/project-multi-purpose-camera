@@ -66,6 +66,7 @@ public class VideoDetailFragment extends Fragment {
     public void update(VideoItem video)
     {
         titleView.setText(video.getTitle());
-        videoView.setVideoPath(video.getUrl());
+        if(video.getUrl() != null)
+            videoView.setVideoPath(video.getUrl());
     }
 }

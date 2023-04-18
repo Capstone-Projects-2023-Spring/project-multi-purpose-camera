@@ -16,7 +16,7 @@ public class VideoViewModel extends ViewModel {
 
     private final MutableLiveData<String> token;
     private final MutableLiveData<VideoItem> selectedVideo;
-    private final VideoItem DEFAULT_VIDEO_ITEM = new VideoItem("Welcome to the Video Library", "Sign in first to view a list of videos", "https://samplelib.com/lib/preview/mp4/sample-5s.mp4");
+    private final VideoItem DEFAULT_VIDEO_ITEM = new VideoItem("Welcome to the Video Library", "Sign in first to view a list of videos", null);
 
     public VideoViewModel() {
         updateFlag = new MutableLiveData<>(0);

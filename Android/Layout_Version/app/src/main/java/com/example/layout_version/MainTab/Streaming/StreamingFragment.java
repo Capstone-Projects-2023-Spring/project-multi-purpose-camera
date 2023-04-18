@@ -6,7 +6,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +16,13 @@ import android.widget.TextView;
 
 import com.amazonaws.ivs.player.Player;
 import com.amazonaws.ivs.player.PlayerView;
+import com.example.layout_version.MainTab.Library.VideoItem;
+import com.example.layout_version.MainTab.Library.VideoViewModel;
 import com.example.layout_version.R;
 
 public class StreamingFragment extends Fragment{
     private Context context;
+    private StreamingViewModel streamingViewModel;
     private PlayerView streamingPlayerView;
     private Player streamingPlayer;
     private StreamingPlayerListener playerListener;
@@ -44,15 +49,24 @@ public class StreamingFragment extends Fragment{
         playerListener = new StreamingPlayerListener(context, streamingPlayer, deviceStatusView);
         streamingPlayer.addListener(playerListener);
 
-
-
         return layout;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        streamingPlayer.load(Uri.parse("https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8"));
+        streamingViewModel = new ViewModelProvider(requireActivity()).get(StreamingViewModel.class);
+        streamingViewModel.getSelectedChannel().observe(getViewLifecycleOwner(), item -> {
+            Log.e("Observer", item.getDeviceName());
+            update(item);
+        });
+    }
+
+    public void update(ChannelItem channel)
+    {
+        deviceNameView.setText(channel.getDeviceName());
+        if(channel.getPlaybackUrl() != null)
+            streamingPlayer.load(Uri.parse(channel.getPlaybackUrl()));
     }
 
     @Override
@@ -61,4 +75,6 @@ public class StreamingFragment extends Fragment{
         streamingPlayer.removeListener(playerListener);
         streamingPlayer.release();
     }
+
+
 }

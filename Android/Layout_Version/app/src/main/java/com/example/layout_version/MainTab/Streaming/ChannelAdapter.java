@@ -1,6 +1,8 @@
 package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.layout_version.MainTab.Library.VideoItem;
+import com.amazonaws.ivs.player.Player;
 import com.example.layout_version.R;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         private final TextView titleView;
         private final TextView descriptionView;
         private final View view;
+        private final TextView statusView;
 
         public ViewHolder(View view) {
             super(view);
@@ -35,8 +38,9 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
             // Define click listener for the ViewHolder's View
             titleView = view.findViewById(R.id.streamingTitleView);
             descriptionView = view.findViewById(R.id.streamingDescriptionView);
+            statusView = view.findViewById(R.id.deviceStatusView);
             view.setOnClickListener(v -> {
-
+                Log.e("", "Channel Clicked");
             });
 
         }
@@ -49,6 +53,9 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         }
         public TextView getDescriptionView() {
             return descriptionView;
+        }
+        public TextView getStatusView(){
+            return statusView;
         }
 
     }
@@ -86,6 +93,10 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         viewHolder.getView().setOnClickListener(
                 view -> clickEvent.accept(localDataSet.get(position))
         );
+        Player player = Player.Factory.create(context);
+        player.addListener(new StreamingPlayerListener(context, player, viewHolder.getStatusView(), false));
+        player.load(Uri.parse(localDataSet.get(position).getPlaybackUrl()));
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)

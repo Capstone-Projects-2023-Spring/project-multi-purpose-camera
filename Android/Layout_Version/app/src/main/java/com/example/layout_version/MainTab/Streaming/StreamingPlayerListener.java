@@ -1,6 +1,7 @@
 package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,12 +18,18 @@ public class StreamingPlayerListener extends Player.Listener {
     private final Context context;
     private final Player player;
     private final TextView deviceStatusView;
-
-    public StreamingPlayerListener(Context context, Player player, TextView deviceStatusView)
+    private boolean autostart;
+    public StreamingPlayerListener(Context context, Player player, TextView deviceStatusView, boolean autostart)
     {
         this.context = context;
         this.player = player;
         this.deviceStatusView = deviceStatusView;
+        this.autostart = autostart;
+    }
+
+    public StreamingPlayerListener(Context context, Player player, TextView deviceStatusView)
+    {
+        this(context, player, deviceStatusView, true);
     }
 
     @Override
@@ -46,7 +53,8 @@ public class StreamingPlayerListener extends Player.Listener {
             case READY:
                 deviceStatusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.online_icon));
                 deviceStatusView.setText(R.string.streaming_online);
-                player.play();
+                if(autostart)
+                    player.play();
                 break;
             case IDLE:
                 deviceStatusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.offline_icon));
@@ -62,17 +70,17 @@ public class StreamingPlayerListener extends Player.Listener {
 
     @Override
     public void onError(@NonNull PlayerException e) {
-
+        Log.e("Error", "Error");
     }
 
     @Override
     public void onRebuffering() {
-
+        Log.e("Rebuffering", "Rebuffering");
     }
 
     @Override
     public void onSeekCompleted(long l) {
-
+        Log.e("Seek", "Seek");
     }
 
     @Override

@@ -83,8 +83,8 @@ public class LibraryFragment extends Fragment {
 
         Consumer<VideoItem> clickEvent = videoItem -> {
             videoViewModel.setSelectedVideo(videoItem);
-            if(requireActivity() instanceof MainActivity)
-                ((MainActivity)requireActivity()).videoSelected();
+            if(requireActivity() instanceof LibraryFragmentInterface)
+                ((LibraryFragmentInterface)requireActivity()).videoSelected();
             Log.e("Video Item", videoItem.getTitle());
         };
 
