@@ -36,14 +36,15 @@ public class StreamingFragment extends Fragment{
         context = layout.getContext();
 
         streamingPlayerView = layout.findViewById(R.id.streamingPlayerView);
+        deviceNameView = layout.findViewById(R.id.deviceNameView);
+        deviceStatusView = layout.findViewById(R.id.deviceStatusView);
 
         streamingPlayer = streamingPlayerView.getPlayer();
 
-        playerListener = new StreamingPlayerListener(streamingPlayer);
+        playerListener = new StreamingPlayerListener(context, streamingPlayer, deviceStatusView);
         streamingPlayer.addListener(playerListener);
 
-        deviceNameView = layout.findViewById(R.id.deviceNameView);
-        deviceStatusView = layout.findViewById(R.id.deviceStatusView);
+
 
         return layout;
     }
