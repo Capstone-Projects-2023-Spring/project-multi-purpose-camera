@@ -705,6 +705,29 @@ class MPCDatabase:
 
         return table_class.list_dict_to_object_list(payload, explicit=True)
 
+    def get_all_join_fields_by_field(self, table_class, join_table_field_field1_list_tuple: list[tuple[type, str, str]],
+                                    match_field: str, match_value: str):
+        """
+            Execute query to get the all hardware ids of objects related to the given notification_id in the table
+
+            Parameters:
+                >table_class        : class<    : Class that represents the DB table
+                >join_table_class   : string<   : name of table that will be joined to the table
+                >join_field1        : string<   : The name of field that the tables will be joined on
+                >join_field2        : string<   : The name of field that the tables will be joined on
+                >match_field        : string<   : The name of field that the tables will be matched with
+                >match_value        : int<      : Value that the match field will be matched to
+
+            Returns:
+                >list[object]<      : Objects found in DB
+        """
+        payload = self.select_payload(
+            table_class.TABLE, table_class.EXPLICIT_COLUMNS,
+            match_list=[MatchItem(match_field, match_value)],
+            join_list=[JoinItem(JoinItem.INNER, t[0].TABLE, t[1], t[2]) for t in join_table_field_field1_list_tuple])["data"]
+
+        return table_class.list_dict_to_object_list(payload, explicit=True)
+
     def update_fields(self, table_class, condition_tuple: tuple[str, str], update_list: list[tuple[str, str]]):
         """
             Updates the information in the table

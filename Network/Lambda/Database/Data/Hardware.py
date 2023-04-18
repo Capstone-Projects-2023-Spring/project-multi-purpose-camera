@@ -52,7 +52,7 @@ class Hardware(Data):
     """Creates an explicit version of the playback_url name variable column name"""
     EXPLICIT_S3_RECORDING_PREFIX = f"{TABLE}.{S3_RECORDING_PREFIX}"
     """Creates an explicit version of the s3_recording_prefix name variable column name"""
-    EXPLICIT_COLUMNS = [EXPLICIT_ID, EXPLICIT_RESOLUTION_NAME, EXPLICIT_DEVICE_ID, EXPLICIT_NAME, EXPLICIT_ARN,
+    EXPLICIT_COLUMNS = [EXPLICIT_ID, EXPLICIT_RESOLUTION_NAME, EXPLICIT_CHANNEL_NAME, EXPLICIT_DEVICE_ID, EXPLICIT_NAME, EXPLICIT_ARN,
                         EXPLICIT_STREAM_KEY, EXPLICIT_INGEST_ENDPOINT, EXPLICIT_PLAYBACK_URL,
                         EXPLICIT_S3_RECORDING_PREFIX]
     """Organizes the explicit versions of the variables above into an array"""
