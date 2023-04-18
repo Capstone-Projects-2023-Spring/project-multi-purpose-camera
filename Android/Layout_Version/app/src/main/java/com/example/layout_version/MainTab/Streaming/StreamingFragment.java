@@ -1,4 +1,4 @@
-package com.example.layout_version.MainTab;
+package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
 import android.net.Uri;

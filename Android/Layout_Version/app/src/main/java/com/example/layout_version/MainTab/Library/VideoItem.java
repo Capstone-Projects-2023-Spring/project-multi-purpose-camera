@@ -1,4 +1,4 @@
-package com.example.layout_version.MainTab;
+package com.example.layout_version.MainTab.Library;
 
 public class VideoItem {
     private final String title;

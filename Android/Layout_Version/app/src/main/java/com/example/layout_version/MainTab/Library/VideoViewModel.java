@@ -1,4 +1,4 @@
-package com.example.layout_version.MainTab;
+package com.example.layout_version.MainTab.Library;
 
 import android.util.Log;
 
@@ -36,11 +36,6 @@ public class VideoViewModel extends ViewModel {
         updateFlag.setValue(updateFlag.getValue() + 1);
     }
 
-    public LiveData<String> getToken()
-    {
-        return token;
-    }
-
     public void setToken(String token)
     {
         if(token == null)
@@ -71,6 +66,4 @@ public class VideoViewModel extends ViewModel {
         this.videos.clear();
         this.videos.addAll(videos);
     }
-
-
 }

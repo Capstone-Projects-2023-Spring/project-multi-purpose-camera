@@ -16,13 +16,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
-import com.example.layout_version.Account.NetworkRequestManager;
+import com.example.layout_version.MainTab.Streaming.StreamingListFragment;
+import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.Account.TokenChangeInterface;
-import com.example.layout_version.MainTab.LibraryFragment;
-import com.example.layout_version.MainTab.LibraryFragmentInterface;
-import com.example.layout_version.MainTab.VideoDetailFragment;
-import com.example.layout_version.MainTab.VideoItem;
-import com.example.layout_version.MainTab.VideoViewModel;
+import com.example.layout_version.MainTab.Library.LibraryFragment;
+import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
+import com.example.layout_version.MainTab.Library.VideoDetailFragment;
+import com.example.layout_version.MainTab.Library.VideoItem;
+import com.example.layout_version.MainTab.Library.VideoViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,17 +57,17 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
             throw new RuntimeException(e);
         }
 
-        MyAsyncTask database = new MyAsyncTask(() -> {
-            System.out.println("calling backend");
-            BackEnd.init();
-        });
-        try {
-            System.out.println("running async");
-            database.execute();
-            database.get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        MyAsyncTask database = new MyAsyncTask(() -> {
+//            System.out.println("calling backend");
+//            BackEnd.init();
+//        });
+//        try {
+//            System.out.println("running async");
+//            database.execute();
+//            database.get();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
         ImageView btn = findViewById(R.id.settings);
         ImageView accountImageView = findViewById(R.id.account);
@@ -93,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
 
         if(savedInstanceState == null) {
             Log.d("", "New state");
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainFragmentContainerView, StreamingListFragment.newInstance())
+                    .commit();
             libraryFragment =LibraryFragment.newInstance(true);
         }
         else

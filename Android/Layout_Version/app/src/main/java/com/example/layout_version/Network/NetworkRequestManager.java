@@ -1,4 +1,4 @@
-package com.example.layout_version.Account;
+package com.example.layout_version.Network;
 
 import android.content.Context;
 import android.content.res.Resources;

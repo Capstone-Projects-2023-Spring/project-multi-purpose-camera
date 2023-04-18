@@ -1,7 +1,6 @@
-package com.example.layout_version.MainTab;
+package com.example.layout_version.MainTab.Library;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
