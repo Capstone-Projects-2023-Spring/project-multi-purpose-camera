@@ -711,8 +711,8 @@ if __name__ == "__main__":
     # print(lambda_handler(event, None))
 
     event = {
-        "resource": "/file/all",
-        "httpMethod": "POST",
+        "resource": "/hardware",
+        "httpMethod": "GET",
         "body": """{
             "username": "tun05036@temple.edu",
             "password": "password",
