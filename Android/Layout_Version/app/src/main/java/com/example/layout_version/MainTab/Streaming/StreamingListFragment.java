@@ -14,7 +14,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.function.Consumer;
 
@@ -57,5 +61,7 @@ public class StreamingListFragment extends Fragment {
         streamingViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
         });
+
+
     }
 }

@@ -36,6 +36,10 @@ public class VideoViewModel extends ViewModel {
         updateFlag.setValue(updateFlag.getValue() + 1);
     }
 
+    public MutableLiveData<String> getToken()
+    {
+        return token;
+    }
     public void setToken(String token)
     {
         if(token == null)
