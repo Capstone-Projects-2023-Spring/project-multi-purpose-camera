@@ -70,7 +70,7 @@ class MPCDatabase:
         self.connection = mysql.connector.connect(host=DBUrl,
                                                   user=DBUser,
                                                   password=DBPassword,
-                                                  database=DBTable)
+                                                  database=DBTable, port=3306)
         """Reference for my sql instance. Used to perform query in database"""
 
         print("Connected")
