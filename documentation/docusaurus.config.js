@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
  * The URL or reference to your projects logo!
  * @type {string}
  */
-const logo = 'https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg';
+const logo = 'https://user-images.githubusercontent.com/89597671/233167964-204fdaed-8e27-4cf4-867c-6b00d202ea5a.png';
 
 const main_template_jira_scripts = () => {
   if (process.env.ORG_NAME === 'ApplebaumIan'){
@@ -29,7 +29,6 @@ const config = {
   /*TODO: Change to your project's title and tagline*/
   title: title,
   tagline: 'Profit Ownership Wealth Enforcement Ruthless (P.O.W.E.R)',
-  mpcIcon: 'img/MPC_Icon.png',
   /*Unless you move this website to a seperate repo don't change url and baseurl.*/
   url: 'https://'+process.env.ORG_NAME+'.github.io/',
   baseUrl: '/'+process.env.PROJECT_NAME+'/',
