@@ -29,7 +29,7 @@ const config = {
   /*TODO: Change to your project's title and tagline*/
   title: title,
   tagline: 'Profit Ownership Wealth Enforcement Ruthless (P.O.W.E.R)',
-  href: 'https://user-images.githubusercontent.com/89597671/233167964-204fdaed-8e27-4cf4-867c-6b00d202ea5a.png',
+  mpcIcon: 'img/MPC_Icon.png',
   /*Unless you move this website to a seperate repo don't change url and baseurl.*/
   url: 'https://'+process.env.ORG_NAME+'.github.io/',
   baseUrl: '/'+process.env.PROJECT_NAME+'/',
