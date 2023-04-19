@@ -6,12 +6,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amazonaws.ivs.player.Player;
+import com.amazonaws.ivs.player.PlayerView;
 import com.example.layout_version.R;
 
 import java.util.List;
@@ -31,6 +34,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         private final TextView descriptionView;
         private final View view;
         private final TextView statusView;
+        private final PlayerView playerView;
 
         public ViewHolder(View view) {
             super(view);
@@ -39,6 +43,13 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
             titleView = view.findViewById(R.id.streamingTitleView);
             descriptionView = view.findViewById(R.id.streamingDescriptionView);
             statusView = view.findViewById(R.id.deviceStatusView);
+
+            FrameLayout playerFrameLayout = view.findViewById(R.id.playerFrameLayout);
+            playerView = new PlayerView(view.getContext());
+            playerView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            playerView.getControls().showControls(false);
+            playerFrameLayout.addView(playerView);
+
             view.setOnClickListener(v -> {
                 Log.e("", "Channel Clicked");
             });
@@ -56,6 +67,9 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         }
         public TextView getStatusView(){
             return statusView;
+        }
+        public PlayerView getPlayerView(){
+            return playerView;
         }
 
     }
@@ -93,8 +107,8 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         viewHolder.getView().setOnClickListener(
                 view -> clickEvent.accept(localDataSet.get(position))
         );
-        Player player = Player.Factory.create(context);
-        player.addListener(new StreamingPlayerListener(context, player, viewHolder.getStatusView(), false));
+        Player player = viewHolder.getPlayerView().getPlayer();
+        player.addListener(new StreamingPlayerListener(context, player, viewHolder.getStatusView(), localDataSet.get(position).getPlaybackUrl(), false));
         player.load(Uri.parse(localDataSet.get(position).getPlaybackUrl()));
 
     }

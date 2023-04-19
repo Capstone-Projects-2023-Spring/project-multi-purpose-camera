@@ -1,6 +1,10 @@
 package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -13,23 +17,33 @@ import com.amazonaws.ivs.player.PlayerException;
 import com.amazonaws.ivs.player.Quality;
 import com.example.layout_version.R;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class StreamingPlayerListener extends Player.Listener {
 
     private final Context context;
     private final Player player;
     private final TextView deviceStatusView;
+    private final String playbackUri;
     private boolean autostart;
-    public StreamingPlayerListener(Context context, Player player, TextView deviceStatusView, boolean autostart)
+
+    private ExecutorService executor;
+    private boolean executing;
+    public StreamingPlayerListener(Context context, Player player, TextView deviceStatusView, String playbackUri, boolean autostart)
     {
         this.context = context;
         this.player = player;
         this.deviceStatusView = deviceStatusView;
         this.autostart = autostart;
+        this.playbackUri =playbackUri;
+        executor = Executors.newSingleThreadExecutor();
+        executing = false;
     }
 
-    public StreamingPlayerListener(Context context, Player player, TextView deviceStatusView)
+    public StreamingPlayerListener(Context context, Player player, TextView deviceStatusView, String playbackUri)
     {
-        this(context, player, deviceStatusView, true);
+        this(context, player, deviceStatusView, playbackUri, true);
     }
 
     @Override
@@ -44,6 +58,8 @@ public class StreamingPlayerListener extends Player.Listener {
 
     @Override
     public void onStateChanged(@NonNull Player.State state) {
+        executor.shutdown();
+        executing = false;
         switch (state) {
             case BUFFERING:
                 // player is buffering
@@ -71,6 +87,18 @@ public class StreamingPlayerListener extends Player.Listener {
     @Override
     public void onError(@NonNull PlayerException e) {
         Log.e("Error", "Error");
+        deviceStatusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.offline_icon));
+        deviceStatusView.setText(R.string.streaming_offline);
+        if(!executing)
+            executor.execute(() -> {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+                player.load(Uri.parse(playbackUri));
+                Log.e("Error", "Checking Live View");
+            });
     }
 
     @Override
@@ -91,5 +119,10 @@ public class StreamingPlayerListener extends Player.Listener {
     @Override
     public void onQualityChanged(@NonNull Quality quality) {
 
+    }
+
+    public void shutdown()
+    {
+        executor.shutdown();
     }
 }

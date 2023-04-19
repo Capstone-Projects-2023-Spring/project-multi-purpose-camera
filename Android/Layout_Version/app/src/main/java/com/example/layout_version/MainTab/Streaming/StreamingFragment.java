@@ -45,9 +45,7 @@ public class StreamingFragment extends Fragment{
         deviceStatusView = layout.findViewById(R.id.deviceStatusView);
 
         streamingPlayer = streamingPlayerView.getPlayer();
-
-        playerListener = new StreamingPlayerListener(context, streamingPlayer, deviceStatusView);
-        streamingPlayer.addListener(playerListener);
+        streamingPlayerView.getControls().showControls(false);
 
         return layout;
     }
@@ -60,18 +58,24 @@ public class StreamingFragment extends Fragment{
             Log.e("Observer", item.getDeviceName());
             update(item);
         });
+
     }
 
     public void update(ChannelItem channel)
     {
         deviceNameView.setText(channel.getDeviceName());
         if(channel.getPlaybackUrl() != null)
+        {
             streamingPlayer.load(Uri.parse(channel.getPlaybackUrl()));
+            playerListener = new StreamingPlayerListener(context, streamingPlayer, deviceStatusView, channel.getPlaybackUrl());
+            streamingPlayer.addListener(playerListener);
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        playerListener.shutdown();
         streamingPlayer.removeListener(playerListener);
         streamingPlayer.release();
     }

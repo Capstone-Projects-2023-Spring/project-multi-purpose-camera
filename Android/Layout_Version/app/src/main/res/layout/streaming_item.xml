@@ -14,17 +14,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/streamingThumbnailImageView"
-            android:layout_width="0dp"
+        <FrameLayout
+            android:id="@+id/playerFrameLayout"
+            android:layout_width="100dp"
             android:layout_height="0dp"
-            android:background="#DA8B8B"
-            android:src="@drawable/baseline_play_arrow_48"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/baseline_clip_24" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/deviceStatusView"
@@ -42,6 +41,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="160dp"
             app:layout_constraintWidth_percent="0.5" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
