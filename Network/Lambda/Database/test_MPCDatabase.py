@@ -111,9 +111,9 @@ class TestMPCDatabase(TestCase):
         ri = database.get_id_by_name(Recording, rc.file_name)
         self.assertTrue(a[0] == ri and len(b) == 0)
 
-    def test_get_ids_by_account_name(self):
-        a: list[int] = database.get_ids_by_account_name(Recording, ac.username)
-        b: list[int] = database.get_ids_by_account_name(Recording, aw.username)
+    def test_get_ids_by_field(self):
+        a: list[int] = database.test_get_ids_by_field(Recording, ac.username)
+        b: list[int] = database.test_get_ids_by_field(Recording, aw.username)
         ri = database.get_id_by_name(Recording, rc.file_name)
         self.assertTrue(a[0] == ri and len(b) == 0)
 
