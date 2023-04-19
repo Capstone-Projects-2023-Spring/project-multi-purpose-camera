@@ -19,9 +19,9 @@ public interface StreamingListFragmentInterface {
                 .mapToObj(i -> {
                     try {
                         JSONObject item = jsonArray.getJSONObject(i);
-                        return new ChannelItem(item.get("file_name").toString(), item.get("timestamp").toString(), item.getString("url"));
+                        return new ChannelItem(item.get("playback_url").toString(), item.get("device_name").toString(), item.get("max_resolution").toString(), item.get("s3_recording_prefix").toString());
                     } catch (JSONException e) {
-                        return new VideoItem("Unknown Video", "Failed to retrieve video file", null);
+                        return new ChannelItem("Unknown Video", "Failed to retrieve video file",  "720p", null);
                     }
                 })
                 .collect(Collectors.toList());

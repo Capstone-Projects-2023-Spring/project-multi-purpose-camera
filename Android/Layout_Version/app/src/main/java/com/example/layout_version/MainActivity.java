@@ -113,10 +113,6 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
 
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
         streamingViewModel = new ViewModelProvider(this).get(StreamingViewModel.class);
-        streamingViewModel.setChannelList(new ArrayList<>(Arrays.asList(
-                new ChannelItem("https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8", "Streaming 1"),
-                new ChannelItem("https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8", "Streaming 2"),
-                new ChannelItem("https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8", "Streaming 3"))));
 
         libraryTabButton.setOnClickListener(view -> {
             LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
@@ -185,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
     public void changed(String token) {
         Log.e("", "Token changed");
         videoViewModel.setToken(token);
-
+        streamingViewModel.setToken(token);
     }
 
     @Override

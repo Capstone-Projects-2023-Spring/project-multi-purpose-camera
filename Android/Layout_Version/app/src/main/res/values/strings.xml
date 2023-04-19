@@ -17,4 +17,6 @@
     <string name="streaming_online">Online</string>
     <string name="streaming_idle">Idle</string>
     <string name="streaming_streaming">Streaming</string>
+    <string name="hardware_all_endpoint">/hardware/all</string>
+    <string name="streaming_unavailable">Unavailable</string>
 </resources>

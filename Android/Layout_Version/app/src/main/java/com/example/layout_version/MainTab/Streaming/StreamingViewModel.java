@@ -15,7 +15,7 @@ public class StreamingViewModel extends ViewModel {
 
     private final MutableLiveData<String> token;
     private final MutableLiveData<ChannelItem> selectedChannel;
-    private final ChannelItem DEFAULT_CHANNEL_ITEM = new ChannelItem(null, "Sign in first to view a list of videos");
+    private final ChannelItem DEFAULT_CHANNEL_ITEM = new ChannelItem(null, "Sign in first to view a list of videos", "720p", null);
 
     public StreamingViewModel() {
         updateFlag = new MutableLiveData<>(0);
