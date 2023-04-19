@@ -90,11 +90,8 @@ public class ExampleUnitTest {
 
 
     @Test
-    public void addition_isCorrect() {
-        System.out.println("starting connection");
-        //Receiver_Client client = new Receiver_Client();
-//        Receiver_Client.custom_run();
-        //client.execute(new Object[1]);
+    public void test_Notifications() {
+        Notifications.send_Notifications();
     }
 
     @Test

@@ -47,10 +47,9 @@ android {
     buildToolsVersion '33.0.2'
 
 }
-
+def core_version = "1.6.0"
 dependencies {
-    //implementation 'javax.swing:javax.swing:1.0.0'
-
+    implementation "androidx.core:core:$core_version"
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -62,4 +61,5 @@ dependencies {
     testImplementation 'com.google.code.gson:gson:2.8.9'
     testImplementation 'org.robolectric:robolectric:4.7.3'
     testImplementation 'org.mockito:mockito-core:4.1.0'
+    implementation 'com.amazonaws:ivs-player:1.18.0'
 }

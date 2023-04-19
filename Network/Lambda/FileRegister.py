@@ -61,15 +61,16 @@ if __name__ == "__main__":
 
     # data = open("assets/bird-thumbnail.jpg", "rb").read()
     # print(data)
-    response = {
-    "url": "https://mpc-capstone.s3.amazonaws.com/",
-    "key": "sample.txt",
-    "AWSAccessKeyId": "AKIAQYOVQX7RESALYLKX",
-    "policy": "eyJleHBpcmF0aW9uIjogIjIwMjMtMDQtMTVUMDU6NDY6MDdaIiwgImNvbmRpdGlvbnMiOiBbeyJidWNrZXQiOiAibXBjLWNhcHN0b25lIn0sIHsia2V5IjogInNhbXBsZS50eHQifV19",
-    "signature": "vJvxhnm49bBcaOXD0Q6lYHkL4P4="
-}
-    data = "Another Secret message".encode("ascii")
-    print("Secret message".encode("ascii"))
-    post(response, data)
+#     response = {
+#     "url": "https://mpc-capstone.s3.amazonaws.com/",
+#     "key": "sample.txt",
+#     "AWSAccessKeyId": "AKIAQYOVQX7RESALYLKX",
+#     "policy": "eyJleHBpcmF0aW9uIjogIjIwMjMtMDQtMTVUMDU6NDY6MDdaIiwgImNvbmRpdGlvbnMiOiBbeyJidWNrZXQiOiAibXBjLWNhcHN0b25lIn0sIHsia2V5IjogInNhbXBsZS50eHQifV19",
+#     "signature": "vJvxhnm49bBcaOXD0Q6lYHkL4P4="
+# }
+#     data = "Another Secret message".encode("ascii")
+#     print("Secret message".encode("ascii"))
+#     post(response, data)
+    print(pre_signed_url_get(settings.BUCKET, "bird.png", expire=3600))
     # url = pre_signed_url_get(bucket, "bird_extra.jpg", 3600)
     # print(url)
