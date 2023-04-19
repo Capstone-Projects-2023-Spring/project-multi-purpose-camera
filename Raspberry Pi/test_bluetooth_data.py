@@ -30,7 +30,9 @@ while True:
             if not data:
                 break
             print("Received:" , data)
-            wifi_parser(data)
+            cond = wifi_parser(data)
+            if (cond == False):
+                client_socket.send("Wifi credentials are incorrect try again.")
         except bluetooth.btcommon.BluetoothError:
             print("Client disconnected")
             break
