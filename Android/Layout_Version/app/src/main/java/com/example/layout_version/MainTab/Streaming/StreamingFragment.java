@@ -75,7 +75,8 @@ public class StreamingFragment extends Fragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        playerListener.shutdown();
+        if(playerListener != null)
+            playerListener.shutdown();
         streamingPlayer.removeListener(playerListener);
         streamingPlayer.release();
     }
