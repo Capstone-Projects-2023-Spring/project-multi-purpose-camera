@@ -1,0 +1,3 @@
+C:/Users/jpax2/Desktop/project-multi-purpose-camera/Android/Layout_Version/openCV/.cxx/RelWithDebInfo/5s493m1i/x86/CMakeFiles/opencv_jni_shared.dir
+C:/Users/jpax2/Desktop/project-multi-purpose-camera/Android/Layout_Version/openCV/.cxx/RelWithDebInfo/5s493m1i/x86/CMakeFiles/edit_cache.dir
+C:/Users/jpax2/Desktop/project-multi-purpose-camera/Android/Layout_Version/openCV/.cxx/RelWithDebInfo/5s493m1i/x86/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,70 @@
+Index: openCV/build/intermediates/incremental/mergeDebugShaders/merger.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<merger version=\"3\"><dataSet config=\"main\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"><source path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\src\\main\\shaders\"/></dataSet><dataSet config=\"debug\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"><source path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\src\\debug\\shaders\"/></dataSet></merger>
+===================================================================
+diff --git a/openCV/build/intermediates/incremental/mergeDebugShaders/merger.xml b/openCV/build/intermediates/incremental/mergeDebugShaders/merger.xml
+--- a/openCV/build/intermediates/incremental/mergeDebugShaders/merger.xml	
++++ b/openCV/build/intermediates/incremental/mergeDebugShaders/merger.xml	
+@@ -1,2 +1,2 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\src\main\shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\src\debug\shaders"/></dataSet></merger>
+\ No newline at end of file
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\src\main\shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\src\debug\shaders"/></dataSet></merger>
+\ No newline at end of file
+Index: openCV/build/intermediates/cxx/abi_configuration_4g54wo62.log
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[\r\n  {\r\n    \"level_\": 0,\r\n    \"message_\": \"ABIs [x86,armeabi-v7a,armeabi] set by \\u0027android.injected.build.abi\\u0027 gradle flag contained \\u0027ARMEABI\\u0027 not targeted by this project.\",\r\n    \"file_\": \"\",\r\n    \"tag_\": \"\",\r\n    \"diagnosticCode_\": 0,\r\n    \"memoizedIsInitialized\": 1,\r\n    \"unknownFields\": {\r\n      \"fields\": {},\r\n      \"fieldsDescending\": {}\r\n    },\r\n    \"memoizedSize\": -1,\r\n    \"memoizedHashCode\": -1553399045\r\n  }\r\n]
+===================================================================
+diff --git a/openCV/build/intermediates/cxx/abi_configuration_4g54wo62.log b/openCV/build/intermediates/cxx/abi_configuration_4g54wo62.log
+--- a/openCV/build/intermediates/cxx/abi_configuration_4g54wo62.log	
++++ b/openCV/build/intermediates/cxx/abi_configuration_4g54wo62.log	
+@@ -11,6 +11,6 @@
+       "fieldsDescending": {}
+     },
+     "memoizedSize": -1,
+-    "memoizedHashCode": -1553399045
++    "memoizedHashCode": 2013788417
+   }
+ ]
+\ No newline at end of file
+Index: openCV/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<merger version=\"3\"><dataSet config=\"main\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"><source path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\native\\libs\"><file name=\"arm64-v8a/libopencv_java4.so\" path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\native\\libs\\arm64-v8a\\libopencv_java4.so\"/><file name=\"armeabi-v7a/libopencv_java4.so\" path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\native\\libs\\armeabi-v7a\\libopencv_java4.so\"/><file name=\"x86/libopencv_java4.so\" path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\native\\libs\\x86\\libopencv_java4.so\"/><file name=\"x86_64/libopencv_java4.so\" path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\native\\libs\\x86_64\\libopencv_java4.so\"/></source></dataSet><dataSet config=\"debug\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"><source path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\src\\debug\\jniLibs\"/></dataSet></merger>
+===================================================================
+diff --git a/openCV/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/openCV/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+--- a/openCV/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml	
++++ b/openCV/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml	
+@@ -1,2 +1,2 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\native\libs"><file name="arm64-v8a/libopencv_java4.so" path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\native\libs\arm64-v8a\libopencv_java4.so"/><file name="armeabi-v7a/libopencv_java4.so" path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\native\libs\armeabi-v7a\libopencv_java4.so"/><file name="x86/libopencv_java4.so" path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\native\libs\x86\libopencv_java4.so"/><file name="x86_64/libopencv_java4.so" path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\native\libs\x86_64\libopencv_java4.so"/></source></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\src\debug\jniLibs"/></dataSet></merger>
+\ No newline at end of file
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\native\libs"><file name="arm64-v8a/libopencv_java4.so" path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\native\libs\arm64-v8a\libopencv_java4.so"/><file name="armeabi-v7a/libopencv_java4.so" path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\native\libs\armeabi-v7a\libopencv_java4.so"/><file name="x86/libopencv_java4.so" path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\native\libs\x86\libopencv_java4.so"/><file name="x86_64/libopencv_java4.so" path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\native\libs\x86_64\libopencv_java4.so"/></source></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\src\debug\jniLibs"/></dataSet></merger>
+\ No newline at end of file
+Index: openCV/build/intermediates/incremental/packageDebugAssets/merger.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<merger version=\"3\"><dataSet config=\"main\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"><source path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\src\\main\\assets\"/><source path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\build\\intermediates\\shader_assets\\debug\\out\"/></dataSet><dataSet config=\"debug\" ignore_pattern=\"!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~\"><source path=\"C:\\Users\\fes77\\Desktop\\CIS4398\\project-multi-purpose-camera\\Android\\Layout_Version\\openCV\\src\\debug\\assets\"/></dataSet></merger>
+===================================================================
+diff --git a/openCV/build/intermediates/incremental/packageDebugAssets/merger.xml b/openCV/build/intermediates/incremental/packageDebugAssets/merger.xml
+--- a/openCV/build/intermediates/incremental/packageDebugAssets/merger.xml	
++++ b/openCV/build/intermediates/incremental/packageDebugAssets/merger.xml	
+@@ -1,2 +1,2 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\src\main\assets"/><source path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\build\intermediates\shader_assets\debug\out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\fes77\Desktop\CIS4398\project-multi-purpose-camera\Android\Layout_Version\openCV\src\debug\assets"/></dataSet></merger>
+\ No newline at end of file
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\src\main\assets"/><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\build\intermediates\shader_assets\debug\out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\openCV\src\debug\assets"/></dataSet></merger>
+\ No newline at end of file
+Index: openCV/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Fri Apr 07 13:06:16 EDT 2023\r\n
+===================================================================
+diff --git a/openCV/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties b/openCV/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+--- a/openCV/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties	
++++ b/openCV/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties	
+@@ -1,1 +1,1 @@
+-#Fri Apr 07 13:06:16 EDT 2023
++#Mon Apr 10 21:22:21 EDT 2023

@@ -245,17 +245,17 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
     }
 
 
-    private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
-        private Runnable task = null;
-        MyAsyncTask(Runnable task) {
-            this.task = task;
-        }
-        @Override
-        protected Void doInBackground(Void... voids) {
-            System.out.println("doing in background");
-            task.run();
-            return null;
-        }
-    }
+//    private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+//        private Runnable task = null;
+//        MyAsyncTask(Runnable task) {
+//            this.task = task;
+//        }
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            System.out.println("doing in background");
+//            task.run();
+//            return null;
+//        }
+//    }
 
 }
