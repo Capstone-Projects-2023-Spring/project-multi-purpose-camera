@@ -97,27 +97,25 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My_Notification");
+        builder.setContentTitle("Settings");
+        builder.setContentText("You have clicked the Settings button");
+        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        //builder.setAutoCancel(true);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            managerCompat.notify(1, builder.build());
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        managerCompat.notify(1, builder.build());
         btn.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, Settings.class);
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My_Notification");
-            builder.setContentTitle("Settings");
-            builder.setContentText("You have clicked the Settings button");
-            builder.setSmallIcon(R.drawable.ic_launcher_background);
-            builder.setAutoCancel(true);
-            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            managerCompat.notify(1, builder.build());
-
             startActivity(intent);
         });
 
