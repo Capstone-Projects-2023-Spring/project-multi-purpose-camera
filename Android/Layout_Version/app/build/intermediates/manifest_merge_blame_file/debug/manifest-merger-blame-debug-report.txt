@@ -5,154 +5,160 @@
 5    android:versionName="1.0" >
 6
 7    <uses-sdk
-7-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:11:5-44
+7-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:11:5-44
 8        android:minSdkVersion="21"
-8-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:11:15-41
+8-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:11:15-41
 9        android:targetSdkVersion="33" />
-9-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:11:5-44
+9-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:11:5-44
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:5:5-67
-11-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:5:22-64
+11-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:5:5-67
+11-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:5:22-64
 12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-12-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:6:5-79
-12-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:6:22-76
-13    <uses-permission android:name="android.permission.CAMERA" />
-13-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:8:5-65
-13-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:8:22-62
-14
-15    <uses-feature android:name="android.hardware.camera" />
-15-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:9:5-60
-15-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:9:19-57
-16    <uses-feature android:name="android.hardware.camera.autofocus" />
-16-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:10:5-70
-16-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:10:19-67
-17
-18    <permission
-18-->[androidx.core:core:1.9.0] C:\Users\jpax2\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
-19        android:name="com.example.layout_version.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-19-->[androidx.core:core:1.9.0] C:\Users\jpax2\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
-20        android:protectionLevel="signature" />
-20-->[androidx.core:core:1.9.0] C:\Users\jpax2\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
-21
-22    <uses-permission android:name="com.example.layout_version.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-22-->[androidx.core:core:1.9.0] C:\Users\jpax2\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
-22-->[androidx.core:core:1.9.0] C:\Users\jpax2\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
-23
-24    <application
-24-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:12:5-57:19
-25        android:allowBackup="true"
-25-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:13:9-35
-26        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-26-->[androidx.core:core:1.9.0] C:\Users\jpax2\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
-27        android:dataExtractionRules="@xml/data_extraction_rules"
-27-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:15:9-65
-28        android:debuggable="true"
-29        android:fullBackupContent="@xml/backup_rules"
-29-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:16:9-54
-30        android:hardwareAccelerated="true"
-30-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:14:9-43
-31        android:icon="@mipmap/ic_launcher"
-31-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:17:9-43
-32        android:label="@string/app_name"
-32-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:18:9-41
-33        android:networkSecurityConfig="@xml/network_security_config"
-33-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:21:9-69
-34        android:supportsRtl="true"
-34-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:19:9-35
-35        android:testOnly="true"
-36        android:theme="@style/Theme.Layout_Version" >
-36-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:20:9-52
-37        <activity
-37-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:23:9-31:20
-38            android:name="com.example.layout_version.MainActivity"
-38-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:24:13-41
-39            android:exported="true" >
-39-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:25:13-36
-40            <intent-filter>
-40-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:26:13-30:29
-41                <action android:name="android.intent.action.MAIN" />
-41-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:27:17-69
-41-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:27:25-66
-42
-43                <category android:name="android.intent.category.LAUNCHER" />
-43-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:29:17-77
-43-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:29:27-74
-44            </intent-filter>
-45        </activity>
-46        <activity android:name="com.example.layout_version.Settings" />
-46-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:32:9-45
-46-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:32:19-43
-47        <activity android:name="com.example.layout_version.Saving_Policy_Page" />
-47-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:33:9-56
-47-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:33:19-53
-48        <activity android:name="com.example.layout_version.Edit_Saving_Policy_Page" />
-48-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:34:9-61
-48-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:34:19-58
-49        <activity android:name="com.example.layout_version.Camera_Page" />
-49-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:35:9-49
-49-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:35:19-46
-50        <activity android:name="com.example.layout_version.Library_Videos_Page" />
-50-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:36:9-57
-50-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:36:19-54
-51        <activity
-51-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:37:9-39:46
-52            android:name="com.example.layout_version.Account.Account_Page"
-52-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:38:13-49
-53            android:launchMode="singleTask" />
-53-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:39:13-44
-54        <activity
-54-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:40:9-42:46
-55            android:name="com.example.layout_version.Account.Account_Page_Signup"
-55-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:41:13-56
-56            android:launchMode="singleTask" />
-56-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:42:13-44
-57        <activity
-57-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:43:9-45:46
-58            android:name="com.example.layout_version.Account.Account_Page_Forgot_Password"
-58-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:44:13-65
-59            android:launchMode="singleTask" />
-59-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:45:13-44
-60        <activity
-60-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:46:9-48:46
-61            android:name="com.example.layout_version.Account.Account_Page_Verify_Code"
-61-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:47:13-61
-62            android:launchMode="singleTask" />
-62-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:48:13-44
-63        <activity
-63-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:49:9-52:15
-64            android:name="com.example.layout_version.Account.Account_Page_Password_Change"
-64-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:50:13-65
-65            android:launchMode="singleTask" />
-65-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:51:13-44
-66        <activity
-66-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:53:9-56:15
-67            android:name="com.example.layout_version.Account.Account_Page_Profile"
-67-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:54:13-57
-68            android:launchMode="singleTask" />
-68-->C:\Users\jpax2\Desktop\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:55:13-44
-69
-70        <provider
-70-->[androidx.emoji2:emoji2:1.2.0] C:\Users\jpax2\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
-71            android:name="androidx.startup.InitializationProvider"
-71-->[androidx.emoji2:emoji2:1.2.0] C:\Users\jpax2\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
-72            android:authorities="com.example.layout_version.androidx-startup"
-72-->[androidx.emoji2:emoji2:1.2.0] C:\Users\jpax2\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
-73            android:exported="false" >
-73-->[androidx.emoji2:emoji2:1.2.0] C:\Users\jpax2\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
-74            <meta-data
-74-->[androidx.emoji2:emoji2:1.2.0] C:\Users\jpax2\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
-75                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-75-->[androidx.emoji2:emoji2:1.2.0] C:\Users\jpax2\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
-76                android:value="androidx.startup" />
-76-->[androidx.emoji2:emoji2:1.2.0] C:\Users\jpax2\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
-77            <meta-data
-77-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\jpax2\.gradle\caches\transforms-3\86041ab2b0d2128b301212662b855cec\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
-78                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-78-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\jpax2\.gradle\caches\transforms-3\86041ab2b0d2128b301212662b855cec\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
-79                android:value="androidx.startup" />
-79-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\jpax2\.gradle\caches\transforms-3\86041ab2b0d2128b301212662b855cec\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
-80        </provider>
-81    </application>
-82
-83</manifest>
+12-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:6:5-79
+12-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+13-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:7:5-76
+13-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:7:22-74
+14    <uses-permission android:name="android.permission.CAMERA" />
+14-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:8:5-65
+14-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:8:22-62
+15
+16    <uses-feature android:name="android.hardware.camera" />
+16-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:9:5-60
+16-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:9:19-57
+17    <uses-feature android:name="android.hardware.camera.autofocus" />
+17-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:10:5-70
+17-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:10:19-67
+18
+19    <permission
+19-->[androidx.core:core:1.9.0] C:\Users\ncoff\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+20        android:name="com.example.layout_version.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+20-->[androidx.core:core:1.9.0] C:\Users\ncoff\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+21        android:protectionLevel="signature" />
+21-->[androidx.core:core:1.9.0] C:\Users\ncoff\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+22
+23    <uses-permission android:name="com.example.layout_version.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+23-->[androidx.core:core:1.9.0] C:\Users\ncoff\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+23-->[androidx.core:core:1.9.0] C:\Users\ncoff\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+24    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+24-->[com.amazonaws:ivs-player:1.18.0] C:\Users\ncoff\.gradle\caches\transforms-3\2d549acd7bd8629aa2c17e9db3f4155d\transformed\ivs-player-1.18.0\AndroidManifest.xml:10:5-76
+24-->[com.amazonaws:ivs-player:1.18.0] C:\Users\ncoff\.gradle\caches\transforms-3\2d549acd7bd8629aa2c17e9db3f4155d\transformed\ivs-player-1.18.0\AndroidManifest.xml:10:22-73
+25
+26    <application
+26-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:12:5-57:19
+27        android:allowBackup="true"
+27-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:13:9-35
+28        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+28-->[androidx.core:core:1.9.0] C:\Users\ncoff\.gradle\caches\transforms-3\ec4f76f6c0c02de8ba18086e7bd9baf5\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+29        android:dataExtractionRules="@xml/data_extraction_rules"
+29-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:15:9-65
+30        android:debuggable="true"
+31        android:fullBackupContent="@xml/backup_rules"
+31-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:16:9-54
+32        android:hardwareAccelerated="true"
+32-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:14:9-43
+33        android:icon="@mipmap/ic_launcher"
+33-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:17:9-43
+34        android:label="@string/app_name"
+34-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:18:9-41
+35        android:networkSecurityConfig="@xml/network_security_config"
+35-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:21:9-69
+36        android:supportsRtl="true"
+36-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:19:9-35
+37        android:testOnly="true"
+38        android:theme="@style/Theme.Layout_Version" >
+38-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:20:9-52
+39        <activity
+39-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:23:9-31:20
+40            android:name="com.example.layout_version.MainActivity"
+40-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:24:13-41
+41            android:exported="true" >
+41-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:25:13-36
+42            <intent-filter>
+42-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:26:13-30:29
+43                <action android:name="android.intent.action.MAIN" />
+43-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:27:17-69
+43-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:27:25-66
+44
+45                <category android:name="android.intent.category.LAUNCHER" />
+45-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:29:17-77
+45-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:29:27-74
+46            </intent-filter>
+47        </activity>
+48        <activity android:name="com.example.layout_version.Settings" />
+48-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:32:9-45
+48-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:32:19-43
+49        <activity android:name="com.example.layout_version.Saving_Policy_Page" />
+49-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:33:9-56
+49-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:33:19-53
+50        <activity android:name="com.example.layout_version.Edit_Saving_Policy_Page" />
+50-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:34:9-61
+50-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:34:19-58
+51        <activity android:name="com.example.layout_version.Camera_Page" />
+51-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:35:9-49
+51-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:35:19-46
+52        <activity android:name="com.example.layout_version.Library_Videos_Page" />
+52-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:36:9-57
+52-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:36:19-54
+53        <activity
+53-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:37:9-39:46
+54            android:name="com.example.layout_version.Account.Account_Page"
+54-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:38:13-49
+55            android:launchMode="singleTask" />
+55-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:39:13-44
+56        <activity
+56-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:40:9-42:46
+57            android:name="com.example.layout_version.Account.Account_Page_Signup"
+57-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:41:13-56
+58            android:launchMode="singleTask" />
+58-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:42:13-44
+59        <activity
+59-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:43:9-45:46
+60            android:name="com.example.layout_version.Account.Account_Page_Forgot_Password"
+60-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:44:13-65
+61            android:launchMode="singleTask" />
+61-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:45:13-44
+62        <activity
+62-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:46:9-48:46
+63            android:name="com.example.layout_version.Account.Account_Page_Verify_Code"
+63-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:47:13-61
+64            android:launchMode="singleTask" />
+64-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:48:13-44
+65        <activity
+65-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:49:9-52:15
+66            android:name="com.example.layout_version.Account.Account_Page_Password_Change"
+66-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:50:13-65
+67            android:launchMode="singleTask" />
+67-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:51:13-44
+68        <activity
+68-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:53:9-56:15
+69            android:name="com.example.layout_version.Account.Account_Page_Profile"
+69-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:54:13-57
+70            android:launchMode="singleTask" />
+70-->C:\Users\ncoff\AndroidStudioProjects\project-multi-purpose-camera\Android\Layout_Version\app\src\main\AndroidManifest.xml:55:13-44
+71
+72        <provider
+72-->[androidx.emoji2:emoji2:1.2.0] C:\Users\ncoff\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+73            android:name="androidx.startup.InitializationProvider"
+73-->[androidx.emoji2:emoji2:1.2.0] C:\Users\ncoff\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+74            android:authorities="com.example.layout_version.androidx-startup"
+74-->[androidx.emoji2:emoji2:1.2.0] C:\Users\ncoff\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+75            android:exported="false" >
+75-->[androidx.emoji2:emoji2:1.2.0] C:\Users\ncoff\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+76            <meta-data
+76-->[androidx.emoji2:emoji2:1.2.0] C:\Users\ncoff\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+77                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+77-->[androidx.emoji2:emoji2:1.2.0] C:\Users\ncoff\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+78                android:value="androidx.startup" />
+78-->[androidx.emoji2:emoji2:1.2.0] C:\Users\ncoff\.gradle\caches\transforms-3\791b39fe68826e8543c46f2d7f8b152e\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+79            <meta-data
+79-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\ncoff\.gradle\caches\transforms-3\86041ab2b0d2128b301212662b855cec\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+80                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+80-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\ncoff\.gradle\caches\transforms-3\86041ab2b0d2128b301212662b855cec\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+81                android:value="androidx.startup" />
+81-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\ncoff\.gradle\caches\transforms-3\86041ab2b0d2128b301212662b855cec\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+82        </provider>
+83    </application>
+84
+85</manifest>

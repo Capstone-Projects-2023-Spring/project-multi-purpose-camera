@@ -1,14 +1,21 @@
 package com.example.layout_version;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -85,8 +92,32 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         libraryTabButton = findViewById(R.id.library);
         cameraTabButton = findViewById(R.id.view);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
         btn.setOnClickListener(view -> {
-            Intent intent = new Intent (MainActivity.this,Settings.class);
+            Intent intent = new Intent(MainActivity.this, Settings.class);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My_Notification");
+            builder.setContentTitle("Settings");
+            builder.setContentText("You have clicked the Settings button");
+            builder.setSmallIcon(R.drawable.ic_launcher_background);
+            builder.setAutoCancel(true);
+            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            managerCompat.notify(1, builder.build());
+
             startActivity(intent);
         });
 

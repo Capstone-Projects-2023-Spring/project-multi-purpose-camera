@@ -80,6 +80,10 @@
         "source": "com.example.layout_version.app-main-31:/layout/account_verify.xml"
     },
     {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_streaming_item.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/streaming_item.xml"
+    },
+    {
         "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_video_detail.xml.flat",
         "source": "com.example.layout_version.app-main-31:/layout/fragment_video_detail.xml"
     },
@@ -140,6 +144,10 @@
         "source": "com.example.layout_version.app-main-31:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_offline_icon.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/offline_icon.xml"
+    },
+    {
         "merged": "com.example.layout_version.app-merged_res-29:/raw_pain.mp4.flat",
         "source": "com.example.layout_version.app-main-31:/raw/pain.mp4"
     },
@@ -188,6 +196,10 @@
         "source": "com.example.layout_version.app-main-31:/layout/account_profile.xml"
     },
     {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_buffering_icon.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/buffering_icon.xml"
+    },
+    {
         "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
         "source": "com.example.layout_version.app-main-31:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
@@ -214,6 +226,10 @@
     {
         "merged": "com.example.layout_version.app-merged_res-29:/layout_saving_policy_template.xml.flat",
         "source": "com.example.layout_version.app-main-31:/layout/saving_policy_template.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_online_icon.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/online_icon.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/layout_policy_text_view.xml.flat",
@@ -246,6 +262,10 @@
     {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_play_circle_outline_24.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_play_circle_outline_24.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_streaming_list.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/fragment_streaming_list.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/mipmap-anydpi-v33_ic_launcher.xml.flat",

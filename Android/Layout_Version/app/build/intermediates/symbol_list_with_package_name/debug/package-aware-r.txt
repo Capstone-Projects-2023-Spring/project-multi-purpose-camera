@@ -2732,6 +2732,7 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable buffering_icon
 drawable cloud_setting
 drawable design_fab_background
 drawable design_ic_visibility
@@ -2825,6 +2826,8 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable offline_icon
+drawable online_icon
 drawable round_rectangle_cyan_16dp
 drawable test_level_drawable
 drawable tooltip_frame_dark
@@ -2973,6 +2976,8 @@ id compress
 id confirm_button
 id constraint
 id constraintLayout
+id constraintLayout2
+id constraintLayout3
 id container
 id content
 id contentPanel
@@ -2999,6 +3004,8 @@ id design_menu_item_action_area
 id design_menu_item_action_area_stub
 id design_menu_item_text
 id design_navigation_view
+id deviceNameView
+id deviceStatusView
 id dialog_button
 id dimensions
 id direct
@@ -3076,6 +3083,7 @@ id ignoreRequest
 id image
 id imageView
 id imageView2
+id imageView3
 id immediateStop
 id included
 id indeterminate
@@ -3095,10 +3103,13 @@ id library
 id line1
 id line3
 id linear
+id linearLayout
+id linearLayout2
 id linearLayout3
+id linearLayout4
+id linearLayout5
 id listMode
 id list_item
-id livestreamImageView
 id login
 id logout
 id m3_side_sheet
@@ -3205,6 +3216,7 @@ id peekHeight
 id percent
 id pin
 id playButton
+id playerFrameLayout
 id position
 id postLayout
 id pressed
@@ -3315,6 +3327,10 @@ id staticLayout
 id staticPostLayout
 id stop
 id stopButton
+id streamingDescriptionView
+id streamingPlayerView
+id streamingRecyclerView
+id streamingTitleView
 id stretch
 id submenuarrow
 id submit_area
@@ -3538,6 +3554,7 @@ layout edit_policy
 layout fragment_blank
 layout fragment_library
 layout fragment_streaming
+layout fragment_streaming_list
 layout fragment_video_detail
 layout library
 layout library_videos
@@ -3607,6 +3624,7 @@ layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout settings
+layout streaming_item
 layout support_simple_spinner_dropdown_item
 layout title_and_description_template
 mipmap ic_launcher
@@ -3779,6 +3797,11 @@ string searchview_navigation_content_description
 string side_sheet_accessibility_pane_title
 string side_sheet_behavior
 string status_bar_notification_info_overflow
+string streaming_buffering
+string streaming_idle
+string streaming_offline
+string streaming_online
+string streaming_streaming
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog

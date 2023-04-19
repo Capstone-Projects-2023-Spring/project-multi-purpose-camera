@@ -21,6 +21,11 @@
     <string name="db_stage">/product2</string>
     <string name="file_all_endpoint">/file/all</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="streaming_buffering">Buffering</string>
+    <string name="streaming_idle">Idle</string>
+    <string name="streaming_offline">Offline</string>
+    <string name="streaming_online">Online</string>
+    <string name="streaming_streaming">Streaming</string>
     <style name="Theme.Layout_Version" parent="Theme.AppCompat.Light.NoActionBar">
         
         <item name="colorPrimary">@color/purple_500</item>
