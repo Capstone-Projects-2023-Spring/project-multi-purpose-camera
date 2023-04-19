@@ -13,11 +13,14 @@ drawable account_setting
 drawable baseline_account_circle_24
 drawable baseline_arrow_back_ios_new_24
 drawable baseline_battery_4_bar_24
+drawable baseline_bluetooth_36
+drawable baseline_bluetooth_48
 drawable baseline_clip_24
 drawable baseline_cloud_queue_24
 drawable baseline_device_thermostat_24
 drawable baseline_directions_walk_24
 drawable baseline_fiber_manual_record_24
+drawable baseline_linked_camera_192
 drawable baseline_menu_24
 drawable baseline_mic_24
 drawable baseline_nightlight_24
@@ -49,6 +52,9 @@ id back_home_text_setting
 id back_home_txt_camera
 id back_setting_btn_savingP
 id back_setting_text_savingP
+id bluetooth_camera
+id bluetooth_description
+id bluetooth_settings
 id cam_vid_clip
 id change
 id cloud_saving_description
@@ -92,6 +98,7 @@ id saving_title2
 id saving_title3
 id saving_vertical_layout_title
 id send
+id serialNumber
 id settings
 id signup
 id spacer
@@ -107,6 +114,7 @@ id textInputLayout
 id textView
 id textView2
 id time_input_text
+id title
 id username
 id video
 id videoRecyclerView
@@ -123,6 +131,7 @@ layout account_reset
 layout account_signup_page
 layout account_verify
 layout activity_main
+layout bluetooth_hardware_page
 layout camera
 layout camera_of_policy_template
 layout description_template

@@ -2707,11 +2707,14 @@ int drawable avd_show_password 0x7f07007a
 int drawable baseline_account_circle_24 0x7f07007b
 int drawable baseline_arrow_back_ios_new_24 0x7f07007c
 int drawable baseline_battery_4_bar_24 0x7f07007d
+int drawable baseline_bluetooth_36 0x7f0700f7
+int drawable baseline_bluetooth_48 0x7f0700f8
 int drawable baseline_clip_24 0x7f07007e
 int drawable baseline_cloud_queue_24 0x7f07007f
 int drawable baseline_device_thermostat_24 0x7f070080
 int drawable baseline_directions_walk_24 0x7f070081
 int drawable baseline_fiber_manual_record_24 0x7f070082
+int drawable baseline_linked_camera_192 0x7f0700f9
 int drawable baseline_menu_24 0x7f070083
 int drawable baseline_mic_24 0x7f070084
 int drawable baseline_nightlight_24 0x7f070085
@@ -2935,6 +2938,9 @@ int id beginOnFirstDraw 0x7f080067
 int id beginning 0x7f080068
 int id bestChoice 0x7f080069
 int id blocking 0x7f08006a
+int id bluetooth_camera 0x7f08023c
+int id bluetooth_description 0x7f08023d
+int id bluetooth_settings 0x7f08023e
 int id bottom 0x7f08006b
 int id bounce 0x7f08006c
 int id bounceBoth 0x7f08006d
@@ -3270,6 +3276,7 @@ int id select_dialog_listview 0x7f0801b6
 int id selected 0x7f0801b7
 int id selection_type 0x7f0801b8
 int id send 0x7f0801b9
+int id serialNumber 0x7f08023f
 int id settings 0x7f0801ba
 int id sharedValueSet 0x7f0801bb
 int id sharedValueUnset 0x7f0801bc
@@ -3513,6 +3520,7 @@ int layout account_reset 0x7f0b001f
 int layout account_signup_page 0x7f0b0020
 int layout account_verify 0x7f0b0021
 int layout activity_main 0x7f0b0022
+int layout bluetooth_hardware_page 0x7f0b0082
 int layout camera 0x7f0b0023
 int layout camera_of_policy_template 0x7f0b0024
 int layout custom_dialog 0x7f0b0025

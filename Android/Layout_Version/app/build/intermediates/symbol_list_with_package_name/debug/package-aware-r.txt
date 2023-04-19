@@ -2708,11 +2708,14 @@ drawable avd_show_password
 drawable baseline_account_circle_24
 drawable baseline_arrow_back_ios_new_24
 drawable baseline_battery_4_bar_24
+drawable baseline_bluetooth_36
+drawable baseline_bluetooth_48
 drawable baseline_clip_24
 drawable baseline_cloud_queue_24
 drawable baseline_device_thermostat_24
 drawable baseline_directions_walk_24
 drawable baseline_fiber_manual_record_24
+drawable baseline_linked_camera_192
 drawable baseline_menu_24
 drawable baseline_mic_24
 drawable baseline_nightlight_24
@@ -2936,6 +2939,9 @@ id beginOnFirstDraw
 id beginning
 id bestChoice
 id blocking
+id bluetooth_camera
+id bluetooth_description
+id bluetooth_settings
 id bottom
 id bounce
 id bounceBoth
@@ -3271,6 +3277,7 @@ id select_dialog_listview
 id selected
 id selection_type
 id send
+id serialNumber
 id settings
 id sharedValueSet
 id sharedValueUnset
@@ -3514,6 +3521,7 @@ layout account_reset
 layout account_signup_page
 layout account_verify
 layout activity_main
+layout bluetooth_hardware_page
 layout camera
 layout camera_of_policy_template
 layout custom_dialog

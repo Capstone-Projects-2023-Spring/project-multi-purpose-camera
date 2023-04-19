@@ -48,6 +48,7 @@
         <activity android:name="com.example.layout_version.Edit_Saving_Policy_Page" />
         <activity android:name="com.example.layout_version.Camera_Page" />
         <activity android:name="com.example.layout_version.Library_Videos_Page" />
+        <activity android:name="com.example.layout_version.Bluetooth_Page" />
         <activity
             android:name="com.example.layout_version.Account.Account_Page"
             android:launchMode="singleTask" />
