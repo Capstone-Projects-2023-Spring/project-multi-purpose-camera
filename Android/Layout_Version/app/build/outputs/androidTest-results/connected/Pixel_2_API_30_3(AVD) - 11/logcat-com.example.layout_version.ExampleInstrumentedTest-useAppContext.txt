@@ -1,3 +1,0 @@
-04-12 16:39:23.501  8429  8453 I TestRunner: started: useAppContext(com.example.layout_version.ExampleInstrumentedTest)
-04-12 16:39:23.508  1440  4377 I MediaProvider: Scanned external_primary due to REASON_MOUNTED, found 18 items in 598ms, 4 inserts 0 updates 0 deletes
-04-12 16:39:23.508  8429  8453 I TestRunner: finished: useAppContext(com.example.layout_version.ExampleInstrumentedTest)
