@@ -1,4 +1,4 @@
-package com.example.layout_version.MainTab;
+package com.example.layout_version.MainTab.Library;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.MainActivity;
 import com.example.layout_version.R;
 
@@ -32,6 +33,7 @@ public class LibraryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private Boolean mParam1;
 
+    private NetworkRequestManager nrm;
 
     private Context context;
     private RecyclerView videoRecyclerView;
@@ -60,9 +62,7 @@ public class LibraryFragment extends Fragment {
         videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
         if (getArguments() != null) {
             mParam1 = getArguments().getBoolean(FIRST_TIME);
-
         }
-
     }
 
     @Override
@@ -74,8 +74,6 @@ public class LibraryFragment extends Fragment {
 
         videoRecyclerView = layout.findViewById(R.id.videoRecyclerView);
         context = container.getContext();
-
-
         return layout;
     }
 
@@ -85,8 +83,8 @@ public class LibraryFragment extends Fragment {
 
         Consumer<VideoItem> clickEvent = videoItem -> {
             videoViewModel.setSelectedVideo(videoItem);
-            if(requireActivity() instanceof MainActivity)
-                ((MainActivity)requireActivity()).videoSelected();
+            if(requireActivity() instanceof LibraryFragmentInterface)
+                ((LibraryFragmentInterface)requireActivity()).videoSelected();
             Log.e("Video Item", videoItem.getTitle());
         };
 
@@ -98,10 +96,5 @@ public class LibraryFragment extends Fragment {
         videoViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
         });
-    }
-
-    interface LibraryFragmentInterface
-    {
-        void videoSelected();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.layout_version.MainTab;
+package com.example.layout_version.MainTab.Library;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -66,6 +66,7 @@ public class VideoDetailFragment extends Fragment {
     public void update(VideoItem video)
     {
         titleView.setText(video.getTitle());
-        videoView.setVideoPath(video.getUrl());
+        if(video.getUrl() != null)
+            videoView.setVideoPath(video.getUrl());
     }
 }

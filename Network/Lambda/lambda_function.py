@@ -4,7 +4,6 @@ import os
 import random
 
 import EmailSender
-from Database.Data.Account_has_Hardware import Account_has_Hardware
 from Database.MPCDatabase import MPCDatabase
 from Database.Data.Recording import Recording
 from Database.Data.Account import Account, AccountStatus
@@ -101,16 +100,6 @@ def check_password(password):
         return True
     else:
         return False
-
-
-def random_by_hash():
-    import hashlib
-    import datetime
-    c = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S.%f')[:-3]
-    dat = 'python' + c
-
-    hs = hashlib.sha224(dat.encode()).hexdigest()
-    return hs
 
 
 def get_all(table_class):
@@ -373,34 +362,6 @@ def hardware_insert(event, pathPara, queryPara):
     database.insert(hardware)
     id = database.get_id_by_name(Hardware, queryPara["name"])
     return json_payload({"id": id})
-
-
-@api.handle("/hardware/all", httpMethod=MPC_API.POST)
-def hardware_insert(event, pathPara, queryPara):
-    """Inserts new rows into the hardware table based on account id"""
-    token = event["body"]["token"]
-
-    hardware = database.get_all_join_fields_by_field(
-        Hardware,
-        [
-            (Account_has_Hardware, Account_has_Hardware.EXPLICIT_HARDWARE_ID, Hardware.EXPLICIT_HARDWARE_ID),
-            (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID)
-        ], Account.TOKEN, token)
-    return json_payload({"hardware": Hardware.list_object_to_dict_list(hardware)})
-
-
-@api.handle("/hardware/register", httpMethod=MPC_API.PUT)
-def hardware_insert(event, pathPara, queryPara):
-    """Inserts new rows into the hardware table based on account id"""
-    hash_name = random_by_hash()[:12]
-    hardware = Hardware(hash_name, "720p", "test-ivs",
-                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
-                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
-    database.insert(hardware)
-    inserted_hardware = database.get_by_field(Hardware, Hardware.NAME, hash_name)
-    return json_payload({"hardware": Hardware.object_to_dict(inserted_hardware)})
 
 
 @api.handle("/hardware/{id}")
@@ -730,6 +691,7 @@ def download_url(event, pathPara, queryPara):
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
+    max = database.get_max_id(Notification)
     # event = {
     #     "resource": "/file/{key}/upload-url",
     #     "httpMethod": MPC_API.POST,
@@ -748,31 +710,22 @@ if __name__ == "__main__":
     # }
     # print(lambda_handler(event, None))
 
-    # event = {
-    #     "resource": "/hardware/register",
-    #     "httpMethod": "PUT",
-    #     "body": """{
-    #         "username": "tun05036@temple.edu",
-    #         "password": "password",
-    #         "email": "default@temple.edu",
-    #         "code": "658186",
-    #         "token": "c0d12f97a5989f6852603badff33ceb6"
-    #     }""",
-    #     "pathParameters": {
-    #         "token": "c0d12f97a5989f6852603badff33ceb6"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
-    # }
-    # print(lambda_handler(event, None))
-    database.delete_by_field(Hardware, (Hardware.ID, "50809c298c5a1a3214b115390b6b725c"))
+    event = {
+        "resource": "/file/all",
+        "httpMethod": "POST",
+        "body": """{
+            "username": "tun05036@temple.edu",
+            "password": "password",
+            "email": "default@temple.edu",
+            "code": "658186",
+            "token": "56df4a92b9eafeff143ff1f16c86f008"
+        }""",
+        "pathParameters": {
+            "token": "c0d12f97a5989f6852603badff33ceb6"
+        },
+        "queryStringParameters": {
+            "notification_type": 10
+        }
+    }
+    print(lambda_handler(event, None))
     database.close()
-    # data = database.get_all_join_fields_by_field(Hardware,
-    #                                             [
-    #                                                 (Account_has_Hardware, Account_has_Hardware.EXPLICIT_HARDWARE_ID, Hardware.EXPLICIT_HARDWARE_ID),
-    #                                                 (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID)
-    #                                             ], Account.NAME, "John Smith")
-    # for d in data:
-    #     print(d)
-
