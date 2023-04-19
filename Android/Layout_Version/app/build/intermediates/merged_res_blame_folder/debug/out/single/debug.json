@@ -12,16 +12,16 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\account_profile.xml"
     },
     {
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_linked_camera_192.xml.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_linked_camera_192.xml"
+    },
+    {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\mipmap-mdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_fragment_streaming.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\fragment_streaming.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_settings.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/settings.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_account_circle_24.xml.flat",
@@ -100,6 +100,10 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\fragment_video_detail.xml"
     },
     {
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_bluetooth_36.xml.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_bluetooth_36.xml"
+    },
+    {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_cloud_queue_24.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_cloud_queue_24.xml"
     },
@@ -116,12 +120,16 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_bluetooth_36.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_bluetooth_36.xml"
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_streaming_item.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/streaming_item.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_notification_setting.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\notification_setting.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_video_detail.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/fragment_video_detail.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\mipmap-anydpi-v33_ic_launcher.xml.flat",
@@ -134,6 +142,10 @@
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_notification_setting_2.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\notification_setting_2.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_activity_main.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/activity_main.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_nightlight_24.xml.flat",
@@ -172,8 +184,8 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_mic_24.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_bluetooth_48.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_bluetooth_48.xml"
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_bluetooth_48.xml.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_bluetooth_48.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_fragment_blank.xml.flat",
@@ -204,6 +216,10 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_surround_sound_24.xml"
     },
     {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_offline_icon.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/offline_icon.xml"
+    },
+    {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
@@ -220,6 +236,10 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_play_arrow_48.xml"
     },
     {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_streaming.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/fragment_streaming.xml"
+    },
+    {
         "merged": "com.example.layout_version.app-merged_res-29:/layout_bluetooth_hardware_page.xml.flat",
         "source": "com.example.layout_version.app-main-31:/layout/bluetooth_hardware_page.xml"
     },
@@ -234,6 +254,10 @@
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_clip_24.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_clip_24.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_buffering_icon.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/buffering_icon.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_cloud_setting.xml.flat",
@@ -264,16 +288,20 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\drawable_round_rectangle.xml"
     },
     {
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_bluetooth_hardware_page.xml.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\bluetooth_hardware_page.xml"
+    },
+    {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\xml_backup_rules.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_fiber_manual_record_24.xml.flat",
-        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_fiber_manual_record_24.xml"
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_online_icon.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/online_icon.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_linked_camera_192.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_linked_camera_192.xml"
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_fiber_manual_record_24.xml.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_fiber_manual_record_24.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_account_signup_page.xml.flat",
@@ -286,6 +314,10 @@
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_library_videos_page.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\library_videos_page.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_streaming_list.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/fragment_streaming_list.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_library.xml.flat",
