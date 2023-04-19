@@ -333,6 +333,27 @@ class MPCDatabase:
                                       match_list=[MatchItem(item[0], item[1]) for item in field_value_list])
         return len(entries["data"]) == 1
 
+    def verify_fields_by_joins(self, table_class, join_data_list: list[tuple], match_data_list: list[tuple]):
+        """
+           Verifies multiple fields with joining table
+
+           Parameters:
+
+               >table_class         : class<        : Class that represents the DB table that is to be updated
+               >join_table_class    : string<       : name of table that will be joined to the table
+               >join_field1         : string<       : The name of field that the tables will be joined on
+               >join_field2         : string<       : The name of field that the tables will be joined on
+               >match_data_list     : list[tuple]   : List of pairs of field and value that will be checked to be matched
+
+           Returns:
+               >bool<       : True if the record with given field exists with value in the table
+       """
+
+        entries = self.select_payload(table_class.TABLE, table_class.EXPLICIT_COLUMNS,
+                                      join_list=[JoinItem(JoinItem.INNER, item[0].TABLE, item[1], item[2]) for item in join_data_list],
+                                      match_list=[MatchItem(item[0], item[1]) for item in match_data_list])
+        return len(entries["data"]) == 1
+
     def verify_id(self, table_class, id: int) -> bool:
         """
            verify_field function to verify the id
@@ -954,4 +975,6 @@ if __name__ == "__main__":
     print(database.get_field_by_field(Account, Account.NAME, Account.EMAIL, "username1@email.com"))
     print(MatchItem("Key", "NONE").value)
     print(database.varidate_timestamp(Account, Account.NAME, "username1"))
+
+
     database.close()

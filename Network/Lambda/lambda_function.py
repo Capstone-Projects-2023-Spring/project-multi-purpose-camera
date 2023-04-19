@@ -342,6 +342,33 @@ def account_signin(event, pathPara, queryPara):
     return json_payload({"message": "Password reset successful", Account.TOKEN: token})
 
 
+@api.handle("/account/verify/token", httpMethod=MPC_API.POST)
+def account_signin(event, pathPara, queryPara):
+    """Handles users reset their account by verifying their username in the database"""
+    body: dict = event["body"]
+
+    if database.verify_field(Account, Account.TOKEN, body[Account.TOKEN]):
+        return json_payload({"message": "Token Found"})
+
+    return json_payload({"message": Error.TOKEN_NOT_FOUND}, True)
+
+
+@api.handle("/account/verify/device", httpMethod=MPC_API.POST)
+def account_signin(event, pathPara, queryPara):
+    """Handles users reset their account by verifying their username in the database"""
+    body: dict = event["body"]
+
+    if database.verify_fields_by_joins(Account,
+                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID),
+                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID, Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                       [(Account.TOKEN, body[Account.TOKEN]),
+                                        (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+        return json_payload({"message": "Device Found"})
+    return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
+
+
+
+
 @api.handle("/account", httpMethod=MPC_API.POST)
 def account_insert(event, pathPara, queryPara):
     """Inserts new row into the account table which represents a new user"""
@@ -748,24 +775,25 @@ if __name__ == "__main__":
     # }
     # print(lambda_handler(event, None))
 
-    # event = {
-    #     "resource": "/hardware/register",
-    #     "httpMethod": "PUT",
-    #     "body": """{
-    #         "username": "tun05036@temple.edu",
-    #         "password": "password",
-    #         "email": "default@temple.edu",
-    #         "code": "658186",
-    #         "token": "c0d12f97a5989f6852603badff33ceb6"
-    #     }""",
-    #     "pathParameters": {
-    #         "token": "c0d12f97a5989f6852603badff33ceb6"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
-    # }
-    # print(lambda_handler(event, None))
+    event = {
+        "resource": "/account/verify/device",
+        "httpMethod": "POST",
+        "body": """{
+            "username": "tun05036@temple.edu",
+            "password": "password",
+            "email": "default@temple.edu",
+            "code": "658186",
+            "token": "0d94d4bdceedba53f4cccf7cfa3ecc3c",
+            "device_id": "5b9ca48d26390983524f551489319af4"
+        }""",
+        "pathParameters": {
+            "token": "c0d12f97a5989f6852603badff33ceb6"
+        },
+        "queryStringParameters": {
+            "notification_type": 10
+        }
+    }
+    print(lambda_handler(event, None))
     # database.delete_by_field(Hardware, (Hardware.ID, "50809c298c5a1a3214b115390b6b725c"))
     database.close()
     # data = database.get_all_join_fields_by_field(Hardware,
