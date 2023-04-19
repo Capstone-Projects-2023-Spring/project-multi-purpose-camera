@@ -16,18 +16,25 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
-import com.example.layout_version.Account.NetworkRequestManager;
+import com.example.layout_version.MainTab.Streaming.ChannelItem;
+import com.example.layout_version.MainTab.Streaming.StreamingFragment;
+import com.example.layout_version.MainTab.Streaming.StreamingListFragment;
+import com.example.layout_version.MainTab.Streaming.StreamingListFragmentInterface;
+import com.example.layout_version.MainTab.Streaming.StreamingViewModel;
+import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.Account.TokenChangeInterface;
-import com.example.layout_version.MainTab.LibraryFragment;
-import com.example.layout_version.MainTab.LibraryFragmentInterface;
-import com.example.layout_version.MainTab.VideoDetailFragment;
-import com.example.layout_version.MainTab.VideoItem;
-import com.example.layout_version.MainTab.VideoViewModel;
+import com.example.layout_version.MainTab.Library.LibraryFragment;
+import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
+import com.example.layout_version.MainTab.Library.VideoDetailFragment;
+import com.example.layout_version.MainTab.Library.VideoItem;
+import com.example.layout_version.MainTab.Library.VideoViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -35,13 +42,17 @@ import java.util.stream.IntStream;
 //import org.opencv.highgui.HighGui;
 
 
-public class MainActivity extends AppCompatActivity implements TokenChangeInterface, LibraryFragmentInterface {
+public class MainActivity extends AppCompatActivity implements TokenChangeInterface, LibraryFragmentInterface, StreamingListFragmentInterface {
 
     private Fragment libraryFragment;
     private VideoViewModel videoViewModel;
+    private StreamingViewModel streamingViewModel;
     private Account account;
     private Button libraryTabButton;
     private Button cameraTabButton;
+
+    private boolean videoDetailViewFlag;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         setContentView(R.layout.activity_main);
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
         account = Account.getInstance(this);
+        videoDetailViewFlag = false;
 
         try {
             Thread.sleep(1000);
@@ -60,13 +72,13 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
 //            System.out.println("calling backend");
 //            BackEnd.init();
 //        });
-        try {
-            System.out.println("running async");
+//        try {
+//            System.out.println("running async");
 //            database.execute();
 //            database.get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
         ImageView btn = findViewById(R.id.settings);
         ImageView accountImageView = findViewById(R.id.account);
@@ -89,16 +101,22 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
             startActivity(intent);
         });
 
-
-
         if(savedInstanceState == null) {
             Log.d("", "New state");
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainFragmentContainerView, StreamingListFragment.newInstance())
+                    .commit();
             libraryFragment =LibraryFragment.newInstance(true);
         }
         else
             Log.d("", "Npot New state");
 
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
+        streamingViewModel = new ViewModelProvider(this).get(StreamingViewModel.class);
+        streamingViewModel.setChannelList(new ArrayList<>(Arrays.asList(
+                new ChannelItem("https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8", "Streaming 1"),
+                new ChannelItem("https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8", "Streaming 2"),
+                new ChannelItem("https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8", "Streaming 3"))));
 
         libraryTabButton.setOnClickListener(view -> {
             LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
@@ -108,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
             VideoDetailFragment videoDetailFragment = (VideoDetailFragment)getSupportFragmentManager().findFragmentByTag("VideoDetailFragment");
             if (videoDetailFragment != null && videoDetailFragment.isVisible()) {
                 getSupportFragmentManager().popBackStack();
+                videoDetailViewFlag = false;
                 return;
             }
             cameraTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -117,11 +136,21 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
                     .replace(R.id.mainFragmentContainerView, libraryFragment, "LibraryFragment")
                     .addToBackStack("LibraryFragment")
                     .commit();
-        });
+            if(videoDetailViewFlag)
+            {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.mainFragmentContainerView, new VideoDetailFragment(), "VideoDetailFragment")
+                        .addToBackStack("VideoDetailFragment")
+                        .commit();
+            }
+        }
+        );
 
         cameraTabButton.setOnClickListener(view -> {
             LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
-            if (fragment != null && fragment.isVisible()) {
+            StreamingFragment streamingFragment = (StreamingFragment) getSupportFragmentManager().findFragmentByTag("StreamingFragment");
+            if (fragment != null && fragment.isVisible() || streamingFragment != null && streamingFragment.isVisible()) {
                 getSupportFragmentManager().popBackStack();
             }
             VideoDetailFragment videoDetailFragment = (VideoDetailFragment)getSupportFragmentManager().findFragmentByTag("VideoDetailFragment");
@@ -184,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
                                     JSONObject item = fileArray.getJSONObject(i);
                                     return new VideoItem(item.get("file_name").toString(), item.get("timestamp").toString(), item.getString("url"));
                                 } catch (JSONException e) {
-                                    throw new RuntimeException(e);
+                                    return new VideoItem("Unknown Video", "Failed to retrieve video file", null);
                                 }
                             })
                             .collect(Collectors.toList());
@@ -201,7 +230,17 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.mainFragmentContainerView, new VideoDetailFragment(), "VideoDetailFragment")
                 .setReorderingAllowed(true)
-                .addToBackStack(null)
+                .addToBackStack("VideoDetailFragment")
+                .commit();
+        videoDetailViewFlag = true;
+    }
+
+    @Override
+    public void channelSelected(ChannelItem channelItem) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainFragmentContainerView, new StreamingFragment(), "StreamingFragment")
+                .setReorderingAllowed(true)
+                .addToBackStack("StreamingFragment")
                 .commit();
     }
 
