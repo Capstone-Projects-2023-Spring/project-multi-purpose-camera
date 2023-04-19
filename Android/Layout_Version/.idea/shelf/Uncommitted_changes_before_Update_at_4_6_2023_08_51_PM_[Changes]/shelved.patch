@@ -1,0 +1,138 @@
+Index: app/src/main/java/com/example/layout_version/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.layout_version;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.constraintlayout.widget.ConstraintLayout;\r\n\r\nimport android.app.ProgressDialog;\r\nimport android.content.Intent;\r\nimport android.graphics.Canvas;\r\nimport android.graphics.Color;\r\nimport android.graphics.Paint;\r\nimport android.graphics.RectF;\r\nimport android.net.Uri;\r\nimport android.os.AsyncTask;\r\nimport android.os.Bundle;\r\nimport android.provider.ContactsContract;\r\nimport android.util.DisplayMetrics;\r\nimport android.view.KeyEvent;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.view.Window;\r\nimport android.webkit.WebSettings;\r\nimport android.webkit.WebView;\r\nimport android.webkit.WebViewClient;\r\nimport android.widget.Button;\r\nimport android.widget.ImageView;\r\nimport android.widget.MediaController;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.ScrollView;\r\nimport android.widget.TextView;\r\nimport android.widget.VideoView;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    public ConstraintLayout main_layout;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n        BackEnd.init_test_objects();\r\n\r\n        ImageView btn;\r\n        ImageView account;\r\n        Button lib;\r\n        TextView vid;\r\n        WebView mWebView;\r\n\r\n        ConstraintLayout constraintLayout = findViewById(R.id.main_layout);\r\n        System.out.println(\"*******************\\n\\n\\n\" + constraintLayout);\r\n\r\n\r\n        main_layout = new ConstraintLayout(this);\r\n        main_layout.setLayoutParams(View_Factory.createLayoutParams(0, 0, 0, 0, -1, -1 ));\r\n        constraintLayout.addView(main_layout);\r\n\r\n        //ConstraintLayout camera_layout = construct_camera_layout(main_layout);\r\n\r\n        btn = (ImageView) findViewById(R.id.settings);\r\n        account = (ImageView) findViewById(R.id.account);\r\n        lib = (Button) findViewById(R.id.library);\r\n//        vid = (TextView) findViewById(R.id.cam_vid_clip);\r\n\r\n        btn.setOnClickListener(new View.OnClickListener()\r\n        {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent intent = new Intent (MainActivity.this,Settings.class);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n        account.setOnClickListener(new View.OnClickListener()\r\n        {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent intent = new Intent (MainActivity.this,Account_Page.class);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n        lib.setOnClickListener(new View.OnClickListener()\r\n        {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent intent = new Intent (MainActivity.this,Library.class);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n//        vid.setOnClickListener(new View.OnClickListener()\r\n//        {\r\n//            @Override\r\n//            public void onClick(View view) {\r\n//                Intent intent = new Intent (MainActivity.this,Camera_Page.class);\r\n//                startActivity(intent);\r\n//                System.out.println(\"--------Entering live stream\");\r\n//            }\r\n//        });\r\n\r\n        // ------------- Layout fir reuseable navbar ---------------\r\n//        RelativeLayout container = findViewById(R.id.nav_test);\r\n//        ViewGroup nav = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.main_top_nav_bar, null);\r\n//        container.addView(nav);\r\n//\r\n//        VideoView videoView = findViewById(R.id.video);\r\n\r\n//        MediaController mediaController = new MediaController (this);\r\n//        videoView.setMediaController(mediaController);\r\n//        mediaController.setAnchorView(videoView);\r\n\r\n        // ------------- Video from project folder -------------\r\n//        String videoPath = \"android.resource://\" + getPackageName() + \"/\" + R.raw.pain;\r\n//        Uri uri = Uri.parse(videoPath);\r\n//        videoView.setVideoURI(uri);\r\n\r\n        // ------------- Video from online URL -------------\r\n        //Uri uri = Uri.parse(\"https://arbzc576ef.execute-api.us-east-1.amazonaws.com/milestone1?event_type=Video\");\r\n        // Livestream online and server\r\n        //Uri uri = Uri.parse(\"http://44.212.17.188:9999/\");\r\n//        Uri uri = Uri.parse(\"http://10.0.2.2:9999/\");\r\n//        //Uri uri = Uri.parse(\"https://livestream.com/accounts/11707815/events/4299357\");\r\n//        videoView.setVideoURI(uri);\r\n//        videoView.requestFocus();\r\n//        videoView.start();\r\n\r\n        // ------------- Web Page from online and Local -------------\r\n        mWebView = (WebView) findViewById(R.id.video_web);\r\n        WebSettings webSettings = mWebView.getSettings();\r\n        webSettings.setJavaScriptEnabled(true);\r\n\r\n        mWebView.setWebViewClient(new Callback());\r\n        mWebView.loadUrl(\"http://192.168.137.247:8082/\");\r\n//          mWebView.loadUrl(\"http://192.168.87.249:5500/Display-Character.html\");\r\n////        mWebView.loadUrl(\"http://44.212.17.188:9999/\");\r\n\r\n        //        String targetServer = \"http://10.0.2.2:9999/\";\r\n        //        AsyncTaskRunner ad = new AsyncTaskRunner();\r\n        //        ad.execute(targetServer);\r\n//        try {\r\n//            Thread.sleep(5000);\r\n//        } catch (InterruptedException e) {\r\n//            throw new RuntimeException(e);\r\n//        }\r\n\r\n//        ImageView image = (ImageView) findViewById(R.id.image);\r\n//        Receiver_Client.yourImageView = image;\r\n//        AsyncTaskRunner thread = new AsyncTaskRunner();\r\n//        thread.execute(\"\");\r\n\r\n    }\r\n\r\n\r\n    private class Callback extends WebViewClient {\r\n        @Override\r\n        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {\r\n            return false;\r\n        }\r\n    }\r\n//\r\n//    private class AsyncTaskRunner extends AsyncTask<String, String, String> {\r\n//        //call doInBackGround with execute()\r\n//        private String resp;\r\n//        ProgressDialog progressDialog;\r\n//\r\n//        @Override\r\n//        protected String doInBackground(String... params) {\r\n//\r\n//            Receiver_Client.custom_run();\r\n//\r\n//            return null;\r\n//        }\r\n//\r\n//\r\n//        @Override\r\n//        protected void onPostExecute(String result) {\r\n//            // execution of result of Long time consuming operation\r\n//            //progressDialog.dismiss();\r\n//            //finalResult.setText(result);\r\n//        }\r\n//    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/layout_version/MainActivity.java b/app/src/main/java/com/example/layout_version/MainActivity.java
+--- a/app/src/main/java/com/example/layout_version/MainActivity.java	(revision 38779ed1b00830381ec6c463ccebf16f56c82c1d)
++++ b/app/src/main/java/com/example/layout_version/MainActivity.java	(date 1680828046436)
+@@ -54,12 +54,9 @@
+         main_layout.setLayoutParams(View_Factory.createLayoutParams(0, 0, 0, 0, -1, -1 ));
+         constraintLayout.addView(main_layout);
+ 
+-        //ConstraintLayout camera_layout = construct_camera_layout(main_layout);
+-
+         btn = (ImageView) findViewById(R.id.settings);
+         account = (ImageView) findViewById(R.id.account);
+         lib = (Button) findViewById(R.id.library);
+-//        vid = (TextView) findViewById(R.id.cam_vid_clip);
+ 
+         btn.setOnClickListener(new View.OnClickListener()
+         {
+@@ -88,42 +85,6 @@
+             }
+         });
+ 
+-//        vid.setOnClickListener(new View.OnClickListener()
+-//        {
+-//            @Override
+-//            public void onClick(View view) {
+-//                Intent intent = new Intent (MainActivity.this,Camera_Page.class);
+-//                startActivity(intent);
+-//                System.out.println("--------Entering live stream");
+-//            }
+-//        });
+-
+-        // ------------- Layout fir reuseable navbar ---------------
+-//        RelativeLayout container = findViewById(R.id.nav_test);
+-//        ViewGroup nav = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.main_top_nav_bar, null);
+-//        container.addView(nav);
+-//
+-//        VideoView videoView = findViewById(R.id.video);
+-
+-//        MediaController mediaController = new MediaController (this);
+-//        videoView.setMediaController(mediaController);
+-//        mediaController.setAnchorView(videoView);
+-
+-        // ------------- Video from project folder -------------
+-//        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.pain;
+-//        Uri uri = Uri.parse(videoPath);
+-//        videoView.setVideoURI(uri);
+-
+-        // ------------- Video from online URL -------------
+-        //Uri uri = Uri.parse("https://arbzc576ef.execute-api.us-east-1.amazonaws.com/milestone1?event_type=Video");
+-        // Livestream online and server
+-        //Uri uri = Uri.parse("http://44.212.17.188:9999/");
+-//        Uri uri = Uri.parse("http://10.0.2.2:9999/");
+-//        //Uri uri = Uri.parse("https://livestream.com/accounts/11707815/events/4299357");
+-//        videoView.setVideoURI(uri);
+-//        videoView.requestFocus();
+-//        videoView.start();
+-
+         // ------------- Web Page from online and Local -------------
+         mWebView = (WebView) findViewById(R.id.video_web);
+         WebSettings webSettings = mWebView.getSettings();
+@@ -131,8 +92,6 @@
+ 
+         mWebView.setWebViewClient(new Callback());
+         mWebView.loadUrl("http://192.168.137.247:8082/");
+-//          mWebView.loadUrl("http://192.168.87.249:5500/Display-Character.html");
+-////        mWebView.loadUrl("http://44.212.17.188:9999/");
+ 
+         //        String targetServer = "http://10.0.2.2:9999/";
+         //        AsyncTaskRunner ad = new AsyncTaskRunner();
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main_layout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    tools:context=\".MainActivity\"\r\n    android:background=\"@android:color/white\">\r\n\r\n        <RelativeLayout\r\n            android:id=\"@+id/nav_bar_top\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:padding=\"12dp\"\r\n            android:translationZ=\"1dp\"\r\n            app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"16dp\"\r\n                android:text=\"MP.Cam\"\r\n                android:textSize=\"20sp\"\r\n                android:textStyle=\"bold\" />\r\n\r\n            <ImageView\r\n                android:id=\"@+id/account\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_alignParentEnd=\"true\"\r\n                android:layout_marginRight=\"35dp\"\r\n                android:src=\"@drawable/baseline_account_circle_24\" />\r\n\r\n            <ImageView\r\n                android:id=\"@+id/settings\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_alignParentEnd=\"true\"\r\n                android:src=\"@drawable/baseline_menu_24\" />\r\n\r\n        </RelativeLayout>\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/nav_bar_bottom\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"50dp\"\r\n        android:translationZ=\"1dp\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n\r\n        <Button\r\n            android:id=\"@+id/view\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_weight=\"1\"\r\n            android:background=\"#c4fffd\"\r\n            android:textColor=\"@color/black\"\r\n            android:text=\"View\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/library\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_weight=\"1\"\r\n            android:background=\"@color/white\"\r\n            android:textColor=\"@android:color/black\"\r\n            android:text=\"Library\" />\r\n    </LinearLayout>\r\n\r\n    <!--    <RelativeLayout-->\r\n    <!--        android:id=\"@+id/nav_test\"-->\r\n    <!--        android:layout_width=\"match_parent\"-->\r\n    <!--        android:layout_height=\"wrap_content\"-->\r\n    <!--        app:layout_constraintTop_toTopOf=\"parent\">-->\r\n\r\n    <!--    </RelativeLayout>-->\r\n\r\n<!--    <RelativeLayout-->\r\n<!--        android:layout_width=\"match_parent\"-->\r\n<!--        android:layout_height=\"wrap_content\"-->\r\n<!--        app:layout_constraintEnd_toEndOf=\"parent\"-->\r\n<!--        app:layout_constraintStart_toStartOf=\"parent\"-->\r\n<!--        app:layout_constraintTop_toTopOf=\"parent\">-->\r\n\r\n<!--            <FrameLayout-->\r\n<!--                android:layout_width=\"match_parent\"-->\r\n<!--                android:layout_height=\"wrap_content\"-->\r\n<!--                android:layout_marginTop=\"120dp\"-->\r\n<!--                android:layout_marginRight=\"30dp\"-->\r\n<!--                android:layout_marginLeft=\"30dp\"-->\r\n<!--                app:layout_constraintEnd_toEndOf=\"parent\"-->\r\n<!--                app:layout_constraintStart_toStartOf=\"parent\"-->\r\n<!--                app:layout_constraintTop_toTopOf=\"parent\">-->\r\n\r\n<!--                <VideoView-->\r\n<!--                    android:id=\"@+id/video\"-->\r\n<!--                    android:layout_width=\"match_parent\"-->\r\n<!--                    android:layout_height=\"230dp\"></VideoView>-->\r\n<!--            </FrameLayout>-->\r\n\r\n<!--        <ImageView-->\r\n<!--            android:id=\"@+id/image\"-->\r\n<!--            android:layout_width=\"match_parent\"-->\r\n<!--            android:layout_height=\"230dp\"-->\r\n<!--            android:layout_marginLeft=\"30dp\"-->\r\n<!--            android:layout_marginTop=\"120dp\"-->\r\n<!--            android:layout_marginRight=\"30dp\">-->\r\n\r\n\r\n<!--        </ImageView>-->\r\n\r\n<!--        <TextView-->\r\n<!--            android:id=\"@+id/cam_vid_clip\"-->\r\n<!--            android:layout_width=\"match_parent\"-->\r\n<!--            android:layout_height=\"wrap_content\"-->\r\n<!--            android:layout_marginLeft=\"100dp\"-->\r\n<!--            android:layout_marginTop=\"150dp\"-->\r\n<!--            android:layout_marginRight=\"100dp\"-->\r\n<!--            android:alpha=\"0.5\"-->\r\n<!--            android:background=\"#c7c7c7\">-->\r\n\r\n<!--        </TextView>-->\r\n\r\n<!--    </RelativeLayout>-->\r\n\r\n        <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n        <WebView\r\n            android:id=\"@+id/video_web\"\r\n            android:layout_width=\"300dp\"\r\n            android:layout_height=\"300dp\"\r\n            android:layout_marginTop=\"100dp\">\r\n\r\n        </WebView>\r\n    </LinearLayout>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 38779ed1b00830381ec6c463ccebf16f56c82c1d)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1680827361361)
+@@ -77,12 +77,12 @@
+ 
+     <!--    </RelativeLayout>-->
+ 
+-<!--    <RelativeLayout-->
+-<!--        android:layout_width="match_parent"-->
+-<!--        android:layout_height="wrap_content"-->
+-<!--        app:layout_constraintEnd_toEndOf="parent"-->
+-<!--        app:layout_constraintStart_toStartOf="parent"-->
+-<!--        app:layout_constraintTop_toTopOf="parent">-->
++    <RelativeLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent">
+ 
+ <!--            <FrameLayout-->
+ <!--                android:layout_width="match_parent"-->
+@@ -123,19 +123,21 @@
+ 
+ <!--        </TextView>-->
+ 
+-<!--    </RelativeLayout>-->
+-
+         <LinearLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent">
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:layout_marginRight="20dp"
++            android:layout_marginLeft="20dp">
+ 
+-        <WebView
+-            android:id="@+id/video_web"
+-            android:layout_width="300dp"
+-            android:layout_height="300dp"
+-            android:layout_marginTop="100dp">
++            <WebView
++                android:id="@+id/video_web"
++                android:layout_width="370dp"
++                android:layout_height="300dp"
++                android:layout_marginTop="100dp">
+ 
+-        </WebView>
+-    </LinearLayout>
++            </WebView>
++        </LinearLayout>
+ 
++    </RelativeLayout>
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
