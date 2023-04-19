@@ -25,6 +25,7 @@ drawable baseline_notification_add_24
 drawable baseline_notifications_none_24
 drawable baseline_photo_camera_24
 drawable baseline_play_arrow_48
+drawable baseline_play_circle_outline_24
 drawable baseline_save_as_24
 drawable baseline_settings_24
 drawable baseline_surround_sound_24
@@ -65,7 +66,6 @@ id frameLayout2
 id imageView
 id imageView2
 id library
-id linearLayout2
 id linearLayout3
 id livestreamImageView
 id login

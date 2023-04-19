@@ -31,11 +31,4 @@ public class Library_Videos_Page extends AppCompatActivity {
 
     }
 
-    public void VideoPage(String description, String date, String video)
-    {
-        this.description = description;
-        this.date = date;
-        this.video = video;
-    }
-
 }

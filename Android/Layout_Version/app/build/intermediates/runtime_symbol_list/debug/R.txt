@@ -2719,6 +2719,7 @@ int drawable baseline_notification_add_24 0x7f070086
 int drawable baseline_notifications_none_24 0x7f070087
 int drawable baseline_photo_camera_24 0x7f070088
 int drawable baseline_play_arrow_48 0x7f070089
+int drawable baseline_play_circle_outline_24 0x7f0700f6
 int drawable baseline_save_as_24 0x7f07008a
 int drawable baseline_settings_24 0x7f07008b
 int drawable baseline_surround_sound_24 0x7f07008c
@@ -3093,7 +3094,6 @@ int id library 0x7f080106
 int id line1 0x7f080107
 int id line3 0x7f080108
 int id linear 0x7f080109
-int id linearLayout2 0x7f08010a
 int id linearLayout3 0x7f08010b
 int id listMode 0x7f08010c
 int id list_item 0x7f08010d
