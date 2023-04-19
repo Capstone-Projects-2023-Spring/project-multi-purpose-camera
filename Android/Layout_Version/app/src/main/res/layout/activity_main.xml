@@ -77,7 +77,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainFragmentContainerView"
-        android:name="com.example.layout_version.MainTab.StreamingFragment"
+        android:name="com.example.layout_version.MainTab.Streaming.StreamingFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

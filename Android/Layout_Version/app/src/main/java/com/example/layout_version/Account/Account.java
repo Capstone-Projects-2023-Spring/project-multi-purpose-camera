@@ -3,6 +3,7 @@ package com.example.layout_version.Account;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 
 import org.json.JSONException;
@@ -19,9 +20,7 @@ public class Account {
     private String username;
     private String email;
     private String token;
-
     private String code;
-
     private String status;
     private TokenChangeInterface tokenChangeInterface;
 
