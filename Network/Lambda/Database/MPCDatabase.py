@@ -269,6 +269,8 @@ class MPCDatabase:
                 values[i] = "NULL"
             elif type(values[i]) is str and values[i][-1:] != ")":
                 values[i] = f"'{values[i]}'"
+            else:
+                values[i] = str(values[i])
 
         return "Insert " + \
                ("Ignore" if ignore else "") + \

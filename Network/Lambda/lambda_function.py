@@ -367,6 +367,20 @@ def account_signin(event, pathPara, queryPara):
     return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
 
 
+@api.handle("/account/add/device", httpMethod=MPC_API.PUT)
+def account_signin(event, pathPara, queryPara):
+    """Handles users reset their account by verifying their username in the database"""
+    body: dict = event["body"]
+    id_a = database.get_field_by_field(Account, Account.ID, Account.TOKEN, body[Account.TOKEN])
+    id_h = database.get_field_by_field(Hardware, Hardware.ID, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
+    if id_a is None:
+        return json_payload({"message": Error.TOKEN_MISMATCH}, True)
+    if id_h is None:
+        return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
+
+    database.insert(Account_has_Hardware(id_a, id_h))
+    # database.insert()
+    return json_payload({"message": "Account associated with device"})
 
 
 @api.handle("/account", httpMethod=MPC_API.POST)
@@ -765,24 +779,20 @@ if __name__ == "__main__":
     # print(lambda_handler(event, None))
     #
     event = {
-        "resource": "/hardware/register",
+        "resource": "/account/add/device",
         "httpMethod": "PUT",
         "body": """{
-            "username": "tun05036@temple.edu",
-            "password": "password",
-            "email": "default@temple.edu",
-            "code": "658186",
-            "token": "0d94d4bdceedba53f4cccf7cfa3ecc3c",
-            "device_id": "c0d12f97a5989f62603badffdasd",
-            "max_resolution": "720p",
-            "channel_name": "new channel",
-            "playback_url": "playback url",
-            "ingest_endpoint": "ingest_endpoint",
-            "stream_key": "stream_key",
-            "device_name": "mydevice",
-            "arn": "arn",
-            "s3_recording_prefix": "NULL"
-        }""",
+                "device_id": "sadawdasdawddawdas",
+                "max_resolution": "720p",
+                "channel_name": "lss-test-channel",
+                "playback_url": "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.oOSbJOVQMG7R.m3u8",
+                "ingest_endpoint": "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
+                "stream_key": "sk_us-east-1_UG1MFYeVv9Ei_vFAD6d4uz6X45GaZUbzzRifzlZcpv7",
+                "device_name": "mydevice",
+                "arn": "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R",
+                "s3_recording_prefix": "ivs/v1/052524269538/oOSbJOVQMG7R/",
+                "token": "0d94d4bdceedba53f4cccf7cfa3ecc3c"
+            }""",
         "pathParameters": {
             "token": "c0d12f97a5989f6852603badff33ceb6"
         },
