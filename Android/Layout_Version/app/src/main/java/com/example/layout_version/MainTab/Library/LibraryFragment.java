@@ -17,6 +17,11 @@ import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.MainActivity;
 import com.example.layout_version.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -95,6 +100,38 @@ public class LibraryFragment extends Fragment {
 
         videoViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
+        });
+
+        videoViewModel.getToken().observe(getViewLifecycleOwner(), token -> {
+            if(token == null)
+            {
+                videoViewModel.videoListUpdated();
+                return;
+            }
+            JSONObject jsonObject = new JSONObject();
+            try{
+                jsonObject.put("token", token);
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+
+            NetworkRequestManager nrm = new NetworkRequestManager(context);
+            nrm.Post(R.string.file_all_endpoint, jsonObject,
+                    json -> {
+                        Log.e("", "Load video list");
+                        JSONArray fileArray;
+                        try {
+                            fileArray = json.getJSONArray("files");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        List<VideoItem> videos = LibraryFragmentInterface.convertJSONArrayToVideoItem(fileArray);
+
+                        videoViewModel.setVideoList(videos);
+
+                        videoViewModel.videoListUpdated();
+                    },
+                    json -> {});
         });
     }
 }

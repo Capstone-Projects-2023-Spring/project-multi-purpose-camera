@@ -5,6 +5,9 @@ class Error:
 
     TOKEN_MISMATCH = "Token Mismatch"
 
+    TOKEN_NOT_FOUND = "Token not found"
+    DEVICE_NOT_FOUND = "Device not found"
+
     NAME_NOT_FOUND = "Name Not Found"
     NAME_DUPLICATE = "Name Has Already been Taken"
 

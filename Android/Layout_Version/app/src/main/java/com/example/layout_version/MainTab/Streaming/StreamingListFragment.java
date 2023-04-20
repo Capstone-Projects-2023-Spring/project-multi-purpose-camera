@@ -14,8 +14,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 import java.util.function.Consumer;
 
 public class StreamingListFragment extends Fragment {
@@ -56,6 +62,38 @@ public class StreamingListFragment extends Fragment {
 
         streamingViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
+        });
+
+        streamingViewModel.getToken().observe(getViewLifecycleOwner(), token -> {
+            if(token == null)
+            {
+                streamingViewModel.streamListUpdated();
+                return;
+            }
+            JSONObject jsonObject = new JSONObject();
+            try{
+                jsonObject.put("token", token);
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+
+            NetworkRequestManager nrm = new NetworkRequestManager(context);
+            nrm.Post(R.string.hardware_all_endpoint, jsonObject,
+                    json -> {
+                        Log.e("", "Load video list");
+                        JSONArray hardwareArray;
+                        try {
+                            hardwareArray = json.getJSONArray("hardware");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        List<ChannelItem> channels = StreamingListFragmentInterface.convertJSONArrayToChannel(hardwareArray);
+
+                        streamingViewModel.setChannelList(channels);
+
+                        streamingViewModel.streamListUpdated();
+                    },
+                    json -> {});
         });
     }
 }

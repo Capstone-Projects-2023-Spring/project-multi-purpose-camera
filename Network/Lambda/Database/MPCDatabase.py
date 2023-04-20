@@ -70,7 +70,7 @@ class MPCDatabase:
         self.connection = mysql.connector.connect(host=DBUrl,
                                                   user=DBUser,
                                                   password=DBPassword,
-                                                  database=DBTable)
+                                                  database=DBTable, port=3306)
         """Reference for my sql instance. Used to perform query in database"""
 
         print("Connected")
@@ -264,11 +264,18 @@ class MPCDatabase:
            Returns:
                >string<     :   SQL script generated based on the parameters
        """
+        for i in range(len(values)):
+            if type(values[i]) is str and values[i].lower() in ["none", "null"]:
+                values[i] = "NULL"
+            elif type(values[i]) is str and values[i][-1:] != ")":
+                values[i] = f"'{values[i]}'"
+            else:
+                values[i] = str(values[i])
+
         return "Insert " + \
                ("Ignore" if ignore else "") + \
                " Into " + table_name + \
-               "(" + ",".join(keys) + ") Values (" + ",".join(
-            [(f"'{v}'" if type(v) is str and v[-1:] != ")" else f"{str(v)}") for v in values]) + ");"
+               "(" + ",".join(keys) + ") Values (" + ",".join(values) + ");"
 
     def gen_update_script(self, table_name: str, condition_item: MatchItem, update_items: list[MatchItem]):
         """Creates an sql update statement"""
@@ -331,6 +338,27 @@ class MPCDatabase:
 
         entries = self.select_payload(table_class.TABLE, table_class.COLUMNS,
                                       match_list=[MatchItem(item[0], item[1]) for item in field_value_list])
+        return len(entries["data"]) == 1
+
+    def verify_fields_by_joins(self, table_class, join_data_list: list[tuple], match_data_list: list[tuple]):
+        """
+           Verifies multiple fields with joining table
+
+           Parameters:
+
+               >table_class         : class<        : Class that represents the DB table that is to be updated
+               >join_table_class    : string<       : name of table that will be joined to the table
+               >join_field1         : string<       : The name of field that the tables will be joined on
+               >join_field2         : string<       : The name of field that the tables will be joined on
+               >match_data_list     : list[tuple]   : List of pairs of field and value that will be checked to be matched
+
+           Returns:
+               >bool<       : True if the record with given field exists with value in the table
+       """
+
+        entries = self.select_payload(table_class.TABLE, table_class.EXPLICIT_COLUMNS,
+                                      join_list=[JoinItem(JoinItem.INNER, item[0].TABLE, item[1], item[2]) for item in join_data_list],
+                                      match_list=[MatchItem(item[0], item[1]) for item in match_data_list])
         return len(entries["data"]) == 1
 
     def verify_id(self, table_class, id: int) -> bool:
@@ -954,4 +982,6 @@ if __name__ == "__main__":
     print(database.get_field_by_field(Account, Account.NAME, Account.EMAIL, "username1@email.com"))
     print(MatchItem("Key", "NONE").value)
     print(database.varidate_timestamp(Account, Account.NAME, "username1"))
+
+
     database.close()
