@@ -21,6 +21,9 @@ class Recorder:
         STOP = "Stop Recording"
         STREAM_STOP = "Stop Streaming"
 
+    class RecorderError(Exception):
+        pass
+
     def __init__(self, arn: str, recordingConfigurationArn: str=settings.IVS_RECORDING_ARN):
         self.arn = arn
         self.recordingConfigurationArn = recordingConfigurationArn
@@ -55,13 +58,14 @@ class Recorder:
                     return self.stop_streaming()
                 else:
                     print("Recorder Type Error")
-                    return
+                    raise Recorder.RecorderError("Recorder Type Error")
             except:
                 print("Failed : " + str(type))
                 time.sleep(sleep_time)
                 loop_num -= 1
+        raise Recorder.RecorderError("Recorder Error : " + str(type))
 
-    def request_single(self, type: Type):
+    def request_single(self, type: Type, ignore_error: bool = True):
         try:
             if type == Recorder.Type.START:
                 return self.start_recording()
@@ -73,6 +77,8 @@ class Recorder:
                 print("Recorder Type Error")
         except:
             print("Failed : " + str(type))
+            if not ignore_error:
+                raise Recorder.RecorderError("Recorder Error Could not stop stream")
 
 
 
