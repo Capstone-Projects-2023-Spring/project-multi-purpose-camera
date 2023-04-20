@@ -118,9 +118,9 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        managerCompat.notify(1, builder.build());
 
         btn.setOnClickListener(view -> {
+            managerCompat.notify(1, notification);
             Intent intent = new Intent(MainActivity.this, Settings.class);
             startActivity(intent);
         });
