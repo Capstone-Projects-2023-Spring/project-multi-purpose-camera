@@ -264,11 +264,16 @@ class MPCDatabase:
            Returns:
                >string<     :   SQL script generated based on the parameters
        """
+        for i in range(len(values)):
+            if type(values[i]) is str and values[i].lower() in ["none", "null"]:
+                values[i] = "NULL"
+            elif type(values[i]) is str and values[i][-1:] != ")":
+                values[i] = f"'{values[i]}'"
+
         return "Insert " + \
                ("Ignore" if ignore else "") + \
                " Into " + table_name + \
-               "(" + ",".join(keys) + ") Values (" + ",".join(
-            [(f"'{v}'" if type(v) is str and v[-1:] != ")" else f"{str(v)}") for v in values]) + ");"
+               "(" + ",".join(keys) + ") Values (" + ",".join(values) + ");"
 
     def gen_update_script(self, table_name: str, condition_item: MatchItem, update_items: list[MatchItem]):
         """Creates an sql update statement"""

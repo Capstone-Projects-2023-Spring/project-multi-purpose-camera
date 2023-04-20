@@ -419,14 +419,16 @@ def hardware_insert(event, pathPara, queryPara):
 @api.handle("/hardware/register", httpMethod=MPC_API.PUT)
 def hardware_insert(event, pathPara, queryPara):
     """Inserts new rows into the hardware table based on account id"""
-    hash_name = random_by_hash()[:12]
-    hardware = Hardware(hash_name, "720p", "test-ivs",
-                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
-                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
+    body = event["body"]
+    if Hardware.S3_RECORDING_PREFIX in body:
+        s3_recording_prefix = body[Hardware.S3_RECORDING_PREFIX]
+    else:
+        s3_recording_prefix = None
+    hardware = Hardware(body[Hardware.NAME], body[Hardware.RESOLUTION_NAME], body[Hardware.CHANNEL_NAME],
+                        body[Hardware.ARN], body[Hardware.STREAM_KEY], body[Hardware.INGEST_ENDPOINT],
+                        body[Hardware.PLAYBACK_URL], body[Hardware.DEVICE_ID], s3_recording_prefix)
     database.insert(hardware)
-    inserted_hardware = database.get_by_field(Hardware, Hardware.NAME, hash_name)
+    inserted_hardware = database.get_by_field(Hardware, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
     return json_payload({"hardware": Hardware.object_to_dict(inserted_hardware)})
 
 
@@ -730,19 +732,6 @@ def upload_url(event, pathPara, queryPara):
     })
 
 
-# @api.handle("/file/add", httpMethod=MPC_API.POST)
-# def upload_url(event, pathPara, queryPara):
-#     id = event["body"]["token"]
-#
-#     account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
-#     recording = Recording(queryPara["file_name"], "CURDATE()", "NOW()",
-#                           account_id=account_id, hardware_id=queryPara["hardware_id"])
-#     recording.add_date_timestamp_from_query_para(queryPara)
-#     database.insert(recording)
-#     id = database.get_id_by_name(Recording, queryPara["file_name"])
-#     return json_payload({"id": id})
-
-
 @api.handle("/file/upload-url/{key}")
 def upload_url(event, pathPara, queryPara):
     response = pre_signed_url_post(BUCKET, pathPara["key"], 10)
@@ -774,17 +763,25 @@ if __name__ == "__main__":
     #     }
     # }
     # print(lambda_handler(event, None))
-
+    #
     event = {
-        "resource": "/account/verify/device",
-        "httpMethod": "POST",
+        "resource": "/hardware/register",
+        "httpMethod": "PUT",
         "body": """{
             "username": "tun05036@temple.edu",
             "password": "password",
             "email": "default@temple.edu",
             "code": "658186",
             "token": "0d94d4bdceedba53f4cccf7cfa3ecc3c",
-            "device_id": "5b9ca48d26390983524f551489319af4"
+            "device_id": "c0d12f97a5989f62603badffdasd",
+            "max_resolution": "720p",
+            "channel_name": "new channel",
+            "playback_url": "playback url",
+            "ingest_endpoint": "ingest_endpoint",
+            "stream_key": "stream_key",
+            "device_name": "mydevice",
+            "arn": "arn",
+            "s3_recording_prefix": "NULL"
         }""",
         "pathParameters": {
             "token": "c0d12f97a5989f6852603badff33ceb6"
