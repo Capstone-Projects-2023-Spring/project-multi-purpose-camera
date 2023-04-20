@@ -1,18 +1,8 @@
-import boto3
-import settings
-import threading
 import time
-
 from enum import Enum
 
-
-
-session = boto3.Session(
-    aws_access_key_id=settings.AWS_SERVER_PUBLIC_KEY,
-    aws_secret_access_key=settings.AWS_SERVER_SECRET_KEY
-)
-
-s3 = session.client('ivs', region_name='us-east-1')
+import boto3
+import settings
 
 
 class Recorder:
@@ -25,23 +15,29 @@ class Recorder:
         pass
 
     def __init__(self, arn: str, recordingConfigurationArn: str=settings.IVS_RECORDING_ARN):
+        session = boto3.Session(
+            aws_access_key_id=settings.AWS_SERVER_PUBLIC_KEY,
+            aws_secret_access_key=settings.AWS_SERVER_SECRET_KEY
+        )
+
+        self.s3 = session.client('ivs', region_name='us-east-1')
         self.arn = arn
         self.recordingConfigurationArn = recordingConfigurationArn
 
     def stop_streaming(self):
-        s3.stop_stream(
+        self.s3.stop_stream(
             channelArn=self.arn
         )
 
     def start_recording(self):
-        response = s3.update_channel(
+        response = self.s3.update_channel(
             arn=self.arn,
             recordingConfigurationArn=self.recordingConfigurationArn
         )
         return response
 
     def stop_recording(self):
-        response = s3.update_channel(
+        response = self.s3.update_channel(
             arn=self.arn,
             recordingConfigurationArn=""
         )
