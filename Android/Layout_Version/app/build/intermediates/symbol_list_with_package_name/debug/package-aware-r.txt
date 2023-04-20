@@ -2832,6 +2832,7 @@ drawable round_rectangle_cyan_16dp
 drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+drawable unavailable_icon
 id ALT
 id Account_settings
 id BOTTOM_END
@@ -3686,6 +3687,7 @@ string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string file_all_endpoint
+string hardware_all_endpoint
 string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
@@ -3802,6 +3804,7 @@ string streaming_idle
 string streaming_offline
 string streaming_online
 string streaming_streaming
+string streaming_unavailable
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog

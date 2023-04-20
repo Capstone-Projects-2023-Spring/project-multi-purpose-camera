@@ -1,5 +1,6 @@
 package com.example.layout_version;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -92,19 +93,23 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         libraryTabButton = findViewById(R.id.library);
         cameraTabButton = findViewById(R.id.view);
 
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("My_Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My_Notification");
+        Notification notification;
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "My_Notification");
+        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
         builder.setContentTitle("Settings");
         builder.setContentText("You have clicked the Settings button");
         builder.setSmallIcon(R.drawable.ic_launcher_background);
-        //builder.setAutoCancel(true);
+        builder.setAutoCancel(true);
+        notification = builder.build();
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            managerCompat.notify(1, builder.build());
+            managerCompat.notify(1, notification);
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -114,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
             return;
         }
         managerCompat.notify(1, builder.build());
+
         btn.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, Settings.class);
             startActivity(intent);

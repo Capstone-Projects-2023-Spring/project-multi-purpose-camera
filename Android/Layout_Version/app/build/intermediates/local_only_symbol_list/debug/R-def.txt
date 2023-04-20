@@ -38,6 +38,7 @@ drawable notification_setting_2
 drawable offline_icon
 drawable online_icon
 drawable round_rectangle_cyan_16dp
+drawable unavailable_icon
 id Account_settings
 id Date
 id VideoTitle
@@ -173,12 +174,14 @@ string app_name
 string db_base_url
 string db_stage
 string file_all_endpoint
+string hardware_all_endpoint
 string hello_blank_fragment
 string streaming_buffering
 string streaming_idle
 string streaming_offline
 string streaming_online
 string streaming_streaming
+string streaming_unavailable
 style Theme.Layout_Version
 xml backup_rules
 xml data_extraction_rules

@@ -1,3 +1,6 @@
+com.example.layout_version:string/streaming_unavailable = 0x7f1000ac
+com.example.layout_version:string/hardware_all_endpoint = 0x7f1000ab
+com.example.layout_version:drawable/unavailable_icon = 0x7f0700fa
 com.example.layout_version:styleable/SearchBar = 0x7f120078
 com.example.layout_version:id/mtrl_calendar_frame = 0x7f080141
 com.example.layout_version:style/Widget.Design.FloatingActionButton = 0x7f110321
