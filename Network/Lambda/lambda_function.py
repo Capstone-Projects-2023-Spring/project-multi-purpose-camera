@@ -72,6 +72,12 @@ def lambda_handler(event, context):
         'body': json.dumps(data)
     }
 
+def isNumber(sNum: str):
+    try:
+        int(sNum)
+        return True
+    except:
+        return False
 
 def json_payload(body, error=False):
     """If there's an error, return an error, if not, then return the proper status code, headers, and body"""
@@ -448,6 +454,40 @@ def hardware_insert(event, pathPara, queryPara):
     return json_payload({"hardware": Hardware.object_to_dict(inserted_hardware)})
 
 
+@api.handle("/hardware/newname", httpMethod=MPC_API.POST)
+def hardware_newname(event, pathPara, queryPara):
+    """Inserts new rows into the hardware table based on account id"""
+    body = event["body"]
+    token = body[Account.TOKEN]
+    if not database.verify_field(Account, Account.TOKEN, token):
+        return json_payload({"message": Error.TOKEN_NOT_FOUND}, True)
+
+    hardware: list[Hardware] = database.get_all_by_joins(Hardware,
+                                         [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_HARDWARE_ID, Hardware.EXPLICIT_ID),
+                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID)],
+                                         [(Account.TOKEN, token)])
+
+    names = [h.device_name for h in hardware]
+
+    prefix = "MPC Camera"
+    if "prefix" in body:
+        prefix = body["prefix"]
+
+    prefixed_numbers = []
+    for name in names:
+        if len(name) > len(prefix) and name[:len(prefix)] == prefix:
+            split_name = name.split(" ")
+            if len(split_name) < 2:
+                continue
+            if isNumber(split_name[-1]):
+                prefixed_numbers.append(int(split_name[-1]))
+
+    if len(prefixed_numbers) <=0:
+        return json_payload({"name": f"{prefix} 0"})
+
+    return json_payload({"name": f"{prefix} {max(prefixed_numbers) + 1}"})
+
+
 @api.handle("/hardware/{id}")
 def hardware_request_by_id(event, pathPara, queryPara):
     """Gets information from the hardware table based on specified id"""
@@ -815,23 +855,24 @@ def convert_data(event, pathPara, queryPara):
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
-    # event = {
-    #     "resource": "/file/{key}/upload-url",
-    #     "httpMethod": MPC_API.POST,
-    #     "body": """{
-    #         "username": "tun05036@temple.edu",
-    #         "password": "password",
-    #         "email": "default@temple.edu",
-    #         "code": "658186"
-    #     }""",
-    #     "pathParameters": {
-    #         "key": "sample.txt"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
-    # }
-    # print(lambda_handler(event, None))
+    event = {
+        "resource": "/hardware/newname",
+        "httpMethod": MPC_API.POST,
+        "body": """{
+            "username": "tun05036@temple.edu",
+            "password": "password",
+            "email": "default@temple.edu",
+            "code": "658186",
+            "token": "0d94d4bdceedba53f4cccf7cfa3ecc3c"
+        }""",
+        "pathParameters": {
+            "key": "sample.txt"
+        },
+        "queryStringParameters": {
+            "notification_type": 10
+        }
+    }
+    print(lambda_handler(event, None))
     #
     # event = {
     #     "resource": "/convert",
@@ -865,4 +906,6 @@ if __name__ == "__main__":
     #                                             ], Account.NAME, "John Smith")
     # for d in data:
     #     print(d)
-    VideoRetriever(settings.BUCKET).convert_video_in_channel("arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
+    # VideoRetriever(settings.BUCKET).convert_video_in_channel("arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
+    #
+    print(random_by_hash())
