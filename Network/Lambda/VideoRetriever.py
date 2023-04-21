@@ -2,6 +2,7 @@ import os
 from mimetypes import MimeTypes
 
 import boto3
+from Database.MPCDatabase import MPCDatabase
 from settings import AWS_SERVER_SECRET_KEY, AWS_SERVER_PUBLIC_KEY, PREFIX, MEDIACONVERT_ENDPOINT, \
     JOB_TEMPLATE_NAME, MEDIACONVERT_ROLE, CONVERTED
 
@@ -10,9 +11,9 @@ class VideoRetriever:
 
     def __init__(self, bucket: str):
         session = boto3.Session(
-                aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
-                aws_secret_access_key=AWS_SERVER_SECRET_KEY
-            )
+            aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
+            aws_secret_access_key=AWS_SERVER_SECRET_KEY
+        )
 
         self.s3 = session.client('s3')
         self.bucket = bucket
@@ -78,42 +79,54 @@ class VideoRetriever:
             UserMetadata=user_metadata,
         )
 
-    def convert_video_in_channel(self, channelArn):
+    def convert_video_in_channel(self, database: MPCDatabase, channelArn, resolution_p: str = "720p", fps: str = "30"):
+        stream_file_prefix = f"{PREFIX}/{channelArn.split(':')[4]}/{channelArn.split('/')[1]}"
+        converted_file_prefix = f"{CONVERTED}/{channelArn.split('/')[1]}"
         stream_response = self.s3.list_objects(
             Bucket=self.bucket,
-            Prefix=f"{PREFIX}/{channelArn.split(':')[4]}/{channelArn.split('/')[1]}"
+            Prefix=stream_file_prefix
         )
 
         converted_response = self.s3.list_objects(
             Bucket=self.bucket,
-            Prefix=f"{CONVERTED}/{channelArn.split('/')[1]}"
+            Prefix=converted_file_prefix
         )
 
         if "Contents" in stream_response:
-            stream_files = [i for i in stream_response["Contents"]]
+            stream_files = [i["Key"].replace(stream_file_prefix, "") for i in stream_response["Contents"]]
         else:
             stream_files = []
 
         if "Contents" in converted_response:
-            converted_files = [i for i in converted_response["Contents"]]
+            converted_files = [i["Key"].replace(converted_file_prefix, "") for i in converted_response["Contents"]]
         else:
             converted_files = []
 
-
+        stream_files_map = {}
+        for file in stream_files:
+            basename = os.path.basename(file)
+            folder_name = file.replace(basename, "")
+            if file[-len(".ts"):] != ".ts" or folder_name[-len(f"{resolution_p}{fps}/"):] != f"{resolution_p}{fps}/":
+                continue
+            if folder_name not in stream_files_map:
+                stream_files_map[folder_name] = [file]
+            else:
+                stream_files_map[folder_name].append(file)
+        print(stream_files_map)
 
     def make_input(self, key):
         return {
-                    "AudioSelectors": {
-                        "Audio Selector 1": {
-                            "Offset": 0,
-                            "DefaultSelection": "DEFAULT",
-                            "SelectorType": "LANGUAGE_CODE",
-                            "ProgramSelection": 1,
-                            "LanguageCode": "ENM"
-                        }
-                    },
-                    "FileInput": f"s3://{self.bucket}/{key}"
+            "AudioSelectors": {
+                "Audio Selector 1": {
+                    "Offset": 0,
+                    "DefaultSelection": "DEFAULT",
+                    "SelectorType": "LANGUAGE_CODE",
+                    "ProgramSelection": 1,
+                    "LanguageCode": "ENM"
                 }
+            },
+            "FileInput": f"s3://{self.bucket}/{key}"
+        }
 
     def make_settings(self, title: str, keys: list[str]):
 

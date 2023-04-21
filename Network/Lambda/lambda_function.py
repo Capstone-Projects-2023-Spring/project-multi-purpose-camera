@@ -855,57 +855,24 @@ def convert_data(event, pathPara, queryPara):
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
-    event = {
-        "resource": "/hardware/newname",
-        "httpMethod": MPC_API.POST,
-        "body": """{
-            "username": "tun05036@temple.edu",
-            "password": "password",
-            "email": "default@temple.edu",
-            "code": "658186",
-            "token": "0d94d4bdceedba53f4cccf7cfa3ecc3c"
-        }""",
-        "pathParameters": {
-            "key": "sample.txt"
-        },
-        "queryStringParameters": {
-            "notification_type": 10
-        }
-    }
-    print(lambda_handler(event, None))
-    #
     # event = {
-    #     "resource": "/convert",
-    #     "httpMethod": "POST",
+    #     "resource": "/hardware/newname",
+    #     "httpMethod": MPC_API.POST,
     #     "body": """{
-    #             "device_id": "5b9ca48d26390983524f551489319af4",
-    #             "max_resolution": "720p",
-    #             "channel_name": "lss-test-channel",
-    #             "playback_url": "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.oOSbJOVQMG7R.m3u8",
-    #             "ingest_endpoint": "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-    #             "stream_key": "sk_us-east-1_UG1MFYeVv9Ei_vFAD6d4uz6X45GaZUbzzRifzlZcpv7",
-    #             "device_name": "mydevice",
-    #             "arn": "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R",
-    #             "s3_recording_prefix": "ivs/v1/052524269538/oOSbJOVQMG7R/",
-    #             "token": "0d94d4bdceedba53f4cccf7cfa3ecc3c"
-    #         }""",
+    #         "username": "tun05036@temple.edu",
+    #         "password": "password",
+    #         "email": "default@temple.edu",
+    #         "code": "658186",
+    #         "token": "0d94d4bdceedba53f4cccf7cfa3ecc3c"
+    #     }""",
     #     "pathParameters": {
-    #         "token": "c0d12f97a5989f6852603badff33ceb6"
+    #         "key": "sample.txt"
     #     },
     #     "queryStringParameters": {
     #         "notification_type": 10
     #     }
     # }
     # print(lambda_handler(event, None))
-    # # database.delete_by_field(Hardware, (Hardware.ID, "50809c298c5a1a3214b115390b6b725c"))
-    # database.close()
-    # data = database.get_all_join_fields_by_field(Hardware,
-    #                                             [
-    #                                                 (Account_has_Hardware, Account_has_Hardware.EXPLICIT_HARDWARE_ID, Hardware.EXPLICIT_HARDWARE_ID),
-    #                                                 (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID)
-    #                                             ], Account.NAME, "John Smith")
-    # for d in data:
-    #     print(d)
-    # VideoRetriever(settings.BUCKET).convert_video_in_channel("arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
-    #
-    print(random_by_hash())
+
+    VideoRetriever(settings.BUCKET).convert_video_in_channel(database, "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
+
