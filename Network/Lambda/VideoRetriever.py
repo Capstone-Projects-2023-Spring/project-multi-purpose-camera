@@ -1,6 +1,9 @@
+import os
 from mimetypes import MimeTypes
 
-from settings  import BUCKET, AWS_SERVER_SECRET_KEY, AWS_SERVER_PUBLIC_KEY, PREFIX
+import boto3
+from settings import AWS_SERVER_SECRET_KEY, AWS_SERVER_PUBLIC_KEY, PREFIX, MEDIACONVERT_ENDPOINT, \
+    JOB_TEMPLATE_NAME, MEDIACONVERT_ROLE
 
 
 class VideoRetriever:
@@ -58,76 +61,25 @@ class VideoRetriever:
 
         return file_names
 
+    def convert_video(self, title: str, keys: list[str]):
+        settings = self.make_settings(title, keys)
+        user_metadata = {
+            'JobCreatedBy': 'videoConvertSample',
+        }
 
-# if __name__ == "__main__":
-#
-#     # data = open("assets/bird-thumbnail.jpg", "rb").read()
-#     # print(data)
-# #     response = {
-# #     "url": "https://mpc-capstone.s3.amazonaws.com/",
-# #     "key": "sample.txt",
-# #     "AWSAccessKeyId": "AKIAQYOVQX7RESALYLKX",
-# #     "policy": "eyJleHBpcmF0aW9uIjogIjIwMjMtMDQtMTVUMDU6NDY6MDdaIiwgImNvbmRpdGlvbnMiOiBbeyJidWNrZXQiOiAibXBjLWNhcHN0b25lIn0sIHsia2V5IjogInNhbXBsZS50eHQifV19",
-# #     "signature": "vJvxhnm49bBcaOXD0Q6lYHkL4P4="
-# # }
-# #     data = "Another Secret message".encode("ascii")
-# #     print("Secret message".encode("ascii"))
-# #     post(response, data)
-#     video_retriever =  VideoRetriever(settings.BUCKET)
-#     print(video_retriever.get_all("arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw"))
-# #     print(video_retriever.pre_signed_url_get("bird.png", expire=3600))
-#
-#     # url = pre_signed_url_get(bucket, "bird_extra.jpg", 3600)
-#     # print(url)
+        client = boto3.client('mediaconvert', endpoint_url=MEDIACONVERT_ENDPOINT)
+        result = client.create_job(
+            Role=MEDIACONVERT_ROLE,
+            JobTemplate=JOB_TEMPLATE_NAME,
+            # 入力ファイルの情報や、上書きしたいパラメータの情報などを渡す
+            Settings=settings,
+            # タスクにユーザ定義のデータを紐付けることもできる。
+            # キーと値が両方 `str` でないとダメ。
+            UserMetadata=user_metadata,
+        )
 
-import os
-import logging
-import urllib.parse
-import boto3
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
-# MediaConvertのエンドポイントURL
-MEDIACONVERT_ENDPOINT = "https://q25wbt2lc.mediaconvert.us-east-1.amazonaws.com"
-
-# 前回作成したジョブテンプレートの名前
-JOB_TEMPLATE_NAME = "MPC_Stream_Recording_To_MP4"
-
-bucket = "mpc-capstone"
-
-# MEDIACONVERT_ROLE = "arn:aws:iam::052524269538:role/MediaConvertLambdaRole"
-MEDIACONVERT_ROLE = "arn:aws:iam::052524269538:role/MediaConvertLambdaRole"
-
-
-def convert_video(key):
-    settings = make_settings(bucket, key)
-    user_metadata = {
-        'JobCreatedBy': 'videoConvertSample',
-    }
-
-    client = boto3.client('mediaconvert', endpoint_url=MEDIACONVERT_ENDPOINT)
-    result = client.create_job(
-        Role=MEDIACONVERT_ROLE,
-        JobTemplate=JOB_TEMPLATE_NAME,
-        # 入力ファイルの情報や、上書きしたいパラメータの情報などを渡す
-        Settings=settings,
-        # タスクにユーザ定義のデータを紐付けることもできる。
-        # キーと値が両方 `str` でないとダメ。
-        UserMetadata=user_metadata,
-    )
-
-    logger.info(str(result))
-
-
-def make_settings(bucket, key):
-    basename = os.path.basename(key).split('.')[0]
-
-    # APIリファレンスを参考に設定
-    return \
-        {
-            "Inputs": [
-                {
+    def make_input(self, key):
+        return {
                     "AudioSelectors": {
                         "Audio Selector 1": {
                             "Offset": 0,
@@ -137,18 +89,23 @@ def make_settings(bucket, key):
                             "LanguageCode": "ENM"
                         }
                     },
-                    "FileInput": f"s3://{bucket}/{key}"
+                    "FileInput": f"s3://{self.bucket}/{key}"
                 }
-            ],
-            "OutputGroups": [
-                {
-                    "OutputGroupSettings": {
-                        "FileGroupSettings": {
-                            # 出力先パス。別バケットも可。トリガーの設定に応じて適宜変更してください。
-                            "Destination": f"s3://{bucket}/converted/{basename}/"
 
+    def make_settings(self, title: str, keys: list[str]):
+
+        # APIリファレンスを参考に設定
+        return \
+            {
+                "Inputs": [self.make_input(k) for k in keys],
+                "OutputGroups": [
+                    {
+                        "OutputGroupSettings": {
+                            "FileGroupSettings": {
+                                # 出力先パス。別バケットも可。トリガーの設定に応じて適宜変更してください。
+                                "Destination": f"s3://{self.bucket}/converted/{title}/"
+                            }
                         }
                     }
-                }
-            ],
-        }
+                ],
+            }

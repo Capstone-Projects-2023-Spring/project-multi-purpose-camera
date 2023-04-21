@@ -17,7 +17,7 @@ from Database.Data.Saving_Policy import Saving_Policy
 from Database.Data.Hardware_has_Saving_Policy import Hardware_has_Saving_Policy
 from Database.Data.Hardware_has_Notification import Hardware_has_Notification
 from Error import Error
-from VideoRetriever import VideoRetriever, convert_video
+from VideoRetriever import VideoRetriever
 from StreamingChannelRetriever import Recorder
 
 from mpc_api import MPC_API
@@ -807,9 +807,11 @@ def get_recording_videos(event, pathPara, queryPara):
 
 @api.handle("/convert", httpMethod=MPC_API.POST)
 def convert_data(event, pathPara, queryPara):
-    key = event["body"]["key"]
-    convert_video(key)
+    keys = event["body"]["keys"]
+    title = event["body"]["title"]
+    VideoRetriever(settings.BUCKET).convert_video(title, keys)
     return json_payload({"message": "Success"})
+
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
