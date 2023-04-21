@@ -4,6 +4,7 @@ import os
 import random
 
 import EmailSender
+import settings
 from Database.Data.Account_has_Hardware import Account_has_Hardware
 from Database.MPCDatabase import MPCDatabase
 from Database.Data.Recording import Recording
@@ -16,7 +17,7 @@ from Database.Data.Saving_Policy import Saving_Policy
 from Database.Data.Hardware_has_Saving_Policy import Hardware_has_Saving_Policy
 from Database.Data.Hardware_has_Notification import Hardware_has_Notification
 from Error import Error
-from FileRegister import pre_signed_url_post, pre_signed_url_get
+from VideoRetriever import VideoRetriever
 from StreamingChannelRetriever import Recorder
 
 from mpc_api import MPC_API
@@ -783,30 +784,25 @@ def send_email(event, pathPara, queryPara):
 
 
 @api.handle("/file/all", httpMethod=MPC_API.POST)
-def upload_url(event, pathPara, queryPara):
+def get_recording_videos(event, pathPara, queryPara):
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
         return json_payload({"message": "Account does not exist"})
-    recordings: list[Recording] = database.get_all_join_field_by_field(Recording, Account,
-                                                      Account.EXPLICIT_ID, Recording.EXPLICIT_ACCOUNT_ID,
-                                                      Account.TOKEN, token)
-    for recording in recordings:
-        recording.url = pre_signed_url_get(BUCKET, recording.file_name, 3600)
+    hardware: list[Hardware] = database.get_all_by_joins(Hardware,
+                                         [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_HARDWARE_ID, Hardware.EXPLICIT_ID),
+                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID)],
+                                         [(Account.TOKEN, token)])
+    hardware_channel_arns = [h.arn for h in hardware]
+    files = []
+
+    video_retriever = VideoRetriever(settings.BUCKET)
+    for arn in hardware_channel_arns:
+        keys = video_retriever.get_all(arn)
+        files = files + keys
+
     return json_payload({
-        "files": Hardware.list_object_to_dict_list(recordings)
+        "files": [{"file_name": f, "url": video_retriever.pre_signed_url_get(f, expire=3600)}for f in files]
     })
-
-
-@api.handle("/file/upload-url/{key}")
-def upload_url(event, pathPara, queryPara):
-    response = pre_signed_url_post(BUCKET, pathPara["key"], 10)
-    return json_payload(response)
-
-
-@api.handle("/file/download-url/{key}")
-def download_url(event, pathPara, queryPara):
-    response = pre_signed_url_get(BUCKET, pathPara["key"], 10)
-    return json_payload(response)
 
 
 if __name__ == "__main__":
@@ -830,7 +826,7 @@ if __name__ == "__main__":
     # print(lambda_handler(event, None))
     #
     event = {
-        "resource": "/recording/stop",
+        "resource": "/file/all",
         "httpMethod": "POST",
         "body": """{
                 "device_id": "5b9ca48d26390983524f551489319af4",
