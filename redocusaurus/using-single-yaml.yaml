@@ -1,190 +1,20 @@
 openapi: 3.0.1
 info:
   title: mpc2
-  version: '1.05'
+  version: '1.01'
 servers:
-  - url: https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2
+  - url: https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/{basePath}
+    variables:
+      basePath:
+        default: product2
 paths:
-  /:
-    get:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Empty'
-        required: true
-      responses:
-        '200':
-          description: 200 response
-          headers:
-            Json:
-              schema:
-                type: string
-            Content-Type:
-              schema:
-                type: string
-          content:
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Empty'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-            image/jpeg:
-              schema:
-                $ref: '#/components/schemas/Empty'
-            video/mp4:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-      x-codegen-request-body-name: Empty
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Empty'
-        required: true
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Event'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-      x-codegen-request-body-name: Empty
-  /account:
-    get:
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ArrayOfAccount'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-    post:
-      parameters:
-        - name: password
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: username
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: email
-          in: query
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ID'
-      x-amazon-apigateway-request-validator: Validate query string parameters and headers
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-  /account/profile:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Token'
-        required: true
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-      x-codegen-request-body-name: Token
   /account/reset:
     post:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Token'
-        required: true
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-      x-codegen-request-body-name: Token
-  /account/signin:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccountSignin'
+              $ref: '#/components/schemas/AccountReset'
         required: true
       responses:
         '200':
@@ -195,7 +25,6 @@ paths:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-request-validator: Validate body
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -204,25 +33,23 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-      x-codegen-request-body-name: AccountSignin
-  /account/signup:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccountSignup'
-        required: true
+        type: aws_proxy
+  /file/upload-url/{key}:
+    get:
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: 200 response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-request-validator: Validate body
+                $ref: '#/components/schemas/UploadURL'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -231,7 +58,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-      x-codegen-request-body-name: AccountSignup
+        type: aws_proxy
   /account/{id}:
     get:
       parameters:
@@ -248,7 +75,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Account'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -257,61 +83,8 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /criteria:
-    get:
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ArrayOfCriteria'
-      x-amazon-apigateway-integration:
         type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-    post:
-      parameters:
-        - name: criteria_type
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: duration
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: magnitude
-          in: query
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-request-validator: Validate query string parameters and headers
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-  /criteria/{id}:
+  /saving_policy/{id}:
     get:
       parameters:
         - name: id
@@ -325,9 +98,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Criteria'
+                $ref: '#/components/schemas/SavingPolicy'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -336,23 +108,20 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
     put:
       parameters:
-        - name: criteria_type
+        - name: max_time
           in: query
           schema:
             type: string
-        - name: duration
+        - name: resolution_name
           in: query
           schema:
             type: string
         - name: id
           in: path
           required: true
-          schema:
-            type: string
-        - name: magnitude
-          in: query
           schema:
             type: string
       responses:
@@ -363,7 +132,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -372,6 +140,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
     delete:
       parameters:
         - name: id
@@ -387,7 +156,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -396,7 +164,8 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /hardware:
+        type: aws_proxy
+  /saving_policy:
     get:
       responses:
         '200':
@@ -404,9 +173,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArrayOfHardware'
+                $ref: '#/components/schemas/ArrayOfSavingPolicy'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -415,14 +183,15 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
     post:
       parameters:
-        - name: name
+        - name: max_time
           in: query
           required: true
           schema:
             type: string
-        - name: max_resolution
+        - name: resolution_name
           in: query
           required: true
           schema:
@@ -436,7 +205,6 @@ paths:
                 $ref: '#/components/schemas/ID'
       x-amazon-apigateway-request-validator: Validate query string parameters and headers
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -445,6 +213,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
   /hardware/{id}:
     get:
       parameters:
@@ -461,7 +230,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Hardware'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -470,6 +238,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
     put:
       parameters:
         - name: name
@@ -493,7 +262,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -502,6 +270,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
     delete:
       parameters:
         - name: id
@@ -517,7 +286,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -526,20 +294,17 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /image:
+        type: aws_proxy
+  /resolution:
     get:
       responses:
         '200':
           description: 200 response
           content:
-            image/jpeg:
+            application/json:
               schema:
-                $ref: '#/components/schemas/Empty'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Empty'
+                $ref: '#/components/schemas/ArrayOfResolution'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -548,10 +313,79 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /image/{image_name}:
-    get:
+        type: aws_proxy
+    post:
       parameters:
-        - name: image_name
+        - name: height
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: width
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: resolution_name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /hardware/register:
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceRegister'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hardware'
+      security:
+        - api_key: []
+      x-amazon-apigateway-request-validator: Validate body
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /saving_policy/{id}/hardware/{hardware_id}:
+    delete:
+      parameters:
+        - name: hardware_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
           in: path
           required: true
           schema:
@@ -560,14 +394,10 @@ paths:
         '200':
           description: 200 response
           content:
-            image/jpeg:
-              schema:
-                $ref: '#/components/schemas/Empty'
-            image/png:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -576,59 +406,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /notification:
-    get:
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ArrayOfNotification'
-      x-amazon-apigateway-integration:
         type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-    post:
-      parameters:
-        - name: hardware_id
-          in: query
-          schema:
-            type: string
-        - name: notification_type
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: criteria_id
-          in: query
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ID'
-      x-amazon-apigateway-request-validator: Validate query string parameters and headers
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
   /notification/{id}:
     get:
       parameters:
@@ -645,7 +423,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Notification'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -654,6 +431,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
     put:
       parameters:
         - name: notification_type
@@ -677,7 +455,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -686,6 +463,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
     delete:
       parameters:
         - name: id
@@ -701,7 +479,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -710,6 +487,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
   /notification/{id}/add/{hardware_id}:
     post:
       parameters:
@@ -731,7 +509,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -740,23 +517,24 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /notification/{id}/hardware:
-    get:
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
+        type: aws_proxy
+  /hardware/all:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+        required: true
       responses:
         '200':
           description: 200 response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArrayOfHardware'
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -765,8 +543,9 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /notification/{id}/hardware/{hardware_id}:
-    delete:
+        type: aws_proxy
+  /saving_policy/{id}/add/{hardware_id}:
+    post:
       parameters:
         - name: hardware_id
           in: path
@@ -786,7 +565,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -795,8 +573,59 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /path:
+        type: aws_proxy
+  /recording/{id}:
     get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recording'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+    put:
+      parameters:
+        - name: hardware_id
+          in: query
+          schema:
+            type: string
+        - name: timestamp
+          in: query
+          schema:
+            type: string
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: file_name
+          in: query
+          schema:
+            type: string
+        - name: account_id
+          in: query
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: 200 response
@@ -805,7 +634,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -814,6 +642,358 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+    delete:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /account/code:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCode'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /notification:
+    get:
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfNotification'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+    post:
+      parameters:
+        - name: hardware_id
+          in: query
+          schema:
+            type: string
+        - name: notification_type
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: criteria_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ID'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /file/add:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadURL'
+      x-amazon-apigateway-request-validator: Validate body
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /criteria/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Criteria'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+    put:
+      parameters:
+        - name: criteria_type
+          in: query
+          schema:
+            type: string
+        - name: duration
+          in: query
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: magnitude
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+    delete:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /resolution/{name}:
+    get:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resolution'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+    put:
+      parameters:
+        - name: width
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: height
+          in: query
+          schema:
+            type: string
+        - name: resolution_name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+    delete:
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /file/all:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfRecording'
+      x-amazon-apigateway-request-validator: Validate body
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /account/password:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountPassword'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
   /recording:
     get:
       responses:
@@ -824,7 +1004,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ArrayOfRecording'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -833,6 +1012,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
     post:
       parameters:
         - name: hardware_id
@@ -887,7 +1067,6 @@ paths:
                 $ref: '#/components/schemas/ID'
       x-amazon-apigateway-request-validator: Validate query string parameters and headers
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -896,58 +1075,9 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /recording/{id}:
+        type: aws_proxy
+  /path:
     get:
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Recording'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-    put:
-      parameters:
-        - name: hardware_id
-          in: query
-          schema:
-            type: string
-        - name: timestamp
-          in: query
-          schema:
-            type: string
-        - name: date
-          in: query
-          schema:
-            type: string
-        - name: file_name
-          in: query
-          schema:
-            type: string
-        - name: account_id
-          in: query
-          schema:
-            type: string
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: 200 response
@@ -956,7 +1086,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -965,13 +1094,15 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-    delete:
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
+        type: aws_proxy
+  /recording/start:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenDevice'
+        required: true
       responses:
         '200':
           description: 200 response
@@ -979,8 +1110,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -989,7 +1120,8 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /resolution:
+        type: aws_proxy
+  /hardware:
     get:
       responses:
         '200':
@@ -997,9 +1129,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArrayOfResolution'
+                $ref: '#/components/schemas/ArrayOfHardware'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -1008,153 +1139,15 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
     post:
       parameters:
-        - name: height
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: width
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: resolution_name
-          in: query
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-request-validator: Validate query string parameters and headers
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-  /resolution/{name}:
-    get:
-      parameters:
         - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Resolution'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-    put:
-      parameters:
-        - name: width
-          in: query
-          schema:
-            type: string
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: height
-          in: query
-          schema:
-            type: string
-        - name: resolution_name
-          in: query
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-    delete:
-      parameters:
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-  /saving_policy:
-    get:
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ArrayOfSavingPolicy'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-    post:
-      parameters:
-        - name: max_time
           in: query
           required: true
           schema:
             type: string
-        - name: resolution_name
+        - name: max_resolution
           in: query
           required: true
           schema:
@@ -1168,7 +1161,6 @@ paths:
                 $ref: '#/components/schemas/ID'
       x-amazon-apigateway-request-validator: Validate query string parameters and headers
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -1177,7 +1169,159 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /saving_policy/{id}:
+        type: aws_proxy
+  /{proxy+}:
+    x-amazon-apigateway-any-method:
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        cacheNamespace: xjz7b2
+        cacheKeyParameters:
+          - method.request.path.proxy
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /criteria:
+    get:
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfCriteria'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+    post:
+      parameters:
+        - name: criteria_type
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: duration
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: magnitude
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /account/profile:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /hardware/newname:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /account/verify/token:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /notification/{id}/hardware:
     get:
       parameters:
         - name: id
@@ -1191,9 +1335,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SavingPolicy'
+                $ref: '#/components/schemas/ArrayOfHardware'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -1202,64 +1345,189 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-    put:
-      parameters:
-        - name: max_time
-          in: query
-          schema:
-            type: string
-        - name: resolution_name
-          in: query
-          schema:
-            type: string
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
         type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-    delete:
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-  /saving_policy/{id}/add/{hardware_id}:
+  /account/signin:
     post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountSignin'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /file/download-url/{key}:
+    get:
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadURL'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /convert:
+    post:
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /recording/stop:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenDevice'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /:
+    get:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          headers:
+            Json:
+              schema:
+                type: string
+            Content-Type:
+              schema:
+                type: string
+          content:
+            image/png:
+              schema:
+                $ref: '#/components/schemas/Empty'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+            image/jpeg:
+              schema:
+                $ref: '#/components/schemas/Empty'
+            video/mp4:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /account/add/device:
+    put:
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /notification/{id}/hardware/{hardware_id}:
+    delete:
       parameters:
         - name: hardware_id
           in: path
@@ -1279,7 +1547,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Empty'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -1288,6 +1555,87 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /account:
+    get:
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfAccount'
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+    post:
+      parameters:
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ID'
+      x-amazon-apigateway-request-validator: Validate query string parameters and headers
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /account/delete:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+        required: true
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
+        responses:
+          default:
+            statusCode: '200'
+        passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
   /saving_policy/{id}/hardware:
     get:
       parameters:
@@ -1304,7 +1652,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ArrayOfHardware'
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -1313,19 +1660,15 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /saving_policy/{id}/hardware/{hardware_id}:
-    delete:
-      parameters:
-        - name: hardware_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
+        type: aws_proxy
+  /email:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Email'
+        required: true
       responses:
         '200':
           description: 200 response
@@ -1333,8 +1676,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
       x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -1343,51 +1686,15 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /storage/{item}:
-    get:
-      parameters:
-        - name: item
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          headers:
-            Content-Type:
-              schema:
-                type: string
-          content:
-            image/jpeg:
-              schema:
-                $ref: '#/components/schemas/Empty'
-            image/png:
-              schema:
-                $ref: '#/components/schemas/Empty'
-            video/mp4:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
-        type: aws
-        credentials: arn:aws:iam::052524269538:role/API-Gateway-S3
-        httpMethod: GET
-        uri: arn:aws:apigateway:us-east-1:s3:path/mpc-capstone/{object}
-        responses:
-          default:
-            statusCode: '200'
-            responseParameters:
-              method.response.header.Content-Type: integration.response.header.Content-Type
-        requestParameters:
-          integration.request.path.object: method.request.path.item
-        passthroughBehavior: when_no_match
-    put:
-      parameters:
-        - name: item
-          in: path
-          required: true
-          schema:
-            type: string
+        type: aws_proxy
+  /account/signup:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountSignup'
+        required: true
       responses:
         '200':
           description: 200 response
@@ -1395,49 +1702,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
       x-amazon-apigateway-integration:
-        type: aws
-        credentials: arn:aws:iam::052524269538:role/API-Gateway-S3
-        httpMethod: PUT
-        uri: arn:aws:apigateway:us-east-1:s3:path/mpc-capstone/{object}
+        httpMethod: POST
+        uri: >-
+          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
         responses:
           default:
             statusCode: '200'
-        requestParameters:
-          integration.request.path.object: method.request.path.item
         passthroughBehavior: when_no_match
+        contentHandling: CONVERT_TO_TEXT
+        type: aws_proxy
+  /account/verify/device:
     post:
       parameters:
-        - name: item
-          in: path
-          required: true
+        - name: x-api-key
+          in: header
           schema:
             type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
-        type: aws
-        credentials: arn:aws:iam::052524269538:role/API-Gateway-S3
-        httpMethod: PUT
-        uri: arn:aws:apigateway:us-east-1:s3:path/mpc-capstone/{object}
-        responses:
-          default:
-            statusCode: '200'
-        requestParameters:
-          integration.request.path.object: method.request.path.item
-        passthroughBehavior: when_no_match
-    delete:
-      parameters:
-        - name: item
-          in: path
-          required: true
+        - name: Content-type
+          in: header
           schema:
             type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenDevice'
+        required: true
       responses:
         '200':
           description: 200 response
@@ -1445,40 +1737,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Empty'
+      x-amazon-apigateway-request-validator: Validate body
       x-amazon-apigateway-integration:
-        type: aws
-        credentials: arn:aws:iam::052524269538:role/API-Gateway-S3
-        httpMethod: DELETE
-        uri: arn:aws:apigateway:us-east-1:s3:path/mpc-capstone/{object}
-        responses:
-          default:
-            statusCode: '200'
-        requestParameters:
-          integration.request.path.object: method.request.path.item
-        passthroughBehavior: when_no_match
-  /video:
-    get:
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-            video/mp4:
-              schema:
-                $ref: '#/components/schemas/Empty'
-        '400':
-          description: 400 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-            video/mp4:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
-        type: aws_proxy
         httpMethod: POST
         uri: >-
           arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
@@ -1487,64 +1747,7 @@ paths:
             statusCode: '200'
         passthroughBehavior: when_no_match
         contentHandling: CONVERT_TO_TEXT
-  /video/{video_name}:
-    get:
-      parameters:
-        - name: video_name
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: 200 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-            video/mp4:
-              schema:
-                $ref: '#/components/schemas/Empty'
-        '400':
-          description: 400 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Empty'
-            video/mp4:
-              schema:
-                $ref: '#/components/schemas/Empty'
-      x-amazon-apigateway-integration:
         type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        contentHandling: CONVERT_TO_TEXT
-  /{proxy+}:
-    x-amazon-apigateway-any-method:
-      parameters:
-        - name: proxy
-          in: path
-          required: true
-          type: string
-      responses: {}
-      x-amazon-apigateway-integration:
-        type: aws_proxy
-        httpMethod: POST
-        uri: >-
-          arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:052524269538:function:mpc2/invocations
-        responses:
-          default:
-            statusCode: '200'
-        passthroughBehavior: when_no_match
-        cacheNamespace: xjz7b2
-        cacheKeyParameters:
-          - method.request.path.proxy
-        contentHandling: CONVERT_TO_TEXT
 components:
   schemas:
     Account:
@@ -1567,6 +1770,32 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Hardware'
+    Email:
+      required:
+        - LetterBody
+        - Subject
+        - ToMail
+      type: object
+      properties:
+        ToMail:
+          type: string
+        Subject:
+          type: string
+        LetterBody:
+          type: string
+    UploadURL:
+      required:
+        - AWSAccessKeyId
+        - policy
+        - signature
+      type: object
+      properties:
+        AWSAccessKeyId:
+          type: string
+        policy:
+          type: string
+        signature:
+          type: string
     Token:
       type: object
       properties:
@@ -1610,12 +1839,132 @@ components:
         criteria_id:
           type: integer
           format: int32
+    Empty:
+      type: object
+    AccountCode:
+      required:
+        - code
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+        code:
+          type: string
+    ArrayOfAccount:
+      type: array
+      items:
+        $ref: '#/components/schemas/Account'
+    AccountReset:
+      required:
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+    Hardware:
+      type: object
+      properties:
+        hardware_id:
+          type: integer
+          format: int64
+        account_id:
+          type: integer
+          format: int64
+        device_id:
+          type: string
+        max_resolution:
+          type: string
+        channel_name:
+          type: string
+        playback_url:
+          type: string
+        ingest_endpoint:
+          type: string
+        stream_key:
+          type: string
+        device_name:
+          type: string
+        arn:
+          type: string
+        s3_recording_prefix:
+          type: string
+    ArrayOfResolution:
+      type: array
+      items:
+        $ref: '#/components/schemas/Resolution'
+    ID:
+      type: object
+      properties:
+        ID:
+          type: integer
+          format: int32
+    DeviceRegister:
+      required:
+        - arn
+        - channel_name
+        - device_id
+        - device_name
+        - ingest_endpoint
+        - max_resolution
+        - playback_url
+        - stream_key
+      type: object
+      properties:
+        device_id:
+          type: string
+        max_resolution:
+          type: string
+        channel_name:
+          type: string
+        playback_url:
+          type: string
+        ingest_endpoint:
+          type: string
+        stream_key:
+          type: string
+        device_name:
+          type: string
+        arn:
+          type: string
+        s3_recording_prefix:
+          type: string
+    TokenDevice:
+      required:
+        - device_id
+        - token
+      type: object
+      properties:
+        token:
+          type: string
+        device_id:
+          type: string
+    DownloadURL:
+      required:
+        - url
+      type: object
+      properties:
+        url:
+          type: string
+    AccountPassword:
+      required:
+        - code
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+        token:
+          type: string
+        password:
+          type: string
+        code:
+          type: string
     ArrayOfCriteria:
       type: array
       items:
         $ref: '#/components/schemas/Criteria'
-    Empty:
-      type: object
     AccountSignup:
       required:
         - email
@@ -1629,10 +1978,6 @@ components:
           type: string
         email:
           type: string
-    ArrayOfAccount:
-      type: array
-      items:
-        $ref: '#/components/schemas/Account'
     AccountSignin:
       required:
         - password
@@ -1648,29 +1993,6 @@ components:
       properties:
         server_information:
           type: string
-    Hardware:
-      type: object
-      properties:
-        hardware_id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        account_id:
-          type: integer
-          format: int64
-        max_resolution:
-          type: string
-    ArrayOfResolution:
-      type: array
-      items:
-        $ref: '#/components/schemas/Resolution'
-    ID:
-      type: object
-      properties:
-        ID:
-          type: integer
-          format: int32
     Recording:
       type: object
       properties:
@@ -1714,6 +2036,11 @@ components:
         height:
           type: integer
           format: int32
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
 x-amazon-apigateway-request-validators:
   Validate body:
     validateRequestParameters: false
