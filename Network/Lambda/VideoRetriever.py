@@ -3,7 +3,7 @@ from mimetypes import MimeTypes
 
 import boto3
 from settings import AWS_SERVER_SECRET_KEY, AWS_SERVER_PUBLIC_KEY, PREFIX, MEDIACONVERT_ENDPOINT, \
-    JOB_TEMPLATE_NAME, MEDIACONVERT_ROLE
+    JOB_TEMPLATE_NAME, MEDIACONVERT_ROLE, CONVERTED
 
 
 class VideoRetriever:
@@ -77,6 +77,29 @@ class VideoRetriever:
             # キーと値が両方 `str` でないとダメ。
             UserMetadata=user_metadata,
         )
+
+    def convert_video_in_channel(self, channelArn):
+        stream_response = self.s3.list_objects(
+            Bucket=self.bucket,
+            Prefix=f"{PREFIX}/{channelArn.split(':')[4]}/{channelArn.split('/')[1]}"
+        )
+
+        converted_response = self.s3.list_objects(
+            Bucket=self.bucket,
+            Prefix=f"{CONVERTED}/{channelArn.split('/')[1]}"
+        )
+
+        if "Contents" in stream_response:
+            stream_files = [i for i in stream_response["Contents"]]
+        else:
+            stream_files = []
+
+        if "Contents" in converted_response:
+            converted_files = [i for i in converted_response["Contents"]]
+        else:
+            converted_files = []
+
+
 
     def make_input(self, key):
         return {
