@@ -27,7 +27,7 @@ public class Notifications {
         builder.setSmallIcon(R.drawable.ic_launcher_background);
         builder.setAutoCancel(true);
         notification = builder.build();
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             managerCompat.notify(1, notification);
             //    ActivityCompat#requestPermissions
