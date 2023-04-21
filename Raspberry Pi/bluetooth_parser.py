@@ -49,20 +49,19 @@ def wifi_setup(ssid,password):
     
     cmd = "sudo wpa_cli -i wlan0 reconfigure"
     subprocess.run(cmd,shell=True)
-    
-    
+
     time.sleep(10)
     
     cmd = "sudo wpa_cli -i wlan0 status"
     output = subprocess.check_output(cmd,shell=True)
-    #time.sleep(2)
+    # time.sleep(2)
     result = 'COMPLETED'
     decode_output = output.decode()
-    #print(decode_output)
+    # print(decode_output)
     if result in decode_output:
-        return True
+        return ssid
     
-    return False
+    return ""
     
     
 def wifi_parser(byte_string):
