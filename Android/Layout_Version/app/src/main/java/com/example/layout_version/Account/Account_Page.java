@@ -28,9 +28,6 @@ public class Account_Page extends AppCompatActivity {
         Button loginbtn = findViewById(R.id.login);
         Button signupbtn = findViewById(R.id.signup);
 
-        ImageView back_home_im = findViewById(R.id.back_home_btn_setting);
-        TextView back_home_txt = findViewById(R.id.back_home_text_setting);
-
         TextView resetPassword = findViewById(R.id.resetPassword);
 
         loginbtn.setOnClickListener(v ->
@@ -46,9 +43,9 @@ public class Account_Page extends AppCompatActivity {
                 )
         );
 
-        back_home_im.setOnClickListener(view -> onBackPressed());
-
-        back_home_txt.setOnClickListener(view -> onBackPressed());
+        loginbtn.setOnClickListener(view -> {
+            startActivity(new Intent (Account_Page.this,MainActivity.class));
+        });
 
         signupbtn.setOnClickListener(view -> {
             startActivity(new Intent (Account_Page.this,Account_Page_Signup.class));

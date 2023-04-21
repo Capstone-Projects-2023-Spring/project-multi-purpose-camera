@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<testsuite name="com.example.layout_version.ExampleInstrumentedTest" tests="1" failures="0" errors="0" skipped="0" time="1.712" timestamp="2023-04-12T20:39:26" hostname="localhost">
-  <properties>
-    <property name="device" value="Pixel_2_API_30_3(AVD) - 11" />
-    <property name="flavor" value="" />
-    <property name="project" value=":app" />
-  </properties>
-  <testcase name="useAppContext" classname="com.example.layout_version.ExampleInstrumentedTest" time="0.599" />
-</testsuite>

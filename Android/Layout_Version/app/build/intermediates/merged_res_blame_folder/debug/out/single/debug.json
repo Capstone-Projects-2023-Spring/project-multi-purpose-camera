@@ -16,24 +16,24 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_settings.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/settings.xml"
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_fragment_streaming.xml.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\fragment_streaming.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_account_circle_24.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_account_circle_24.xml"
     },
     {
-        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_save_as_24.xml.flat",
-        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_save_as_24.xml"
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_title_and_description_template.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\title_and_description_template.xml"
     },
     {
-        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\mipmap-xxxhdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_save_as_24.xml.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_save_as_24.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_account_verify.xml.flat",
@@ -76,6 +76,10 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\camera_of_policy_template.xml"
     },
     {
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_fragment_library.xml.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\fragment_library.xml"
+    },
+    {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_notification_add_24.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_notification_add_24.xml"
     },
@@ -90,6 +94,10 @@
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_library_videos.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\library_videos.xml"
+    },
+    {
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_fragment_video_detail.xml.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\fragment_video_detail.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_cloud_queue_24.xml.flat",
@@ -124,10 +132,6 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\notification_setting_2.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_activity_main.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/activity_main.xml"
-    },
-    {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_nightlight_24.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_nightlight_24.xml"
     },
@@ -158,6 +162,10 @@
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_mic_24.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_mic_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_fragment_blank.xml.flat",
+        "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\fragment_blank.xml"
     },
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\xml_data_extraction_rules.xml.flat",
@@ -252,6 +260,10 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\account_signup_page.xml"
     },
     {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_account_signup_page.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/account_signup_page.xml"
+    },
+    {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_baseline_device_thermostat_24.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\baseline_device_thermostat_24.xml"
     },
@@ -262,9 +274,5 @@
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_library.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\library.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_library_videos_page.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/library_videos_page.xml"
     }
 ]
