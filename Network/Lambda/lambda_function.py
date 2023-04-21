@@ -17,6 +17,7 @@ from Database.Data.Hardware_has_Saving_Policy import Hardware_has_Saving_Policy
 from Database.Data.Hardware_has_Notification import Hardware_has_Notification
 from Error import Error
 from FileRegister import pre_signed_url_post, pre_signed_url_get
+from StreamingChannelRetriever import Recorder
 
 from mpc_api import MPC_API
 import boto3
@@ -520,6 +521,56 @@ def recording_update_by_id(event, pathPara, queryPara):
     return update_by_id(Recording, pathPara, queryPara)
 
 
+@api.handle("/recording/start", httpMethod=MPC_API.POST)
+def recording_start(event, pathPara, queryPara):
+    """Updates recording table based on specified id"""
+    body = event["body"]
+    if not database.verify_fields_by_joins(Account,
+                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID),
+                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID, Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                       [(Account.TOKEN, body[Account.TOKEN]),
+                                        (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+        return json_payload({"message": "Device not Found"}, True)
+    arn = database.get_field_by_field(Hardware, Hardware.ARN, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
+    recorder = Recorder(arn)
+    try:
+        recorder.request_single(Recorder.Type.STREAM_STOP)
+    except Recorder.RecorderError:
+        return json_payload({"message": "Could not stop stream"}, True)
+
+    try:
+        recorder.request_looper(Recorder.Type.START, 3, 5)
+    except Recorder.RecorderError:
+        return json_payload({"message": "Could not start recording"}, True)
+
+    return json_payload({"message": "Recording started"})
+
+
+@api.handle("/recording/stop", httpMethod=MPC_API.POST)
+def recording_start(event, pathPara, queryPara):
+    """Updates recording table based on specified id"""
+    body = event["body"]
+    if not database.verify_fields_by_joins(Account,
+                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID),
+                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID, Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                       [(Account.TOKEN, body[Account.TOKEN]),
+                                        (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+        return json_payload({"message": "Device not Found"}, True)
+    arn = database.get_field_by_field(Hardware, Hardware.ARN, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
+    recorder = Recorder(arn)
+    try:
+        recorder.request_single(Recorder.Type.STREAM_STOP)
+    except Recorder.RecorderError:
+        return json_payload({"message": "Could not stop stream"}, True)
+
+    try:
+        recorder.request_looper(Recorder.Type.START, 3, 5)
+    except Recorder.RecorderError:
+        return json_payload({"message": "Could not stop recording"}, True)
+
+    return json_payload({"message": "Recording stopped"})
+
+
 @api.handle("/criteria")
 def criteria_request(event, pathPara, queryPara):
     """Gets all rows and columns from the Criteria table"""
@@ -779,10 +830,10 @@ if __name__ == "__main__":
     # print(lambda_handler(event, None))
     #
     event = {
-        "resource": "/account/add/device",
-        "httpMethod": "PUT",
+        "resource": "/recording/stop",
+        "httpMethod": "POST",
         "body": """{
-                "device_id": "sadawdasdawddawdas",
+                "device_id": "5b9ca48d26390983524f551489319af4",
                 "max_resolution": "720p",
                 "channel_name": "lss-test-channel",
                 "playback_url": "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.oOSbJOVQMG7R.m3u8",
