@@ -1,7 +1,18 @@
 package com.example.layout_version.Network;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -10,6 +21,7 @@ import com.android.volley.ServerError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.layout_version.MainActivity;
 import com.example.layout_version.R;
 
 import org.json.JSONException;

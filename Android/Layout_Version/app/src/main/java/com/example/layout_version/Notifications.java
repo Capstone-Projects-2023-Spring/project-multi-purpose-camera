@@ -2,30 +2,41 @@ package com.example.layout_version;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.pm.PackageManager;
 import android.os.Build;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class Notifications {
-    public static void send_Notifications(){
-        /*
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+    public void send_Notifications(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My_Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel( channel );
+            manager.createNotificationChannel(channel);
         }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "My_Notification");
-        builder.setContentTitle("Title");
-        builder.setContentText("Hello, this is the first notification");
+        Notification notification;
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "My_Notification");
+        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
+        builder.setContentTitle("Settings");
+        builder.setContentText("You have clicked the Settings button");
         builder.setSmallIcon(R.drawable.ic_launcher_background);
         builder.setAutoCancel(true);
-
+        notification = builder.build();
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
-        managerCompat.notify(1, builder.build());
-        */
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            managerCompat.notify(1, notification);
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
     }
 }
