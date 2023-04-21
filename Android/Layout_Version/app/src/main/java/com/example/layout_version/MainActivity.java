@@ -37,18 +37,6 @@ import com.example.layout_version.MainTab.Library.VideoDetailFragment;
 import com.example.layout_version.MainTab.Library.VideoItem;
 import com.example.layout_version.MainTab.Library.VideoViewModel;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-//import org.opencv.highgui.HighGui;
-
 
 public class MainActivity extends AppCompatActivity implements TokenChangeInterface, LibraryFragmentInterface, StreamingListFragmentInterface {
 
@@ -118,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-
         btn.setOnClickListener(view -> {
             managerCompat.notify(1, notification);
             Intent intent = new Intent(MainActivity.this, Settings.class);
