@@ -91,7 +91,7 @@ public class ExampleUnitTest {
 
     @Test
     public void test_Notifications() {
-        Notifications n = new Notifications();
+        Notifications n = new Notifications(null);
         n.send_Notifications();
     }
 
