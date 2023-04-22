@@ -403,6 +403,27 @@ class MPCDatabase:
         payload = self.select_payload(table_class.TABLE, table_class.COLUMNS)
         return table_class.list_dict_to_object_list(payload["data"])
 
+    def get_all_by_joins(self, table_class, join_data_list: list[tuple], match_data_list: list[tuple]):
+        """
+           Verifies multiple fields with joining table
+
+           Parameters:
+
+               >table_class         : class<        : Class that represents the DB table that is to be updated
+               >join_table_class    : string<       : name of table that will be joined to the table
+               >join_field1         : string<       : The name of field that the tables will be joined on
+               >join_field2         : string<       : The name of field that the tables will be joined on
+               >match_data_list     : list[tuple]   : List of pairs of field and value that will be checked to be matched
+
+           Returns:
+               >bool<       : True if the record with given field exists with value in the table
+       """
+
+        payload = self.select_payload(table_class.TABLE, table_class.EXPLICIT_COLUMNS,
+                                      join_list=[JoinItem(JoinItem.INNER, item[0].TABLE, item[1], item[2]) for item in join_data_list],
+                                      match_list=[MatchItem(item[0], item[1]) for item in match_data_list])["data"]
+        return table_class.list_dict_to_object_list(payload, explicit=True)
+
     def get_field_by_name(self, table_class, field: str, name: str):
         """
            Execute query to get the object related to the specified field by the given name
@@ -948,22 +969,22 @@ if __name__ == "__main__":
         print(str(d))
 
     print(id_a_h)
-    recording1 = Recording("_import_616e5dcf2a2362.07330217_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
-                           hardware_id=random.choice(id_a_h))
-    recording2 = Recording("_import_616e710b7f2ff0.35776522_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
-                           hardware_id=random.choice(id_a_h))
-    recording3 = Recording("_import_616e7d55dc7db8.56370719_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
-                           hardware_id=random.choice(id_a1_h))
-    recording4 = Recording("Cat_Eye_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
-                           hardware_id=random.choice(id_a1_h))
-    recording5 = Recording("cat.mp4", "CURDATE()", "NOW()", account_id=id_a2,
-                           hardware_id=random.choice(id_a2_h))
-
-    for f in [recording1, recording2, recording3, recording4, recording5]:
-        database.insert(f)
-    data = database.get_all(Recording)
-    for d in data:
-        print(str(d))
+    # recording1 = Recording("_import_616e5dcf2a2362.07330217_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
+    #                        hardware_id=random.choice(id_a_h))
+    # recording2 = Recording("_import_616e710b7f2ff0.35776522_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
+    #                        hardware_id=random.choice(id_a_h))
+    # recording3 = Recording("_import_616e7d55dc7db8.56370719_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
+    #                        hardware_id=random.choice(id_a1_h))
+    # recording4 = Recording("Cat_Eye_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
+    #                        hardware_id=random.choice(id_a1_h))
+    # recording5 = Recording("cat.mp4", "CURDATE()", "NOW()", account_id=id_a2,
+    #                        hardware_id=random.choice(id_a2_h))
+    #
+    # for f in [recording1, recording2, recording3, recording4, recording5]:
+    #     database.insert(f)
+    # data = database.get_all(Recording)
+    # for d in data:
+    #     print(str(d))
 
     a = Account("Keita Nakashima", "Password", "tun05036@temple.edu")
     database.insert(a, ignore=True)
