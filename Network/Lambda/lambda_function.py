@@ -4,6 +4,7 @@ import os
 import random
 
 import EmailSender
+import settings
 from Database.Data.Account_has_Hardware import Account_has_Hardware
 from Database.MPCDatabase import MPCDatabase
 from Database.Data.Recording import Recording
@@ -16,7 +17,7 @@ from Database.Data.Saving_Policy import Saving_Policy
 from Database.Data.Hardware_has_Saving_Policy import Hardware_has_Saving_Policy
 from Database.Data.Hardware_has_Notification import Hardware_has_Notification
 from Error import Error
-from FileRegister import pre_signed_url_post, pre_signed_url_get
+from VideoRetriever import VideoRetriever
 from StreamingChannelRetriever import Recorder
 
 from mpc_api import MPC_API
@@ -70,6 +71,14 @@ def lambda_handler(event, context):
         'headers': {'Content-Type': 'application/json'},
         'body': json.dumps(data)
     }
+
+
+def isNumber(sNum: str):
+    try:
+        int(sNum)
+        return True
+    except:
+        return False
 
 
 def json_payload(body, error=False):
@@ -360,8 +369,10 @@ def account_signin(event, pathPara, queryPara):
     body: dict = event["body"]
 
     if database.verify_fields_by_joins(Account,
-                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID),
-                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID, Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                         Account.EXPLICIT_ID),
+                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
+                                         Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
                                        [(Account.TOKEN, body[Account.TOKEN]),
                                         (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
         return json_payload({"message": "Device Found"})
@@ -447,19 +458,56 @@ def hardware_insert(event, pathPara, queryPara):
     return json_payload({"hardware": Hardware.object_to_dict(inserted_hardware)})
 
 
+@api.handle("/hardware/newname", httpMethod=MPC_API.POST)
+def hardware_newname(event, pathPara, queryPara):
+    """Inserts new rows into the hardware table based on account id"""
+    body = event["body"]
+    token = body[Account.TOKEN]
+    if not database.verify_field(Account, Account.TOKEN, token):
+        return json_payload({"message": Error.TOKEN_NOT_FOUND}, True)
+
+    hardware: list[Hardware] = database.get_all_by_joins(Hardware,
+                                                         [(Account_has_Hardware,
+                                                           Account_has_Hardware.EXPLICIT_HARDWARE_ID,
+                                                           Hardware.EXPLICIT_ID),
+                                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                                           Account.EXPLICIT_ID)],
+                                                         [(Account.TOKEN, token)])
+
+    names = [h.device_name for h in hardware]
+
+    prefix = "MPC Camera"
+    if "prefix" in body:
+        prefix = body["prefix"]
+
+    prefixed_numbers = []
+    for name in names:
+        if len(name) > len(prefix) and name[:len(prefix)] == prefix:
+            split_name = name.split(" ")
+            if len(split_name) < 2:
+                continue
+            if isNumber(split_name[-1]):
+                prefixed_numbers.append(int(split_name[-1]))
+
+    if len(prefixed_numbers) <= 0:
+        return json_payload({"name": f"{prefix} 0"})
+
+    return json_payload({"name": f"{prefix} {max(prefixed_numbers) + 1}"})
+
+
 @api.handle("/hardware/{id}")
 def hardware_request_by_id(event, pathPara, queryPara):
     """Gets information from the hardware table based on specified id"""
     return get_by_id(Hardware, pathPara)
 
 
-@api.handle("/hardware/{id}", httpMethod=MPC_API.POST)
+@api.handle("/hardware/{id}", httpMethod=MPC_API.DELETE)
 def hardware_delete_by_id(event, pathPara, queryPara):
     """Deletes rows from the hardware table of the specified id"""
     return delete_by_id(Hardware, pathPara)
 
 
-@api.handle("/hardware/{id}", httpMethod=MPC_API.POST)
+@api.handle("/hardware/{id}", httpMethod=MPC_API.PUT)
 def hardware_update_by_id(event, pathPara, queryPara):
     """Updates the hardware table based on the specified id"""
     return update_by_id(Hardware, pathPara, queryPara)
@@ -471,7 +519,7 @@ def recordings_request(event, pathPara, queryPara):
     recordings: list[Recording] = database.get_all(Recording)
     for rec in recordings:
         bucket = "mpc-capstone"
-        rec.url = f"https://{bucket}.s3.amazonaws.com/{rec.file_name}"
+        rec.url = f"https://{bucket}.s3.amazonaws.com/{settings.CONVERTED}/{rec.file_name}"
         host = event["multiValueHeaders"]["Host"][0]
         stage = event["requestContext"]["stage"]
         path = "storage"
@@ -509,13 +557,13 @@ def recording_request_by_id(event, pathPara, queryPara):
     return json_payload(body)
 
 
-@api.handle("/recording/{id}", httpMethod=MPC_API.POST)
+@api.handle("/recording/{id}", httpMethod=MPC_API.DELETE)
 def recording_delete_by_id(event, pathPara, queryPara):
     """Deletes recording from table based on specified id"""
     return delete_by_id(Recording, pathPara)
 
 
-@api.handle("/recording/{id}", httpMethod=MPC_API.POST)
+@api.handle("/recording/{id}", httpMethod=MPC_API.PUT)
 def recording_update_by_id(event, pathPara, queryPara):
     """Updates recording table based on specified id"""
     return update_by_id(Recording, pathPara, queryPara)
@@ -526,10 +574,12 @@ def recording_start(event, pathPara, queryPara):
     """Updates recording table based on specified id"""
     body = event["body"]
     if not database.verify_fields_by_joins(Account,
-                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID),
-                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID, Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
-                                       [(Account.TOKEN, body[Account.TOKEN]),
-                                        (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+                                           [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                             Account.EXPLICIT_ID),
+                                            (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
+                                             Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                           [(Account.TOKEN, body[Account.TOKEN]),
+                                            (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
         return json_payload({"message": "Device not Found"}, True)
     arn = database.get_field_by_field(Hardware, Hardware.ARN, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
     recorder = Recorder(arn)
@@ -551,10 +601,12 @@ def recording_start(event, pathPara, queryPara):
     """Updates recording table based on specified id"""
     body = event["body"]
     if not database.verify_fields_by_joins(Account,
-                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID),
-                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID, Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
-                                       [(Account.TOKEN, body[Account.TOKEN]),
-                                        (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+                                           [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                             Account.EXPLICIT_ID),
+                                            (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
+                                             Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                           [(Account.TOKEN, body[Account.TOKEN]),
+                                            (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
         return json_payload({"message": "Device not Found"}, True)
     arn = database.get_field_by_field(Hardware, Hardware.ARN, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
     recorder = Recorder(arn)
@@ -591,13 +643,13 @@ def criteria_request_by_id(event, pathPara, queryPara):
     return get_by_id(Criteria, pathPara)
 
 
-@api.handle("/criteria/{id}", httpMethod=MPC_API.POST)
+@api.handle("/criteria/{id}", httpMethod=MPC_API.DELETE)
 def criteria_delete_by_id(event, pathPara, queryPara):
     """Deletes rows from the criteria table based on the specified id"""
     return delete_by_id(Criteria, pathPara)
 
 
-@api.handle("/criteria/{id}", httpMethod=MPC_API.POST)
+@api.handle("/criteria/{id}", httpMethod=MPC_API.PUT)
 def criteria_update_by_id(event, pathPara, queryPara):
     """Updates the criteria table rows based on the specified id"""
     return update_by_id(Criteria, pathPara, queryPara)
@@ -640,13 +692,13 @@ def notification_request_by_id(event, pathPara, queryPara):
     return json_payload(body)
 
 
-@api.handle("/notification/{id}", httpMethod=MPC_API.POST)
+@api.handle("/notification/{id}", httpMethod=MPC_API.DELETE)
 def notification_delete_by_id(event, pathPara, queryPara):
     """Deletes notification from the table based on specified id"""
     return delete_by_id(Notification, pathPara)
 
 
-@api.handle("/notification/{id}", httpMethod=MPC_API.POST)
+@api.handle("/notification/{id}", httpMethod=MPC_API.PUT)
 def notification_update_by_id(event, pathPara, queryPara):
     """Updates notification table with new information"""
     return update_by_id(Notification, pathPara, queryPara)
@@ -670,7 +722,7 @@ def notification_hardware_request(event, pathPara, queryPara):
     return json_payload(Hardware.list_object_to_dict_list(data))
 
 
-@api.handle("/notification/{id}/hardware/{hardware_id}", httpMethod=MPC_API.POST)
+@api.handle("/notification/{id}/hardware/{hardware_id}", httpMethod=MPC_API.DELETE)
 def notification_hardware_delete_by_id(event, pathPara, queryPara):
     """Deletes notification based on id"""
     return delete_by_hardware_id(Hardware_has_Notification, pathPara)
@@ -696,13 +748,13 @@ def resolution_request_by_name(event, pathPara, queryPara):
     return get_by_name(Resolution, pathPara)
 
 
-@api.handle("/resolution/{name}", httpMethod=MPC_API.POST)
+@api.handle("/resolution/{name}", httpMethod=MPC_API.DELETE)
 def resolution_delete_by_id(event, pathPara, queryPara):
     """Deletes rows from Resolution table based on id"""
     return delete_by_name(Resolution, pathPara)
 
 
-@api.handle("/resolution/{name}", httpMethod=MPC_API.POST)
+@api.handle("/resolution/{name}", httpMethod=MPC_API.PUT)
 def resolution_update_by_id(event, pathPara, queryPara):
     """Updates the resolution table based on specified id"""
     return update_by_id(Notification, pathPara, queryPara)
@@ -740,13 +792,13 @@ def saving_policy_request_by_id(event, pathPara, queryPara):
     return json_payload(body)
 
 
-@api.handle("/saving_policy/{id}", httpMethod=MPC_API.POST)
+@api.handle("/saving_policy/{id}", httpMethod=MPC_API.DELETE)
 def saving_policy_delete_by_id(event, pathPara, queryPara):
     """Deletes saving policy based on specified id"""
     return delete_by_id(Saving_Policy, pathPara)
 
 
-@api.handle("/saving_policy/{id}", httpMethod=MPC_API.POST)
+@api.handle("/saving_policy/{id}", httpMethod=MPC_API.PUT)
 def saving_policy_update_by_id(event, pathPara, queryPara):
     """Updates saving policy table based on id"""
     return update_by_id(Saving_Policy, pathPara, queryPara)
@@ -770,7 +822,7 @@ def saving_policy_hardware_request(event, pathPara, queryPara):
     return json_payload(Hardware.list_object_to_dict_list(data))
 
 
-@api.handle("/saving_policy/{id}/hardware/{hardware_id}", httpMethod=MPC_API.POST)
+@api.handle("/saving_policy/{id}/hardware/{hardware_id}", httpMethod=MPC_API.DELETE)
 def saving_policy_hardware_delete_by_id(event, pathPara, queryPara):
     """Deletes saving policy based on the specified hardware id"""
     return delete_by_hardware_id(Hardware_has_Saving_Policy, pathPara)
@@ -783,81 +835,83 @@ def send_email(event, pathPara, queryPara):
 
 
 @api.handle("/file/all", httpMethod=MPC_API.POST)
-def upload_url(event, pathPara, queryPara):
+def get_recording_videos(event, pathPara, queryPara):
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
         return json_payload({"message": "Account does not exist"})
-    recordings: list[Recording] = database.get_all_join_field_by_field(Recording, Account,
-                                                      Account.EXPLICIT_ID, Recording.EXPLICIT_ACCOUNT_ID,
-                                                      Account.TOKEN, token)
-    for recording in recordings:
-        recording.url = pre_signed_url_get(BUCKET, recording.file_name, 3600)
+    hardware: list[Hardware] = database.get_all_by_joins(Hardware,
+                                                         [(Account_has_Hardware,
+                                                           Account_has_Hardware.EXPLICIT_HARDWARE_ID,
+                                                           Hardware.EXPLICIT_ID),
+                                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                                           Account.EXPLICIT_ID)],
+                                                         [(Account.TOKEN, token)])
+    account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
+    channel_id_dict = dict(zip([h.arn for h in hardware], [h.hardware_id for h in hardware]))
+
+    video_retriever = VideoRetriever(settings.BUCKET)
+
+    recordings: list[Recording] = database.get_all_by_account_id(Recording, account_id=account_id)
+    files = list(set([f.file_name for f in recordings]))
+
+    id_to_folder_stream_list_map = video_retriever.unregistered_stream_map_from_channels(recordings, channel_id_dict)
+
+    video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
+
+    converted_files = video_retriever.converted_streams([h.arn for h in hardware])
+
+    # for id in id_to_folder_stream_list_map:
+    #     for folder in id_to_folder_stream_list_map[id]:
+    #         if folder not in files:
+    #             files.append(folder)
+    recordings: list[Recording] = database.get_all_by_account_id(Recording, account_id=account_id)
     return json_payload({
-        "files": Hardware.list_object_to_dict_list(recordings)
+        "files": [
+            {
+                "file_name": f.file_name,
+                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f.file_name}/0.mp4", expire=3600) if f.file_name in converted_files else None,
+                "timestamp": f.timestamp,
+                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f.file_name), 3600) if f.file_name in converted_files else None
+            } for f in recordings]
     })
 
 
-@api.handle("/file/upload-url/{key}")
-def upload_url(event, pathPara, queryPara):
-    response = pre_signed_url_post(BUCKET, pathPara["key"], 10)
-    return json_payload(response)
-
-
-@api.handle("/file/download-url/{key}")
-def download_url(event, pathPara, queryPara):
-    response = pre_signed_url_get(BUCKET, pathPara["key"], 10)
-    return json_payload(response)
+@api.handle("/convert", httpMethod=MPC_API.POST)
+def convert_data(event, pathPara, queryPara):
+    keys = event["body"]["keys"]
+    title = event["body"]["title"]
+    VideoRetriever(settings.BUCKET).convert_video(title, keys)
+    return json_payload({"message": "Success"})
 
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
-    # event = {
-    #     "resource": "/file/{key}/upload-url",
-    #     "httpMethod": MPC_API.POST,
-    #     "body": """{
-    #         "username": "tun05036@temple.edu",
-    #         "password": "password",
-    #         "email": "default@temple.edu",
-    #         "code": "658186"
-    #     }""",
-    #     "pathParameters": {
-    #         "key": "sample.txt"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
-    # }
-    # print(lambda_handler(event, None))
-    #
     event = {
-        "resource": "/recording/stop",
-        "httpMethod": "POST",
+        "resource": "/file/all",
+        "httpMethod": MPC_API.POST,
         "body": """{
-                "device_id": "5b9ca48d26390983524f551489319af4",
-                "max_resolution": "720p",
-                "channel_name": "lss-test-channel",
-                "playback_url": "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.oOSbJOVQMG7R.m3u8",
-                "ingest_endpoint": "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                "stream_key": "sk_us-east-1_UG1MFYeVv9Ei_vFAD6d4uz6X45GaZUbzzRifzlZcpv7",
-                "device_name": "mydevice",
-                "arn": "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R",
-                "s3_recording_prefix": "ivs/v1/052524269538/oOSbJOVQMG7R/",
-                "token": "0d94d4bdceedba53f4cccf7cfa3ecc3c"
-            }""",
+            "username": "tun05036@temple.edu",
+            "password": "password",
+            "email": "default@temple.edu",
+            "code": "658186",
+            "token": "7f3945df3fc41c113c1fbcec47dccf04"
+        }""",
         "pathParameters": {
-            "token": "c0d12f97a5989f6852603badff33ceb6"
+            "key": "sample.txt"
         },
         "queryStringParameters": {
             "notification_type": 10
         }
     }
     print(lambda_handler(event, None))
-    # database.delete_by_field(Hardware, (Hardware.ID, "50809c298c5a1a3214b115390b6b725c"))
-    database.close()
-    # data = database.get_all_join_fields_by_field(Hardware,
-    #                                             [
-    #                                                 (Account_has_Hardware, Account_has_Hardware.EXPLICIT_HARDWARE_ID, Hardware.EXPLICIT_HARDWARE_ID),
-    #                                                 (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID)
-    #                                             ], Account.NAME, "John Smith")
-    # for d in data:
-    #     print(d)
+
+    # video_retriever = VideoRetriever(settings.BUCKET)
+    # recordings: list[Recording] = database.get_all(Recording)
+    # print(video_retriever.converted_streams(["arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+    #                                          "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R"]))
+    # information_dict = video_retriever.unregistered_stream_map_from_channels(recordings,
+    #                                                                         {
+    #                                                                             "50": "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+    #                                                                             "57": "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R"}
+    #                                                                         )
+    # video_retriever.convert_stream_in_account(database, "18", information_dict)
