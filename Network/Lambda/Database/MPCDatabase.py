@@ -969,22 +969,22 @@ if __name__ == "__main__":
         print(str(d))
 
     print(id_a_h)
-    recording1 = Recording("_import_616e5dcf2a2362.07330217_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
-                           hardware_id=random.choice(id_a_h))
-    recording2 = Recording("_import_616e710b7f2ff0.35776522_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
-                           hardware_id=random.choice(id_a_h))
-    recording3 = Recording("_import_616e7d55dc7db8.56370719_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
-                           hardware_id=random.choice(id_a1_h))
-    recording4 = Recording("Cat_Eye_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
-                           hardware_id=random.choice(id_a1_h))
-    recording5 = Recording("cat.mp4", "CURDATE()", "NOW()", account_id=id_a2,
-                           hardware_id=random.choice(id_a2_h))
-
-    for f in [recording1, recording2, recording3, recording4, recording5]:
-        database.insert(f)
-    data = database.get_all(Recording)
-    for d in data:
-        print(str(d))
+    # recording1 = Recording("_import_616e5dcf2a2362.07330217_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
+    #                        hardware_id=random.choice(id_a_h))
+    # recording2 = Recording("_import_616e710b7f2ff0.35776522_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
+    #                        hardware_id=random.choice(id_a_h))
+    # recording3 = Recording("_import_616e7d55dc7db8.56370719_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
+    #                        hardware_id=random.choice(id_a1_h))
+    # recording4 = Recording("Cat_Eye_preview.mp4", "CURDATE()", "NOW()", account_id=id_a1,
+    #                        hardware_id=random.choice(id_a1_h))
+    # recording5 = Recording("cat.mp4", "CURDATE()", "NOW()", account_id=id_a2,
+    #                        hardware_id=random.choice(id_a2_h))
+    #
+    # for f in [recording1, recording2, recording3, recording4, recording5]:
+    #     database.insert(f)
+    # data = database.get_all(Recording)
+    # for d in data:
+    #     print(str(d))
 
     a = Account("Keita Nakashima", "Password", "tun05036@temple.edu")
     database.insert(a, ignore=True)

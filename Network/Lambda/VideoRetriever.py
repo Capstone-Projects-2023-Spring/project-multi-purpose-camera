@@ -2,6 +2,7 @@ import os
 from mimetypes import MimeTypes
 
 import boto3
+from Database.Data.Recording import Recording
 from Database.MPCDatabase import MPCDatabase
 from settings import AWS_SERVER_SECRET_KEY, AWS_SERVER_PUBLIC_KEY, PREFIX, MEDIACONVERT_ENDPOINT, \
     JOB_TEMPLATE_NAME, MEDIACONVERT_ROLE, CONVERTED
@@ -62,12 +63,19 @@ class VideoRetriever:
 
         return file_names
 
-    def convert_video(self, title: str, keys: list[str]):
+    def convert_stream_in_account(self, database: MPCDatabase, account_id, id_to_folder_stream_list_map: [str, dict[str, list[str]]]):
+        for id in id_to_folder_stream_list_map:
+            for folder in id_to_folder_stream_list_map[id]:
+                self.convert_stream_to_one_vid(database, account_id, id, folder, id_to_folder_stream_list_map[id][folder])
+
+    def convert_stream_to_one_vid(self, database: MPCDatabase, account_id, hardware_id, title: str, keys: list[str]):
         settings = self.make_settings(title, keys)
         user_metadata = {
             'JobCreatedBy': 'videoConvertSample',
         }
 
+        database.insert(Recording(title, account_id=account_id, hardware_id=hardware_id))
+        print(f"Video registered: account_id: {account_id} hardware_id: {hardware_id} title: {title}")
         client = boto3.client('mediaconvert', endpoint_url=MEDIACONVERT_ENDPOINT)
         result = client.create_job(
             Role=MEDIACONVERT_ROLE,
@@ -79,19 +87,23 @@ class VideoRetriever:
             UserMetadata=user_metadata,
         )
 
-    def convert_video_in_channel(self, database: MPCDatabase, channelArn, resolution_p: str = "720p", fps: str = "30"):
+    def unregistered_stream_map_from_channels(self, recordings: list[Recording], id_channel_map: dict[str, str], resolution_p: str = "720p", fps: str = "30"):
+        id_to_folder_stream_list_map = {}
+
+        for id in id_channel_map:
+            id_to_folder_stream_list_map[id] = self.unregistered_stream_map_from_channel(recordings, id_channel_map[id], resolution_p, fps)
+
+        return id_to_folder_stream_list_map
+
+    def unregistered_stream_map_from_channel(self, recordings: list[Recording], channelArn: str, resolution_p: str = "720p", fps: str = "30"):
+        folder_to_stream_list_map = {}
+
         account_id =channelArn.split(':')[4]
         stream_id = channelArn.split('/')[1]
         stream_file_prefix = f"{PREFIX}/{account_id}/{stream_id}/"
-        converted_file_prefix = f"{CONVERTED}/{stream_id}"
         stream_response = self.s3.list_objects(
             Bucket=self.bucket,
             Prefix=stream_file_prefix
-        )
-
-        converted_response = self.s3.list_objects(
-            Bucket=self.bucket,
-            Prefix=converted_file_prefix
         )
 
         if "Contents" in stream_response:
@@ -99,26 +111,24 @@ class VideoRetriever:
         else:
             stream_files = []
 
-        if "Contents" in converted_response:
-            converted_files = [i["Key"] for i in converted_response["Contents"]]
-        else:
-            converted_files = []
+        registered_file_names = [r.file_name for r in recordings]
 
-        stream_files_map = {}
         for file in stream_files:
             basename = os.path.basename(file)
             folder_name = file.replace(basename, "")
             if file[-len(".ts"):] != ".ts" or folder_name[-len(f"{resolution_p}{fps}/"):] != f"{resolution_p}{fps}/":
                 continue
-            folder_name = folder_name\
+            folder_name = f"{stream_id}/" + folder_name\
                 .replace(f"/media/hls/{resolution_p}{fps}/", "")\
                 .replace(stream_file_prefix, "")\
-                .replace("/", "-") + "/"
-            if folder_name not in stream_files_map:
-                stream_files_map[folder_name] = [file]
+                .replace("/", "-")
+            if folder_name in registered_file_names:
+                continue
+            if folder_name not in folder_to_stream_list_map:
+                folder_to_stream_list_map[folder_name] = [file]
             else:
-                stream_files_map[folder_name].append(file)
-        print(stream_files_map)
+                folder_to_stream_list_map[folder_name].append(file)
+        return folder_to_stream_list_map
 
     def make_input(self, key):
         return {
@@ -133,6 +143,23 @@ class VideoRetriever:
             },
             "FileInput": f"s3://{self.bucket}/{key}"
         }
+
+    def converted_streams(self, channelArnList: list[str]):
+        converted_files = []
+        for channelArn in set(channelArnList):
+            stream_id = channelArn.split('/')[1]
+            converted_file_prefix = f"{CONVERTED}/{stream_id}"
+            converted_response = self.s3.list_objects(
+                Bucket=self.bucket,
+                Prefix=converted_file_prefix
+            )
+
+            if "Contents" in converted_response:
+                for item in converted_response["Contents"]:
+                    split_item = item["Key"].split("/")
+                    if len(split_item) == 4:
+                        converted_files.append(f"{split_item[1]}/{split_item[2]}")
+        return converted_files
 
     def make_settings(self, title: str, keys: list[str]):
 

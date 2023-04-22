@@ -72,12 +72,14 @@ def lambda_handler(event, context):
         'body': json.dumps(data)
     }
 
+
 def isNumber(sNum: str):
     try:
         int(sNum)
         return True
     except:
         return False
+
 
 def json_payload(body, error=False):
     """If there's an error, return an error, if not, then return the proper status code, headers, and body"""
@@ -367,8 +369,10 @@ def account_signin(event, pathPara, queryPara):
     body: dict = event["body"]
 
     if database.verify_fields_by_joins(Account,
-                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID),
-                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID, Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                         Account.EXPLICIT_ID),
+                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
+                                         Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
                                        [(Account.TOKEN, body[Account.TOKEN]),
                                         (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
         return json_payload({"message": "Device Found"})
@@ -463,9 +467,12 @@ def hardware_newname(event, pathPara, queryPara):
         return json_payload({"message": Error.TOKEN_NOT_FOUND}, True)
 
     hardware: list[Hardware] = database.get_all_by_joins(Hardware,
-                                         [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_HARDWARE_ID, Hardware.EXPLICIT_ID),
-                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID)],
-                                         [(Account.TOKEN, token)])
+                                                         [(Account_has_Hardware,
+                                                           Account_has_Hardware.EXPLICIT_HARDWARE_ID,
+                                                           Hardware.EXPLICIT_ID),
+                                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                                           Account.EXPLICIT_ID)],
+                                                         [(Account.TOKEN, token)])
 
     names = [h.device_name for h in hardware]
 
@@ -482,7 +489,7 @@ def hardware_newname(event, pathPara, queryPara):
             if isNumber(split_name[-1]):
                 prefixed_numbers.append(int(split_name[-1]))
 
-    if len(prefixed_numbers) <=0:
+    if len(prefixed_numbers) <= 0:
         return json_payload({"name": f"{prefix} 0"})
 
     return json_payload({"name": f"{prefix} {max(prefixed_numbers) + 1}"})
@@ -512,7 +519,7 @@ def recordings_request(event, pathPara, queryPara):
     recordings: list[Recording] = database.get_all(Recording)
     for rec in recordings:
         bucket = "mpc-capstone"
-        rec.url = f"https://{bucket}.s3.amazonaws.com/{rec.file_name}"
+        rec.url = f"https://{bucket}.s3.amazonaws.com/{settings.CONVERTED}/{rec.file_name}"
         host = event["multiValueHeaders"]["Host"][0]
         stage = event["requestContext"]["stage"]
         path = "storage"
@@ -567,10 +574,12 @@ def recording_start(event, pathPara, queryPara):
     """Updates recording table based on specified id"""
     body = event["body"]
     if not database.verify_fields_by_joins(Account,
-                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID),
-                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID, Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
-                                       [(Account.TOKEN, body[Account.TOKEN]),
-                                        (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+                                           [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                             Account.EXPLICIT_ID),
+                                            (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
+                                             Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                           [(Account.TOKEN, body[Account.TOKEN]),
+                                            (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
         return json_payload({"message": "Device not Found"}, True)
     arn = database.get_field_by_field(Hardware, Hardware.ARN, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
     recorder = Recorder(arn)
@@ -592,10 +601,12 @@ def recording_start(event, pathPara, queryPara):
     """Updates recording table based on specified id"""
     body = event["body"]
     if not database.verify_fields_by_joins(Account,
-                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID),
-                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID, Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
-                                       [(Account.TOKEN, body[Account.TOKEN]),
-                                        (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+                                           [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                             Account.EXPLICIT_ID),
+                                            (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
+                                             Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                           [(Account.TOKEN, body[Account.TOKEN]),
+                                            (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
         return json_payload({"message": "Device not Found"}, True)
     arn = database.get_field_by_field(Hardware, Hardware.ARN, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
     recorder = Recorder(arn)
@@ -829,19 +840,32 @@ def get_recording_videos(event, pathPara, queryPara):
     if not database.verify_field(Account, Account.TOKEN, token):
         return json_payload({"message": "Account does not exist"})
     hardware: list[Hardware] = database.get_all_by_joins(Hardware,
-                                         [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_HARDWARE_ID, Hardware.EXPLICIT_ID),
-                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID)],
-                                         [(Account.TOKEN, token)])
-    hardware_channel_arns = [h.arn for h in hardware]
-    files = []
+                                                         [(Account_has_Hardware,
+                                                           Account_has_Hardware.EXPLICIT_HARDWARE_ID,
+                                                           Hardware.EXPLICIT_ID),
+                                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                                           Account.EXPLICIT_ID)],
+                                                         [(Account.TOKEN, token)])
+    account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
+    id_channel_dict = dict(zip([h.hardware_id for h in hardware], [h.arn for h in hardware]))
 
     video_retriever = VideoRetriever(settings.BUCKET)
-    for arn in hardware_channel_arns:
-        keys = video_retriever.get_all(arn)
-        files = files + keys
+
+    recordings: list[Recording] = database.get_all_by_account_id(Recording, account_id=account_id)
+    files = set([f.file_name for f in recordings])
+
+    id_to_folder_stream_list_map = video_retriever.unregistered_stream_map_from_channels(recordings, id_channel_dict)
+
+    video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
+
+    converted_files = video_retriever.converted_streams([h.arn for h in hardware])
 
     return json_payload({
-        "files": [{"file_name": f, "url": video_retriever.pre_signed_url_get(f, expire=3600)}for f in files]
+        "files": [
+            {
+                "file_name": f,
+                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f}/0.mp4", expire=3600) if f in converted_files else None} for f in
+            files]
     })
 
 
@@ -855,24 +879,32 @@ def convert_data(event, pathPara, queryPara):
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
-    # event = {
-    #     "resource": "/hardware/newname",
-    #     "httpMethod": MPC_API.POST,
-    #     "body": """{
-    #         "username": "tun05036@temple.edu",
-    #         "password": "password",
-    #         "email": "default@temple.edu",
-    #         "code": "658186",
-    #         "token": "0d94d4bdceedba53f4cccf7cfa3ecc3c"
-    #     }""",
-    #     "pathParameters": {
-    #         "key": "sample.txt"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
-    # }
-    # print(lambda_handler(event, None))
+    event = {
+        "resource": "/file/all",
+        "httpMethod": MPC_API.POST,
+        "body": """{
+            "username": "tun05036@temple.edu",
+            "password": "password",
+            "email": "default@temple.edu",
+            "code": "658186",
+            "token": "1a7ce906f4b402271b2984c77f298ced"
+        }""",
+        "pathParameters": {
+            "key": "sample.txt"
+        },
+        "queryStringParameters": {
+            "notification_type": 10
+        }
+    }
+    print(lambda_handler(event, None))
 
-    VideoRetriever(settings.BUCKET).convert_video_in_channel(database, "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
-
+    # video_retriever = VideoRetriever(settings.BUCKET)
+    # recordings: list[Recording] = database.get_all(Recording)
+    # print(video_retriever.converted_streams(["arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+    #                                          "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R"]))
+    # information_dict = video_retriever.unregistered_stream_map_from_channels(recordings,
+    #                                                                         {
+    #                                                                             "50": "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+    #                                                                             "57": "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R"}
+    #                                                                         )
+    # video_retriever.convert_stream_in_account(database, "18", information_dict)
