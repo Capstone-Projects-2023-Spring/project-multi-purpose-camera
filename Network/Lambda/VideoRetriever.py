@@ -80,8 +80,10 @@ class VideoRetriever:
         )
 
     def convert_video_in_channel(self, database: MPCDatabase, channelArn, resolution_p: str = "720p", fps: str = "30"):
-        stream_file_prefix = f"{PREFIX}/{channelArn.split(':')[4]}/{channelArn.split('/')[1]}"
-        converted_file_prefix = f"{CONVERTED}/{channelArn.split('/')[1]}"
+        account_id =channelArn.split(':')[4]
+        stream_id = channelArn.split('/')[1]
+        stream_file_prefix = f"{PREFIX}/{account_id}/{stream_id}/"
+        converted_file_prefix = f"{CONVERTED}/{stream_id}"
         stream_response = self.s3.list_objects(
             Bucket=self.bucket,
             Prefix=stream_file_prefix
@@ -93,12 +95,12 @@ class VideoRetriever:
         )
 
         if "Contents" in stream_response:
-            stream_files = [i["Key"].replace(stream_file_prefix, "") for i in stream_response["Contents"]]
+            stream_files = [i["Key"] for i in stream_response["Contents"]]
         else:
             stream_files = []
 
         if "Contents" in converted_response:
-            converted_files = [i["Key"].replace(converted_file_prefix, "") for i in converted_response["Contents"]]
+            converted_files = [i["Key"] for i in converted_response["Contents"]]
         else:
             converted_files = []
 
@@ -108,6 +110,10 @@ class VideoRetriever:
             folder_name = file.replace(basename, "")
             if file[-len(".ts"):] != ".ts" or folder_name[-len(f"{resolution_p}{fps}/"):] != f"{resolution_p}{fps}/":
                 continue
+            folder_name = folder_name\
+                .replace(f"/media/hls/{resolution_p}{fps}/", "")\
+                .replace(stream_file_prefix, "")\
+                .replace("/", "-") + "/"
             if folder_name not in stream_files_map:
                 stream_files_map[folder_name] = [file]
             else:
