@@ -864,8 +864,9 @@ def get_recording_videos(event, pathPara, queryPara):
         "files": [
             {
                 "file_name": f,
-                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f}/0.mp4", expire=3600) if f in converted_files else None} for f in
-            files]
+                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f}/0.mp4", expire=3600) if f in converted_files else None,
+                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f), 3600) if f in converted_files else None
+            } for f in files]
     })
 
 
@@ -887,7 +888,7 @@ if __name__ == "__main__":
             "password": "password",
             "email": "default@temple.edu",
             "code": "658186",
-            "token": "1a7ce906f4b402271b2984c77f298ced"
+            "token": "e86d4a52998daf9aced10e41e4d8b2f2"
         }""",
         "pathParameters": {
             "key": "sample.txt"

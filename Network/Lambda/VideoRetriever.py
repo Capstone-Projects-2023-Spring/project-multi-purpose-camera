@@ -2,6 +2,7 @@ import os
 from mimetypes import MimeTypes
 
 import boto3
+import settings
 from Database.Data.Recording import Recording
 from Database.MPCDatabase import MPCDatabase
 from settings import AWS_SERVER_SECRET_KEY, AWS_SERVER_PUBLIC_KEY, PREFIX, MEDIACONVERT_ENDPOINT, \
@@ -130,20 +131,6 @@ class VideoRetriever:
                 folder_to_stream_list_map[folder_name].append(file)
         return folder_to_stream_list_map
 
-    def make_input(self, key):
-        return {
-            "AudioSelectors": {
-                "Audio Selector 1": {
-                    "Offset": 0,
-                    "DefaultSelection": "DEFAULT",
-                    "SelectorType": "LANGUAGE_CODE",
-                    "ProgramSelection": 1,
-                    "LanguageCode": "ENM"
-                }
-            },
-            "FileInput": f"s3://{self.bucket}/{key}"
-        }
-
     def converted_streams(self, channelArnList: list[str]):
         converted_files = []
         for channelArn in set(channelArnList):
@@ -161,6 +148,22 @@ class VideoRetriever:
                         converted_files.append(f"{split_item[1]}/{split_item[2]}")
         return converted_files
 
+    def get_thumbnail_key(self, folder: str):
+        return f"{PREFIX}/{settings.ACCOUNT_ID}/{folder.replace('-', '/')}/media/thumbnails/thumb0.jpg"
+
+    def make_input(self, key):
+        return {
+            "AudioSelectors": {
+                "Audio Selector 1": {
+                    "Offset": 0,
+                    "DefaultSelection": "DEFAULT",
+                    "SelectorType": "LANGUAGE_CODE",
+                    "ProgramSelection": 1,
+                    "LanguageCode": "ENM"
+                }
+            },
+            "FileInput": f"s3://{self.bucket}/{key}"
+        }
     def make_settings(self, title: str, keys: list[str]):
 
         # APIリファレンスを参考に設定
