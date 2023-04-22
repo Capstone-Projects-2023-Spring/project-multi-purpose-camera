@@ -88,11 +88,12 @@ class VideoRetriever:
             UserMetadata=user_metadata,
         )
 
-    def unregistered_stream_map_from_channels(self, recordings: list[Recording], id_channel_map: dict[str, str], resolution_p: str = "720p", fps: str = "30"):
+    def unregistered_stream_map_from_channels(self, recordings: list[Recording], channel_id_map: dict[str, str], resolution_p: str = "720p", fps: str = "30"):
         id_to_folder_stream_list_map = {}
 
-        for id in id_channel_map:
-            id_to_folder_stream_list_map[id] = self.unregistered_stream_map_from_channel(recordings, id_channel_map[id], resolution_p, fps)
+        for arn in channel_id_map:
+            id = channel_id_map[arn]
+            id_to_folder_stream_list_map[id] = self.unregistered_stream_map_from_channel(recordings, arn, resolution_p, fps)
 
         return id_to_folder_stream_list_map
 
@@ -164,6 +165,7 @@ class VideoRetriever:
             },
             "FileInput": f"s3://{self.bucket}/{key}"
         }
+
     def make_settings(self, title: str, keys: list[str]):
 
         # APIリファレンスを参考に設定

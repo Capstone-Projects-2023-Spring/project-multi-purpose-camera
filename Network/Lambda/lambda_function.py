@@ -501,13 +501,13 @@ def hardware_request_by_id(event, pathPara, queryPara):
     return get_by_id(Hardware, pathPara)
 
 
-@api.handle("/hardware/{id}", httpMethod=MPC_API.POST)
+@api.handle("/hardware/{id}", httpMethod=MPC_API.DELETE)
 def hardware_delete_by_id(event, pathPara, queryPara):
     """Deletes rows from the hardware table of the specified id"""
     return delete_by_id(Hardware, pathPara)
 
 
-@api.handle("/hardware/{id}", httpMethod=MPC_API.POST)
+@api.handle("/hardware/{id}", httpMethod=MPC_API.PUT)
 def hardware_update_by_id(event, pathPara, queryPara):
     """Updates the hardware table based on the specified id"""
     return update_by_id(Hardware, pathPara, queryPara)
@@ -557,13 +557,13 @@ def recording_request_by_id(event, pathPara, queryPara):
     return json_payload(body)
 
 
-@api.handle("/recording/{id}", httpMethod=MPC_API.POST)
+@api.handle("/recording/{id}", httpMethod=MPC_API.DELETE)
 def recording_delete_by_id(event, pathPara, queryPara):
     """Deletes recording from table based on specified id"""
     return delete_by_id(Recording, pathPara)
 
 
-@api.handle("/recording/{id}", httpMethod=MPC_API.POST)
+@api.handle("/recording/{id}", httpMethod=MPC_API.PUT)
 def recording_update_by_id(event, pathPara, queryPara):
     """Updates recording table based on specified id"""
     return update_by_id(Recording, pathPara, queryPara)
@@ -643,13 +643,13 @@ def criteria_request_by_id(event, pathPara, queryPara):
     return get_by_id(Criteria, pathPara)
 
 
-@api.handle("/criteria/{id}", httpMethod=MPC_API.POST)
+@api.handle("/criteria/{id}", httpMethod=MPC_API.DELETE)
 def criteria_delete_by_id(event, pathPara, queryPara):
     """Deletes rows from the criteria table based on the specified id"""
     return delete_by_id(Criteria, pathPara)
 
 
-@api.handle("/criteria/{id}", httpMethod=MPC_API.POST)
+@api.handle("/criteria/{id}", httpMethod=MPC_API.PUT)
 def criteria_update_by_id(event, pathPara, queryPara):
     """Updates the criteria table rows based on the specified id"""
     return update_by_id(Criteria, pathPara, queryPara)
@@ -692,13 +692,13 @@ def notification_request_by_id(event, pathPara, queryPara):
     return json_payload(body)
 
 
-@api.handle("/notification/{id}", httpMethod=MPC_API.POST)
+@api.handle("/notification/{id}", httpMethod=MPC_API.DELETE)
 def notification_delete_by_id(event, pathPara, queryPara):
     """Deletes notification from the table based on specified id"""
     return delete_by_id(Notification, pathPara)
 
 
-@api.handle("/notification/{id}", httpMethod=MPC_API.POST)
+@api.handle("/notification/{id}", httpMethod=MPC_API.PUT)
 def notification_update_by_id(event, pathPara, queryPara):
     """Updates notification table with new information"""
     return update_by_id(Notification, pathPara, queryPara)
@@ -722,7 +722,7 @@ def notification_hardware_request(event, pathPara, queryPara):
     return json_payload(Hardware.list_object_to_dict_list(data))
 
 
-@api.handle("/notification/{id}/hardware/{hardware_id}", httpMethod=MPC_API.POST)
+@api.handle("/notification/{id}/hardware/{hardware_id}", httpMethod=MPC_API.DELETE)
 def notification_hardware_delete_by_id(event, pathPara, queryPara):
     """Deletes notification based on id"""
     return delete_by_hardware_id(Hardware_has_Notification, pathPara)
@@ -748,13 +748,13 @@ def resolution_request_by_name(event, pathPara, queryPara):
     return get_by_name(Resolution, pathPara)
 
 
-@api.handle("/resolution/{name}", httpMethod=MPC_API.POST)
+@api.handle("/resolution/{name}", httpMethod=MPC_API.DELETE)
 def resolution_delete_by_id(event, pathPara, queryPara):
     """Deletes rows from Resolution table based on id"""
     return delete_by_name(Resolution, pathPara)
 
 
-@api.handle("/resolution/{name}", httpMethod=MPC_API.POST)
+@api.handle("/resolution/{name}", httpMethod=MPC_API.PUT)
 def resolution_update_by_id(event, pathPara, queryPara):
     """Updates the resolution table based on specified id"""
     return update_by_id(Notification, pathPara, queryPara)
@@ -792,13 +792,13 @@ def saving_policy_request_by_id(event, pathPara, queryPara):
     return json_payload(body)
 
 
-@api.handle("/saving_policy/{id}", httpMethod=MPC_API.POST)
+@api.handle("/saving_policy/{id}", httpMethod=MPC_API.DELETE)
 def saving_policy_delete_by_id(event, pathPara, queryPara):
     """Deletes saving policy based on specified id"""
     return delete_by_id(Saving_Policy, pathPara)
 
 
-@api.handle("/saving_policy/{id}", httpMethod=MPC_API.POST)
+@api.handle("/saving_policy/{id}", httpMethod=MPC_API.PUT)
 def saving_policy_update_by_id(event, pathPara, queryPara):
     """Updates saving policy table based on id"""
     return update_by_id(Saving_Policy, pathPara, queryPara)
@@ -822,7 +822,7 @@ def saving_policy_hardware_request(event, pathPara, queryPara):
     return json_payload(Hardware.list_object_to_dict_list(data))
 
 
-@api.handle("/saving_policy/{id}/hardware/{hardware_id}", httpMethod=MPC_API.POST)
+@api.handle("/saving_policy/{id}/hardware/{hardware_id}", httpMethod=MPC_API.DELETE)
 def saving_policy_hardware_delete_by_id(event, pathPara, queryPara):
     """Deletes saving policy based on the specified hardware id"""
     return delete_by_hardware_id(Hardware_has_Saving_Policy, pathPara)
@@ -847,19 +847,23 @@ def get_recording_videos(event, pathPara, queryPara):
                                                            Account.EXPLICIT_ID)],
                                                          [(Account.TOKEN, token)])
     account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
-    id_channel_dict = dict(zip([h.hardware_id for h in hardware], [h.arn for h in hardware]))
+    channel_id_dict = dict(zip([h.arn for h in hardware], [h.hardware_id for h in hardware]))
 
     video_retriever = VideoRetriever(settings.BUCKET)
 
     recordings: list[Recording] = database.get_all_by_account_id(Recording, account_id=account_id)
-    files = set([f.file_name for f in recordings])
+    files = list(set([f.file_name for f in recordings]))
 
-    id_to_folder_stream_list_map = video_retriever.unregistered_stream_map_from_channels(recordings, id_channel_dict)
+    id_to_folder_stream_list_map = video_retriever.unregistered_stream_map_from_channels(recordings, channel_id_dict)
 
     video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
 
     converted_files = video_retriever.converted_streams([h.arn for h in hardware])
 
+    for id in id_to_folder_stream_list_map:
+        for folder in id_to_folder_stream_list_map[id]:
+            if folder not in files:
+                files.append(folder)
     return json_payload({
         "files": [
             {
@@ -888,7 +892,7 @@ if __name__ == "__main__":
             "password": "password",
             "email": "default@temple.edu",
             "code": "658186",
-            "token": "e86d4a52998daf9aced10e41e4d8b2f2"
+            "token": "80a7b9cb354ead8cb3c1ecbc0271d09f"
         }""",
         "pathParameters": {
             "key": "sample.txt"
