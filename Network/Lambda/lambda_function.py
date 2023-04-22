@@ -860,17 +860,19 @@ def get_recording_videos(event, pathPara, queryPara):
 
     converted_files = video_retriever.converted_streams([h.arn for h in hardware])
 
-    for id in id_to_folder_stream_list_map:
-        for folder in id_to_folder_stream_list_map[id]:
-            if folder not in files:
-                files.append(folder)
+    # for id in id_to_folder_stream_list_map:
+    #     for folder in id_to_folder_stream_list_map[id]:
+    #         if folder not in files:
+    #             files.append(folder)
+    recordings: list[Recording] = database.get_all_by_account_id(Recording, account_id=account_id)
     return json_payload({
         "files": [
             {
-                "file_name": f,
-                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f}/0.mp4", expire=3600) if f in converted_files else None,
-                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f), 3600) if f in converted_files else None
-            } for f in files]
+                "file_name": f.file_name,
+                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f.file_name}/0.mp4", expire=3600) if f.file_name in converted_files else None,
+                "timestamp": f.timestamp,
+                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f.file_name), 3600) if f.file_name in converted_files else None
+            } for f in recordings]
     })
 
 
@@ -892,7 +894,7 @@ if __name__ == "__main__":
             "password": "password",
             "email": "default@temple.edu",
             "code": "658186",
-            "token": "80a7b9cb354ead8cb3c1ecbc0271d09f"
+            "token": "7f3945df3fc41c113c1fbcec47dccf04"
         }""",
         "pathParameters": {
             "key": "sample.txt"
