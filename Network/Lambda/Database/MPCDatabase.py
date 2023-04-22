@@ -2,11 +2,13 @@ import os
 import sys
 
 import mysql.connector
+from Database.Data.Account_has_Hardware import Account_has_Hardware
 from Database.Data.Configuration import Configuration
 from Database.Data.Account import Account
 
 try:
     from settings import DBPassword, DBUrl, DBUser, DBTable
+
     PASSWORD, URL, USER, TABLE = (DBPassword, DBUrl, DBUser, DBTable)
 except:
     PASSWORD = os.environ['DBPassword']
@@ -408,6 +410,25 @@ class MPCDatabase:
             return None
         return entries["data"][0][target_field]
 
+    def get_fields_by_field(self, table_class, target_field: str, field: str, value: str):
+        """
+            Execute query to get the all value of target field of objects related to the given field in the table
+
+            Parameters:
+                >table_class    : class<    : Class that represents the DB table
+                >target_field    : string    : Field that wil bbe extracted
+                >field           : string    : Field that has to match
+                >value           : string    : Value that is used to compare
+
+            Returns:
+                >list[int]<     : IDs of Objects found in DB
+        """
+        payload = self.select_payload(
+            table_class.TABLE, [target_field],
+            match_list=[MatchItem(field, value)])
+
+        return [v[target_field] for v in payload["data"]]
+
     def get_by_name(self, table_class, name: str):
         """
             Execute query to get the object related to the given name in the table
@@ -532,25 +553,6 @@ class MPCDatabase:
                                       [MatchItem(table_class.ACCOUNT_ID, account_id)])
         return [v[table_class.ID] for v in payload["data"]]
 
-    def get_ids_by_account_name(self, table_class, account_name: str):
-        """
-            Execute query to get the all id of objects related to the given account_name in the table
-
-            Parameters:
-                >table_class    : class<    : Class that represents the DB table
-                >account_name   : string<   : account_name of object
-
-            Returns:
-                >list[int]<     : IDs of Objects found in DB
-        """
-        payload = self.select_payload(
-            table_class.TABLE, [table_class.ID],
-            match_list=[MatchItem(Account.NAME, account_name)],
-            join_list=[JoinItem(JoinItem.INNER, Account.TABLE, table_class.EXPLICIT_ACCOUNT_ID,
-                                Account.EXPLICIT_ID)])
-
-        return [v[table_class.ID] for v in payload["data"]]
-
     def get_all_by_hardware_id(self, table_class, hardware_id: int):
         """
             Execute query to get the all objects related to the given hardware_id in the table
@@ -598,8 +600,8 @@ class MPCDatabase:
                 >object<  : Object found in DB
         """
         data = \
-        self.select_payload(table_class.TABLE, table_class.COLUMNS, match_list=[MatchItem(table_class.TYPE, type)])[
-            "data"]
+            self.select_payload(table_class.TABLE, table_class.COLUMNS, match_list=[MatchItem(table_class.TYPE, type)])[
+                "data"]
         if len(data) != 1:
             return None
         return table_class.dict_to_object(data[0])
@@ -680,7 +682,8 @@ class MPCDatabase:
                                       [MatchItem(table_class.NOTIFICATION_ID, notification_id)])
         return [v[table_class.HARDWARE_ID] for v in payload["data"]]
 
-    def get_all_join_field_by_field(self, table_class, join_table_class, join_field1: str, join_field2: str, match_field: str, match_value: str):
+    def get_all_join_field_by_field(self, table_class, join_table_class, join_field1: str, join_field2: str,
+                                    match_field: str, match_value: str):
         """
             Execute query to get the all hardware ids of objects related to the given notification_id in the table
 
@@ -702,6 +705,28 @@ class MPCDatabase:
 
         return table_class.list_dict_to_object_list(payload, explicit=True)
 
+    def get_all_join_fields_by_field(self, table_class, join_table_field_field1_list_tuple: list[tuple[type, str, str]],
+                                    match_field: str, match_value: str):
+        """
+            Execute query to get the all hardware ids of objects related to the given notification_id in the table
+
+            Parameters:
+                >table_class        : class<    : Class that represents the DB table
+                >join_table_class   : string<   : name of table that will be joined to the table
+                >join_field1        : string<   : The name of field that the tables will be joined on
+                >join_field2        : string<   : The name of field that the tables will be joined on
+                >match_field        : string<   : The name of field that the tables will be matched with
+                >match_value        : int<      : Value that the match field will be matched to
+
+            Returns:
+                >list[object]<      : Objects found in DB
+        """
+        payload = self.select_payload(
+            table_class.TABLE, table_class.EXPLICIT_COLUMNS,
+            match_list=[MatchItem(match_field, match_value)],
+            join_list=[JoinItem(JoinItem.INNER, t[0].TABLE, t[1], t[2]) for t in join_table_field_field1_list_tuple])["data"]
+
+        return table_class.list_dict_to_object_list(payload, explicit=True)
 
     def update_fields(self, table_class, condition_tuple: tuple[str, str], update_list: list[tuple[str, str]]):
         """
@@ -807,22 +832,69 @@ if __name__ == "__main__":
         print(str(d))
 
     # database.truncate(Hardware)
-    hardware1 = Hardware("Hardware-1", "720p", account_id=id_a1)
-    hardware2 = Hardware("Hardware-2", "1080p", account_id=id_a1)
-    hardware3 = Hardware("Hardware-3", "1080p", account_id=id_a)
-    hardware4 = Hardware("Hardware-4", "1080p", account_id=id_a)
-    hardware5 = Hardware("Hardware-5", "720p", account_id=id_a)
-    hardware6 = Hardware("Hardware-6", "720p", account_id=id_a2)
-    hardware7 = Hardware("Hardware-7", "720p", account_id=id_a2)
-
-
+    hardware1 = Hardware("Hardware-1", "720p", "test-ivs",
+                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
+                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
+                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
+    hardware2 = Hardware("Hardware-2", "1080p", "test-ivs",
+                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
+                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
+                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
+    hardware3 = Hardware("Hardware-3", "1080p", "test-ivs",
+                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
+                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
+                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
+    hardware4 = Hardware("Hardware-4", "1080p", "test-ivs",
+                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
+                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
+                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
+    hardware5 = Hardware("Hardware-5", "720p", "test-ivs",
+                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
+                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
+                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
+    hardware6 = Hardware("Hardware-6", "720p", "test-ivs",
+                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
+                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
+                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
+    hardware7 = Hardware("Hardware-7", "720p", "test-ivs",
+                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
+                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
+                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
+                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
 
     for h in [hardware1, hardware2, hardware3, hardware4, hardware5, hardware6, hardware7]:
         database.insert(h, ignore=True)
 
-    id_a_h = database.get_ids_by_account_name(Hardware, "John Smith")
-    id_a1_h = database.get_ids_by_account_name(Hardware, "Tom Morgan")
-    id_a2_h = database.get_ids_by_account_name(Hardware, "Tan Pen")
+    account_hardware_map = {
+        id_a: {
+            hardware1, hardware2, hardware3
+        },
+        id_a1: {
+            hardware4, hardware5
+        },
+        id_a2: {
+            hardware6, hardware7
+        }
+    }
+
+    for id in account_hardware_map:
+        for hardware in account_hardware_map[id]:
+            id_h = database.get_field_by_field(Hardware, Hardware.ID,
+                                               Hardware.NAME, hardware.device_name)
+            database.insert(Account_has_Hardware(id, id_h), True)
+
+    id_a_h = database.get_fields_by_field(Account_has_Hardware, Account_has_Hardware.HARDWARE_ID,
+                                          Account_has_Hardware.ACCOUNT_ID, str(id_a))
+    id_a1_h = database.get_fields_by_field(Account_has_Hardware, Account_has_Hardware.HARDWARE_ID,
+                                           Account_has_Hardware.ACCOUNT_ID, str(id_a1))
+    id_a2_h = database.get_fields_by_field(Account_has_Hardware, Account_has_Hardware.HARDWARE_ID,
+                                           Account_has_Hardware.ACCOUNT_ID, str(id_a2))
 
     data = database.get_all(Hardware)
     for d in data:
@@ -847,11 +919,6 @@ if __name__ == "__main__":
     for d in data:
         print(str(d))
 
-    data = database.get_all_by_join_id(Hardware, Hardware_has_Saving_Policy,
-                                       "EXPLICIT_HARDWARE_ID", "EXPLICIT_SAVING_POLICY_ID", 69)
-
-    for d in data:
-        print(str(d))
     print(id_a_h)
     recording1 = Recording("_import_616e5dcf2a2362.07330217_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
                            hardware_id=random.choice(id_a_h))
@@ -873,7 +940,8 @@ if __name__ == "__main__":
     a = Account("Keita Nakashima", "Password", "tun05036@temple.edu")
     database.insert(a, ignore=True)
 
-    database.update(Account, MatchItem(Account.ID, 4), [MatchItem(Account.TOKEN, "md5(ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000))")])
+    database.update(Account, MatchItem(Account.ID, 4),
+                    [MatchItem(Account.TOKEN, "md5(ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000))")])
     a = database.get_by_name(Account, "Keita Nakashima")
     print(a)
     max = database.get_max_id(Account)

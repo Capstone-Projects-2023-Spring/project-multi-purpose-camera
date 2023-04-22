@@ -7,10 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.layout_version.MainActivity;
-import com.example.layout_version.MainTab.VideoViewModel;
+import com.example.layout_version.MainTab.Library.VideoViewModel;
 import com.example.layout_version.R;
 
 public class Account_Page extends AppCompatActivity {

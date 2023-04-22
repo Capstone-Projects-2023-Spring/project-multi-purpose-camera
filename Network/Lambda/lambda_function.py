@@ -718,7 +718,7 @@ if __name__ == "__main__":
             "password": "password",
             "email": "default@temple.edu",
             "code": "658186",
-            "token": "c0d12f97a5989f6852603badff33ceb6"
+            "token": "56df4a92b9eafeff143ff1f16c86f008"
         }""",
         "pathParameters": {
             "token": "c0d12f97a5989f6852603badff33ceb6"
