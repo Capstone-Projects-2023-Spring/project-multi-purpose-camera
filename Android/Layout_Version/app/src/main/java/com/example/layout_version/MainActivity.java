@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
         account = Account.getInstance(this);
         videoDetailViewFlag = false;
 
@@ -112,7 +111,9 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
             Log.d("", "Npot New state");
 
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
+        LibraryFragmentInterface.setUpNetwork(this, this, videoViewModel);
         streamingViewModel = new ViewModelProvider(this).get(StreamingViewModel.class);
+        StreamingListFragmentInterface.setUpNetwork(this, this, streamingViewModel);
 
         libraryTabButton.setOnClickListener(view -> {
             LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");

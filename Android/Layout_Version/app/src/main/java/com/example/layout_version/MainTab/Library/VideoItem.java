@@ -5,6 +5,9 @@ public class VideoItem {
     private final String description;
 
     private final String url;
+
+    public static final VideoItem DEFAULT_VIDEO_ITEM = new VideoItem("Welcome to the Video Library", "Sign in first to view a list of videos", null);
+
     public VideoItem(String title, String description, String url) {
         this.title = title;
         this.description = description;

@@ -90,6 +90,10 @@ public class StreamingPlayerListener extends Player.Listener {
         deviceStatusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.offline_icon));
         deviceStatusView.setText(R.string.streaming_offline);
         if(!executing)
+        {
+            if(executor != null)
+                executor.shutdown();
+            executor = Executors.newSingleThreadExecutor();
             executor.execute(() -> {
                 try {
                     Thread.sleep(5000);
@@ -100,6 +104,7 @@ public class StreamingPlayerListener extends Player.Listener {
                 player.load(Uri.parse(playbackUri));
                 Log.e("Error", "Checking Live View");
             });
+        }
     }
 
     @Override
