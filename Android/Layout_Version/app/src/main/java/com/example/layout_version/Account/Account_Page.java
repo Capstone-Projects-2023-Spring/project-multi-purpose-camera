@@ -57,4 +57,14 @@ public class Account_Page extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+
+        if(account.isSignedIn())
+        {
+            super.onBackPressed();
+        }
+    }
+
 }
