@@ -850,10 +850,10 @@ def get_recording_videos(event, pathPara, queryPara):
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     recordings = []
-    arns = set()
+    channel_arn_id = {}
     files = []
     for account_id, hardware_id, arn, file_name, timestamp in records:
-        arns.add(arn)
+        channel_arn_id[arn] = hardware_id
 
         if file_name != None:
             timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
@@ -861,33 +861,26 @@ def get_recording_videos(event, pathPara, queryPara):
             r.arn = arn
             recordings.append(r)
             files.append(file_name)
-    arns = list(arns)
-
-    # if len(recordings) == 0:
-    #     account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
-    # else:
-    #     account_id = recordings[0].account_id
-
-    channel_id_dict = dict(zip([r.arn for r in recordings], [r.hardware_id for r in recordings]))
 
     video_retriever = VideoRetriever(settings.BUCKET)
-    converted_files = video_retriever.converted_streams(arns)
+
+    converted_files = video_retriever.converted_streams(channel_arn_id.keys())
     for file in converted_files:
         if file not in files:
             files.append(file)
             recordings.append(Recording(file, now, now))
 
-    id_to_folder_stream_list_map = video_retriever.unregistered_stream_map_from_channels(recordings, channel_id_dict)
-    for id in id_to_folder_stream_list_map:
-        for folder in id_to_folder_stream_list_map[id]:
-            if len(id_to_folder_stream_list_map[id][folder]) == 1:
-                id_to_folder_stream_list_map[id].pop(folder)
+    id_channel_stream_list_dict = video_retriever.unregistered_stream_map_from_channels(files, recordings, channel_arn_id)
+    for id in id_channel_stream_list_dict:
+        for folder in id_channel_stream_list_dict[id]:
+            if len(id_channel_stream_list_dict[id][folder]) == 1:
+                id_channel_stream_list_dict[id].pop(folder)
                 break
-            elif len(id_to_folder_stream_list_map[id][folder]) > 1:
-                id_to_folder_stream_list_map[id][folder].pop()
+            elif len(id_channel_stream_list_dict[id][folder]) > 1:
+                id_channel_stream_list_dict[id][folder].pop()
 
-    for id in id_to_folder_stream_list_map:
-        for folder in id_to_folder_stream_list_map[id]:
+    for id in id_channel_stream_list_dict:
+        for folder in id_channel_stream_list_dict[id]:
             recordings.append(Recording(folder, None, None))
 
     # video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
@@ -896,11 +889,13 @@ def get_recording_videos(event, pathPara, queryPara):
         "files": [
             {
                 "file_name": f.file_name,
-                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f.file_name}/0.mp4",
-                                                          expire=3600) if f.timestamp is not None else now,
+                "url": video_retriever.pre_signed_url_get(
+                    f"{settings.CONVERTED}/{f.file_name}/0.mp4", expire=3600
+                ) if f.timestamp is not None else now,
                 "timestamp": f.timestamp if f.timestamp is not None else now,
-                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f.file_name),
-                                                                3600) if f.timestamp is not None else now
+                "thumbnail": video_retriever.pre_signed_url_get(
+                    video_retriever.get_thumbnail_key(f.file_name), 3600
+                ) if f.timestamp is not None else now
             } for f in recordings]
     })
 
