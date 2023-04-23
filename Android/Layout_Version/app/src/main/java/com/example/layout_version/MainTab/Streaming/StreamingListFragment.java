@@ -63,37 +63,5 @@ public class StreamingListFragment extends Fragment {
         streamingViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
         });
-
-        streamingViewModel.getToken().observe(getViewLifecycleOwner(), token -> {
-            if(token == null)
-            {
-                streamingViewModel.streamListUpdated();
-                return;
-            }
-            JSONObject jsonObject = new JSONObject();
-            try{
-                jsonObject.put("token", token);
-            } catch (JSONException e1) {
-                e1.printStackTrace();
-            }
-
-            NetworkRequestManager nrm = new NetworkRequestManager(context);
-            nrm.Post(R.string.hardware_all_endpoint, jsonObject,
-                    json -> {
-                        Log.e("", "Load video list");
-                        JSONArray hardwareArray;
-                        try {
-                            hardwareArray = json.getJSONArray("hardware");
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        List<ChannelItem> channels = StreamingListFragmentInterface.convertJSONArrayToChannel(hardwareArray);
-
-                        streamingViewModel.setChannelList(channels);
-
-                        streamingViewModel.streamListUpdated();
-                    },
-                    json -> {});
-        });
     }
 }

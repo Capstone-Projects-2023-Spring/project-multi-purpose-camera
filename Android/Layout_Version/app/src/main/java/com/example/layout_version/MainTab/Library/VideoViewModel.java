@@ -16,14 +16,13 @@ public class VideoViewModel extends ViewModel {
 
     private final MutableLiveData<String> token;
     private final MutableLiveData<VideoItem> selectedVideo;
-    private final VideoItem DEFAULT_VIDEO_ITEM = new VideoItem("Welcome to the Video Library", "Sign in first to view a list of videos", null);
 
     public VideoViewModel() {
         updateFlag = new MutableLiveData<>(0);
         token = new MutableLiveData<>(null);
         selectedVideo = new MutableLiveData<>(null);
         videos = new ArrayList<>();
-        videos.add(DEFAULT_VIDEO_ITEM);
+        videos.add(VideoItem.DEFAULT_VIDEO_ITEM);
         Log.e("LiveViewModel Created", "LiveViewModel Created");
     }
 
@@ -45,7 +44,7 @@ public class VideoViewModel extends ViewModel {
         if(token == null)
         {
             this.videos.clear();
-            videos.add(DEFAULT_VIDEO_ITEM);
+            videos.add(VideoItem.DEFAULT_VIDEO_ITEM);
         }
 
         this.token.setValue(token);

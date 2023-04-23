@@ -1,28 +1,25 @@
-import base64
 import json
 import os
 import random
+import re
 
 import EmailSender
 import settings
+from Database.Data.Account import Account
 from Database.Data.Account_has_Hardware import Account_has_Hardware
-from Database.MPCDatabase import MPCDatabase
-from Database.Data.Recording import Recording
-from Database.Data.Account import Account, AccountStatus
-from Database.Data.Hardware import Hardware
 from Database.Data.Criteria import Criteria
+from Database.Data.Hardware import Hardware
+from Database.Data.Hardware_has_Notification import Hardware_has_Notification
+from Database.Data.Hardware_has_Saving_Policy import Hardware_has_Saving_Policy
 from Database.Data.Notification import Notification
+from Database.Data.Recording import Recording
 from Database.Data.Resolution import Resolution
 from Database.Data.Saving_Policy import Saving_Policy
-from Database.Data.Hardware_has_Saving_Policy import Hardware_has_Saving_Policy
-from Database.Data.Hardware_has_Notification import Hardware_has_Notification
+from Database.MPCDatabase import MPCDatabase, MatchItem, JoinItem
 from Error import Error
-from VideoRetriever import VideoRetriever
 from StreamingChannelRetriever import Recorder
-
+from VideoRetriever import VideoRetriever
 from mpc_api import MPC_API
-import boto3
-import re
 
 try:
     from settings import AWS_SERVER_PUBLIC_KEY, AWS_SERVER_SECRET_KEY, BUCKET
@@ -83,6 +80,7 @@ def isNumber(sNum: str):
 
 def json_payload(body, error=False):
     """If there's an error, return an error, if not, then return the proper status code, headers, and body"""
+    print(body)
     if error:
         return {
             'statusCode': 400,
@@ -836,42 +834,72 @@ def send_email(event, pathPara, queryPara):
 
 @api.handle("/file/all", httpMethod=MPC_API.POST)
 def get_recording_videos(event, pathPara, queryPara):
+    import datetime
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
         return json_payload({"message": "Account does not exist"})
-    hardware: list[Hardware] = database.get_all_by_joins(Hardware,
-                                                         [(Account_has_Hardware,
-                                                           Account_has_Hardware.EXPLICIT_HARDWARE_ID,
-                                                           Hardware.EXPLICIT_ID),
-                                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
-                                                           Account.EXPLICIT_ID)],
-                                                         [(Account.TOKEN, token)])
-    account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
-    channel_id_dict = dict(zip([h.arn for h in hardware], [h.hardware_id for h in hardware]))
+
+    records = database.query(
+        f"""Select distinct Account.account_id, Hardware.hardware_id, arn, file_name, Recording.timestamp From Account 
+        Inner Join Account_has_Hardware ON  Account_has_Hardware.account_id = Account.account_id
+        Inner Join Hardware ON  Account_has_Hardware.hardware_id = Hardware.hardware_id
+        Left Join Recording On Hardware.hardware_id = Recording.hardware_id
+        WHere token = "{token}";"""
+    )
+    import datetime
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    recordings = []
+    arns = set()
+    channel_id_dict = {}
+    files = []
+    for account_id, hardware_id, arn, file_name, timestamp in records:
+        arns.add(arn)
+        channel_id_dict[arn] = hardware_id
+        if file_name != None:
+            timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+            r = Recording(file_name, timestamp, timestamp, account_id=account_id, hardware_id=hardware_id)
+            r.arn = arn
+            recordings.append(r)
+            files.append(file_name)
+    arns = list(arns)
+
+    if len(recordings) == 0:
+        account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
+    else:
+        account_id = recordings[0].account_id
 
     video_retriever = VideoRetriever(settings.BUCKET)
-
-    recordings: list[Recording] = database.get_all_by_account_id(Recording, account_id=account_id)
-    files = list(set([f.file_name for f in recordings]))
+    converted_files = video_retriever.converted_streams(arns)
+    for file in converted_files:
+        if file not in files:
+            files.append(file)
+            recordings.append(Recording(file, now, now))
 
     id_to_folder_stream_list_map = video_retriever.unregistered_stream_map_from_channels(recordings, channel_id_dict)
+    for id in id_to_folder_stream_list_map:
+        for folder in id_to_folder_stream_list_map[id]:
+            if len(id_to_folder_stream_list_map[id][folder]) == 1:
+                id_to_folder_stream_list_map[id].pop(folder)
+                break
+            elif len(id_to_folder_stream_list_map[id][folder]) > 1:
+                id_to_folder_stream_list_map[id][folder].pop()
+
+    for id in id_to_folder_stream_list_map:
+        for folder in id_to_folder_stream_list_map[id]:
+            recordings.append(Recording(folder, None, None))
 
     video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
 
-    converted_files = video_retriever.converted_streams([h.arn for h in hardware])
-
-    # for id in id_to_folder_stream_list_map:
-    #     for folder in id_to_folder_stream_list_map[id]:
-    #         if folder not in files:
-    #             files.append(folder)
-    recordings: list[Recording] = database.get_all_by_account_id(Recording, account_id=account_id)
     return json_payload({
         "files": [
             {
                 "file_name": f.file_name,
-                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f.file_name}/0.mp4", expire=3600) if f.file_name in converted_files else None,
-                "timestamp": f.timestamp,
-                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f.file_name), 3600) if f.file_name in converted_files else None
+                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f.file_name}/0.mp4",
+                                                          expire=3600) if f.timestamp is not None else now,
+                "timestamp": f.timestamp if f.timestamp is not None else now,
+                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f.file_name),
+                                                                3600) if f.timestamp is not None else now
             } for f in recordings]
     })
 
@@ -886,15 +914,17 @@ def convert_data(event, pathPara, queryPara):
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
+
     event = {
-        "resource": "/file/all",
+        "resource": "/account/signin",
         "httpMethod": MPC_API.POST,
         "body": """{
-            "username": "tun05036@temple.edu",
-            "password": "password",
+            "username": "John Smith",
+            "password": "Password",
             "email": "default@temple.edu",
             "code": "658186",
-            "token": "7f3945df3fc41c113c1fbcec47dccf04"
+            "token": "b442f59cb6126563024fedfbd7fbf1fd",
+            "device_id": "60df7562bc4e566abe803c448f5609ea"
         }""",
         "pathParameters": {
             "key": "sample.txt"
@@ -903,15 +933,27 @@ if __name__ == "__main__":
             "notification_type": 10
         }
     }
-    print(lambda_handler(event, None))
+    response = lambda_handler(event, None)
+    token = json.loads(response["body"])["token"]
+    print(token)
 
-    # video_retriever = VideoRetriever(settings.BUCKET)
-    # recordings: list[Recording] = database.get_all(Recording)
-    # print(video_retriever.converted_streams(["arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-    #                                          "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R"]))
-    # information_dict = video_retriever.unregistered_stream_map_from_channels(recordings,
-    #                                                                         {
-    #                                                                             "50": "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-    #                                                                             "57": "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R"}
-    #                                                                         )
-    # video_retriever.convert_stream_in_account(database, "18", information_dict)
+    event = {
+        "resource": "/file/all",
+        "httpMethod": MPC_API.POST,
+        "body": "{\"token\":\"" + token + "\"}",
+        "pathParameters": {
+            "key": "sample.txt"
+        },
+        "queryStringParameters": {
+            "notification_type": 10
+        }
+    }
+    response = lambda_handler(event, None)
+
+    print(response)
+    # database.insert(Account_has_Hardware(18, 36))
+    # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
+    # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
+    recording = database.get_all(Recording)
+    for r in recording:
+        print(r)

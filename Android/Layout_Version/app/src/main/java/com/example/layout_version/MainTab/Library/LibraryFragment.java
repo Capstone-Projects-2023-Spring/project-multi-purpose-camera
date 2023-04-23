@@ -102,36 +102,6 @@ public class LibraryFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
 
-        videoViewModel.getToken().observe(getViewLifecycleOwner(), token -> {
-            if(token == null)
-            {
-                videoViewModel.videoListUpdated();
-                return;
-            }
-            JSONObject jsonObject = new JSONObject();
-            try{
-                jsonObject.put("token", token);
-            } catch (JSONException e1) {
-                e1.printStackTrace();
-            }
 
-            NetworkRequestManager nrm = new NetworkRequestManager(context);
-            nrm.Post(R.string.file_all_endpoint, jsonObject,
-                    json -> {
-                        Log.e("", "Load video list");
-                        JSONArray fileArray;
-                        try {
-                            fileArray = json.getJSONArray("files");
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        List<VideoItem> videos = LibraryFragmentInterface.convertJSONArrayToVideoItem(fileArray);
-
-                        videoViewModel.setVideoList(videos);
-
-                        videoViewModel.videoListUpdated();
-                    },
-                    json -> {});
-        });
     }
 }
