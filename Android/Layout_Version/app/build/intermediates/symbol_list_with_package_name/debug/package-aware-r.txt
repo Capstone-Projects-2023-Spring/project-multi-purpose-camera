@@ -3287,6 +3287,7 @@ id select_dialog_listview
 id selected
 id selection_type
 id send
+id serialButton
 id serialNumber
 id settings
 id sharedValueSet

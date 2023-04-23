@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.layout_version.Bluetooth_Page;
+import com.example.layout_version.MainActivity;
 import com.example.layout_version.MainTab.Library.VideoViewModel;
 import com.example.layout_version.R;
 
@@ -41,8 +43,12 @@ public class Account_Page extends AppCompatActivity {
                 )
         );
 
+//        loginbtn.setOnClickListener(view -> {
+//            startActivity(new Intent (Account_Page.this, MainActivity.class));
+//        });
+
         loginbtn.setOnClickListener(view -> {
-            startActivity(new Intent (Account_Page.this,MainActivity.class));
+            startActivity(new Intent (Account_Page.this, Bluetooth_Page.class));
         });
 
         signupbtn.setOnClickListener(view -> {

@@ -37,8 +37,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.Layout_Version" >
         <activity
-            android:name="com.example.layout_version.MainActivity"
-            android:exported="true" >
+            android:name="com.example.layout_version.Account.Account_Page"
+            android:exported="true"
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,9 +52,7 @@
         <activity android:name="com.example.layout_version.Camera_Page" />
         <activity android:name="com.example.layout_version.Library_Videos_Page" />
         <activity android:name="com.example.layout_version.Bluetooth_Page" />
-        <activity
-            android:name="com.example.layout_version.Account.Account_Page"
-            android:launchMode="singleTask" />
+        <activity android:name="com.example.layout_version.MainActivity" />
         <activity
             android:name="com.example.layout_version.Account.Account_Page_Signup"
             android:launchMode="singleTask" />
