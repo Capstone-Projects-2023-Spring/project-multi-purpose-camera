@@ -93,7 +93,9 @@ class VideoRetriever:
 
         for arn in channel_id_map:
             id = channel_id_map[arn]
-            id_to_folder_stream_list_map[id] = self.unregistered_stream_map_from_channel(recordings, arn, resolution_p, fps)
+            d = self.unregistered_stream_map_from_channel(recordings, arn, resolution_p, fps)
+            if len(d) != 0:
+                id_to_folder_stream_list_map[id] = d
 
         return id_to_folder_stream_list_map
 
