@@ -1,5 +1,6 @@
 package com.example.layout_version.Account;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.layout_version.MainActivity;
 import com.example.layout_version.R;
 
 public class Account_Page_Signup extends AppCompatActivity {
@@ -40,7 +42,7 @@ public class Account_Page_Signup extends AppCompatActivity {
                         email.getText().toString(),
                         password.getText().toString(),
                         a -> {
-                            onBackPressed();
+                            startActivity(new Intent(Account_Page_Signup.this, MainActivity.class));
                         },
                         a -> {}
                 );
@@ -49,6 +51,10 @@ public class Account_Page_Signup extends AppCompatActivity {
                 Toast.makeText(Account_Page_Signup.this, "Password does not match", Toast.LENGTH_SHORT).show();
             }
         });
+
+//        signupbtn.setOnClickListener(view -> {
+//
+//        });
 
         back_im.setOnClickListener(view -> onBackPressed());
 

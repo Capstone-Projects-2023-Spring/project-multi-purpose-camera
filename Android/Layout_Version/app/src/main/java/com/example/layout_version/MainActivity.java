@@ -57,23 +57,29 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         account = Account.getInstance(this);
         videoDetailViewFlag = false;
 
+        if(!account.isSignedIn())
+        {
+            Intent intent = new Intent (MainActivity.this, Account_Page.class);
+            startActivity(intent);
+        }
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-//        MyAsyncTask database = new MyAsyncTask(() -> {
-//            System.out.println("calling backend");
-//            BackEnd.init();
-//        });
-//        try {
-//            System.out.println("running async");
-//            database.execute();
-//            database.get();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        MyAsyncTask database = new MyAsyncTask(() -> {
+            System.out.println("calling backend");
+            BackEnd.init();
+        });
+        try {
+            System.out.println("running async");
+            database.execute();
+            database.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         ImageView btn = findViewById(R.id.settings);
         ImageView accountImageView = findViewById(R.id.account);
@@ -201,17 +207,17 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
     }
 
 
-//    private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
-//        private Runnable task = null;
-//        MyAsyncTask(Runnable task) {
-//            this.task = task;
-//        }
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            System.out.println("doing in background");
-//            task.run();
-//            return null;
-//        }
-//    }
+    private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+        private Runnable task = null;
+        MyAsyncTask(Runnable task) {
+            this.task = task;
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            System.out.println("doing in background");
+            task.run();
+            return null;
+        }
+    }
 
 }

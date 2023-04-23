@@ -134,6 +134,7 @@ public class Account {
                 json -> {
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        this.setToken(json.get("token").toString());
                         success.action(this);
                     } catch (JSONException e) {
                         fail.action(this);

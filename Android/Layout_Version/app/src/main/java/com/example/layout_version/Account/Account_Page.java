@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.layout_version.Bluetooth_Page;
+import com.example.layout_version.MainActivity;
 import com.example.layout_version.MainTab.Library.VideoViewModel;
 import com.example.layout_version.R;
 
@@ -26,9 +28,6 @@ public class Account_Page extends AppCompatActivity {
         Button loginbtn = findViewById(R.id.login);
         Button signupbtn = findViewById(R.id.signup);
 
-        ImageView back_home_im = findViewById(R.id.back_home_btn_setting);
-        TextView back_home_txt = findViewById(R.id.back_home_text_setting);
-
         TextView resetPassword = findViewById(R.id.resetPassword);
 
         loginbtn.setOnClickListener(v ->
@@ -44,9 +43,9 @@ public class Account_Page extends AppCompatActivity {
                 )
         );
 
-        back_home_im.setOnClickListener(view -> onBackPressed());
-
-        back_home_txt.setOnClickListener(view -> onBackPressed());
+//        loginbtn.setOnClickListener(view -> {
+//            startActivity(new Intent (Account_Page.this, Bluetooth_Page.class));
+//        });
 
         signupbtn.setOnClickListener(view -> {
             startActivity(new Intent (Account_Page.this,Account_Page_Signup.class));
@@ -56,6 +55,16 @@ public class Account_Page extends AppCompatActivity {
             startActivity(new Intent (Account_Page.this,Account_Page_Forgot_Password.class));
         });
 
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if(account.isSignedIn())
+        {
+            super.onBackPressed();
+        }
     }
 
 }
