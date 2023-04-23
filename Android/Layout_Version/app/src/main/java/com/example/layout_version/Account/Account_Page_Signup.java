@@ -42,7 +42,7 @@ public class Account_Page_Signup extends AppCompatActivity {
                         email.getText().toString(),
                         password.getText().toString(),
                         a -> {
-                            onBackPressed();
+                            startActivity(new Intent(Account_Page_Signup.this, MainActivity.class));
                         },
                         a -> {}
                 );
@@ -52,9 +52,9 @@ public class Account_Page_Signup extends AppCompatActivity {
             }
         });
 
-        signupbtn.setOnClickListener(view -> {
-            startActivity(new Intent(Account_Page_Signup.this, MainActivity.class));
-        });
+//        signupbtn.setOnClickListener(view -> {
+//
+//        });
 
         back_im.setOnClickListener(view -> onBackPressed());
 
