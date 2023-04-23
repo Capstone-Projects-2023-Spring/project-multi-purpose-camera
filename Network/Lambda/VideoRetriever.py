@@ -88,46 +88,32 @@ class VideoRetriever:
             UserMetadata=user_metadata,
         )
 
-    def unregistered_stream_map_from_channels(self, file_names: list[str], recordings: list[Recording], channelArns_id: dict[str, str], resolution_p: str = "720p", fps: str = "30"):
+    def unregistered_stream_map_from_channels(self, recordings: list[Recording], channel_id_map: dict[str, str], resolution_p: str = "720p", fps: str = "30"):
         id_to_folder_stream_list_map = {}
-        account_id = settings.ACCOUNT_ID
-        resolution = f"{resolution_p}{fps}"
-        stream_id_hardware_map = {}
-        for arn in channelArns_id:
-            stream_id_hardware_map[arn.split("/")[1]] = channelArns_id[arn]
 
-        file_prefix = f"{PREFIX}/{account_id}/"
+        for arn in channel_id_map:
+            id = channel_id_map[arn]
+            d = self.unregistered_stream_map_from_channel(recordings, arn, resolution_p, fps)
+            if len(d) != 0:
+                id_to_folder_stream_list_map[id] = d
+
+        return id_to_folder_stream_list_map
+
+    def unregistered_stream_map_from_channel(self, recordings: list[Recording], channelArn: str, resolution_p: str = "720p", fps: str = "30"):
+        folder_to_stream_list_map = {}
+
+        account_id =channelArn.split(':')[4]
+        stream_id = channelArn.split('/')[1]
+        stream_file_prefix = f"{PREFIX}/{account_id}/{stream_id}/"
         stream_response = self.s3.list_objects(
             Bucket=self.bucket,
-            Prefix=file_prefix
+            Prefix=stream_file_prefix
         )
 
         if "Contents" in stream_response:
             stream_files = [i["Key"] for i in stream_response["Contents"]]
         else:
             stream_files = []
-
-        id_channel_stream_list_dict = {}
-        for file in stream_files:
-            if file[-len(".ts"):] != ".ts":
-                continue
-            split_file = file.split("/")
-            if len(split_file) != 14 or split_file[3] not in stream_id_hardware_map or split_file[12] != resolution:
-                continue
-            id = stream_id_hardware_map[split_file[3]]
-            folder = f"{split_file[3]}/{'-'.join(split_file[4:10])}"
-            if folder not in file_names:
-                if id not in id_channel_stream_list_dict:
-                    id_channel_stream_list_dict[id] = {folder:[file]}
-                elif folder not in id_channel_stream_list_dict[id]:
-                    id_channel_stream_list_dict[id][folder] = [file]
-                else:
-                    id_channel_stream_list_dict[id][folder].append(file)
-
-        return id_channel_stream_list_dict
-
-    def unregistered_stream_map_from_channel(self, recordings: list[Recording], stream_files: list[str], resolution_p: str = "720p", fps: str = "30"):
-        folder_to_stream_list_map = {}
 
         registered_file_names = [r.file_name for r in recordings]
 
@@ -136,10 +122,10 @@ class VideoRetriever:
             folder_name = file.replace(basename, "")
             if file[-len(".ts"):] != ".ts" or folder_name[-len(f"{resolution_p}{fps}/"):] != f"{resolution_p}{fps}/":
                 continue
-            # folder_name = f"{stream_id}/" + folder_name\
-            #     .replace(f"/media/hls/{resolution_p}{fps}/", "")\
-            #     .replace(stream_file_prefix, "")\
-            #     .replace("/", "-")
+            folder_name = f"{stream_id}/" + folder_name\
+                .replace(f"/media/hls/{resolution_p}{fps}/", "")\
+                .replace(stream_file_prefix, "")\
+                .replace("/", "-")
             if folder_name in registered_file_names:
                 continue
             if folder_name not in folder_to_stream_list_map:
@@ -167,12 +153,6 @@ class VideoRetriever:
 
     def get_thumbnail_key(self, folder: str):
         return f"{PREFIX}/{settings.ACCOUNT_ID}/{folder.replace('-', '/')}/media/thumbnails/thumb0.jpg"
-
-    def files_in_s3(self):
-        response = self.s3.list_objects(
-            Bucket=self.bucket
-        )
-        return [i["Key"] for i in response["Contents"]]
 
     def make_input(self, key):
         return {
