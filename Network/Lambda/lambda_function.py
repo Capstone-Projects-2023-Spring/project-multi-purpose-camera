@@ -852,19 +852,21 @@ def get_recording_videos(event, pathPara, queryPara):
     recordings = []
     arns = set()
     files = []
-    for account_id, hardware_id, arn, file_name, timestamp  in records:
+    for account_id, hardware_id, arn, file_name, timestamp in records:
         arns.add(arn)
+
         if file_name != None:
+            timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
             r = Recording(file_name, timestamp, timestamp, account_id=account_id, hardware_id=hardware_id)
             r.arn = arn
             recordings.append(r)
             files.append(file_name)
     arns = list(arns)
 
-    if len(recordings) == 0:
-        account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
-    else:
-        account_id = recordings[0].account_id
+    # if len(recordings) == 0:
+    #     account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
+    # else:
+    #     account_id = recordings[0].account_id
 
     channel_id_dict = dict(zip([r.arn for r in recordings], [r.hardware_id for r in recordings]))
 
@@ -894,9 +896,11 @@ def get_recording_videos(event, pathPara, queryPara):
         "files": [
             {
                 "file_name": f.file_name,
-                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f.file_name}/0.mp4", expire=3600) if f.timestamp is not None else now,
+                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f.file_name}/0.mp4",
+                                                          expire=3600) if f.timestamp is not None else now,
                 "timestamp": f.timestamp if f.timestamp is not None else now,
-                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f.file_name), 3600) if f.timestamp is not None else now
+                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f.file_name),
+                                                                3600) if f.timestamp is not None else now
             } for f in recordings]
     })
 
