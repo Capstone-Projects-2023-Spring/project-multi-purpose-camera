@@ -44,12 +44,8 @@ public class Account_Page extends AppCompatActivity {
         );
 
 //        loginbtn.setOnClickListener(view -> {
-//            startActivity(new Intent (Account_Page.this, MainActivity.class));
+//            startActivity(new Intent (Account_Page.this, Bluetooth_Page.class));
 //        });
-
-        loginbtn.setOnClickListener(view -> {
-            startActivity(new Intent (Account_Page.this, Bluetooth_Page.class));
-        });
 
         signupbtn.setOnClickListener(view -> {
             startActivity(new Intent (Account_Page.this,Account_Page_Signup.class));

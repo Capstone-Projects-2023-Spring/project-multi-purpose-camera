@@ -58,6 +58,12 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         account = Account.getInstance(this);
         videoDetailViewFlag = false;
 
+        if(!account.isSignedIn())
+        {
+            Intent intent = new Intent (MainActivity.this, Account_Page.class);
+            startActivity(intent);
+        }
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
