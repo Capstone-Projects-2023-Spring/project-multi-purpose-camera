@@ -224,7 +224,8 @@ def account_signup(event, pathPara, queryPara):
 
     if len(error) == 0:
         database.insert(Account(body["username"], body["password"], body["email"], timestamp="NOW()"))
-        return json_payload({"message": "Account created"})
+        token = database.get_field_by_field(Account, Account.TOKEN, Account.NAME, body[Account.NAME])
+        return json_payload({"message": "Account created", "token": token})
     return json_payload({"message": "\n".join(error)}, True)
 
 
