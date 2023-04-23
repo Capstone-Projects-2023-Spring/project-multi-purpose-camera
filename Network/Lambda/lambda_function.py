@@ -864,10 +864,10 @@ def get_recording_videos(event, pathPara, queryPara):
             files.append(file_name)
     arns = list(arns)
 
-    # if len(recordings) == 0:
-    #     account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
-    # else:
-    #     account_id = recordings[0].account_id
+    if len(recordings) == 0:
+        account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
+    else:
+        account_id = recordings[0].account_id
 
     video_retriever = VideoRetriever(settings.BUCKET)
     converted_files = video_retriever.converted_streams(arns)
@@ -889,7 +889,7 @@ def get_recording_videos(event, pathPara, queryPara):
         for folder in id_to_folder_stream_list_map[id]:
             recordings.append(Recording(folder, None, None))
 
-    # video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
+    video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
 
     return json_payload({
         "files": [
