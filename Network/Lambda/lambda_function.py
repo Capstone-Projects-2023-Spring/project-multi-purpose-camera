@@ -839,22 +839,27 @@ def get_recording_videos(event, pathPara, queryPara):
     if not database.verify_field(Account, Account.TOKEN, token):
         return json_payload({"message": "Account does not exist"})
 
-    data = database.select_payload(
-        Recording.TABLE,
-        [Recording.NAME, Recording.EXPLICIT_ACCOUNT_ID, Recording.EXPLICIT_HARDWARE_ID, Hardware.ARN, Recording.EXPLICIT_TIMESTAMP],
-        [MatchItem(Account.TOKEN, token)],
-        [JoinItem(JoinItem.INNER, Account.TABLE, Account.EXPLICIT_ID, Recording.EXPLICIT_ACCOUNT_ID),
-         JoinItem(JoinItem.INNER, Hardware.TABLE, Hardware.EXPLICIT_HARDWARE_ID, Recording.EXPLICIT_HARDWARE_ID)]
-    )["data"]
+    records = database.query(
+        f"""Select distinct Account.account_id, Hardware.hardware_id, arn, file_name, Recording.timestamp From Account 
+        Inner Join Account_has_Hardware ON  Account_has_Hardware.account_id = Account.account_id
+        Inner Join Hardware ON  Account_has_Hardware.hardware_id = Hardware.hardware_id
+        Left Join Recording On Hardware.hardware_id = Recording.hardware_id
+        WHere token = "{token}";"""
+    )
+    import datetime
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     recordings = []
-    for d in data:
-        recording = Recording(
-            d[Recording.NAME], d[Recording.EXPLICIT_TIMESTAMP], d[Recording.EXPLICIT_TIMESTAMP],
-            account_id=d[Recording.EXPLICIT_ACCOUNT_ID], hardware_id=d[Recording.EXPLICIT_HARDWARE_ID])
-        recording.arn = d[Hardware.ARN]
-        recording.timestamp = recording.timestamp.strftime("%Y-%m-%d %H:%M:%S")
-        recordings.append(recording)
+    arns = set()
+    files = []
+    for account_id, hardware_id, arn, file_name, timestamp  in records:
+        arns.add(arn)
+        if file_name != None:
+            r = Recording(file_name, timestamp, timestamp, account_id=account_id, hardware_id=hardware_id)
+            r.arn = arn
+            recordings.append(r)
+            files.append(file_name)
+    arns = list(arns)
 
     if len(recordings) == 0:
         account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
@@ -864,16 +869,27 @@ def get_recording_videos(event, pathPara, queryPara):
     channel_id_dict = dict(zip([r.arn for r in recordings], [r.hardware_id for r in recordings]))
 
     video_retriever = VideoRetriever(settings.BUCKET)
+    converted_files = video_retriever.converted_streams(arns)
+    for file in converted_files:
+        if file not in files:
+            files.append(file)
+            recordings.append(Recording(file, now, now))
 
     id_to_folder_stream_list_map = video_retriever.unregistered_stream_map_from_channels(recordings, channel_id_dict)
+    for id in id_to_folder_stream_list_map:
+        for folder in id_to_folder_stream_list_map[id]:
+            if len(id_to_folder_stream_list_map[id][folder]) == 1:
+                id_to_folder_stream_list_map[id].pop(folder)
+                break
+            elif len(id_to_folder_stream_list_map[id][folder]) > 1:
+                id_to_folder_stream_list_map[id][folder].pop()
 
     for id in id_to_folder_stream_list_map:
         for folder in id_to_folder_stream_list_map[id]:
             recordings.append(Recording(folder, None, None))
 
-    video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(now)
+    # video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
+
     return json_payload({
         "files": [
             {
@@ -895,6 +911,7 @@ def convert_data(event, pathPara, queryPara):
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
+
     event = {
         "resource": "/account/signin",
         "httpMethod": MPC_API.POST,
@@ -903,7 +920,7 @@ if __name__ == "__main__":
             "password": "Password",
             "email": "default@temple.edu",
             "code": "658186",
-            "token": "bef0e96d0b4e33e4b001698820069df3",
+            "token": "b442f59cb6126563024fedfbd7fbf1fd",
             "device_id": "60df7562bc4e566abe803c448f5609ea"
         }""",
         "pathParameters": {
@@ -931,13 +948,9 @@ if __name__ == "__main__":
     response = lambda_handler(event, None)
 
     print(response)
-    # video_retriever = VideoRetriever(settings.BUCKET)
-    # recordings: list[Recording] = database.get_all(Recording)
-    # print(video_retriever.converted_streams(["arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-    #                                          "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R"]))
-    # information_dict = video_retriever.unregistered_stream_map_from_channels(recordings,
-    #                                                                         {
-    #                                                                             "50": "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-    #                                                                             "57": "arn:aws:ivs:us-east-1:052524269538:channel/oOSbJOVQMG7R"}
-    #                                                                         )
-    # video_retriever.convert_stream_in_account(database, "18", information_dict)
+    # database.insert(Account_has_Hardware(18, 36))
+    # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
+    # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
+    recording = database.get_all(Recording)
+    for r in recording:
+        print(r)
