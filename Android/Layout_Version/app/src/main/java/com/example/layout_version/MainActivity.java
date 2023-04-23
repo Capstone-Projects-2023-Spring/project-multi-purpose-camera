@@ -1,14 +1,22 @@
 package com.example.layout_version;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -28,18 +36,6 @@ import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
 import com.example.layout_version.MainTab.Library.VideoDetailFragment;
 import com.example.layout_version.MainTab.Library.VideoItem;
 import com.example.layout_version.MainTab.Library.VideoViewModel;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-//import org.opencv.highgui.HighGui;
 
 
 public class MainActivity extends AppCompatActivity implements TokenChangeInterface, LibraryFragmentInterface, StreamingListFragmentInterface {
@@ -63,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         videoDetailViewFlag = false;
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -86,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         cameraTabButton = findViewById(R.id.view);
 
         btn.setOnClickListener(view -> {
-            Intent intent = new Intent (MainActivity.this,Settings.class);
+            Intent intent = new Intent(MainActivity.this, Settings.class);
             startActivity(intent);
         });
 
@@ -113,10 +109,6 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
 
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
         streamingViewModel = new ViewModelProvider(this).get(StreamingViewModel.class);
-        streamingViewModel.setChannelList(new ArrayList<>(Arrays.asList(
-                new ChannelItem("https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8", "Streaming 1"),
-                new ChannelItem("https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8", "Streaming 2"),
-                new ChannelItem("https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8", "Streaming 3"))));
 
         libraryTabButton.setOnClickListener(view -> {
             LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
@@ -185,44 +177,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
     public void changed(String token) {
         Log.e("", "Token changed");
         videoViewModel.setToken(token);
-        if(token == null)
-        {
-            videoViewModel.videoListUpdated();
-            return;
-        }
-        JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("token", token);
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
-
-        NetworkRequestManager nrm = new NetworkRequestManager(this);
-        nrm.Post(R.string.file_all_endpoint, jsonObject,
-                json -> {
-                    Log.e("", "Load video list");
-                    JSONArray fileArray;
-                    try {
-                        fileArray = json.getJSONArray("files");
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                    List<VideoItem> videos = IntStream.range(0,fileArray.length())
-                            .mapToObj(i -> {
-                                try {
-                                    JSONObject item = fileArray.getJSONObject(i);
-                                    return new VideoItem(item.get("file_name").toString(), item.get("timestamp").toString(), item.getString("url"));
-                                } catch (JSONException e) {
-                                    return new VideoItem("Unknown Video", "Failed to retrieve video file", null);
-                                }
-                            })
-                            .collect(Collectors.toList());
-
-                    videoViewModel.setVideoList(videos);
-
-                    videoViewModel.videoListUpdated();
-                },
-                json -> {});
+        streamingViewModel.setToken(token);
     }
 
     @Override

@@ -96,6 +96,7 @@ public class StreamingPlayerListener extends Player.Listener {
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
+
                 player.load(Uri.parse(playbackUri));
                 Log.e("Error", "Checking Live View");
             });

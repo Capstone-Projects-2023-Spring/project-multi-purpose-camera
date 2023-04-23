@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amazonaws.ivs.player.Player;
@@ -104,13 +105,19 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         // contents of the view with that element
         viewHolder.getTitleView().setText(localDataSet.get(position).getDeviceName());
         viewHolder.getDescriptionView().setText("Default description");
-        viewHolder.getView().setOnClickListener(
-                view -> clickEvent.accept(localDataSet.get(position))
-        );
-        Player player = viewHolder.getPlayerView().getPlayer();
-        player.addListener(new StreamingPlayerListener(context, player, viewHolder.getStatusView(), localDataSet.get(position).getPlaybackUrl(), false));
-        player.load(Uri.parse(localDataSet.get(position).getPlaybackUrl()));
 
+        Player player = viewHolder.getPlayerView().getPlayer();
+        if(localDataSet.get(position).getPlaybackUrl() != null)
+        {
+            player.addListener(new StreamingPlayerListener(context, player, viewHolder.getStatusView(), localDataSet.get(position).getPlaybackUrl(), false));
+            player.load(Uri.parse(localDataSet.get(position).getPlaybackUrl()));
+            viewHolder.getView().setOnClickListener(
+                    view -> clickEvent.accept(localDataSet.get(position))
+            );
+        }else{
+            viewHolder.getStatusView().setBackground(AppCompatResources.getDrawable(context, R.drawable.unavailable_icon));
+            viewHolder.getStatusView().setText(R.string.streaming_unavailable);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

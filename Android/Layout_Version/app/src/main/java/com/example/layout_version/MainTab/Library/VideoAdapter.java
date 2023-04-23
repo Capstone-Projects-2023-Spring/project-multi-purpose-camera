@@ -82,9 +82,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         // contents of the view with that element
         viewHolder.getTitleView().setText(localDataSet.get(position).getTitle());
         viewHolder.getDescriptionView().setText(localDataSet.get(position).getDescription());
-        viewHolder.getView().setOnClickListener(
-                view -> clickEvent.accept(localDataSet.get(position))
-        );
+        if(localDataSet.get(position).getUrl() != null)
+        {
+            viewHolder.getView().setOnClickListener(
+                    view -> clickEvent.accept(localDataSet.get(position))
+            );
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

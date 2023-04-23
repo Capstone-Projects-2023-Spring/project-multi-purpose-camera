@@ -1889,7 +1889,6 @@ color mtrl_textinput_focused_box_stroke_color
 color mtrl_textinput_hovered_box_stroke_color
 color notification_action_color_filter
 color notification_icon_bg_color
-color pairing
 color primary_dark_material_dark
 color primary_dark_material_light
 color primary_material_dark
@@ -2709,14 +2708,11 @@ drawable avd_show_password
 drawable baseline_account_circle_24
 drawable baseline_arrow_back_ios_new_24
 drawable baseline_battery_4_bar_24
-drawable baseline_bluetooth_36
-drawable baseline_bluetooth_48
 drawable baseline_clip_24
 drawable baseline_cloud_queue_24
 drawable baseline_device_thermostat_24
 drawable baseline_directions_walk_24
 drawable baseline_fiber_manual_record_24
-drawable baseline_linked_camera_192
 drawable baseline_menu_24
 drawable baseline_mic_24
 drawable baseline_nightlight_24
@@ -2836,6 +2832,7 @@ drawable round_rectangle_cyan_16dp
 drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+drawable unavailable_icon
 id ALT
 id Account_settings
 id BOTTOM_END
@@ -2943,9 +2940,6 @@ id beginOnFirstDraw
 id beginning
 id bestChoice
 id blocking
-id bluetooth_camera
-id bluetooth_description
-id bluetooth_settings
 id bottom
 id bounce
 id bounceBoth
@@ -2984,6 +2978,7 @@ id confirm_button
 id constraint
 id constraintLayout
 id constraintLayout2
+id constraintLayout3
 id container
 id content
 id contentPanel
@@ -3089,6 +3084,7 @@ id ignoreRequest
 id image
 id imageView
 id imageView2
+id imageView3
 id immediateStop
 id included
 id indeterminate
@@ -3111,6 +3107,7 @@ id linear
 id linearLayout
 id linearLayout2
 id linearLayout3
+id linearLayout4
 id linearLayout5
 id listMode
 id list_item
@@ -3287,8 +3284,6 @@ id select_dialog_listview
 id selected
 id selection_type
 id send
-id serialButton
-id serialNumber
 id settings
 id sharedValueSet
 id sharedValueUnset
@@ -3536,7 +3531,6 @@ layout account_reset
 layout account_signup_page
 layout account_verify
 layout activity_main
-layout bluetooth_hardware_page
 layout camera
 layout camera_of_policy_template
 layout custom_dialog
@@ -3693,6 +3687,7 @@ string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string file_all_endpoint
+string hardware_all_endpoint
 string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
@@ -3809,6 +3804,7 @@ string streaming_idle
 string streaming_offline
 string streaming_online
 string streaming_streaming
+string streaming_unavailable
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog

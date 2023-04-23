@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,9 +17,17 @@ import android.widget.TextView;
 
 import com.amazonaws.ivs.player.Player;
 import com.amazonaws.ivs.player.PlayerView;
+import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
 import com.example.layout_version.MainTab.Library.VideoItem;
 import com.example.layout_version.MainTab.Library.VideoViewModel;
+import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 public class StreamingFragment extends Fragment{
     private Context context;
@@ -58,7 +67,6 @@ public class StreamingFragment extends Fragment{
             Log.e("Observer", item.getDeviceName());
             update(item);
         });
-
     }
 
     public void update(ChannelItem channel)
@@ -69,6 +77,9 @@ public class StreamingFragment extends Fragment{
             streamingPlayer.load(Uri.parse(channel.getPlaybackUrl()));
             playerListener = new StreamingPlayerListener(context, streamingPlayer, deviceStatusView, channel.getPlaybackUrl());
             streamingPlayer.addListener(playerListener);
+        }else{
+            deviceStatusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.unavailable_icon));
+            deviceStatusView.setText(R.string.streaming_unavailable);
         }
     }
 
