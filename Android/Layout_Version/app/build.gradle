@@ -63,4 +63,5 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.7.3'
     testImplementation 'org.mockito:mockito-core:4.1.0'
     implementation 'com.amazonaws:ivs-player:1.18.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

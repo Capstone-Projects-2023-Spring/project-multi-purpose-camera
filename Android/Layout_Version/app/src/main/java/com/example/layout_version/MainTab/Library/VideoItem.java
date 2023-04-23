@@ -5,13 +5,15 @@ public class VideoItem {
     private final String description;
 
     private final String url;
+    private final String thumbnailUrl;
 
-    public static final VideoItem DEFAULT_VIDEO_ITEM = new VideoItem("Welcome to the Video Library", "Sign in first to view a list of videos", null);
+    public static final VideoItem DEFAULT_VIDEO_ITEM = new VideoItem("Welcome to the Video Library", "Sign in first to view a list of videos", null, null);
 
-    public VideoItem(String title, String description, String url) {
+    public VideoItem(String title, String description, String url, String thumbnailUrl) {
         this.title = title;
         this.description = description;
         this.url = url;
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public String getTitle() {
@@ -23,5 +25,9 @@ public class VideoItem {
     }
     public String getUrl() {
         return url;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
     }
 }
