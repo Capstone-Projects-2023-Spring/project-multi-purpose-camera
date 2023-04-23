@@ -29,12 +29,12 @@ public class Account_Page_Forgot_Password extends AppCompatActivity {
                 account.reset(
                         Account_Page_Forgot_Password.this,
                         username.getText().toString(),
-                        a -> startActivity(new Intent (
+                        () -> startActivity(new Intent (
                                 Account_Page_Forgot_Password.this,
                                             Account_Page_Verify_Code.class
                                 )
                         ),
-                        a -> {}
+                        () -> {}
                 )
         );
 

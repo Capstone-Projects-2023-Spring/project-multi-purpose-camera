@@ -13,13 +13,10 @@ import java.util.List;
 public class VideoViewModel extends ViewModel {
     private List<VideoItem> videos;
     private final MutableLiveData<Integer> updateFlag;
-
-    private final MutableLiveData<String> token;
     private final MutableLiveData<VideoItem> selectedVideo;
 
     public VideoViewModel() {
         updateFlag = new MutableLiveData<>(0);
-        token = new MutableLiveData<>(null);
         selectedVideo = new MutableLiveData<>(null);
         videos = new ArrayList<>();
         videos.add(VideoItem.DEFAULT_VIDEO_ITEM);
@@ -33,21 +30,6 @@ public class VideoViewModel extends ViewModel {
     public void videoListUpdated()
     {
         updateFlag.setValue(updateFlag.getValue() + 1);
-    }
-
-    public MutableLiveData<String> getToken()
-    {
-        return token;
-    }
-    public void setToken(String token)
-    {
-        if(token == null)
-        {
-            this.videos.clear();
-            videos.add(VideoItem.DEFAULT_VIDEO_ITEM);
-        }
-
-        this.token.setValue(token);
     }
 
     public MutableLiveData<VideoItem> getSelectedVideo() {
@@ -68,5 +50,12 @@ public class VideoViewModel extends ViewModel {
     {
         this.videos.clear();
         this.videos.addAll(videos);
+    }
+
+    public void clearUpdate()
+    {
+        this.videos.clear();
+        this.videos.add(VideoItem.DEFAULT_VIDEO_ITEM);
+        videoListUpdated();
     }
 }

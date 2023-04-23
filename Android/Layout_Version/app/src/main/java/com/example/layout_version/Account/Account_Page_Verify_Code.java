@@ -30,12 +30,12 @@ public class Account_Page_Verify_Code extends AppCompatActivity {
                 account.verifyCode(
                         Account_Page_Verify_Code.this,
                         code.getText().toString(),
-                        a -> startActivity(new Intent(
+                        () -> startActivity(new Intent(
                                         Account_Page_Verify_Code.this,
                                         Account_Page_Password_Change.class
                                 )
                         ),
-                        a -> {}
+                        () -> {}
                 )
         );
 
@@ -43,8 +43,8 @@ public class Account_Page_Verify_Code extends AppCompatActivity {
                 account.reset(
                         Account_Page_Verify_Code.this,
                         account.getUsername(),
-                        a -> {},
-                        a -> {}
+                        () -> {},
+                        () -> {}
                 )
         );
 

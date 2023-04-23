@@ -2,6 +2,7 @@ package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 public class StreamingListFragment extends Fragment {
@@ -29,7 +32,7 @@ public class StreamingListFragment extends Fragment {
     private Context context;
     private StreamingViewModel streamingViewModel;
     private RecyclerView streamingRecyclerView;
-
+    private static ExecutorService executor;
     public static StreamingListFragment newInstance() {
         return new StreamingListFragment();
     }
@@ -42,6 +45,19 @@ public class StreamingListFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_streaming_list, container, false);
         streamingRecyclerView = layout.findViewById(R.id.streamingRecyclerView);
         context = layout.getContext();
+
+//        if(executor == null)
+//        {
+//            executor = Executors.newSingleThreadExecutor();
+//            executor.execute(()-> {
+//                try {
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//
+//            });
+//        }
         return layout;
     }
 
@@ -63,5 +79,19 @@ public class StreamingListFragment extends Fragment {
         streamingViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
         });
+
+//        Handler timerHandler;
+//        timerHandler = new Handler();
+//
+//        Runnable timerRunnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                // Here you can update your adapter data
+//                adapter.checkPlayers();
+//                timerHandler.postDelayed(this, 1000); //run every second
+//            }
+//        };
+//
+//        timerHandler.postDelayed(timerRunnable, 1000); //Start timer after 1 sec
     }
 }

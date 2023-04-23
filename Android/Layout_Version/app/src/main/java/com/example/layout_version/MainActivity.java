@@ -1,22 +1,14 @@
 package com.example.layout_version;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -29,16 +21,13 @@ import com.example.layout_version.MainTab.Streaming.StreamingFragment;
 import com.example.layout_version.MainTab.Streaming.StreamingListFragment;
 import com.example.layout_version.MainTab.Streaming.StreamingListFragmentInterface;
 import com.example.layout_version.MainTab.Streaming.StreamingViewModel;
-import com.example.layout_version.Network.NetworkRequestManager;
-import com.example.layout_version.Account.TokenChangeInterface;
 import com.example.layout_version.MainTab.Library.LibraryFragment;
 import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
 import com.example.layout_version.MainTab.Library.VideoDetailFragment;
-import com.example.layout_version.MainTab.Library.VideoItem;
 import com.example.layout_version.MainTab.Library.VideoViewModel;
 
 
-public class MainActivity extends AppCompatActivity implements TokenChangeInterface, LibraryFragmentInterface, StreamingListFragmentInterface {
+public class MainActivity extends AppCompatActivity implements LibraryFragmentInterface, StreamingListFragmentInterface {
 
     private Fragment libraryFragment;
     private VideoViewModel videoViewModel;
@@ -54,9 +43,20 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        account = Account.getInstance(this);
         videoDetailViewFlag = false;
 
+        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
+        LibraryFragmentInterface.setUpNetwork(this, this, videoViewModel);
+        streamingViewModel = new ViewModelProvider(this).get(StreamingViewModel.class);
+        StreamingListFragmentInterface.setUpNetwork(this, this, streamingViewModel);
+
+
+        ImageView btn = findViewById(R.id.settings);
+        ImageView accountImageView = findViewById(R.id.account);
+        libraryTabButton = findViewById(R.id.library);
+        cameraTabButton = findViewById(R.id.view);
+
+        account = Account.getInstance();
         if(!account.isSignedIn())
         {
             Intent intent = new Intent (MainActivity.this, Account_Page.class);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         }
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -80,11 +80,6 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        ImageView btn = findViewById(R.id.settings);
-        ImageView accountImageView = findViewById(R.id.account);
-        libraryTabButton = findViewById(R.id.library);
-        cameraTabButton = findViewById(R.id.view);
 
         btn.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, Settings.class);
@@ -112,10 +107,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         else
             Log.d("", "Npot New state");
 
-        videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
-        LibraryFragmentInterface.setUpNetwork(this, this, videoViewModel);
-        streamingViewModel = new ViewModelProvider(this).get(StreamingViewModel.class);
-        StreamingListFragmentInterface.setUpNetwork(this, this, streamingViewModel);
+
 
         libraryTabButton.setOnClickListener(view -> {
             LibraryFragment fragment = (LibraryFragment)getSupportFragmentManager().findFragmentByTag("LibraryFragment");
@@ -180,12 +172,12 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
 
     }
 
-    @Override
-    public void changed(String token) {
-        Log.e("", "Token changed");
-        videoViewModel.setToken(token);
-        streamingViewModel.setToken(token);
-    }
+//    @Override
+//    public void changed(String token) {
+//        Log.e("", "Token changed");
+//        videoViewModel.setToken(token);
+//        streamingViewModel.setToken(token);
+//    }
 
     @Override
     public void videoSelected() {

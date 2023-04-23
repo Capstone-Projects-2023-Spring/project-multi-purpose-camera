@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.amazonaws.ivs.player.Player;
@@ -49,7 +50,10 @@ public class StreamingFragment extends Fragment{
         View layout = inflater.inflate(R.layout.fragment_streaming, container, false);
         context = layout.getContext();
 
-        streamingPlayerView = layout.findViewById(R.id.streamingPlayerView);
+        streamingPlayerView = new PlayerView(layout.getContext());
+        FrameLayout playerFrameLayout = layout.findViewById(R.id.streamPlayerFrameView);
+        streamingPlayerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        playerFrameLayout.addView(streamingPlayerView);
         deviceNameView = layout.findViewById(R.id.deviceNameView);
         deviceStatusView = layout.findViewById(R.id.deviceStatusView);
 
@@ -86,8 +90,6 @@ public class StreamingFragment extends Fragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(playerListener != null)
-            playerListener.shutdown();
         streamingPlayer.removeListener(playerListener);
         streamingPlayer.release();
     }

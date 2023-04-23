@@ -5,8 +5,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 
-import com.example.layout_version.MainTab.Library.VideoItem;
-import com.example.layout_version.MainTab.Library.VideoViewModel;
+import com.example.layout_version.Account.Account;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 
@@ -14,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -37,10 +37,10 @@ public interface StreamingListFragmentInterface {
 
     static void setUpNetwork(Context context, LifecycleOwner lifecycleOwner, StreamingViewModel streamingViewModel)
     {
-        streamingViewModel.getToken().observe(lifecycleOwner, token -> {
+        Account.getInstance().getTokenData().observe(lifecycleOwner, token  -> {
             if(token == null)
             {
-                streamingViewModel.streamListUpdated();
+                streamingViewModel.clearUpdate();
                 return;
             }
             JSONObject jsonObject = new JSONObject();
@@ -63,8 +63,6 @@ public interface StreamingListFragmentInterface {
                         List<ChannelItem> channels = StreamingListFragmentInterface.convertJSONArrayToChannel(hardwareArray);
 
                         streamingViewModel.setChannelList(channels);
-
-                        streamingViewModel.streamListUpdated();
                     },
                     json -> {});
         });

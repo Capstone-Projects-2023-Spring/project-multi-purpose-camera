@@ -41,10 +41,10 @@ public class Account_Page_Signup extends AppCompatActivity {
                         username.getText().toString(),
                         email.getText().toString(),
                         password.getText().toString(),
-                        a -> {
+                        () -> {
                             startActivity(new Intent(Account_Page_Signup.this, MainActivity.class));
                         },
-                        a -> {}
+                        () -> {}
                 );
             }
             else{

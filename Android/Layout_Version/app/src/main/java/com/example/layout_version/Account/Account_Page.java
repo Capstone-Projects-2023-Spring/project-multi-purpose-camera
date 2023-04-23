@@ -35,11 +35,8 @@ public class Account_Page extends AppCompatActivity {
                         Account_Page.this,
                         username.getText().toString(),
                         password.getText().toString(),
-                        a -> {
-                            onBackPressed();
-
-                        },
-                        a -> {}
+                        () -> onBackPressed(),
+                        () -> {}
                 )
         );
 

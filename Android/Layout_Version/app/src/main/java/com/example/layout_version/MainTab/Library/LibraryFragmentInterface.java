@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 
+import com.example.layout_version.Account.Account;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 
@@ -12,8 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,10 +37,10 @@ public interface LibraryFragmentInterface {
 
     static void setUpNetwork(Context context, LifecycleOwner lifecycleOwner, VideoViewModel videoViewModel)
     {
-        videoViewModel.getToken().observe(lifecycleOwner, token -> {
+        Account.getInstance().getTokenData().observe(lifecycleOwner, token  -> {
             if(token == null)
             {
-                videoViewModel.videoListUpdated();
+                videoViewModel.clearUpdate();
                 return;
             }
             JSONObject jsonObject = new JSONObject();
@@ -67,8 +66,6 @@ public interface LibraryFragmentInterface {
 
 
                         videoViewModel.setVideoList(videos);
-
-                        videoViewModel.videoListUpdated();
                     },
                     json -> {});
         });
