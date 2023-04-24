@@ -2,6 +2,7 @@ package com.example.layout_version.MainTab.Library;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LifecycleOwner;
 
@@ -36,55 +37,67 @@ public interface LibraryFragmentInterface {
                 .collect(Collectors.toList());
     }
 
+    static void loadData(Context context, VideoViewModel videoViewModel, String token, int retryNum)
+    {
+        State state = videoViewModel.getStateData().getValue();
+        if(state == State.REQUESTED || state == State.RETRY)
+        {
+            Toast.makeText(context, "Fetching Video Library!! Please wait!", Toast.LENGTH_SHORT);
+            return;
+        }
+        if(retryNum <= 0)
+        {
+            videoViewModel.setStateData(State.FAILED);
+            return;
+        }
+        if(token == null)
+        {
+            videoViewModel.clearUpdate();
+            return;
+        }
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("token", token);
+            jsonObject.put("timestamp", Account.getInstance().getTimestamp());
+            jsonObject.put("username", Account.getInstance().getUsername());
+            Log.e("Video", "Token in JSON");
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        Log.e("TOKEN", token);
+        NetworkRequestManager nrm = new NetworkRequestManager(context);
+        videoViewModel.setStateData(State.REQUESTED);
+        nrm.Post(R.string.file_all_endpoint, jsonObject,
+                json -> {
+                    videoViewModel.setStateData(State.LOADING);
+                    Log.e("", "Load video list");
+                    JSONArray fileArray;
+                    List<VideoItem> videos;
+                    try {
+                        fileArray = json.getJSONArray("files");
+                        videos = LibraryFragmentInterface.convertJSONArrayToVideoItem(fileArray);
+                    } catch (JSONException e) {
+                        videos = Collections.singletonList(VideoItem.DEFAULT_VIDEO_ITEM);
+                    }
+
+
+                    videoViewModel.setDataList(videos);
+                    videoViewModel.setStateData(State.LOADED);
+                },
+                json -> {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    loadData(context, videoViewModel, token, retryNum - 1);
+                    Log.e("Retry", "Timestamp issue. Trying again");
+                });
+    }
     static void setUpNetwork(Context context, LifecycleOwner lifecycleOwner, VideoViewModel videoViewModel, int retryNum)
     {
-        if(retryNum <= 0)
-            return;
         Account.getInstance().getTokenData().observe(lifecycleOwner, token  -> {
-            if(token == null)
-            {
-                videoViewModel.clearUpdate();
-                return;
-            }
-            JSONObject jsonObject = new JSONObject();
-            try{
-                jsonObject.put("token", token);
-                jsonObject.put("timestamp", Account.getInstance().getTimestamp());
-                jsonObject.put("username", Account.getInstance().getUsername());
-                Log.e("Video", "Token in JSON");
-            } catch (JSONException e1) {
-                e1.printStackTrace();
-            }
-            Log.e("TOKEN", token);
-            NetworkRequestManager nrm = new NetworkRequestManager(context);
-            videoViewModel.setStateData(State.REQUESTED);
-            nrm.Post(R.string.file_all_endpoint, jsonObject,
-                    json -> {
-                        videoViewModel.setStateData(State.LOADING);
-                        Log.e("", "Load video list");
-                        JSONArray fileArray;
-                        List<VideoItem> videos;
-                        try {
-                            fileArray = json.getJSONArray("files");
-                            videos = LibraryFragmentInterface.convertJSONArrayToVideoItem(fileArray);
-                        } catch (JSONException e) {
-                            videos = Collections.singletonList(VideoItem.DEFAULT_VIDEO_ITEM);
-                        }
-
-
-                        videoViewModel.setDataList(videos);
-                        videoViewModel.setStateData(State.LOADED);
-                    },
-                    json -> {
-                        videoViewModel.setStateData(State.FAILED);
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                        setUpNetwork(context, lifecycleOwner, videoViewModel, retryNum - 1);
-                        Log.e("Retry", "Timestamp issue. Trying again");
-                    });
+            loadData(context, videoViewModel, token, retryNum);
         });
     }
 }

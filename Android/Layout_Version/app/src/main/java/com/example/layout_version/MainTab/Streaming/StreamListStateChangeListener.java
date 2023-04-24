@@ -26,6 +26,8 @@ public class StreamListStateChangeListener implements StateObservableFragment.St
                 break;
             case LOADED:
                 break;
+            case RETRY:
+                break;
             case FAILED:
                 break;
             case ERROR:

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class LibraryFragment extends StateObservableFragment {
     private RecyclerView videoRecyclerView;
     private VideoViewModel videoViewModel;
     private TextView libraryStatusTextView;
+    private ImageButton refreshButton;
 
 
     /**
@@ -80,6 +82,7 @@ public class LibraryFragment extends StateObservableFragment {
         videoRecyclerView = layout.findViewById(R.id.videoRecyclerView);
         context = container.getContext();
         libraryStatusTextView = layout.findViewById(R.id.libraryStatusTextView);
+        refreshButton = layout.findViewById(R.id.libraryRefreshButton);
 
         return layout;
     }
@@ -101,12 +104,14 @@ public class LibraryFragment extends StateObservableFragment {
         videoRecyclerView.setLayoutManager(layoutManager);
         setStateChangeListener(new LibraryStateChangeListener(context, libraryStatusTextView, videoViewModel.getStateData().getValue()));
 
+        videoViewModel.getStateData().observe(getViewLifecycleOwner(), this::setState);
+
         videoViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
         });
 
-        videoViewModel.getStateData().observe(getViewLifecycleOwner(), this::setState);
-
-
+        refreshButton.setOnClickListener(view1 -> {
+            LibraryFragmentInterface.loadData(context, videoViewModel, Account.getInstance().getTokenData().getValue(), 4);
+        });
     }
 }

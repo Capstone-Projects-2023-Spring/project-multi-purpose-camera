@@ -39,6 +39,10 @@ public class LibraryStateChangeListener implements StateObservableFragment.State
                 statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.success_icon));
                 statusView.setText("Loaded");
                 break;
+            case RETRY:
+                statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.offline_icon));
+                statusView.setText("Retrying");
+                break;
             case FAILED:
                 statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.online_icon));
                 statusView.setText("Failed");
