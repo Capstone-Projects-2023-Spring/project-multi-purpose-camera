@@ -1,26 +1,20 @@
 package com.example.layout_version;
 
-import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
+import com.example.layout_version.Settings.*;
 
-
-import org.checkerframework.checker.units.qual.A;
+import org.checkerframework.checker.units.qual.*;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import android.content.Context;
+
+//import androidx.test.core.app.ApplicationProvider;
+//import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -56,12 +50,23 @@ public class ExampleUnitTest {
         System.out.println(Database_Manager.get_string_from_database(Database_Manager.url_hardware) + "\n");
         System.out.println(Database_Manager.get_string_from_database(Database_Manager.url_account) + "\n");
     }
+    @Test
+    public void test_load_settings(){
+        BackEnd backEnd = Database_Manager.create_BackEnd();
+    }
 
 
 
     @Test
     public void test_post(){
         Database_Manager.test();
+    }
+
+    @Test
+    public void test_using_token(){
+        String token = "32bd5e1ab76afd7f824cceec2ad616cb";
+        List<Database_Manager.Camera_Configuration> cameras = Database_Manager.get_cameras_of_account_from_database(token);
+        System.out.println(cameras);
     }
     @Test
     public void build_objects_from_database(){
@@ -96,6 +101,8 @@ public class ExampleUnitTest {
 //        Receiver_Client.custom_run();
         //client.execute(new Object[1]);
     }
+
+
 
     @Test
     public void test_saving_policy_duplicate_checker(){

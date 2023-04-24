@@ -1,10 +1,35 @@
 package com.example.layout_version;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.ServerError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.layout_version.Account.AccountActionInterface;
+import com.example.layout_version.Account.NetworkInterface;
+import com.example.layout_version.Account.NetworkRequestManager;
+import com.example.layout_version.Settings.*;
+import com.example.layout_version.Settings.Criteria;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+
+import org.testng.annotations.Test;
+//import org.mockito.Mockito;
+import android.content.Context;
+
+
+
+import android.util.JsonWriter;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,11 +37,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Database_Manager {
 
@@ -29,8 +63,10 @@ public class Database_Manager {
     public static final int pass = 200;
     public static final int error = 500;
 
+
+
     //region data_classes
-    class Saving_Policy_Configuration {
+    static class Saving_Policy_Configuration {
         int max_time;
         String resolution_name;
         int saving_policy_id;
@@ -41,7 +77,7 @@ public class Database_Manager {
             for(int i = 0; i < hardware.size(); i++){
                 boolean got_camera = false;
                 for(int j = 0; j < cameras.size(); j++){
-                    if(cameras.get(j).id == hardware.get(i).intValue()){
+                    if(cameras.get(j).id == hardware.get(i)){
                         my_cameras.add(cameras.get(j));
                         got_camera = true;
                         break;
@@ -55,37 +91,56 @@ public class Database_Manager {
 
             return new Saving_Policy(my_cameras, max_time, resolution, saving_policy_id);
         }
+        @NonNull
         public String toString(){
             return "max_time: " + max_time + ", resolution_name: " + resolution_name + ", saving_policy_id: " + saving_policy_id + ", cameras: " + hardware;
         }
     }
-    class Camera_Configuration {
-        String name;
+    static class Camera_Configuration {
+        String channel_name;
+        String device_name;
         String max_resolution;
+        String device_id;
+        String arn;
+        String steam_key;
+        String ingest_endpoint;
+        String playback_url;
+        String s3_recording_prefix;
         int hardware_id;
         int account_id;
 
         public Camera camera(){
-            return new Camera(name, Resolution.name_to_resolution(max_resolution), hardware_id, account_id);
+            int new_account_id = 17;
+            if(channel_name.equals("test-app"))
+                return new Camera(device_name, Resolution.name_to_resolution(max_resolution), hardware_id, new_account_id);
+            return new Camera(device_name, Resolution.name_to_resolution(max_resolution), hardware_id, account_id);
         }
+        @NonNull
         public String toString(){
-            return "name: " + name + ", max_resolution: " + max_resolution + ", camera id, " + hardware_id + ", account: " + account_id;
+            return "name: " + device_name + ", max_resolution: " + max_resolution + ", camera id, " + hardware_id + ", account: " + account_id;
         }
     }
-    class Account_Configuration {
+    static class Account_Configuration {
         String username;
         String password;
+        String email;
+        String status;
+        String token;
+        String timestamp;
+        String code;
         int account_id;
 
+        @NonNull
         public String toString(){
             return "username: " + username + ", password: " + password + ", account_id: " + account_id;
         }
     }
-    class Notification_Configuration {
+    static class Notification_Configuration {
         int notification_type;
         int criteria_id;
         int notification_id;
         List<Integer> hardware;
+        @NonNull
         public String toString(){
             return "notification_type: " + notification_type + ", criteria_id: " + criteria_id + ", id: " + notification_id + ", cameras: " + hardware;
         }
@@ -100,7 +155,7 @@ public class Database_Manager {
             Criteria my_criteria = null;
             for(int i = 0; i < hardware.size(); i++){
                 for(int j = 0; j < cameras.size(); j++){
-                    if(cameras.get(j).id == hardware.get(i).intValue()){
+                    if(cameras.get(j).id == hardware.get(i)){
                         my_cameras.add(cameras.get(j));
                         break;
                     }
@@ -127,13 +182,14 @@ public class Database_Manager {
 
 
     }
-    class Criteria_Configuration {
+    static class Criteria_Configuration {
         int criteria_type;
         int magnitude;
         int duration;
         int criteria_id;
 
 
+        @NonNull
         public String toString(){
             return "criteria_type: " + criteria_type + ", magnitude: " + magnitude + ", duration: " + duration + ", id: " + criteria_id;
         }
@@ -204,9 +260,6 @@ public class Database_Manager {
             return false;
         }
     }
-
-
-
     public static boolean do_put(String url_string){
 
         String urlString = url_string;
@@ -241,7 +294,6 @@ public class Database_Manager {
         }
 
     }
-
     public static boolean do_delete(String url_string){
 
         String urlString = url_string;
@@ -275,6 +327,142 @@ public class Database_Manager {
             return false;
         }
 
+    }
+
+
+
+    public static String do_post(String url, String[][] params) {
+        try {
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json; utf-8");
+            con.setRequestProperty("Accept", "application/json");
+            con.setDoOutput(true);
+
+            JsonObject payload = new JsonObject();
+            for(int i = 0; i < params.length; i++){
+                payload.addProperty(params[i][0], params[i][1]);
+            }
+            //payload.addProperty("token", token);
+
+            OutputStream os = con.getOutputStream();
+            byte[] input = payload.toString().getBytes("utf-8");
+            os.write(input, 0, input.length);
+
+            int responseCode = con.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) { // success
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                return response.toString();
+            } else {
+                System.out.println("POST request did not work.");
+            }
+        } catch (ProtocolException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "no data";
+    }
+
+    public static void test_from_app(Context context){
+        signup(context);
+    }
+    public static void signup(Context context){
+        String username = "tyler";
+        String password = "password";
+        String email = "myemail@website.com";
+        String[][] params = new String[][]{{"username", username}, {"password", password}, {"email", email}};
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/account/signup";
+        signup(context, username, password, email);
+        //String result = Database_Manager.do_post(url, params);
+        //System.out.println(result);
+//        jsonBody.put("username", username);
+//        jsonBody.put("password", password);
+//        jsonBody.put("email", email);
+    }
+
+    public static void Post(int endpointID, JSONObject data, NetworkInterface success, NetworkInterface fail, String url, Context context)
+    {
+        //Resources resource = context.getResources();
+        //Context context = InstrumentationRegistry.getTargetContext();
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                success::action,
+                error -> {
+                    NetworkResponse response = error.networkResponse;
+                    if (error instanceof ServerError && response != null) {
+                        try {
+                            String res = new String(response.data,
+                                    HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                            JSONObject obj = new JSONObject(res);
+                            fail.action((JSONObject) obj.get("body"));
+                        } catch (UnsupportedEncodingException | JSONException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }){
+        };
+        //mRequestQueue.add(jsonRequest);
+    }
+
+    public static void signup(Context context, String username, String email, String password)
+    {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("username", username);
+            jsonBody.put("password", password);
+            jsonBody.put("email", email);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        NetworkRequestManager nrm = new NetworkRequestManager(context);
+        nrm.Post(R.string.account_signup_endpoint, jsonBody,
+                json -> {
+                    try {
+                        Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                        //success.action(this);
+                    } catch (JSONException e) {
+                        //fail.action(this);
+                    }
+                },
+                json -> {
+                    try {
+                        Toast.makeText(context, "Login failed: " + json.get("message"), Toast.LENGTH_SHORT).show();
+                        //fail.action(this);
+                    } catch (JSONException e) {
+                        //fail.action(this);
+                    }
+                });
+    }
+
+    public static List<Camera_Configuration> get_cameras_of_account_from_database(String token){
+        String result = null;
+        result = do_post("https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/hardware/all", new String[][]{{"token", token}});
+
+        System.out.println("result: "+result);
+        JsonObject json;
+        List<Camera_Configuration> parsedJson;
+        try {
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<Camera_Configuration>>() {}.getType();
+            parsedJson = gson.fromJson(result, listType);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return parsedJson;
     }
 
     //region get
@@ -480,20 +668,23 @@ public class Database_Manager {
     }
     //endregion
     public static BackEnd create_BackEnd(){
-        int my_account = 15;
+        int my_account = 17;
         ArrayList<Account_Configuration> accounts = (ArrayList<Account_Configuration>) get_accounts_from_database();
         ArrayList<Criteria> criterias = convert_criterias(get_criterias_from_database());
         ArrayList<Camera> cameras = convert_cameras((get_cameras_from_database()));
         ArrayList<Saving_Policy> saving_policies = convert_saving_policies(get_saving_policy_from_database(), cameras);
-        System.out.println(saving_policies);
+
         ArrayList<Notification_Policy> notification_policies = convert_noitification_policies(get_notification_from_database(), cameras, criterias);
+        System.out.println("settings before removing other accounts: ");
+        System.out.println(saving_policies);
         System.out.println(notification_policies);
-        System.out.println(accounts);
+        System.out.println(accounts + "\n");
         for(int i = 0; i < cameras.size(); i++){
             System.out.println("["+cameras.get(i).name + ", " + cameras.get(i).account_id +"] ");
         }
         //removes cameras that dont belong to account
         for(int i = cameras.size() - 1;  i >= 0; i--){
+
             if(cameras.get(i).account_id != my_account)
                 cameras.remove(i);
         }
@@ -523,9 +714,12 @@ public class Database_Manager {
             if(!my_list)
                 notification_policies.remove(i);
         }
+        System.out.println("settings after removing other accounts: ");
         for(int i = 0; i < cameras.size(); i++){
             System.out.println("["+cameras.get(i).name + ", " + cameras.get(i).account_id +"] ");
         }
+
+
         System.out.println(notification_policies);
         System.out.println(saving_policies);
 

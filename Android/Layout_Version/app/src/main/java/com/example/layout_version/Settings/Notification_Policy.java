@@ -1,8 +1,10 @@
-package com.example.layout_version;
+package com.example.layout_version.Settings;
+
+import com.example.layout_version.Settings.Attributes.*;
 
 import java.util.ArrayList;
 
-public class Notification_Policy implements Displayable_Policy{
+public class Notification_Policy implements Displayable_Setting{
     public static final int type_buzz = 1001;
     public static final int type_silent = 1002;
 
@@ -54,7 +56,7 @@ public class Notification_Policy implements Displayable_Policy{
 
 
     @Override
-    public String get_display_text() {
-        return null;
+    public Attribute[] get_attributes() {
+        return new Attribute[0];
     }
 }

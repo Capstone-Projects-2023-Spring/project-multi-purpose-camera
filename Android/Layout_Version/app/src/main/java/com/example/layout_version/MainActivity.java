@@ -23,6 +23,8 @@ import com.example.layout_version.MainTab.LibraryFragmentInterface;
 import com.example.layout_version.MainTab.VideoDetailFragment;
 import com.example.layout_version.MainTab.VideoItem;
 import com.example.layout_version.MainTab.VideoViewModel;
+import com.example.layout_version.Settings.BackEnd;
+import com.example.layout_version.Settings.Settings;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
     private Account account;
     private Button libraryTabButton;
     private Button cameraTabButton;
+    public static boolean doing_unit_test = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,19 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
         account = Account.getInstance(this);
 
+
+        if(doing_unit_test){
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            MyAsyncTask database = new MyAsyncTask(() -> {
+                System.out.println("calling backend");
+                Database_Manager.test_from_app(this);
+            });
+            return;
+        }
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -74,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         cameraTabButton = findViewById(R.id.view);
 
         btn.setOnClickListener(view -> {
-            Intent intent = new Intent (MainActivity.this,Settings.class);
+            Intent intent = new Intent (MainActivity.this, Settings.class);
             startActivity(intent);
         });
 

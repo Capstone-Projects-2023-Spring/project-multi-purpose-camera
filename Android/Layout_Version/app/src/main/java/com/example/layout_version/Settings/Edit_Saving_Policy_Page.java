@@ -1,4 +1,4 @@
-package com.example.layout_version;
+package com.example.layout_version.Settings;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.layout_version.R;
+import com.example.layout_version.Settings.Attributes.*;
+import com.example.layout_version.View_Factory;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -164,5 +167,46 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
             }
         });
         linearLayout.addView(camera_layout, linearLayout.getChildCount()-number_views_below_cameras);
+    }
+
+    public void add_using_attributes(LinearLayout linearLayout){
+        Attribute[] attributes = current_policy.get_attributes();
+        for(int i = 0; i < attributes.length; i++){
+            Attribute attribute = attributes[i];
+            if(attribute instanceof X_Attribute)
+                construct_X_attribute(linearLayout, (X_Attribute) attribute);
+            if(attribute instanceof Add_Button)
+                construct_add_attribute(linearLayout, (Add_Button) attribute);
+        }
+    }
+
+    public void construct_X_attribute(LinearLayout linearLayout, X_Attribute attribute){
+        ConstraintLayout camera_layout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.camera_of_policy_template, null);
+        TextView camera_view = (TextView)((ConstraintLayout)camera_layout.getChildAt(0)).getChildAt(0);
+        camera_view.setText(attribute.value());
+        ImageView delete_view = (ImageView)((ConstraintLayout)camera_layout.getChildAt(0)).getChildAt(1);
+        delete_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                current_policy = (Saving_Policy) attribute.set(null);
+                linearLayout.removeAllViews();
+                add_using_attributes(linearLayout);
+            }
+        });
+        linearLayout.addView(camera_layout);//linearLayout.addView(camera_layout, linearLayout.getChildCount()-number_views_below_cameras);
+    }
+
+    public void construct_add_attribute(LinearLayout linearLayout, Add_Button attribute){
+        ConstraintLayout camera_layout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.settings_add_button, null);
+        ImageView add_camera_view = (ImageView)((ConstraintLayout)camera_layout.getChildAt(0)).getChildAt(0);//findViewById(R.id.add_camera_view);
+        View_Factory.set_entries(attribute.get_list(), spinner_camera, Edit_Saving_Policy_Page.this);
+        add_camera_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String item = (String) spinner_camera.getSelectedItem();
+                Camera chosen_camera = BackEnd.main.name_to_camera(item);
+                current_policy = (Saving_Policy) attribute.set(chosen_camera);
+            }
+        });
     }
 }

@@ -1,6 +1,4 @@
-package com.example.layout_version;
-
-import android.widget.ArrayAdapter;
+package com.example.layout_version.Settings;
 
 import java.util.ArrayList;
 

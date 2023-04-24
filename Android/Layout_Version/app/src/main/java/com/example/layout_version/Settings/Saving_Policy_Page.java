@@ -1,4 +1,4 @@
-package com.example.layout_version;
+package com.example.layout_version.Settings;
 
 
 import android.app.ProgressDialog;
@@ -16,7 +16,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.security.Policy;
+import com.example.layout_version.Database_Manager;
+import com.example.layout_version.R;
+import com.example.layout_version.View_Factory;
+
 import java.util.ArrayList;
 
 public class Saving_Policy_Page extends AppCompatActivity {
@@ -121,15 +124,15 @@ public class Saving_Policy_Page extends AppCompatActivity {
         for(int i = 0; i < to_delete.size(); i++){
             System.out.println(to_delete.get(i).get_display_text());
         }
-        if(!delete_policies(to_delete))
+        if(!database_delete_policies(to_delete))
             return false;
 
-        if (!add_policies(to_add))
+        if (!database_add_policies(to_add))
             return false;
         return true;
     }
 
-    public boolean delete_policies(ArrayList<Saving_Policy> policies){
+    public boolean database_delete_policies(ArrayList<Saving_Policy> policies){
         for(int i = 0; i < policies.size(); i++){
             if(!Database_Manager.delete_saving_policy(policies.get(i).id))
                 return false;
@@ -138,7 +141,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
         return true;
     }
 
-    public boolean add_policies(ArrayList<Saving_Policy> policies){
+    public boolean database_add_policies(ArrayList<Saving_Policy> policies){
         for(int i = 0; i < policies.size(); i++){
             Saving_Policy policy = policies.get(i);
             int new_id = Database_Manager.add_saving_policy(policy.get_max_time(), policy.get_resolution().name);
@@ -182,9 +185,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
 
         showExitConfirmationDialog();
     }
-
     private ProgressDialog progressDialog;
-
     private void showSavingProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Saving");
@@ -194,7 +195,6 @@ public class Saving_Policy_Page extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
-
     private class SaveDataTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
@@ -227,7 +227,6 @@ public class Saving_Policy_Page extends AppCompatActivity {
 
         }
     }
-
     private void show_saving_error_dialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Exit");
@@ -244,7 +243,6 @@ public class Saving_Policy_Page extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
     private void showExitConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Exit");
@@ -321,7 +319,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (Saving_Policy_Page.this,Settings.class);
+                Intent intent = new Intent (Saving_Policy_Page.this, Settings.class);
                 startActivity(intent);
             }
         });

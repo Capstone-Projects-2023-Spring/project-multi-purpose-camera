@@ -1,8 +1,12 @@
-package com.example.layout_version;
+package com.example.layout_version.Settings;
+
+
+
+import com.example.layout_version.Settings.Attributes.*;
 
 import java.util.ArrayList;
 
-public class Camera {
+public class Camera implements Displayable_Setting{
     public int id;
     public String name;
     public Resolution resolution;
@@ -14,6 +18,22 @@ public class Camera {
         this.account_id = account_id;
     }
 
+    public int get_num_items(){
+        return 2;
+    }
+
+    public Attribute[] get_attributes(){
+        Attribute[] attributes = new Attribute[]{
+                new Title(name) {
+                    @Override
+                    public Object set(Object object) {
+                        return new Camera((String)object, resolution, id, account_id);
+                    }
+                }
+        };
+        return attributes;
+    }
+
     public static ArrayList<String> names (ArrayList<Camera> cameras) {
         ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < cameras.size(); i++) {
@@ -21,6 +41,8 @@ public class Camera {
         }
         return result;
     }
+
+
 
     public String toString(){
         return name;

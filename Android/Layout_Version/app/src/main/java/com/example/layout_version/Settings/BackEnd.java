@@ -1,9 +1,12 @@
-package com.example.layout_version;
+package com.example.layout_version.Settings;
+
+import com.example.layout_version.Database_Manager;
 
 import java.util.ArrayList;
 
 public class BackEnd {
     public static BackEnd main;
+    static boolean using_database = false;
 
     public BackEnd(ArrayList<Camera> cameras, ArrayList<Saving_Policy> savings, ArrayList<Notification_Policy> notifications){
         this.cameras = cameras;
@@ -39,8 +42,10 @@ public class BackEnd {
         return result;
     }
     public static void init(){
-        main = Database_Manager.create_BackEnd();
-        //init_test_objects();
+        if(using_database)
+            main = Database_Manager.create_BackEnd();
+        else
+            init_test_objects();
     }
     public static void init_test_objects(){
         ArrayList<Saving_Policy> savings = new ArrayList<>();
@@ -127,6 +132,15 @@ public class BackEnd {
                 new_temp.remove(policy);
             }
         }
+    }
+
+    public ArrayList<Camera> get_camera_not_in_list(ArrayList<Camera> list){
+        ArrayList<Camera> result = new ArrayList<>();
+        for(int i = 0; i < cameras.size(); i++){
+            if(!list.contains(cameras.get(i)))
+                result.add(cameras.get(i));
+        }
+        return result;
     }
 }
 

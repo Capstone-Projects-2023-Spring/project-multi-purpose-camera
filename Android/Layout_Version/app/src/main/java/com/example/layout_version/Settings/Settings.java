@@ -1,4 +1,4 @@
-package com.example.layout_version;
+package com.example.layout_version.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
+import com.example.layout_version.MainActivity;
+import com.example.layout_version.R;
 
 
 public class Settings extends AppCompatActivity {
@@ -52,7 +54,7 @@ public class Settings extends AppCompatActivity {
         saving_policy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (Settings.this,Saving_Policy_Page.class);
+                Intent intent = new Intent (Settings.this, Saving_Policy_Page.class);
                 startActivity(intent);
             }
         });
@@ -61,7 +63,7 @@ public class Settings extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (Settings.this,MainActivity.class);
+                Intent intent = new Intent (Settings.this, MainActivity.class);
                 startActivity(intent);
             }
         });

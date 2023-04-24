@@ -29,9 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Settings"/>
-        <activity android:name=".Saving_Policy_Page" />
-        <activity android:name=".Edit_Saving_Policy_Page" />
+        <activity android:name=".Settings.Settings"/>
+        <activity android:name=".Settings.Saving_Policy_Page" />
+        <activity android:name=".Settings.Edit_Saving_Policy_Page" />
         <activity android:name=".Camera_Page" />
         <activity android:name=".Library_Videos_Page" />
         <activity

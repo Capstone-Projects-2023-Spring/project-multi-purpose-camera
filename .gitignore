@@ -11,3 +11,4 @@
 /Network/Lambda/settings.py
 /Network/Lambda/lambda_function.zip/
 /Network/Lambda/lambda_function.zip
+*.txt

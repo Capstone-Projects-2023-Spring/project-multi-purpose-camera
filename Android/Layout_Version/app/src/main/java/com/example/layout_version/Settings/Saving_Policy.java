@@ -1,10 +1,13 @@
-package com.example.layout_version;
+package com.example.layout_version.Settings;
 
-import android.widget.ArrayAdapter;
+
+import com.example.layout_version.Settings.Attributes.Attribute;
+import com.example.layout_version.Settings.Attributes.Number;
+import com.example.layout_version.Settings.Attributes.*;
 
 import java.util.ArrayList;
 
-public class Saving_Policy implements Displayable_Policy{
+public class Saving_Policy implements Displayable_Setting{
     public int id;
     private int max_time;
     public int get_max_time(){
@@ -47,7 +50,7 @@ public class Saving_Policy implements Displayable_Policy{
         cameras.add(camera);
     }
 
-    @Override
+
     public String get_display_text() {
         String camera_string = "";
         for(int i = 0; i < cameras.size(); i++){
@@ -95,6 +98,44 @@ public class Saving_Policy implements Displayable_Policy{
     }
 
 
+    @Override
+    public Attribute[] get_attributes() {
+        ArrayList<Object> resolution_objects = new ArrayList<>();
+        for (int i = 0; i < Resolution.resolutions.size(); i++) {
+            resolution_objects.add(Resolution.resolutions.get(i));
+        }
 
+        Attribute[] attributes = new Attribute[cameras.size() + 3];
+        for(int i = 0; i < cameras.size(); i++){
+            Camera camera = cameras.get(i);
+            cameras.remove(camera);
+            attributes[i] = new X_Attribute(camera.name) {
+                @Override
+                public Object set(Object object) {
+                    return new Saving_Policy(cameras, max_time, resolution, id);
+                }
+            };
+        }
+        attributes[attributes.length - 3] = new Add_Button(BackEnd.main.get_camera_not_in_list(cameras)) {
+            @Override
+            public Object set(Object object) {
+                cameras.add((Camera) object);
+                return new Saving_Policy(cameras, max_time, resolution, id);
+            }
+        };
+        attributes[attributes.length - 2] = new Number(max_time) {
+            @Override
+            public Object set(Object object) {
+                return new Saving_Policy(cameras, (Integer) object, resolution, id);
+            }
+        };
+        attributes[attributes.length - 1] = new Drop_Down_Attribute(resolution, resolution_objects) {
+            @Override
+            public Object set(Object object) {
+                return new Saving_Policy(cameras, max_time, (Resolution) object, id);
+            }
 
+        };
+        return attributes;
+    }
 }

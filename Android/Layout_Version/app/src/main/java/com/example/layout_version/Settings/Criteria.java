@@ -1,4 +1,4 @@
-package com.example.layout_version;
+package com.example.layout_version.Settings;
 
 public class Criteria {
     public static final int type_brightness = 1001;
