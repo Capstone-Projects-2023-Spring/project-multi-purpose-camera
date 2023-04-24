@@ -39,17 +39,19 @@ def wifi_setup(ssid,password):
 #         wifi.write('wpa-psk "' + password + '"\n')
 # 
 
-    """copies text file to a temp wpa_supplicant"""
+    # copies text file to a temp wpa_supplicant"""
     cmd = "sudo cp temp.txt wpa_supplicant.conf.temp"
     subprocess.run(cmd,shell=True)
     
-    """copies the temp wpa_supplicant to the actual wpa_supplicant that the pi will use"""
+    # copies the temp wpa_supplicant to the actual wpa_supplicant that the pi will use"""
     cmd = "sudo cp wpa_supplicant.conf.temp /etc/wpa_supplicant/wpa_supplicant.conf"
     subprocess.run(cmd,shell=True)
     
+    # applies the new wifi credentials 
     cmd = "sudo wpa_cli -i wlan0 reconfigure"
     subprocess.run(cmd,shell=True)
 
+    # sleeps so the pi has enough time to reconfigure
     time.sleep(10)
     
     cmd = "sudo wpa_cli -i wlan0 status"
@@ -58,6 +60,8 @@ def wifi_setup(ssid,password):
     result = 'COMPLETED'
     decode_output = output.decode()
     # print(decode_output)
+    
+    # checks if the change was successful and returns the hostname
     if result in decode_output:
         return ssid
     
@@ -65,17 +69,24 @@ def wifi_setup(ssid,password):
     
     
 def wifi_parser(byte_string):
+    # recieves byte string and splits it into an array to be parsed
+    # the format of the byte string should be wifi\nhostname\npassword
     string_list = byte_string.decode().split('\n')
     
+    # gets the hostname
     ssid = string_list[1:2]
+    # gets the password
     password = string_list[2:3]
 #     print(ssid)
 #     print(password)
+    
+    # converts the bytes into strings  
     string_ssid = ''.join(ssid)
     string_password = ''.join(password)
     #print(len(string_ssid))
     #print(string_password)
     
+    #sends the results to the wifi setup to change the wifi settings
     result = wifi_setup(string_ssid,string_password)
     return result
     
