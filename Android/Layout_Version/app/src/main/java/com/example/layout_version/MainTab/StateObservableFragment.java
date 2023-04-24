@@ -10,11 +10,6 @@ public abstract class StateObservableFragment extends Fragment {
 
     private StateChangeListener stateChangeListener;
 
-    public StateObservableFragment()
-    {
-
-    }
-
     public void setStateChangeListener(@NonNull StateChangeListener stateChangeListener) {
         this.stateChangeListener = stateChangeListener;
     }
