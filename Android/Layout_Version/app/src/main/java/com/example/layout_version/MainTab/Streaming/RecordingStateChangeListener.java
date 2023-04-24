@@ -1,6 +1,7 @@
 package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageButton;
 
 import androidx.appcompat.content.res.AppCompatResources;
@@ -19,6 +20,7 @@ public class RecordingStateChangeListener implements StateChangeListener<Recordi
     }
     @Override
     public void onStateChanged(RecordingState state) {
+        Log.e("State Change", state.toString());
         switch (state) {
             case STOPPED:
                 statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.offline_icon));
@@ -30,7 +32,7 @@ public class RecordingStateChangeListener implements StateChangeListener<Recordi
                 break;
             case BUFFERING:
                 statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.buffering_icon));
-                statusView.setImageResource(R.drawable.baseline_videocam_24);
+                statusView.setImageResource(R.drawable.baseline_videocam_off_24);
                 break;
             case RETRY:
                 break;

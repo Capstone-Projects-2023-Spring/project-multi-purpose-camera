@@ -29,6 +29,7 @@ public class StreamingFragment extends StateFragment<RecordingState> {
     private TextView deviceNameView;
     private TextView deviceStatusView;
     private ImageButton recordingButton;
+    private ImageButton streamRefreshButton;
 
     public StreamingFragment() {
         // Required empty public constructor
@@ -48,6 +49,7 @@ public class StreamingFragment extends StateFragment<RecordingState> {
         deviceNameView = layout.findViewById(R.id.deviceNameView);
         deviceStatusView = layout.findViewById(R.id.deviceStatusView);
         recordingButton = layout.findViewById(R.id.recordingButton);
+        streamRefreshButton = layout.findViewById(R.id.streamRefreshButton);
 
         streamingPlayer = streamingPlayerView.getPlayer();
         streamingPlayerView.getControls().showControls(false);
@@ -78,6 +80,11 @@ public class StreamingFragment extends StateFragment<RecordingState> {
                     streamingViewModel.setRecordingStatus(RecordingState.STARTED);
             }
         });
+        StreamingFragmentInterface.loadData(context, streamingViewModel, streamingViewModel.getSelectedItem().getValue(), 4);
+        streamRefreshButton.setOnClickListener(view1 -> {
+            StreamingFragmentInterface.loadData(context, streamingViewModel, streamingViewModel.getSelectedItem().getValue(), 4);
+        });
+
     }
 
     public void update(ChannelItem channel)

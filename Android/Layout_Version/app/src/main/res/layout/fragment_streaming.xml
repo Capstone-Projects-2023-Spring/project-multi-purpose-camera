@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/streamRefreshButton2"
+            android:id="@+id/streamRefreshButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginEnd="10dp"
@@ -36,7 +36,7 @@
             android:background="@drawable/offline_icon"
             android:src="@drawable/baseline_videocam_off_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/streamRefreshButton2"
+            app:layout_constraintEnd_toStartOf="@+id/streamRefreshButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
