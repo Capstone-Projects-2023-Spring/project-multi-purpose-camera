@@ -5,6 +5,7 @@ public enum State {
     REQUESTED,
     LOADING,
     LOADED,
+    RETRY,
     FAILED,
     ERROR
 }
