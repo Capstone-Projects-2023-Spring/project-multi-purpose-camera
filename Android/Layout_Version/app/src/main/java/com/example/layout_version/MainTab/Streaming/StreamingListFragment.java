@@ -16,13 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.layout_version.Account.Account;
-import com.example.layout_version.MainTab.NetworkStateChangeListener;
-import com.example.layout_version.MainTab.NetworkStateFragment;
+import com.example.layout_version.MainTab.State.NetworkState;
+import com.example.layout_version.MainTab.State.NetworkStateChangeListener;
+import com.example.layout_version.MainTab.State.StateFragment;
 import com.example.layout_version.R;
 
 import java.util.function.Consumer;
 
-public class StreamingListFragment extends NetworkStateFragment {
+public class StreamingListFragment extends StateFragment<NetworkState> {
 
     private Context context;
     private StreamingViewModel streamingViewModel;

@@ -1,4 +1,4 @@
-package com.example.layout_version.MainTab;
+package com.example.layout_version.MainTab.State;
 
 import android.content.Context;
 import android.widget.TextView;
@@ -8,7 +8,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import com.example.layout_version.R;
 
-public class NetworkStateChangeListener {
+public class NetworkStateChangeListener implements StateChangeListener<NetworkState>{
     private Context context;
     private TextView statusView;
     public NetworkStateChangeListener(Context context, TextView statusView, NetworkState networkState) {

@@ -16,8 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.layout_version.Account.Account;
-import com.example.layout_version.MainTab.NetworkStateChangeListener;
-import com.example.layout_version.MainTab.NetworkStateFragment;
+import com.example.layout_version.MainTab.State.NetworkState;
+import com.example.layout_version.MainTab.State.NetworkStateChangeListener;
+import com.example.layout_version.MainTab.State.StateFragment;
 import com.example.layout_version.R;
 
 import java.util.function.Consumer;
@@ -27,7 +28,7 @@ import java.util.function.Consumer;
  * Use the {@link LibraryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LibraryFragment extends NetworkStateFragment {
+public class LibraryFragment extends StateFragment<NetworkState> {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

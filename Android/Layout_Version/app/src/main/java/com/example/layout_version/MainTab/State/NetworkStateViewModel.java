@@ -1,4 +1,4 @@
-package com.example.layout_version.MainTab;
+package com.example.layout_version.MainTab.State;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

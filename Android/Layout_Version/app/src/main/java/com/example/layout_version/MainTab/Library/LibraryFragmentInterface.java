@@ -7,7 +7,7 @@ import android.widget.Toast;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.example.layout_version.Account.Account;
-import com.example.layout_version.MainTab.NetworkState;
+import com.example.layout_version.MainTab.State.NetworkState;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 

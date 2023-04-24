@@ -3,12 +3,6 @@ package com.example.layout_version.MainTab.Streaming;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +11,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.amazonaws.ivs.player.Player;
 import com.amazonaws.ivs.player.PlayerView;
+import com.example.layout_version.MainTab.State.StateFragment;
 import com.example.layout_version.R;
 
-public class StreamingFragment extends Fragment{
+public class StreamingFragment extends StateFragment<RecordingState> {
     private Context context;
     private StreamingViewModel streamingViewModel;
     private PlayerView streamingPlayerView;
@@ -64,18 +63,20 @@ public class StreamingFragment extends Fragment{
             Log.e("Observer", item.getDeviceName());
             update(item);
         });
-        recordingButton.setOnClickListener(view1 -> {
-            RecordingStatus status = streamingViewModel.getRecordingStatusData().getValue();
-            if(status != RecordingStatus.BUFFERING)
-            {
-                if (status == RecordingStatus.STARTED)
-                    streamingViewModel.setRecordingStatus(RecordingStatus.STOPPED);
-                else
-                    streamingViewModel.setRecordingStatus(RecordingStatus.STARTED);
-            }
-        });
-        streamingViewModel.getRecordingStatusData().observe(getViewLifecycleOwner(), recordingStatus -> {
 
+        setStateChangeListener(new RecordingStateChangeListener(context, recordingButton, streamingViewModel.getRecordingStateData().getValue()));
+        streamingViewModel.getRecordingStateData().observe(getViewLifecycleOwner(), recordingState -> {
+            setState(recordingState);
+        });
+        recordingButton.setOnClickListener(view1 -> {
+            RecordingState status = streamingViewModel.getRecordingStateData().getValue();
+            if(status != RecordingState.BUFFERING)
+            {
+                if (status == RecordingState.STARTED)
+                    streamingViewModel.setRecordingStatus(RecordingState.STOPPED);
+                else
+                    streamingViewModel.setRecordingStatus(RecordingState.STARTED);
+            }
         });
     }
 
@@ -91,11 +92,6 @@ public class StreamingFragment extends Fragment{
             deviceStatusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.unavailable_icon));
             deviceStatusView.setText(R.string.streaming_unavailable);
         }
-    }
-
-    private void updateRecordingStatus(RecordingStatus status)
-    {
-
     }
 
     @Override

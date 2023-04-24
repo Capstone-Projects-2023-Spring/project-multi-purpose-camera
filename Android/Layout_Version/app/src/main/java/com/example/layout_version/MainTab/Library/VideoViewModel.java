@@ -1,6 +1,6 @@
 package com.example.layout_version.MainTab.Library;
 
-import com.example.layout_version.MainTab.NetworkStateViewModel;
+import com.example.layout_version.MainTab.State.NetworkStateViewModel;
 
 public class VideoViewModel extends NetworkStateViewModel<VideoItem> {
 
