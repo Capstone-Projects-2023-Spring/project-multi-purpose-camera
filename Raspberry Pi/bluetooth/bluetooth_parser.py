@@ -17,7 +17,7 @@ def wifi_setup(ssid,password):
 #     subprocess.run(cmd, shell=True)
     
     """Writes new wifi info to a text file"""
-    with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/temp.txt", "w+") as wifi:
+    with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/bluetooth/temp.txt", "w+") as wifi:
         wifi.write("ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n")
         wifi.write("update_config=1\n")
         wifi.write("country=US\n")
@@ -63,34 +63,51 @@ def wifi_setup(ssid,password):
     
     # checks if the change was successful and returns the hostname
     if result in decode_output:
-        return ssid
+        return "Connected to " + ssid + "\n"
     
     return ""
     
     
-def wifi_parser(byte_string):
+def token_obs(string):
+    print(string)
+    
+    return ""
+    
+    
+def parser(byte_string):
     # recieves byte string and splits it into an array to be parsed
+    
+    result = ""
     # the format of the byte string should be wifi\nhostname\npassword
     string_list = byte_string.decode().split('\n')
+     
+    option = string_list[0]
     
-    # gets the hostname
-    ssid = string_list[1:2]
-    # gets the password
-    password = string_list[2:3]
-#     print(ssid)
-#     print(password)
+    string_option = ''.join(option)
     
-    # converts the bytes into strings  
-    string_ssid = ''.join(ssid)
-    string_password = ''.join(password)
-    #print(len(string_ssid))
-    #print(string_password)
+    if "wifi" in string_option:
+        # gets the hostname
+        ssid = string_list[1:2]
+        # gets the password
+        password = string_list[2:3]
+        # converts the bytes into strings  
+        string_ssid = ''.join(ssid)
+        string_password = ''.join(password)
+        #print(len(string_ssid))
+        #print(string_password)
+        
+        #sends the results to the wifi setup to change the wifi settings
+        result = wifi_setup(string_ssid,string_password)
+        # print(result)
+        
+    if "token" in string_option:
+        token_item = string_list[1:2]
+        result = token_obs(token_item)
     
-    #sends the results to the wifi setup to change the wifi settings
-    result = wifi_setup(string_ssid,string_password)
     return result
     
    
 if __name__ == "__main__":
     byte_string = b'wifi\nCOMPUTER 7084\nAC24dc34!\n'
-    wifi_parser(byte_string)
+    temp = parser(byte_string)
+    print(temp)
