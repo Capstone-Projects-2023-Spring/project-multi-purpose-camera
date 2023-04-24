@@ -1,6 +1,12 @@
 import cv2
+import datetime
+import time
+import os
+import numpy as np
 
 from picamera2 import Picamera2
+from picamera2.encoders import H264Encoder
+from picamera2.outputs import FfmpegOutput
 
 # setup picamera2 camera
 picam2 = Picamera2()
@@ -18,10 +24,32 @@ blur_size = 7
 min_area = 1000
 is_motion = False
 
+# Setup settings for video saving
+RECORD_DURATION = 5
+VIDEO_PATH = '/home/mpc/Videos'
+fourcc = cv2.VideoWriter_fourcc('X','V','I','D')
+fps = 20
+frame_size = (640, 480)
+video_writer = None
+
+"""Creates a video writer for when motion is detected"""
+def create_video_writer():
+    # Create the video file name using the current date and time
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    video_path = os.path.join(VIDEO_PATH, f"motion_{timestamp}.avi")
+    # Create the video writer object
+
+    
+    return cv2.VideoWriter(video_path, fourcc, fps, frame_size)
+
+
 # Loop over frames from the webcam
 while True:
     # Read a frame from the webcam
     frame = picam2.capture_array()
+    
+    # Initilize the start_time variable
+    start_time = time.time()
 
     # Convert the frame to grayscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -49,9 +77,24 @@ while True:
         # Compute the bounding box for the contour and draw it on the frame
         (x, y, w, h) = cv2.boundingRect(contour)
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        
+        if not is_motion:
+            is_motion = True
+            video_writer = create_video_writer()
+            start_time = time.time()
 
+    if is_motion and (time.time() - start_time >= RECORD_DURATION):
+        is_motion = False
+        video_writer.release()
+        
+    if is_motion:
+        video_writer.write(frame)
+    
     # Show the frame
     cv2.imshow("Feed", frame)
+    
+#     if not is_motion:
+#         time.sleep(0.1)
 
     # If the 'q' key is pressed, stop the loop
     if cv2.waitKey(1) & 0xFF == ord('q'):
