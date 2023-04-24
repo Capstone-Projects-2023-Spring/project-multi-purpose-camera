@@ -89,6 +89,7 @@ public class StreamingFragment extends StateFragment<RecordingState> {
             playerListener = new StreamingPlayerListener(context, streamingPlayer, deviceStatusView, channel.getPlaybackUrl());
             streamingPlayer.addListener(playerListener);
         }else{
+//            StreamingFragmentInterface.loadData(context, streamingViewModel, channel, 4);
             deviceStatusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.unavailable_icon));
             deviceStatusView.setText(R.string.streaming_unavailable);
         }

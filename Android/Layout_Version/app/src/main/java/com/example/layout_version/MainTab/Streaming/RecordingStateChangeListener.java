@@ -32,6 +32,10 @@ public class RecordingStateChangeListener implements StateChangeListener<Recordi
                 statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.buffering_icon));
                 statusView.setImageResource(R.drawable.baseline_videocam_24);
                 break;
+            case RETRY:
+                break;
+            case FAILED:
+                break;
         }
     }
 }

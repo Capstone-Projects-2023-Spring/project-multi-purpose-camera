@@ -5,5 +5,7 @@ import com.example.layout_version.MainTab.State.State;
 public enum RecordingState implements State {
     STOPPED,
     STARTED,
-    BUFFERING
+    BUFFERING,
+    RETRY,
+    FAILED
 }

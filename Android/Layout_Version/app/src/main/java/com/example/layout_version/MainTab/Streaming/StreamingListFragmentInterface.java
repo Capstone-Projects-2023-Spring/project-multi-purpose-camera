@@ -28,9 +28,15 @@ public interface StreamingListFragmentInterface {
                 .mapToObj(i -> {
                     try {
                         JSONObject item = jsonArray.getJSONObject(i);
-                        return new ChannelItem(item.get("playback_url").toString(), item.get("device_name").toString(), item.get("max_resolution").toString(), item.get("s3_recording_prefix").toString());
+                        return new ChannelItem(
+                                item.get("device_id").toString(),
+                                item.get("playback_url").toString(),
+                                item.get("device_name").toString(),
+                                item.get("max_resolution").toString(),
+                                item.get("s3_recording_prefix").toString(),
+                                item.get("arn").toString());
                     } catch (JSONException e) {
-                        return new ChannelItem("Unknown Video", "Failed to retrieve video file",  "720p", null);
+                        return new ChannelItem("1234", "Unknown Video", "Failed to retrieve video file",  "720p", null, null);
                     }
                 })
                 .collect(Collectors.toList());
@@ -92,7 +98,7 @@ public interface StreamingListFragmentInterface {
     static void setUpNetwork(Context context, LifecycleOwner lifecycleOwner, StreamingViewModel streamingViewModel, int retryNum)
     {
         Account.getInstance().getTokenData().observe(lifecycleOwner, token  -> {
-            loadData(context, streamingViewModel, token, retryNum);
-        });
-    }
+        loadData(context, streamingViewModel, token, retryNum);
+    });
+}
 }
