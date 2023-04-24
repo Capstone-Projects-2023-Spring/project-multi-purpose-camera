@@ -88,13 +88,6 @@ public class ExampleUnitTest {
         }
     }
 
-
-    @Test
-    public void test_Notifications() {
-        Notifications n = new Notifications();
-        n.send_Notifications();
-    }
-
     @Test
     public void test_saving_policy_duplicate_checker(){
         ArrayList<Saving_Policy> policies = new ArrayList<>();

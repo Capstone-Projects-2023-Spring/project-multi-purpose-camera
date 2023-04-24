@@ -1,5 +1,7 @@
 package com.example.layout_version;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -57,6 +59,22 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
         account = Account.getInstance(this);
         videoDetailViewFlag = false;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My_Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "My_Notification");
+        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
+        builder.setContentTitle("Test");
+        builder.setContentText("You have clicked the Settings button");
+        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        builder.setAutoCancel(true);
+
+        Notifications notif = new Notifications(this);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        notif.send_Notifications( managerCompat);
 
         try {
             Thread.sleep(2000);
