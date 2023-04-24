@@ -1,7 +1,11 @@
 import cv2
 
-# Initialize webcam
-cap = cv2.VideoCapture(0)
+from picamera2 import Picamera2
+
+# setup picamera2 camera
+picam2 = Picamera2()
+picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640,480)}))
+picam2.start()
 
 # Initialize frame variables
 frame = None
@@ -16,7 +20,7 @@ min_area = 1200
 # Loop over frames from the webcam
 while True:
     # Read a frame from the webcam
-    ret, frame = cap.read()
+    frame = picam2.capture_array()
 
     # Convert the frame to grayscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -46,7 +50,7 @@ while True:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
     # Show the frame
-    cv2.imshow("Security Feed", frame)
+    cv2.imshow("Feed", frame)
 
     # If the 'q' key is pressed, stop the loop
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -56,5 +60,5 @@ while True:
     previous_gray = gray
 
 # Release the webcam and close all windows
-cap.release()
+picam2.close()
 cv2.destroyAllWindows()
