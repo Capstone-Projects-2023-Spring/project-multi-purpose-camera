@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/deviceStatusView2"
+            android:id="@+id/libraryStatusTextView"
             android:layout_width="100dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"

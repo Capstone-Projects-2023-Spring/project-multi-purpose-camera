@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.example.layout_version.Account.Account;
+import com.example.layout_version.MainTab.State;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 
@@ -56,8 +57,10 @@ public interface LibraryFragmentInterface {
             }
             Log.e("TOKEN", token);
             NetworkRequestManager nrm = new NetworkRequestManager(context);
+            videoViewModel.setStateData(State.REQUESTED);
             nrm.Post(R.string.file_all_endpoint, jsonObject,
                     json -> {
+                        videoViewModel.setStateData(State.LOADING);
                         Log.e("", "Load video list");
                         JSONArray fileArray;
                         List<VideoItem> videos;
@@ -70,8 +73,10 @@ public interface LibraryFragmentInterface {
 
 
                         videoViewModel.setDataList(videos);
+                        videoViewModel.setStateData(State.LOADED);
                     },
                     json -> {
+                        videoViewModel.setStateData(State.FAILED);
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {

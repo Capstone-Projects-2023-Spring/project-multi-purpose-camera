@@ -99,14 +99,14 @@ public class LibraryFragment extends StateObservableFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         videoRecyclerView.setAdapter(adapter);
         videoRecyclerView.setLayoutManager(layoutManager);
-        setStateChangeListener(new StreamListStateChangeListener(libraryStatusTextView));
+        setStateChangeListener(new LibraryStateChangeListener(context, libraryStatusTextView, videoViewModel.getStateData().getValue()));
 
         videoViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
         });
 
-        Account.getInstance().getTokenData().observe(getViewLifecycleOwner(), token -> {
-            setState(State.REQUESTED);
-        });
+        videoViewModel.getStateData().observe(getViewLifecycleOwner(), this::setState);
+
+
     }
 }
