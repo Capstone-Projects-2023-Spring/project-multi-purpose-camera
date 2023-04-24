@@ -65,5 +65,7 @@ public abstract  class NetworkStateViewModel<E> extends ViewModel {
     public void clearUpdate()
     {
         updatedSignal();
+        stateData.setValue(NetworkState.IDLE);
+        setSelectedItem(null);
     }
 }

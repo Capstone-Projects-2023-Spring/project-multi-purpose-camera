@@ -22,6 +22,8 @@ public class NetworkStateChangeListener implements StateChangeListener<NetworkSt
         {
 
             case IDLE:
+                statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.unavailable_icon));
+                statusView.setText(R.string.streaming_unavailable);
                 break;
             case REQUESTED:
                 statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.offline_icon));

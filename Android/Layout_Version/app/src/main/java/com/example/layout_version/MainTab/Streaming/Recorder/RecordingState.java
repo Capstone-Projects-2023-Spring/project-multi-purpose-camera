@@ -1,4 +1,4 @@
-package com.example.layout_version.MainTab.Streaming;
+package com.example.layout_version.MainTab.Streaming.Recorder;
 
 import com.example.layout_version.MainTab.State.State;
 

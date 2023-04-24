@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -55,13 +56,8 @@ public interface LibraryFragmentInterface {
             videoViewModel.clearUpdate();
             return;
         }
-        JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("token", token);
-            Log.e("Video", "Token in JSON");
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
+
+        JSONObject jsonObject = new JSONObject(Map.of("token", token));
 
         NetworkRequestManager nrm = new NetworkRequestManager(context);
         videoViewModel.setStateData(NetworkState.REQUESTED);

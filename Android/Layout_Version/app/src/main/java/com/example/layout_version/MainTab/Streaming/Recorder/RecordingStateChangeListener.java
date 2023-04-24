@@ -1,26 +1,29 @@
-package com.example.layout_version.MainTab.Streaming;
+package com.example.layout_version.MainTab.Streaming.Recorder;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.example.layout_version.MainTab.State.StateChangeListener;
 import com.example.layout_version.R;
 
 public class RecordingStateChangeListener implements StateChangeListener<RecordingState> {
-    private Context context;
-    private ImageButton statusView;
+    private final Context context;
+    private final ImageButton statusView;
 
-    public RecordingStateChangeListener(Context context, ImageButton statusView, RecordingState recordingState) {
+    public RecordingStateChangeListener(
+            @NonNull Context context,
+            @NonNull ImageButton statusView,
+            @NonNull RecordingState recordingState) {
         this.context = context;
         this.statusView  = statusView;
         onStateChanged(recordingState);
     }
     @Override
-    public void onStateChanged(RecordingState state) {
-        Log.e("State Change", state.toString());
+    public void onStateChanged(@NonNull RecordingState state) {
         switch (state) {
             case STOPPED:
                 statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.offline_icon));
@@ -37,6 +40,8 @@ public class RecordingStateChangeListener implements StateChangeListener<Recordi
             case RETRY:
                 break;
             case FAILED:
+                statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.unavailable_icon));
+                statusView.setImageResource(R.drawable.baseline_videocam_off_24);
                 break;
         }
     }
