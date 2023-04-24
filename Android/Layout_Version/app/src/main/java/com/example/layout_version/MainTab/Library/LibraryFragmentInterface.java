@@ -58,8 +58,6 @@ public interface LibraryFragmentInterface {
         JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("token", token);
-            jsonObject.put("timestamp", Account.getInstance().getTimestamp());
-            jsonObject.put("username", Account.getInstance().getUsername());
             Log.e("Video", "Token in JSON");
         } catch (JSONException e1) {
             e1.printStackTrace();
