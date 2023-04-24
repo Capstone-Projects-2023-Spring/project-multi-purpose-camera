@@ -69,7 +69,7 @@ public interface LibraryFragmentInterface {
                         }
 
 
-                        videoViewModel.setVideoList(videos);
+                        videoViewModel.setDataList(videos);
                     },
                     json -> {
                         try {

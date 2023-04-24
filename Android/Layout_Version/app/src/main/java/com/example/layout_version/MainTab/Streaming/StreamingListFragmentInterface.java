@@ -13,7 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -62,7 +61,7 @@ public interface StreamingListFragmentInterface {
                         }
                         List<ChannelItem> channels = StreamingListFragmentInterface.convertJSONArrayToChannel(hardwareArray);
 
-                        streamingViewModel.setChannelList(channels);
+                        streamingViewModel.setDataList(channels);
                     },
                     json -> {
                         try {

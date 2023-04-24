@@ -60,13 +60,13 @@ public class StreamingListFragment  extends StateObservableFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Consumer<ChannelItem> clickEvent = channelItem -> {
-            streamingViewModel.setSelectedChannel(channelItem);
+            streamingViewModel.setSelectedItem(channelItem);
             if(requireActivity() instanceof StreamingListFragmentInterface)
                 ((StreamingListFragmentInterface)requireActivity()).channelSelected(channelItem);
             Log.e("Channel Item", channelItem.getDeviceName());
         };
 
-        ChannelAdapter adapter = new ChannelAdapter(streamingViewModel.getChannelList(), clickEvent);
+        ChannelAdapter adapter = new ChannelAdapter(streamingViewModel.getDataList(), clickEvent);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         streamingRecyclerView.setAdapter(adapter);
         streamingRecyclerView.setLayoutManager(layoutManager);

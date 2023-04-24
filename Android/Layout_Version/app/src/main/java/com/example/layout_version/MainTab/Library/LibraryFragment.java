@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,16 +14,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.layout_version.Account.Account;
+import com.example.layout_version.MainTab.State;
 import com.example.layout_version.MainTab.StateObservableFragment;
+import com.example.layout_version.MainTab.Streaming.StreamListStateChangeListener;
 import com.example.layout_version.Network.NetworkRequestManager;
-import com.example.layout_version.MainActivity;
 import com.example.layout_version.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -44,6 +42,7 @@ public class LibraryFragment extends StateObservableFragment {
     private Context context;
     private RecyclerView videoRecyclerView;
     private VideoViewModel videoViewModel;
+    private TextView libraryStatusTextView;
 
 
     /**
@@ -80,6 +79,8 @@ public class LibraryFragment extends StateObservableFragment {
 
         videoRecyclerView = layout.findViewById(R.id.videoRecyclerView);
         context = container.getContext();
+        libraryStatusTextView = layout.findViewById(R.id.libraryStatusTextView);
+
         return layout;
     }
 
@@ -88,21 +89,24 @@ public class LibraryFragment extends StateObservableFragment {
         super.onViewCreated(view, savedInstanceState);
 
         Consumer<VideoItem> clickEvent = videoItem -> {
-            videoViewModel.setSelectedVideo(videoItem);
+            videoViewModel.setSelectedItem(videoItem);
             if(requireActivity() instanceof LibraryFragmentInterface)
                 ((LibraryFragmentInterface)requireActivity()).videoSelected();
             Log.e("Video Item", videoItem.getTitle());
         };
 
-        VideoAdapter adapter = new VideoAdapter(videoViewModel.getVideoList(), clickEvent);
+        VideoAdapter adapter = new VideoAdapter(videoViewModel.getDataList(), clickEvent);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         videoRecyclerView.setAdapter(adapter);
         videoRecyclerView.setLayoutManager(layoutManager);
+        setStateChangeListener(new StreamListStateChangeListener(libraryStatusTextView));
 
         videoViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
         });
 
-
+        Account.getInstance().getTokenData().observe(getViewLifecycleOwner(), token -> {
+            setState(State.REQUESTED);
+        });
     }
 }
