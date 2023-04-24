@@ -2,9 +2,6 @@ package com.example.layout_version.MainTab.Streaming;
 
 import com.example.layout_version.MainTab.StateViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class StreamingViewModel extends StateViewModel<ChannelItem> {
     public StreamingViewModel() {
         getDataList().add(ChannelItem.DEFAULT_CHANNEL_ITEM);

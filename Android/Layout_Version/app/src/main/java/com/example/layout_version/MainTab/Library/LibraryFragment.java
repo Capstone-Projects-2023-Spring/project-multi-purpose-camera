@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.layout_version.Account.Account;
-import com.example.layout_version.MainTab.State;
 import com.example.layout_version.MainTab.StateObservableFragment;
-import com.example.layout_version.MainTab.Streaming.StreamListStateChangeListener;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 
@@ -34,11 +32,6 @@ public class LibraryFragment extends StateObservableFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String FIRST_TIME = "FIRST_TIME";
-
-    // TODO: Rename and change types of parameters
-    private Boolean mParam1;
-
-    private NetworkRequestManager nrm;
 
     private Context context;
     private RecyclerView videoRecyclerView;
@@ -67,9 +60,6 @@ public class LibraryFragment extends StateObservableFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getBoolean(FIRST_TIME);
-        }
     }
 
     @Override
@@ -102,13 +92,13 @@ public class LibraryFragment extends StateObservableFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         videoRecyclerView.setAdapter(adapter);
         videoRecyclerView.setLayoutManager(layoutManager);
-        setStateChangeListener(new LibraryStateChangeListener(context, libraryStatusTextView, videoViewModel.getStateData().getValue()));
-
-        videoViewModel.getStateData().observe(getViewLifecycleOwner(), this::setState);
 
         videoViewModel.getUpdateFlag().observe(getViewLifecycleOwner(), updateFlag -> {
             adapter.notifyDataSetChanged();
         });
+
+        setStateChangeListener(new LibraryStateChangeListener(context, libraryStatusTextView, videoViewModel.getStateData().getValue()));
+        videoViewModel.getStateData().observe(getViewLifecycleOwner(), this::setState);
 
         refreshButton.setOnClickListener(view1 -> {
             LibraryFragmentInterface.loadData(context, videoViewModel, Account.getInstance().getTokenData().getValue(), 4);

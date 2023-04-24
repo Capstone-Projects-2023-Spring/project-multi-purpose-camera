@@ -40,9 +40,9 @@ public interface LibraryFragmentInterface {
     static void loadData(Context context, VideoViewModel videoViewModel, String token, int retryNum)
     {
         State state = videoViewModel.getStateData().getValue();
-        if(state == State.REQUESTED || state == State.RETRY)
+        if(state == State.REQUESTED || state == State.LOADING)
         {
-            Toast.makeText(context, "Fetching Video Library!! Please wait!", Toast.LENGTH_SHORT);
+            Toast.makeText(context, "Fetching Video Library!! Please wait!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(retryNum <= 0)
@@ -64,7 +64,7 @@ public interface LibraryFragmentInterface {
         } catch (JSONException e1) {
             e1.printStackTrace();
         }
-        Log.e("TOKEN", token);
+
         NetworkRequestManager nrm = new NetworkRequestManager(context);
         videoViewModel.setStateData(State.REQUESTED);
         nrm.Post(R.string.file_all_endpoint, jsonObject,
@@ -80,11 +80,11 @@ public interface LibraryFragmentInterface {
                         videos = Collections.singletonList(VideoItem.DEFAULT_VIDEO_ITEM);
                     }
 
-
                     videoViewModel.setDataList(videos);
                     videoViewModel.setStateData(State.LOADED);
                 },
                 json -> {
+                    videoViewModel.setStateData(State.RETRY);
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {

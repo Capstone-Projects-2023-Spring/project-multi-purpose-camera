@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,10 +15,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.layout_version.Account.Account;
 import com.example.layout_version.MainTab.StateObservableFragment;
 import com.example.layout_version.R;
 
-import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
 public class StreamingListFragment  extends StateObservableFragment {
@@ -25,9 +27,9 @@ public class StreamingListFragment  extends StateObservableFragment {
     private StreamingViewModel streamingViewModel;
     private RecyclerView streamingRecyclerView;
 
-    private StateChangeListener stateChangeListener;
+    private TextView streamStatusTextView;
+    private ImageButton refreshButton;
 
-    private static ExecutorService executor;
     public static StreamingListFragment newInstance() {
         return new StreamingListFragment();
     }
@@ -40,19 +42,8 @@ public class StreamingListFragment  extends StateObservableFragment {
         View layout = inflater.inflate(R.layout.fragment_streaming_list, container, false);
         streamingRecyclerView = layout.findViewById(R.id.streamingRecyclerView);
         context = layout.getContext();
-
-//        if(executor == null)
-//        {
-//            executor = Executors.newSingleThreadExecutor();
-//            executor.execute(()-> {
-//                try {
-//                    Thread.sleep(5000);
-//                } catch (InterruptedException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//
-//            });
-//        }
+        streamStatusTextView = layout.findViewById(R.id.streamStatusTextView);
+        refreshButton = layout.findViewById(R.id.streamRefreshButton);
         return layout;
     }
 
@@ -75,18 +66,10 @@ public class StreamingListFragment  extends StateObservableFragment {
             adapter.notifyDataSetChanged();
         });
 
-//        Handler timerHandler;
-//        timerHandler = new Handler();
-//
-//        Runnable timerRunnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                // Here you can update your adapter data
-//                adapter.checkPlayers();
-//                timerHandler.postDelayed(this, 1000); //run every second
-//            }
-//        };
-//
-//        timerHandler.postDelayed(timerRunnable, 1000); //Start timer after 1 sec
+        setStateChangeListener(new StreamListStateChangeListener(context, streamStatusTextView, streamingViewModel.getStateData().getValue()));
+        streamingViewModel.getStateData().observe(getViewLifecycleOwner(), this::setState);
+        refreshButton.setOnClickListener(view1 -> {
+            StreamingListFragmentInterface.loadData(context, streamingViewModel, Account.getInstance().getTokenData().getValue(), 4);
+        });
     }
 }

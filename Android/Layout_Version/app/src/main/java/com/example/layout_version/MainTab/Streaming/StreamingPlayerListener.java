@@ -1,10 +1,6 @@
 package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -16,9 +12,6 @@ import com.amazonaws.ivs.player.Player;
 import com.amazonaws.ivs.player.PlayerException;
 import com.amazonaws.ivs.player.Quality;
 import com.example.layout_version.R;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class StreamingPlayerListener extends Player.Listener {
 

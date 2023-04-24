@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.layout_version.MainTab.State;
 import com.example.layout_version.MainTab.StateObservableFragment;
@@ -24,7 +23,6 @@ public class LibraryStateChangeListener implements StateObservableFragment.State
     public void onStateChanged(@NonNull State state) {
         switch(state)
         {
-
             case IDLE:
                 break;
             case REQUESTED:
