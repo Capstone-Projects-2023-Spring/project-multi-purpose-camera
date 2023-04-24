@@ -15,7 +15,8 @@ previous_gray = None
 # Initialize motion detection parameters
 delta_thresh = 5
 blur_size = 7
-min_area = 1200
+min_area = 1000
+is_motion = False
 
 # Loop over frames from the webcam
 while True:
