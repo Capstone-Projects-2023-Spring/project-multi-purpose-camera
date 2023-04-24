@@ -41,7 +41,7 @@ public class VideoDetailFragment extends Fragment {
         stopButton = layout.findViewById(R.id.stopButton);
 
         videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
-        videoViewModel.getSelectedVideo().observe(getViewLifecycleOwner(), item -> {
+        videoViewModel.getSelectedItem().observe(getViewLifecycleOwner(), item -> {
             Log.e("Observer", item.getTitle());
             update(item);
         });

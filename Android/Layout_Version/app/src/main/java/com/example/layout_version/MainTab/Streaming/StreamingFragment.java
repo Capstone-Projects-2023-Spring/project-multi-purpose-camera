@@ -13,21 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.amazonaws.ivs.player.Player;
 import com.amazonaws.ivs.player.PlayerView;
-import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
-import com.example.layout_version.MainTab.Library.VideoItem;
-import com.example.layout_version.MainTab.Library.VideoViewModel;
-import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
 
 public class StreamingFragment extends Fragment{
     private Context context;
@@ -49,7 +40,10 @@ public class StreamingFragment extends Fragment{
         View layout = inflater.inflate(R.layout.fragment_streaming, container, false);
         context = layout.getContext();
 
-        streamingPlayerView = layout.findViewById(R.id.streamingPlayerView);
+        streamingPlayerView = new PlayerView(layout.getContext());
+        FrameLayout playerFrameLayout = layout.findViewById(R.id.streamPlayerFrameView);
+        streamingPlayerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        playerFrameLayout.addView(streamingPlayerView);
         deviceNameView = layout.findViewById(R.id.deviceNameView);
         deviceStatusView = layout.findViewById(R.id.deviceStatusView);
 
@@ -63,7 +57,7 @@ public class StreamingFragment extends Fragment{
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         streamingViewModel = new ViewModelProvider(requireActivity()).get(StreamingViewModel.class);
-        streamingViewModel.getSelectedChannel().observe(getViewLifecycleOwner(), item -> {
+        streamingViewModel.getSelectedItem().observe(getViewLifecycleOwner(), item -> {
             Log.e("Observer", item.getDeviceName());
             update(item);
         });
@@ -86,8 +80,6 @@ public class StreamingFragment extends Fragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(playerListener != null)
-            playerListener.shutdown();
         streamingPlayer.removeListener(playerListener);
         streamingPlayer.release();
     }

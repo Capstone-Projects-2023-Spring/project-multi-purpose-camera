@@ -35,12 +35,12 @@ public class Account_Page_Password_Change extends AppCompatActivity {
                         account.changePassword(
                                 Account_Page_Password_Change.this,
                                 password.getText().toString(),
-                                a -> startActivity(new Intent(
+                                () -> startActivity(new Intent(
                                                 Account_Page_Password_Change.this,
                                                 Account_Page.class
                                         )
                                 ),
-                                a -> {
+                                () -> {
                                 }
                         );
                     }else{

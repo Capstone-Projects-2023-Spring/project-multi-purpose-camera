@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,15 +15,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.layout_version.Account.Account;
+import com.example.layout_version.MainTab.StateObservableFragment;
 import com.example.layout_version.Network.NetworkRequestManager;
-import com.example.layout_version.MainActivity;
 import com.example.layout_version.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -29,20 +27,17 @@ import java.util.function.Consumer;
  * Use the {@link LibraryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LibraryFragment extends Fragment {
+public class LibraryFragment extends StateObservableFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String FIRST_TIME = "FIRST_TIME";
 
-    // TODO: Rename and change types of parameters
-    private Boolean mParam1;
-
-    private NetworkRequestManager nrm;
-
     private Context context;
     private RecyclerView videoRecyclerView;
     private VideoViewModel videoViewModel;
+    private TextView libraryStatusTextView;
+    private ImageButton refreshButton;
 
 
     /**
@@ -65,9 +60,6 @@ public class LibraryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getBoolean(FIRST_TIME);
-        }
     }
 
     @Override
@@ -79,6 +71,9 @@ public class LibraryFragment extends Fragment {
 
         videoRecyclerView = layout.findViewById(R.id.videoRecyclerView);
         context = container.getContext();
+        libraryStatusTextView = layout.findViewById(R.id.libraryStatusTextView);
+        refreshButton = layout.findViewById(R.id.libraryRefreshButton);
+
         return layout;
     }
 
@@ -87,13 +82,13 @@ public class LibraryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Consumer<VideoItem> clickEvent = videoItem -> {
-            videoViewModel.setSelectedVideo(videoItem);
+            videoViewModel.setSelectedItem(videoItem);
             if(requireActivity() instanceof LibraryFragmentInterface)
                 ((LibraryFragmentInterface)requireActivity()).videoSelected();
             Log.e("Video Item", videoItem.getTitle());
         };
 
-        VideoAdapter adapter = new VideoAdapter(videoViewModel.getVideoList(), clickEvent);
+        VideoAdapter adapter = new VideoAdapter(videoViewModel.getDataList(), clickEvent);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         videoRecyclerView.setAdapter(adapter);
         videoRecyclerView.setLayoutManager(layoutManager);
@@ -102,36 +97,11 @@ public class LibraryFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
 
-        videoViewModel.getToken().observe(getViewLifecycleOwner(), token -> {
-            if(token == null)
-            {
-                videoViewModel.videoListUpdated();
-                return;
-            }
-            JSONObject jsonObject = new JSONObject();
-            try{
-                jsonObject.put("token", token);
-            } catch (JSONException e1) {
-                e1.printStackTrace();
-            }
+        setStateChangeListener(new LibraryStateChangeListener(context, libraryStatusTextView, videoViewModel.getStateData().getValue()));
+        videoViewModel.getStateData().observe(getViewLifecycleOwner(), this::setState);
 
-            NetworkRequestManager nrm = new NetworkRequestManager(context);
-            nrm.Post(R.string.file_all_endpoint, jsonObject,
-                    json -> {
-                        Log.e("", "Load video list");
-                        JSONArray fileArray;
-                        try {
-                            fileArray = json.getJSONArray("files");
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        List<VideoItem> videos = LibraryFragmentInterface.convertJSONArrayToVideoItem(fileArray);
-
-                        videoViewModel.setVideoList(videos);
-
-                        videoViewModel.videoListUpdated();
-                    },
-                    json -> {});
+        refreshButton.setOnClickListener(view1 -> {
+            LibraryFragmentInterface.loadData(context, videoViewModel, Account.getInstance().getTokenData().getValue(), 4);
         });
     }
 }
