@@ -2,7 +2,6 @@ package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,28 +9,24 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.layout_version.Network.NetworkRequestManager;
+import com.example.layout_version.MainTab.StateObservableFragment;
 import com.example.layout_version.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
-public class StreamingListFragment extends Fragment {
+public class StreamingListFragment  extends StateObservableFragment {
 
     private Context context;
     private StreamingViewModel streamingViewModel;
     private RecyclerView streamingRecyclerView;
+
+    private StateChangeListener stateChangeListener;
+
     private static ExecutorService executor;
     public static StreamingListFragment newInstance() {
         return new StreamingListFragment();

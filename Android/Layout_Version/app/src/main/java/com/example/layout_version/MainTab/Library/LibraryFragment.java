@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.layout_version.MainTab.StateObservableFragment;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.MainActivity;
 import com.example.layout_version.R;
@@ -29,7 +30,7 @@ import java.util.function.Consumer;
  * Use the {@link LibraryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LibraryFragment extends Fragment {
+public class LibraryFragment extends StateObservableFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -23,6 +23,7 @@ public class Account {
     private String email;
     private String code;
     private String status;
+    private String timestamp;
     private MutableLiveData<String> tokenData;
 //    private TokenChangeInterface tokenChangeInterface;
 
@@ -61,6 +62,11 @@ public class Account {
         this.status = status;
     }
 
+    public void setTimestamp(String timestamp)
+    {
+        this.timestamp = timestamp;
+    }
+
     public MutableLiveData<String> getTokenData()
     {
         return tokenData;
@@ -71,6 +77,10 @@ public class Account {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
     }
 
     public boolean isSignedIn(){
@@ -174,6 +184,7 @@ public class Account {
                         this.setUsername(json.get("username").toString());
                         this.setEmail(json.get("email").toString());
                         this.setToken(json.get("token").toString());
+                        this.setTimestamp(json.get("timestamp").toString());
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
                         success.action();
                     } catch (JSONException e) {

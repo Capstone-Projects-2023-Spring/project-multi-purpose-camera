@@ -1,23 +1,16 @@
 package com.example.layout_version.MainTab;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
-enum State{
-    IDLE,
-    REQUESTED,
-    LOADING,
-    LOADED,
-    FAILED,
-    ERROR
-}
 
-public abstract class StateObservable {
+public abstract class StateObservableFragment extends Fragment {
 
     private State state;
 
     private StateChangeListener stateChangeListener;
 
-    public StateObservable()
+    public StateObservableFragment()
     {
 
     }
@@ -30,5 +23,10 @@ public abstract class StateObservable {
         if(stateChangeListener != null && this.state != state)
             stateChangeListener.onStateChanged(state);
         this.state = state;
+    }
+
+    public interface StateChangeListener {
+
+        void onStateChanged(@NonNull State state);
     }
 }
