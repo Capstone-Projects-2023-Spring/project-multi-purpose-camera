@@ -432,6 +432,10 @@ def hardware_insert(event, pathPara, queryPara):
 def hardware_insert(event, pathPara, queryPara):
     """Inserts new rows into the hardware table based on account id"""
     token = event["body"]["token"]
+    body = event["body"]
+
+    if not database.verify_field(Account, Account.TOKEN, body[Account.TOKEN]):
+        json_payload({"message": Error.UNKNOWN_ACCOUNT}, True)
 
     hardware = database.get_all_join_fields_by_field(
         Hardware,
@@ -935,25 +939,25 @@ def convert_data(event, pathPara, queryPara):
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
 
-    # event = {
-    #     "resource": "/account/signin",
-    #     "httpMethod": MPC_API.POST,
-    #     "body": """{
-    #         "username": "John Smith",
-    #         "password": "Password",
-    #         "email": "default@temple.edu",
-    #         "code": "658186",
-    #         "token": "b442f59cb6126563024fedfbd7fbf1fd",
-    #         "device_id": "60df7562bc4e566abe803c448f5609ea"
-    #     }""",
-    #     "pathParameters": {
-    #         "key": "sample.txt"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
-    # }
-    # response = lambda_handler(event, None)
+    event = {
+        "resource": "/account",
+        "httpMethod": MPC_API.GET,
+        "body": """{
+            "username": "John Smith",
+            "password": "Password",
+            "email": "default@temple.edu",
+            "code": "658186",
+            "token": "b442f59cb6126563024fedfbd7fbf1fd",
+            "device_id": "60df7562bc4e566abe803c448f5609ea"
+        }""",
+        "pathParameters": {
+            "key": "sample.txt"
+        },
+        "queryStringParameters": {
+            "notification_type": 10
+        }
+    }
+    response = lambda_handler(event, None)
     # token = json.loads(response["body"])["token"]
     # print(token)
     #
