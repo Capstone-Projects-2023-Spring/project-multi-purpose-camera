@@ -35,8 +35,10 @@ public interface LibraryFragmentInterface {
                 .collect(Collectors.toList());
     }
 
-    static void setUpNetwork(Context context, LifecycleOwner lifecycleOwner, VideoViewModel videoViewModel)
+    static void setUpNetwork(Context context, LifecycleOwner lifecycleOwner, VideoViewModel videoViewModel, int retryNum)
     {
+        if(retryNum <= 0)
+            return;
         Account.getInstance().getTokenData().observe(lifecycleOwner, token  -> {
             if(token == null)
             {
@@ -46,6 +48,8 @@ public interface LibraryFragmentInterface {
             JSONObject jsonObject = new JSONObject();
             try{
                 jsonObject.put("token", token);
+                jsonObject.put("timestamp", Account.getInstance().getTimestamp());
+                jsonObject.put("username", Account.getInstance().getUsername());
                 Log.e("Video", "Token in JSON");
             } catch (JSONException e1) {
                 e1.printStackTrace();
@@ -67,7 +71,15 @@ public interface LibraryFragmentInterface {
 
                         videoViewModel.setVideoList(videos);
                     },
-                    json -> {});
+                    json -> {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        setUpNetwork(context, lifecycleOwner, videoViewModel, retryNum - 1);
+                        Log.e("Retry", "Timestamp issue. Trying again");
+                    });
         });
     }
 }

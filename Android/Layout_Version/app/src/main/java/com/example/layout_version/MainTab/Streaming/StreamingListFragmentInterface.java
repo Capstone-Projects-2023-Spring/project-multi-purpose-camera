@@ -35,7 +35,7 @@ public interface StreamingListFragmentInterface {
                 .collect(Collectors.toList());
     }
 
-    static void setUpNetwork(Context context, LifecycleOwner lifecycleOwner, StreamingViewModel streamingViewModel)
+    static void setUpNetwork(Context context, LifecycleOwner lifecycleOwner, StreamingViewModel streamingViewModel, int retryNum)
     {
         Account.getInstance().getTokenData().observe(lifecycleOwner, token  -> {
             if(token == null)
@@ -64,7 +64,15 @@ public interface StreamingListFragmentInterface {
 
                         streamingViewModel.setChannelList(channels);
                     },
-                    json -> {});
+                    json -> {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        setUpNetwork(context, lifecycleOwner, streamingViewModel, retryNum - 1);
+                        Log.e("Retry", "Timestamp issue. Trying again");
+                    });
         });
     }
 }

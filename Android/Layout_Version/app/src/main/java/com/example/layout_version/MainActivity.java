@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
         videoDetailViewFlag = false;
 
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
-        LibraryFragmentInterface.setUpNetwork(this, this, videoViewModel);
+        LibraryFragmentInterface.setUpNetwork(this, this, videoViewModel, 4);
         streamingViewModel = new ViewModelProvider(this).get(StreamingViewModel.class);
-        StreamingListFragmentInterface.setUpNetwork(this, this, streamingViewModel);
+        StreamingListFragmentInterface.setUpNetwork(this, this, streamingViewModel, 4);
 
 
         ImageView btn = findViewById(R.id.settings);

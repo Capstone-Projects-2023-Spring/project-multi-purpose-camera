@@ -50,6 +50,7 @@ public class VideoViewModel extends ViewModel {
     {
         this.videos.clear();
         this.videos.addAll(videos);
+        videoListUpdated();
     }
 
     public void clearUpdate()
