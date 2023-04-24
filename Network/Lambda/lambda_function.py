@@ -4,6 +4,7 @@ import random
 import re
 
 import EmailSender
+import boto3
 import settings
 from Database.Data.Account import Account
 from Database.Data.Account_has_Hardware import Account_has_Hardware
@@ -622,6 +623,24 @@ def recording_start(event, pathPara, queryPara):
     return json_payload({"message": "Recording stopped"})
 
 
+@api.handle("/recording/is_recording", httpMethod=MPC_API.POST)
+def recording_start(event, pathPara, queryPara):
+    """Updates recording table based on specified id"""
+    body = event["body"]
+    if not database.verify_fields_by_joins(Account,
+                                           [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                             Account.EXPLICIT_ID),
+                                            (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
+                                             Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                           [(Account.TOKEN, body[Account.TOKEN]),
+                                            (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+        return json_payload({"message": "Device not Found"}, True)
+    arn = database.get_field_by_field(Hardware, Hardware.ARN, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
+    recorder = Recorder(arn)
+
+    return json_payload({"message": recorder.isRecording()})
+
+
 @api.handle("/criteria")
 def criteria_request(event, pathPara, queryPara):
     """Gets all rows and columns from the Criteria table"""
@@ -916,45 +935,56 @@ def convert_data(event, pathPara, queryPara):
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
 
-    event = {
-        "resource": "/account/signin",
-        "httpMethod": MPC_API.POST,
-        "body": """{
-            "username": "John Smith",
-            "password": "Password",
-            "email": "default@temple.edu",
-            "code": "658186",
-            "token": "b442f59cb6126563024fedfbd7fbf1fd",
-            "device_id": "60df7562bc4e566abe803c448f5609ea"
-        }""",
-        "pathParameters": {
-            "key": "sample.txt"
-        },
-        "queryStringParameters": {
-            "notification_type": 10
-        }
-    }
-    response = lambda_handler(event, None)
-    token = json.loads(response["body"])["token"]
-    print(token)
+    # event = {
+    #     "resource": "/account/signin",
+    #     "httpMethod": MPC_API.POST,
+    #     "body": """{
+    #         "username": "John Smith",
+    #         "password": "Password",
+    #         "email": "default@temple.edu",
+    #         "code": "658186",
+    #         "token": "b442f59cb6126563024fedfbd7fbf1fd",
+    #         "device_id": "60df7562bc4e566abe803c448f5609ea"
+    #     }""",
+    #     "pathParameters": {
+    #         "key": "sample.txt"
+    #     },
+    #     "queryStringParameters": {
+    #         "notification_type": 10
+    #     }
+    # }
+    # response = lambda_handler(event, None)
+    # token = json.loads(response["body"])["token"]
+    # print(token)
+    #
+    # event = {
+    #     "resource": "/file/all",
+    #     "httpMethod": MPC_API.POST,
+    #     "body": "{\"token\":\"" + token + "\"}",
+    #     "pathParameters": {
+    #         "key": "sample.txt"
+    #     },
+    #     "queryStringParameters": {
+    #         "notification_type": 10
+    #     }
+    # }
+    # response = lambda_handler(event, None)
+    #
+    # print(response)
+    # # database.insert(Account_has_Hardware(18, 36))
+    # # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
+    # # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
+    #
+    #
+    # recording = database.get_all(Recording)
+    # for r in recording:
+    #     print(r)
 
-    event = {
-        "resource": "/file/all",
-        "httpMethod": MPC_API.POST,
-        "body": "{\"token\":\"" + token + "\"}",
-        "pathParameters": {
-            "key": "sample.txt"
-        },
-        "queryStringParameters": {
-            "notification_type": 10
-        }
-    }
-    response = lambda_handler(event, None)
+    session = boto3.Session(
+        aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
+        aws_secret_access_key=AWS_SERVER_SECRET_KEY
+    )
 
-    print(response)
-    # database.insert(Account_has_Hardware(18, 36))
-    # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
-    # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
-    recording = database.get_all(Recording)
-    for r in recording:
-        print(r)
+    recorder = Recorder("arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
+    recorder.stop_recording()
+    print(recorder.isRecording())

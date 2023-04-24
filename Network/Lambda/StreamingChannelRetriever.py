@@ -43,6 +43,13 @@ class Recorder:
         )
         return response
 
+    def isRecording(self):
+        response = self.s3.get_channel(
+            arn=self.arn
+        )
+
+        return response["channel"]["recordingConfigurationArn"] != ""
+
     def request_looper(self, type: Type, loop_num, sleep_time: int = 5):
         while loop_num > 0:
             try:
