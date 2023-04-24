@@ -435,7 +435,7 @@ def hardware_insert(event, pathPara, queryPara):
     body = event["body"]
 
     if not database.verify_field(Account, Account.TOKEN, body[Account.TOKEN]):
-        json_payload({"message": Error.UNKNOWN_ACCOUNT}, True)
+        return json_payload({"message": Error.UNKNOWN_ACCOUNT}, True)
 
     hardware = database.get_all_join_fields_by_field(
         Hardware,
