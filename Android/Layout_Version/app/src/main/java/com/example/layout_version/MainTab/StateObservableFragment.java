@@ -19,9 +19,4 @@ public abstract class StateObservableFragment extends Fragment {
             stateChangeListener.onStateChanged(state);
         this.state = state;
     }
-
-    public interface StateChangeListener {
-
-        void onStateChanged(@NonNull State state);
-    }
 }

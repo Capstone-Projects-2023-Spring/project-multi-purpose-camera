@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.layout_version.Account.Account;
+import com.example.layout_version.MainTab.StateChangeListener;
 import com.example.layout_version.MainTab.StateObservableFragment;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
@@ -97,7 +98,7 @@ public class LibraryFragment extends StateObservableFragment {
             adapter.notifyDataSetChanged();
         });
 
-        setStateChangeListener(new LibraryStateChangeListener(context, libraryStatusTextView, videoViewModel.getStateData().getValue()));
+        setStateChangeListener(new StateChangeListener(context, libraryStatusTextView, videoViewModel.getStateData().getValue()));
         videoViewModel.getStateData().observe(getViewLifecycleOwner(), this::setState);
 
         refreshButton.setOnClickListener(view1 -> {
