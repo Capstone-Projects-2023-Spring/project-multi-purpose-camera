@@ -16,11 +16,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageButton
+            android:id="@+id/streamRefreshButton2"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/theme_circle"
+            android:src="@drawable/baseline_refresh_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/recordingButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/offline_icon"
+            android:src="@drawable/baseline_videocam_off_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/streamRefreshButton2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
         <TextView
             android:id="@+id/deviceStatusView"
             android:layout_width="100dp"
             android:layout_height="20dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/offline_icon"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/streaming_offline"
@@ -34,23 +58,15 @@
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_marginStart="20dp"
-            android:gravity="center_vertical"
+            android:layout_marginEnd="79dp"
+            android:gravity="center_horizontal|center_vertical"
             android:text="TextView"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView4"
+            app:layout_constraintEnd_toStartOf="@+id/streamRefreshButton2"
             app:layout_constraintStart_toEndOf="@+id/deviceStatusView"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/baseline_refresh_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

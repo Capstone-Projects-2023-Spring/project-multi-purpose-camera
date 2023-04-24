@@ -7,7 +7,7 @@ import android.widget.Toast;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.example.layout_version.Account.Account;
-import com.example.layout_version.MainTab.State;
+import com.example.layout_version.MainTab.NetworkState;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 
@@ -38,15 +38,15 @@ public interface StreamingListFragmentInterface {
 
     static void loadData(Context context, StreamingViewModel streamingViewModel, String token, int retryNum)
     {
-        State state = streamingViewModel.getStateData().getValue();
-        if(state == State.REQUESTED || state == State.LOADING)
+        NetworkState networkState = streamingViewModel.getStateData().getValue();
+        if(networkState == NetworkState.REQUESTED || networkState == NetworkState.LOADING)
         {
             Toast.makeText(context, "Fetching Stream Channels!! Please wait!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(retryNum <= 0)
         {
-            streamingViewModel.setStateData(State.FAILED);
+            streamingViewModel.setStateData(NetworkState.FAILED);
             return;
         }
         if(token == null)
@@ -62,10 +62,10 @@ public interface StreamingListFragmentInterface {
         }
 
         NetworkRequestManager nrm = new NetworkRequestManager(context);
-        streamingViewModel.setStateData(State.REQUESTED);
+        streamingViewModel.setStateData(NetworkState.REQUESTED);
         nrm.Post(R.string.hardware_all_endpoint, jsonObject,
                 json -> {
-                    streamingViewModel.setStateData(State.LOADING);
+                    streamingViewModel.setStateData(NetworkState.LOADING);
                     Log.e("", "Load video list");
                     JSONArray hardwareArray;
                     try {
@@ -76,10 +76,10 @@ public interface StreamingListFragmentInterface {
                     List<ChannelItem> channels = StreamingListFragmentInterface.convertJSONArrayToChannel(hardwareArray);
 
                     streamingViewModel.setDataList(channels);
-                    streamingViewModel.setStateData(State.LOADED);
+                    streamingViewModel.setStateData(NetworkState.LOADED);
                 },
                 json -> {
-                    streamingViewModel.setStateData(State.RETRY);
+                    streamingViewModel.setStateData(NetworkState.RETRY);
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {

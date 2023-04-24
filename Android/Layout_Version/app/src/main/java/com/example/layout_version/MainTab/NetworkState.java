@@ -1,6 +1,6 @@
 package com.example.layout_version.MainTab;
 
-public enum State {
+public enum NetworkState {
     IDLE,
     REQUESTED,
     LOADING,

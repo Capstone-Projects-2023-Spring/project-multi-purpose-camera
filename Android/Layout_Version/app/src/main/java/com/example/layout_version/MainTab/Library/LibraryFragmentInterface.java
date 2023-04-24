@@ -7,7 +7,7 @@ import android.widget.Toast;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.example.layout_version.Account.Account;
-import com.example.layout_version.MainTab.State;
+import com.example.layout_version.MainTab.NetworkState;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 
@@ -39,15 +39,15 @@ public interface LibraryFragmentInterface {
 
     static void loadData(Context context, VideoViewModel videoViewModel, String token, int retryNum)
     {
-        State state = videoViewModel.getStateData().getValue();
-        if(state == State.REQUESTED || state == State.LOADING)
+        NetworkState networkState = videoViewModel.getStateData().getValue();
+        if(networkState == NetworkState.REQUESTED || networkState == NetworkState.LOADING)
         {
             Toast.makeText(context, "Fetching Video Library!! Please wait!", Toast.LENGTH_SHORT).show();
             return;
         }
         if(retryNum <= 0)
         {
-            videoViewModel.setStateData(State.FAILED);
+            videoViewModel.setStateData(NetworkState.FAILED);
             return;
         }
         if(token == null)
@@ -66,10 +66,10 @@ public interface LibraryFragmentInterface {
         }
 
         NetworkRequestManager nrm = new NetworkRequestManager(context);
-        videoViewModel.setStateData(State.REQUESTED);
+        videoViewModel.setStateData(NetworkState.REQUESTED);
         nrm.Post(R.string.file_all_endpoint, jsonObject,
                 json -> {
-                    videoViewModel.setStateData(State.LOADING);
+                    videoViewModel.setStateData(NetworkState.LOADING);
                     Log.e("", "Load video list");
                     JSONArray fileArray;
                     List<VideoItem> videos;
@@ -81,10 +81,10 @@ public interface LibraryFragmentInterface {
                     }
 
                     videoViewModel.setDataList(videos);
-                    videoViewModel.setStateData(State.LOADED);
+                    videoViewModel.setStateData(NetworkState.LOADED);
                 },
                 json -> {
-                    videoViewModel.setStateData(State.RETRY);
+                    videoViewModel.setStateData(NetworkState.RETRY);
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {

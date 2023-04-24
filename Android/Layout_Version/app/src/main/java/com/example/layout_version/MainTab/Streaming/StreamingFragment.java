@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.amazonaws.ivs.player.Player;
@@ -28,6 +29,7 @@ public class StreamingFragment extends Fragment{
     private StreamingPlayerListener playerListener;
     private TextView deviceNameView;
     private TextView deviceStatusView;
+    private ImageButton recordingButton;
 
     public StreamingFragment() {
         // Required empty public constructor
@@ -46,6 +48,7 @@ public class StreamingFragment extends Fragment{
         playerFrameLayout.addView(streamingPlayerView);
         deviceNameView = layout.findViewById(R.id.deviceNameView);
         deviceStatusView = layout.findViewById(R.id.deviceStatusView);
+        recordingButton = layout.findViewById(R.id.recordingButton);
 
         streamingPlayer = streamingPlayerView.getPlayer();
         streamingPlayerView.getControls().showControls(false);
@@ -61,6 +64,19 @@ public class StreamingFragment extends Fragment{
             Log.e("Observer", item.getDeviceName());
             update(item);
         });
+        recordingButton.setOnClickListener(view1 -> {
+            RecordingStatus status = streamingViewModel.getRecordingStatusData().getValue();
+            if(status != RecordingStatus.BUFFERING)
+            {
+                if (status == RecordingStatus.STARTED)
+                    streamingViewModel.setRecordingStatus(RecordingStatus.STOPPED);
+                else
+                    streamingViewModel.setRecordingStatus(RecordingStatus.STARTED);
+            }
+        });
+        streamingViewModel.getRecordingStatusData().observe(getViewLifecycleOwner(), recordingStatus -> {
+
+        });
     }
 
     public void update(ChannelItem channel)
@@ -75,6 +91,11 @@ public class StreamingFragment extends Fragment{
             deviceStatusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.unavailable_icon));
             deviceStatusView.setText(R.string.streaming_unavailable);
         }
+    }
+
+    private void updateRecordingStatus(RecordingStatus status)
+    {
+
     }
 
     @Override

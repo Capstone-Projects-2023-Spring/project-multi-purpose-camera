@@ -16,9 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.layout_version.Account.Account;
-import com.example.layout_version.MainTab.StateChangeListener;
-import com.example.layout_version.MainTab.StateObservableFragment;
-import com.example.layout_version.Network.NetworkRequestManager;
+import com.example.layout_version.MainTab.NetworkStateChangeListener;
+import com.example.layout_version.MainTab.NetworkStateFragment;
 import com.example.layout_version.R;
 
 import java.util.function.Consumer;
@@ -28,7 +27,7 @@ import java.util.function.Consumer;
  * Use the {@link LibraryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LibraryFragment extends StateObservableFragment {
+public class LibraryFragment extends NetworkStateFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,7 +97,7 @@ public class LibraryFragment extends StateObservableFragment {
             adapter.notifyDataSetChanged();
         });
 
-        setStateChangeListener(new StateChangeListener(context, libraryStatusTextView, videoViewModel.getStateData().getValue()));
+        setStateChangeListener(new NetworkStateChangeListener(context, libraryStatusTextView, videoViewModel.getStateData().getValue()));
         videoViewModel.getStateData().observe(getViewLifecycleOwner(), this::setState);
 
         refreshButton.setOnClickListener(view1 -> {
