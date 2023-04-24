@@ -620,7 +620,7 @@ def recording_start(event, pathPara, queryPara):
         return json_payload({"message": "Could not stop stream"}, True)
 
     try:
-        recorder.request_looper(Recorder.Type.START, 3, 5)
+        recorder.request_looper(Recorder.Type.STOP, 3, 5)
     except Recorder.RecorderError:
         return json_payload({"message": "Could not stop recording"}, True)
 
