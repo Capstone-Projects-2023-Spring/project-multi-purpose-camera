@@ -16,7 +16,7 @@ from Database.Data.Notification import Notification
 from Database.Data.Recording import Recording
 from Database.Data.Resolution import Resolution
 from Database.Data.Saving_Policy import Saving_Policy
-from Database.MPCDatabase import MPCDatabase, MatchItem, JoinItem
+from Database.MPCDatabase import MPCDatabase
 from Error import Error
 from StreamingChannelRetriever import Recorder
 from VideoRetriever import VideoRetriever
@@ -870,7 +870,7 @@ def get_recording_videos(event, pathPara, queryPara):
         Left Join Recording On Hardware.hardware_id = Recording.hardware_id
         WHere token = "{token}";"""
     )
-    import datetime
+
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     recordings = []
@@ -898,7 +898,7 @@ def get_recording_videos(event, pathPara, queryPara):
     for file in converted_files:
         if file not in files:
             files.append(file)
-            recordings.append(Recording(file, now, now))
+            recordings.append(Recording(file, timestamp=now))
 
     id_to_folder_stream_list_map = video_retriever.unregistered_stream_map_from_channels(recordings, channel_id_dict)
     for id in id_to_folder_stream_list_map:
@@ -920,20 +920,12 @@ def get_recording_videos(event, pathPara, queryPara):
             {
                 "file_name": f.file_name,
                 "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f.file_name}/0.mp4",
-                                                          expire=3600) if f.timestamp is not None else now,
-                "timestamp": f.timestamp if f.timestamp is not None else now,
+                                                          expire=3600) if f.timestamp is not None else None,
+                "timestamp": f.timestamp if f.timestamp is not None else "Processing",
                 "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f.file_name),
-                                                                3600) if f.timestamp is not None else now
+                                                                3600) if f.timestamp is not None else None
             } for f in recordings]
     })
-
-
-@api.handle("/convert", httpMethod=MPC_API.POST)
-def convert_data(event, pathPara, queryPara):
-    keys = event["body"]["keys"]
-    title = event["body"]["title"]
-    VideoRetriever(settings.BUCKET).convert_video(title, keys)
-    return json_payload({"message": "Success"})
 
 
 if __name__ == "__main__":
@@ -947,7 +939,7 @@ if __name__ == "__main__":
             "password": "Password",
             "email": "default@temple.edu",
             "code": "658186",
-            "token": "b442f59cb6126563024fedfbd7fbf1fd",
+            "token": "abe5af3cbc47c47b803ade26be8807a0",
             "device_id": "60df7562bc4e566abe803c448f5609ea"
         }""",
         "pathParameters": {
@@ -961,22 +953,23 @@ if __name__ == "__main__":
     # token = json.loads(response["body"])["token"]
     # print(token)
     #
-    # event = {
-    #     "resource": "/file/all",
-    #     "httpMethod": MPC_API.POST,
-    #     "body": "{\"token\":\"" + token + "\"}",
-    #     "pathParameters": {
-    #         "key": "sample.txt"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
-    # }
-    # response = lambda_handler(event, None)
-    #
-    # print(response)
-    # # database.insert(Account_has_Hardware(18, 36))
-    # # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
+    token = "abe5af3cbc47c47b803ade26be8807a0"
+    event = {
+        "resource": "/file/all",
+        "httpMethod": MPC_API.POST,
+        "body": "{\"token\":\"" + token + "\"}",
+        "pathParameters": {
+            "key": "sample.txt"
+        },
+        "queryStringParameters": {
+            "notification_type": 10
+        }
+    }
+    response = lambda_handler(event, None)
+
+    print(response)
+    # database.insert(Account_has_Hardware(18, 36))
+    # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
     # # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
     #
     #
@@ -984,11 +977,11 @@ if __name__ == "__main__":
     # for r in recording:
     #     print(r)
 
-    session = boto3.Session(
-        aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
-        aws_secret_access_key=AWS_SERVER_SECRET_KEY
-    )
-
-    recorder = Recorder("arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
-    recorder.stop_recording()
-    print(recorder.isRecording())
+    # session = boto3.Session(
+    #     aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
+    #     aws_secret_access_key=AWS_SERVER_SECRET_KEY
+    # )
+    #
+    # recorder = Recorder("arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
+    # # recorder.stop_recording()
+    # print(recorder.isRecording())

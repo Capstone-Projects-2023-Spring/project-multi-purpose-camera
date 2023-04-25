@@ -30,6 +30,8 @@ public interface LibraryFragmentInterface {
                 .mapToObj(i -> {
                     try {
                         JSONObject item = jsonArray.getJSONObject(i);
+                        if(item.isNull("url"))
+                            return new VideoItem(item.get("file_name").toString(), item.get("timestamp").toString(), null, null);
                         return new VideoItem(item.get("file_name").toString(), item.get("timestamp").toString(), item.getString("url"), item.getString("thumbnail"));
                     } catch (JSONException e) {
                         return new VideoItem("Unknown Video", "Failed to retrieve video file", null, null);
