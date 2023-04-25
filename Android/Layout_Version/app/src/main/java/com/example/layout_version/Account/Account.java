@@ -12,11 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-interface AccountActionInterface
-{
-    void action();
-}
-
 public class Account {
     private static Account single_instance = null;
     private String username;

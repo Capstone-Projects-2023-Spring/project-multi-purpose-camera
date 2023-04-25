@@ -1,10 +1,19 @@
 package com.example.layout_version;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.example.layout_version.Account.Account;
+import com.example.layout_version.Network.NetworkRequestManager;
+import com.example.layout_version.Settings.Criteria;
+import com.example.layout_version.Settings.Resolution;
+import com.example.layout_version.Settings.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,6 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Database_Manager {
 
@@ -533,11 +543,57 @@ public class Database_Manager {
         return backEnd;
     }
 
-    public static void test(){
+    public static void test(Context context){
 
         //database_add_camera_to_saving_policy(7, 12);
         //database_add_camera_to_saving_policy(8, 12);
-        saving_policy_remove_camera(8, 12);
+        //saving_policy_remove_camera(8, 12);
+        signup(context);
+    }
+
+    public static void signup(Context context){
+        String username = "tyler3";
+        String password = "Password2!";
+        String email = "myemail2@website.com";
+        String[][] params = new String[][]{{"username", username}, {"password", password}, {"email", email}};
+        String url = "https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/account/signup";
+        signup(context, username, email, password);
+        //String result = Database_Manager.do_post(url, params);
+        //System.out.println(result);
+//        jsonBody.put("username", username);
+//        jsonBody.put("password", password);
+//        jsonBody.put("email", email);
+    }
+
+    public static void signup_with_object(Context context, String username, String email, String password){
+        Account account = Account.getInstance();
+        System.out.println("signing up with object");
+        account.signup(context, username,email, password, () -> {}, () -> {});
+    }
+
+    public static void signup(Context context, String username, String email, String password)
+    {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("username", username);
+            jsonBody.put("password", password);
+            jsonBody.put("email", email);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        NetworkRequestManager nrm = new NetworkRequestManager(context);
+        nrm.Post(R.string.account_signup_endpoint, jsonBody,
+                json -> {
+                    //Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
+                    //success.action(this);
+                    System.out.println("signup success");
+                },
+                json -> {
+                    //Toast.makeText(context, "Login failed: " + json.get("message"), Toast.LENGTH_SHORT).show();
+                    //fail.action(this);
+                    System.out.println("signup fail");
+                });
     }
 
     public static boolean edit_criteria(int type, int duration, int magnitude, int id){

@@ -25,6 +25,8 @@ import com.example.layout_version.MainTab.Library.LibraryFragment;
 import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
 import com.example.layout_version.MainTab.Library.VideoDetailFragment;
 import com.example.layout_version.MainTab.Library.VideoViewModel;
+import com.example.layout_version.Settings.BackEnd;
+import com.example.layout_version.Settings.*;
 
 
 public class MainActivity extends AppCompatActivity implements LibraryFragmentInterface, StreamingListFragmentInterface {
@@ -37,12 +39,41 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
     private Button cameraTabButton;
 
     private boolean videoDetailViewFlag;
-
+    public static final boolean unit_testing = true;
+    public static final boolean using_database_settings = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(unit_testing){
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            MyAsyncTask test = new MyAsyncTask(() -> {
+                //Database_Manager.test(this);
+                Intent intent = new Intent (MainActivity.this, Settings.class);
+                startActivity(intent);
+            });
+            try {
+                BackEnd.init();
+                System.out.println("running async");
+                test.execute();
+                test.get();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+
         videoDetailViewFlag = false;
 
         videoViewModel = new ViewModelProvider(this).get(VideoViewModel.class);
@@ -63,11 +94,7 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             startActivity(intent);
         }
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
 
         MyAsyncTask database = new MyAsyncTask(() -> {
             System.out.println("calling backend");

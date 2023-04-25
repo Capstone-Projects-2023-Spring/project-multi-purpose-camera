@@ -1,26 +1,13 @@
 package com.example.layout_version;
 
-import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
+import com.example.layout_version.Settings.Criteria;
 
-
-import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.layout_version.Settings.*;
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -61,7 +48,7 @@ public class ExampleUnitTest {
 
     @Test
     public void test_post(){
-        Database_Manager.test();
+
     }
     @Test
     public void build_objects_from_database(){
