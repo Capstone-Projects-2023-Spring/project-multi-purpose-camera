@@ -16,6 +16,9 @@ def lambda_handler(event, context):
     s3 = boto3.client("s3")
 
     channelArn = event["arn"].split("/")[1]
+
+    print("MediaConvert: Request received")
+
     response = s3.list_objects(
         Bucket="mpc-capstone",
         Prefix=f"{PREFIX}/{ACCOUNT_ID}/{channelArn}"
@@ -38,7 +41,7 @@ def lambda_handler(event, context):
 
             index_date = datetime(int(split_file[4]), int(split_file[5]), int(split_file[6]), int(split_file[7]),
                                   int(split_file[8]))
-            folder = f"{index_date.strftime('%Y-%m-%d %H:%M:%S')}/{split_file[9]}"
+            folder = f"{channelArn}/{index_date.strftime('%Y-%m-%d %H:%M:%S')}-{split_file[9]}"
             stream_key_files[folder] = []
             basename = os.path.basename(response["Contents"][index]["Key"])
             basename = basename.replace(".ts", "")
@@ -52,6 +55,7 @@ def lambda_handler(event, context):
 
     print(stream_key_files)
     for key in stream_key_files:
+        print("MediaConvert: Converting " + key)
         settings = make_settings(key, stream_key_files[key])
         user_metadata = {
             'JobCreatedBy': 'videoConvertSample',
