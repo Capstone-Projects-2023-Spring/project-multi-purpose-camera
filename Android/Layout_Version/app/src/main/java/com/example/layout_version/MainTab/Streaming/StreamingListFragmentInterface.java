@@ -74,7 +74,8 @@ public interface StreamingListFragmentInterface {
                     try {
                         hardwareArray = json.getJSONArray("hardware");
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        streamingViewModel.setStateData(NetworkState.FAILED);
+                        return;
                     }
                     List<ChannelItem> channels = StreamingListFragmentInterface.convertJSONArrayToChannel(hardwareArray);
 
@@ -86,7 +87,7 @@ public interface StreamingListFragmentInterface {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                        streamingViewModel.setStateData(NetworkState.FAILED);
                     }
                     loadData(context, streamingViewModel, token, retryNum - 1);
                     Log.e("Retry", "Timestamp issue. Trying again");

@@ -77,10 +77,15 @@ public class StreamingFragment extends StateFragment<RecordingState> {
                     recorder.stop();
                 else if(status == RecordingState.STOPPED)
                     recorder.start();
+                else if(status == RecordingState.FAILED)
+                    recorder.askIsRecording(4);
             }
         });
 
-        streamRefreshButton.setOnClickListener(view1 -> recorder.askIsRecording(4));
+        streamRefreshButton.setOnClickListener(view1 -> {
+            recorder.askIsRecording(4);
+            update(streamingViewModel.getSelectedItem().getValue());
+        });
 
     }
 

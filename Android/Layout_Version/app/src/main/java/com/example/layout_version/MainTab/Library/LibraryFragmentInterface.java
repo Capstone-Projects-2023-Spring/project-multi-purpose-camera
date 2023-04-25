@@ -72,6 +72,7 @@ public interface LibraryFragmentInterface {
                         videos = LibraryFragmentInterface.convertJSONArrayToVideoItem(fileArray);
                     } catch (JSONException e) {
                         videos = Collections.singletonList(VideoItem.DEFAULT_VIDEO_ITEM);
+                        videoViewModel.setStateData(NetworkState.FAILED);
                     }
 
                     videoViewModel.setDataList(videos);
@@ -82,6 +83,7 @@ public interface LibraryFragmentInterface {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
+                        videoViewModel.setStateData(NetworkState.FAILED);
                         throw new RuntimeException(e);
                     }
                     loadData(context, videoViewModel, token, retryNum - 1);
