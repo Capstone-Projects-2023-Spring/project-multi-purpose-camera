@@ -1,12 +1,25 @@
 package com.example.layout_version.MainTab.Streaming;
 
-import com.example.layout_version.MainTab.StateViewModel;
+import androidx.lifecycle.MutableLiveData;
 
-public class StreamingViewModel extends StateViewModel<ChannelItem> {
+import com.example.layout_version.MainTab.State.NetworkStateViewModel;
+import com.example.layout_version.MainTab.Streaming.Recorder.RecordingState;
+
+public class StreamingViewModel extends NetworkStateViewModel<ChannelItem> {
+    private final MutableLiveData<RecordingState> recordingStateData;
     public StreamingViewModel() {
         getDataList().add(ChannelItem.DEFAULT_CHANNEL_ITEM);
+        recordingStateData = new MutableLiveData<>(RecordingState.STOPPED);
     }
 
+    public MutableLiveData<RecordingState> getRecordingStateData() {
+        return recordingStateData;
+    }
+
+    public void setRecordingStatus(RecordingState status)
+    {
+        recordingStateData.setValue(status);
+    }
 
     public void clearUpdate()
     {

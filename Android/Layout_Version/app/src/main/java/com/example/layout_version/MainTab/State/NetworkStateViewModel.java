@@ -1,4 +1,4 @@
-package com.example.layout_version.MainTab;
+package com.example.layout_version.MainTab.State;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -6,20 +6,20 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract  class StateViewModel<E> extends ViewModel {
+public abstract  class NetworkStateViewModel<E> extends ViewModel {
     private final MutableLiveData<Integer> updateFlag;
 
     private final MutableLiveData<E> selectedData;
 
     private final List<E> dataList;
 
-    private final MutableLiveData<State> stateData;
+    private final MutableLiveData<NetworkState> stateData;
 
-    public StateViewModel(){
+    public NetworkStateViewModel(){
         updateFlag = new MutableLiveData<>(0);
         selectedData = new MutableLiveData<>();
         dataList = new ArrayList<>();
-        stateData = new MutableLiveData<>(State.IDLE);
+        stateData = new MutableLiveData<>(NetworkState.IDLE);
     }
 
     public MutableLiveData<E> getSelectedItem() {
@@ -43,13 +43,13 @@ public abstract  class StateViewModel<E> extends ViewModel {
         updatedSignal();
     }
 
-    public MutableLiveData<State> getStateData() {
+    public MutableLiveData<NetworkState> getStateData() {
         return stateData;
     }
 
-    public void setStateData(State state)
+    public void setStateData(NetworkState networkState)
     {
-        stateData.setValue(state);
+        stateData.setValue(networkState);
     }
 
     public MutableLiveData<Integer> getUpdateFlag()
@@ -65,5 +65,7 @@ public abstract  class StateViewModel<E> extends ViewModel {
     public void clearUpdate()
     {
         updatedSignal();
+        stateData.setValue(NetworkState.IDLE);
+        setSelectedItem(null);
     }
 }

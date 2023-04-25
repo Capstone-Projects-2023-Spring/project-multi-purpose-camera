@@ -1,4 +1,4 @@
-package com.example.layout_version.MainTab.Library;
+package com.example.layout_version.MainTab.State;
 
 import android.content.Context;
 import android.widget.TextView;
@@ -6,24 +6,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.example.layout_version.MainTab.State;
-import com.example.layout_version.MainTab.StateObservableFragment;
 import com.example.layout_version.R;
 
-public class LibraryStateChangeListener implements StateObservableFragment.StateChangeListener {
-    private final TextView statusView;
-    private final Context context;
-    public LibraryStateChangeListener(Context context, TextView statusView, State state) {
+public class NetworkStateChangeListener implements StateChangeListener<NetworkState>{
+    private Context context;
+    private TextView statusView;
+    public NetworkStateChangeListener(Context context, TextView statusView, NetworkState networkState) {
         this.context = context;
         this.statusView  = statusView;
-        onStateChanged(state);
+        onStateChanged(networkState);
     }
 
-    @Override
-    public void onStateChanged(@NonNull State state) {
-        switch(state)
+    public void onStateChanged(@NonNull NetworkState networkState) {
+        switch (networkState)
         {
+
             case IDLE:
+                statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.unavailable_icon));
+                statusView.setText(R.string.streaming_unavailable);
                 break;
             case REQUESTED:
                 statusView.setBackground(AppCompatResources.getDrawable(context, R.drawable.offline_icon));

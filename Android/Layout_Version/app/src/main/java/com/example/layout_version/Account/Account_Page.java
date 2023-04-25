@@ -3,13 +3,10 @@ package com.example.layout_version.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.layout_version.Bluetooth_Page;
-import com.example.layout_version.MainActivity;
 import com.example.layout_version.MainTab.Library.VideoViewModel;
 import com.example.layout_version.R;
 

@@ -1,8 +1,8 @@
 package com.example.layout_version.MainTab.Library;
 
-import com.example.layout_version.MainTab.StateViewModel;
+import com.example.layout_version.MainTab.State.NetworkStateViewModel;
 
-public class VideoViewModel extends StateViewModel<VideoItem> {
+public class VideoViewModel extends NetworkStateViewModel<VideoItem> {
 
     public VideoViewModel() {
         getDataList().add(VideoItem.DEFAULT_VIDEO_ITEM);

@@ -16,12 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.layout_version.Account.Account;
-import com.example.layout_version.MainTab.StateObservableFragment;
+import com.example.layout_version.MainTab.State.NetworkState;
+import com.example.layout_version.MainTab.State.NetworkStateChangeListener;
+import com.example.layout_version.MainTab.State.StateFragment;
 import com.example.layout_version.R;
 
 import java.util.function.Consumer;
 
-public class StreamingListFragment  extends StateObservableFragment {
+public class StreamingListFragment extends StateFragment<NetworkState> {
 
     private Context context;
     private StreamingViewModel streamingViewModel;
@@ -66,7 +68,7 @@ public class StreamingListFragment  extends StateObservableFragment {
             adapter.notifyDataSetChanged();
         });
 
-        setStateChangeListener(new StreamListStateChangeListener(context, streamStatusTextView, streamingViewModel.getStateData().getValue()));
+        setStateChangeListener(new NetworkStateChangeListener(context, streamStatusTextView, streamingViewModel.getStateData().getValue()));
         streamingViewModel.getStateData().observe(getViewLifecycleOwner(), this::setState);
         refreshButton.setOnClickListener(view1 -> {
             StreamingListFragmentInterface.loadData(context, streamingViewModel, Account.getInstance().getTokenData().getValue(), 4);

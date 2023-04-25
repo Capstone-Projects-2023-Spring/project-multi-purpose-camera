@@ -4,6 +4,7 @@ import random
 import re
 
 import EmailSender
+import boto3
 import settings
 from Database.Data.Account import Account
 from Database.Data.Account_has_Hardware import Account_has_Hardware
@@ -15,7 +16,7 @@ from Database.Data.Notification import Notification
 from Database.Data.Recording import Recording
 from Database.Data.Resolution import Resolution
 from Database.Data.Saving_Policy import Saving_Policy
-from Database.MPCDatabase import MPCDatabase, MatchItem, JoinItem
+from Database.MPCDatabase import MPCDatabase
 from Error import Error
 from StreamingChannelRetriever import Recorder
 from VideoRetriever import VideoRetriever
@@ -431,6 +432,10 @@ def hardware_insert(event, pathPara, queryPara):
 def hardware_insert(event, pathPara, queryPara):
     """Inserts new rows into the hardware table based on account id"""
     token = event["body"]["token"]
+    body = event["body"]
+
+    if not database.verify_field(Account, Account.TOKEN, body[Account.TOKEN]):
+        return json_payload({"message": Error.UNKNOWN_ACCOUNT}, True)
 
     hardware = database.get_all_join_fields_by_field(
         Hardware,
@@ -615,11 +620,29 @@ def recording_start(event, pathPara, queryPara):
         return json_payload({"message": "Could not stop stream"}, True)
 
     try:
-        recorder.request_looper(Recorder.Type.START, 3, 5)
+        recorder.request_looper(Recorder.Type.STOP, 3, 5)
     except Recorder.RecorderError:
         return json_payload({"message": "Could not stop recording"}, True)
 
     return json_payload({"message": "Recording stopped"})
+
+
+@api.handle("/recording/is_recording", httpMethod=MPC_API.POST)
+def recording_start(event, pathPara, queryPara):
+    """Updates recording table based on specified id"""
+    body = event["body"]
+    if not database.verify_fields_by_joins(Account,
+                                           [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                             Account.EXPLICIT_ID),
+                                            (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
+                                             Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                           [(Account.TOKEN, body[Account.TOKEN]),
+                                            (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+        return json_payload({"message": "Device not Found"}, True)
+    arn = database.get_field_by_field(Hardware, Hardware.ARN, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
+    recorder = Recorder(arn)
+
+    return json_payload({"message": recorder.isRecording()})
 
 
 @api.handle("/criteria")
@@ -847,7 +870,7 @@ def get_recording_videos(event, pathPara, queryPara):
         Left Join Recording On Hardware.hardware_id = Recording.hardware_id
         WHere token = "{token}";"""
     )
-    import datetime
+
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     recordings = []
@@ -875,7 +898,7 @@ def get_recording_videos(event, pathPara, queryPara):
     for file in converted_files:
         if file not in files:
             files.append(file)
-            recordings.append(Recording(file, now, now))
+            recordings.append(Recording(file, timestamp=now))
 
     id_to_folder_stream_list_map = video_retriever.unregistered_stream_map_from_channels(recordings, channel_id_dict)
     for id in id_to_folder_stream_list_map:
@@ -897,34 +920,26 @@ def get_recording_videos(event, pathPara, queryPara):
             {
                 "file_name": f.file_name,
                 "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f.file_name}/0.mp4",
-                                                          expire=3600) if f.timestamp is not None else now,
-                "timestamp": f.timestamp if f.timestamp is not None else now,
+                                                          expire=3600) if f.timestamp is not None else None,
+                "timestamp": f.timestamp if f.timestamp is not None else "Processing",
                 "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f.file_name),
-                                                                3600) if f.timestamp is not None else now
+                                                                3600) if f.timestamp is not None else None
             } for f in recordings]
     })
-
-
-@api.handle("/convert", httpMethod=MPC_API.POST)
-def convert_data(event, pathPara, queryPara):
-    keys = event["body"]["keys"]
-    title = event["body"]["title"]
-    VideoRetriever(settings.BUCKET).convert_video(title, keys)
-    return json_payload({"message": "Success"})
 
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
 
     event = {
-        "resource": "/account/signin",
-        "httpMethod": MPC_API.POST,
+        "resource": "/account",
+        "httpMethod": MPC_API.GET,
         "body": """{
             "username": "John Smith",
             "password": "Password",
             "email": "default@temple.edu",
             "code": "658186",
-            "token": "b442f59cb6126563024fedfbd7fbf1fd",
+            "token": "abe5af3cbc47c47b803ade26be8807a0",
             "device_id": "60df7562bc4e566abe803c448f5609ea"
         }""",
         "pathParameters": {
@@ -935,9 +950,10 @@ if __name__ == "__main__":
         }
     }
     response = lambda_handler(event, None)
-    token = json.loads(response["body"])["token"]
-    print(token)
-
+    # token = json.loads(response["body"])["token"]
+    # print(token)
+    #
+    token = "abe5af3cbc47c47b803ade26be8807a0"
     event = {
         "resource": "/file/all",
         "httpMethod": MPC_API.POST,
@@ -954,7 +970,18 @@ if __name__ == "__main__":
     print(response)
     # database.insert(Account_has_Hardware(18, 36))
     # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
-    # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
-    recording = database.get_all(Recording)
-    for r in recording:
-        print(r)
+    # # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
+    #
+    #
+    # recording = database.get_all(Recording)
+    # for r in recording:
+    #     print(r)
+
+    # session = boto3.Session(
+    #     aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
+    #     aws_secret_access_key=AWS_SERVER_SECRET_KEY
+    # )
+    #
+    # recorder = Recorder("arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
+    # # recorder.stop_recording()
+    # print(recorder.isRecording())
