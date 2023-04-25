@@ -19,14 +19,14 @@ class IVS_Channel:
         return requests.post('https://nk0fs4t630.execute-api.us-east-1.amazonaws.com/product2/account/verify/token',
                           json=json, headers=self.headers)
 
-    def create_channel(self):
+    def create_channel(self, device_name="MP-Camera"):
         ivs_client = boto3.client('ivs')
         # create a device_id for the device
         device_id = self.random_by_hash()
         # create a channel for the device
         response = ivs_client.create_channel(
-            authorized=True,
-            insecureIngest=False,
+            # authorized=True,
+            # insecureIngest=True,
             latencyMode='NORMAL',
             name=device_id,
             recordingConfigurationArn="",
@@ -39,9 +39,9 @@ class IVS_Channel:
             "max_resolution": "720p",
             "channel_name": response["channel"]["name"],
             "playback_url": response["channel"]["playbackUrl"],
-            "ingest_endpoint": response["channel"]["ingestEndpoint"],
+            "ingest_endpoint": f"rtmps://{response['channel']['ingestEndpoint']}:443/app/",
             "stream_key": response["streamKey"]["value"],
-            "device_name": "MP-Camera",
+            "device_name": device_name,
             "arn": response["channel"]["arn"]
         }
 

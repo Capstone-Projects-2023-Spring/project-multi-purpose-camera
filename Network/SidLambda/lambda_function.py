@@ -1,5 +1,6 @@
 import json
 
+from EB_EventDispatcher import EB_EventDispatcher
 from IVS_Channel import IVS_Channel
 from requests import Response
 
@@ -43,10 +44,18 @@ def lambda_handler(event, context):
 
     # if there is a device_id in the json
     if "device_id" not in body:
-        data = ivs.create_channel()
+        if "device_name" in body:
+            data = ivs.create_channel(body["device_name"])
+        else:
+            data = ivs.create_channel()
         _device_id = data["device_id"]
+        _arn = data["arn"]
         ivs.register_device(data)
         ivs.link_device(_device_id)
+        event_dispatcher = EB_EventDispatcher(_arn)
+        rule_arn = event_dispatcher.put_rule_target()
+        event_dispatcher.setup_lambda(rule_arn)
+
     else:
         _device_id = body["device_id"]
 
