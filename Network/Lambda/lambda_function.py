@@ -363,6 +363,28 @@ def account_signin(event, pathPara, queryPara):
     return json_payload({"message": Error.TOKEN_NOT_FOUND}, True)
 
 
+@api.handle("/account/get/device", httpMethod=MPC_API.POST)
+def account_signin(event, pathPara, queryPara):
+    """Handles users reset their account by verifying their username in the database"""
+    body: dict = event["body"]
+
+    hardware: list[Hardware] = database.get_all_by_joins(
+        Hardware,
+        [
+            (Account_has_Hardware, Account_has_Hardware.EXPLICIT_HARDWARE_ID, Hardware.EXPLICIT_HARDWARE_ID),
+            (Account, Account.EXPLICIT_ID, Account_has_Hardware.EXPLICIT_ACCOUNT_ID)
+        ],
+        [
+            (Account.TOKEN, body[Account.TOKEN]),
+            (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])
+        ])
+
+    if len(hardware) <= 0:
+        return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
+
+    return json_payload({"hardware": Hardware.object_to_dict(hardware[0])})
+
+
 @api.handle("/account/verify/device", httpMethod=MPC_API.POST)
 def account_signin(event, pathPara, queryPara):
     """Handles users reset their account by verifying their username in the database"""
@@ -913,7 +935,7 @@ def get_recording_videos(event, pathPara, queryPara):
         for folder in id_to_folder_stream_list_map[id]:
             recordings.append(Recording(folder, None, None))
 
-    video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
+    # video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
 
     return json_payload({
         "files": [
@@ -932,15 +954,15 @@ if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
 
     event = {
-        "resource": "/account",
-        "httpMethod": MPC_API.GET,
+        "resource": "/account/get/device",
+        "httpMethod": MPC_API.POST,
         "body": """{
             "username": "John Smith",
             "password": "Password",
             "email": "default@temple.edu",
             "code": "658186",
-            "token": "abe5af3cbc47c47b803ade26be8807a0",
-            "device_id": "60df7562bc4e566abe803c448f5609ea"
+            "token": "3d17b1f7ace4bad5aaca513bf386bbd6",
+            "device_id": "f4cd9ff05855d0048e28cf9eccc9bed2"
         }""",
         "pathParameters": {
             "key": "sample.txt"
@@ -952,22 +974,22 @@ if __name__ == "__main__":
     response = lambda_handler(event, None)
     # token = json.loads(response["body"])["token"]
     # print(token)
+    # #
+    # token = "abe5af3cbc47c47b803ade26be8807a0"
+    # event = {
+    #     "resource": "/file/all",
+    #     "httpMethod": MPC_API.POST,
+    #     "body": "{\"token\":\"" + token + "\"}",
+    #     "pathParameters": {
+    #         "key": "sample.txt"
+    #     },
+    #     "queryStringParameters": {
+    #         "notification_type": 10
+    #     }
+    # }
+    # response = lambda_handler(event, None)
     #
-    token = "abe5af3cbc47c47b803ade26be8807a0"
-    event = {
-        "resource": "/file/all",
-        "httpMethod": MPC_API.POST,
-        "body": "{\"token\":\"" + token + "\"}",
-        "pathParameters": {
-            "key": "sample.txt"
-        },
-        "queryStringParameters": {
-            "notification_type": 10
-        }
-    }
-    response = lambda_handler(event, None)
-
-    print(response)
+    # print(response)
     # database.insert(Account_has_Hardware(18, 36))
     # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
     # # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
@@ -982,6 +1004,23 @@ if __name__ == "__main__":
     #     aws_secret_access_key=AWS_SERVER_SECRET_KEY
     # )
     #
+    # s3 = session.client("s3")
+    #
+    # channelArn = "HCBh4loJzOvw"
+    # response = s3.list_objects(
+    #     Bucket="mpc-capstone",
+    #     Prefix=f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{channelArn}"
+    # )
+    #
+    # keys = [f["Key"] for f in response["Contents"]]
+    #
+
+
+    # for i in range(len(keys)):
+    #     if key[-len(".ts"):] == ".ts" and key[-len(".ts"):] == ".ts":
+    #         stream_files.append(key)
+    #
     # recorder = Recorder("arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
     # # recorder.stop_recording()
     # print(recorder.isRecording())
+
