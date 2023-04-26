@@ -57,11 +57,28 @@ def lambda_handler(event, context):
     print(max_key)
     print(resolution_key_map_sort[max_key])
 
+    if len(resolution_key_map_sort[max_key]) > 0:
+        resolution_key_map_sort[max_key].pop()
+
+    file_number_map = {}
+    for file in resolution_key_map_sort[max_key]:
+        splitted = file.split("/")
+        file_number_map[int(splitted[-1].split(".")[0])] = file
+
+    keys_sorted = list(file_number_map.keys())
+
+    keys_sorted.sort()
+
+    stream_files = []
+
+    for key in keys_sorted:
+        stream_files.append(file_number_map[key])
+
     split_prefix = prefix.split("/")
     key = f"{split_prefix[3]}/{'-'.join(split_prefix[4:10])}"
 
     print("MediaConvert: Converting " + key)
-    settings = make_settings(key, resolution_key_map_sort[max_key])
+    settings = make_settings(key, stream_files)
     user_metadata = {
         'JobCreatedBy': 'videoConvertSample',
     }
