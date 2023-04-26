@@ -180,10 +180,10 @@ public class View_Factory {
         };
     }
     
-    public static void set_entries(ArrayList<String> entries, Spinner spinner, Context context){
+    public static void set_entries(ArrayList entries, Spinner spinner, Context context){
         String[] final_entries = new String[entries.size()];
         for(int j = 0; j < entries.size(); j++)
-            final_entries[j] = entries.get(j);
+            final_entries[j] = entries.get(j).toString();
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                 context, android.R.layout.simple_spinner_item, final_entries );

@@ -9,6 +9,9 @@ public abstract class X_Attribute implements Attribute{
     public String value(){
         return value;
     }
+    public String type() {
+        return "X_Attribute";
+    }
 
 
 }

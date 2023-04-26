@@ -9,4 +9,7 @@ public abstract class Title implements Attribute{
     public String value(){
         return name;
     }
+    public String type() {
+        return "Title";
+    }
 }

@@ -8,6 +8,10 @@ public abstract class Add_Button implements Attribute, Drop_Down{
         this.options = options;
     }
 
+    public String type() {
+        return "Add_Button";
+    }
+
     public ArrayList get_list(){
         return options;
     }

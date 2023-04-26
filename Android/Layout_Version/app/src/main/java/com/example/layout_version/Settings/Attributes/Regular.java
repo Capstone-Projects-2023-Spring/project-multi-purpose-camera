@@ -9,4 +9,7 @@ public abstract class Regular implements Attribute{
     public String value(){
         return value;
     }
+    public String type() {
+        return "Regular";
+    }
 }

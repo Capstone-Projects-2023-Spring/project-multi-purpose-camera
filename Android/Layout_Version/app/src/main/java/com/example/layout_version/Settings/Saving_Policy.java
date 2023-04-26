@@ -21,10 +21,57 @@ public class Saving_Policy implements Displayable_Setting{
         return result;
     }
     private Resolution resolution;
+    private Saving_Policy this_policy = this;
+
+    private Saving_Policy old;
+
+    public void set_max_time(int time){
+        if(!edited())
+            set_edited();
+        max_time = time;
+    }
+
+    public void set_resolution(Resolution res){
+        if(!edited())
+            set_edited();
+        resolution = res;
+    }
+    public void set_cameras(ArrayList<Camera> cameras){
+        if(!edited())
+            set_edited();
+        this.cameras = cameras;
+    }
+
+    public void add_camera(Camera camera){
+        if(!edited())
+            set_edited();
+        cameras.add(camera);
+    }public void remove_camera(Camera camera){
+        if(!edited())
+            set_edited();
+        cameras.remove(camera);
+    }
 
 
+    public boolean is_different(){
+        if(!edited())
+            return false;
+        if(max_time != old.max_time || resolution != old.resolution || Camera.is_lists_different(cameras, old.cameras))
+            return true;
+        return false;
+    }
 
+    private void set_edited(){
+        ArrayList<Camera> new_cameras = new ArrayList<>();
+        for(int i = 0; i < cameras.size(); i++){
+            new_cameras.add(cameras.get(i));
+        }
+        old = new Saving_Policy(new_cameras, max_time, resolution, id);
+    }
 
+    public boolean edited(){
+        return old != null;
+    }
 
     public Resolution get_resolution(){
         return resolution;
@@ -44,11 +91,6 @@ public class Saving_Policy implements Displayable_Setting{
         cameras = parent;
         this.id = id;
     }
-
-    public void add_camera(Camera camera){
-        cameras.add(camera);
-    }
-
 
     public String get_display_text() {
         String camera_string = "";
@@ -107,31 +149,34 @@ public class Saving_Policy implements Displayable_Setting{
         Attribute[] attributes = new Attribute[cameras.size() + 3];
         for(int i = 0; i < cameras.size(); i++){
             Camera camera = cameras.get(i);
-            cameras.remove(camera);
+            ArrayList<Camera> cameras_if_delete = new ArrayList<>();
+            for(int j = 0; j < cameras.size(); j++){
+                cameras_if_delete.add(cameras.get(j));
+            }
+            cameras_if_delete.remove(camera);
             attributes[i] = new X_Attribute(camera.name) {
                 @Override
-                public Object set(Object object) {
-                    return new Saving_Policy(cameras, max_time, resolution, id);
+                public void set(Object object) {
+                    this_policy.remove_camera(camera);
                 }
             };
         }
         attributes[attributes.length - 3] = new Add_Button(BackEnd.main.get_camera_not_in_list(cameras)) {
             @Override
-            public Object set(Object object) {
-                cameras.add((Camera) object);
-                return new Saving_Policy(cameras, max_time, resolution, id);
+            public void set(Object object) {
+                this_policy.add_camera((Camera) object);
             }
         };
         attributes[attributes.length - 2] = new Number(max_time) {
             @Override
-            public Object set(Object object) {
-                return new Saving_Policy(cameras, (Integer) object, resolution, id);
+            public void set(Object object) {
+                this_policy.set_max_time((Integer)max_time);
             }
         };
         attributes[attributes.length - 1] = new Drop_Down_Attribute(resolution, resolution_objects) {
             @Override
-            public Object set(Object object) {
-                return new Saving_Policy(cameras, max_time, (Resolution) object, id);
+            public void set(Object object) {
+                this_policy.set_resolution((Resolution) object);
             }
 
         };

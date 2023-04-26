@@ -9,4 +9,7 @@ public abstract class Number implements Attribute{
     public String value(){
         return String.valueOf(value);
     }
+    public String type() {
+        return "Number";
+    }
 }

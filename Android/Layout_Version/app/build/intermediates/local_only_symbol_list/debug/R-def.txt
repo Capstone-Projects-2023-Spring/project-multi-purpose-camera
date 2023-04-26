@@ -179,6 +179,10 @@ layout policy_text_view
 layout saving_policies
 layout saving_policy_template
 layout settings
+layout settings_add_button
+layout settings_drop_down_template
+layout settings_number_template
+layout settings_x_attribute
 layout streaming_item
 layout title_and_description_template
 mipmap ic_launcher

@@ -24,8 +24,8 @@ public class Camera implements Displayable_Setting{
         Attribute[] attributes = new Attribute[]{
                 new Title(name) {
                     @Override
-                    public Object set(Object object) {
-                        return new Camera((String)object, resolution, id, account_id);
+                    public void set(Object object) {
+
                     }
                 }
         };
@@ -38,6 +38,25 @@ public class Camera implements Displayable_Setting{
             result.add(cameras.get(i).name);
         }
         return result;
+    }
+
+    public static boolean is_lists_different(ArrayList<Camera> one, ArrayList<Camera> two){
+        ArrayList<Camera> temp_one = new ArrayList<>();
+        ArrayList<Camera> temp_two = new ArrayList<>();
+        for(int i = 0; i < one.size(); i++)
+            temp_one.add(one.get(i));
+        for(int i = 0; i < two.size(); i++)
+            temp_two.add(two.get(i));
+
+        for(int i = 0; i < temp_one.size(); i++)
+            if(temp_two.contains(temp_one.get(i)))
+                temp_two.remove(temp_one.get(i));
+        for(int i = 0; i < temp_two.size(); i++)
+            if(temp_one.contains(temp_two.get(i)))
+                temp_one.remove(temp_two.get(i));
+        if(temp_one.size() > 0 || temp_two.size() > 0)
+            return true;
+        return false;
     }
 
 
