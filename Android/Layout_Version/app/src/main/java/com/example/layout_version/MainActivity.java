@@ -1,14 +1,18 @@
 package com.example.layout_version;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,15 +20,15 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
+import com.example.layout_version.MainTab.Library.LibraryFragment;
+import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
+import com.example.layout_version.MainTab.Library.VideoDetailFragment;
+import com.example.layout_version.MainTab.Library.VideoViewModel;
 import com.example.layout_version.MainTab.Streaming.ChannelItem;
 import com.example.layout_version.MainTab.Streaming.StreamingFragment;
 import com.example.layout_version.MainTab.Streaming.StreamingListFragment;
 import com.example.layout_version.MainTab.Streaming.StreamingListFragmentInterface;
 import com.example.layout_version.MainTab.Streaming.StreamingViewModel;
-import com.example.layout_version.MainTab.Library.LibraryFragment;
-import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
-import com.example.layout_version.MainTab.Library.VideoDetailFragment;
-import com.example.layout_version.MainTab.Library.VideoViewModel;
 
 
 public class MainActivity extends AppCompatActivity implements LibraryFragmentInterface, StreamingListFragmentInterface {
@@ -50,6 +54,34 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
         streamingViewModel = new ViewModelProvider(this).get(StreamingViewModel.class);
         StreamingListFragmentInterface.setUpNetwork(this, this, streamingViewModel, 4);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My_Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+        Notifications notif = new Notifications(this);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        notif.send_Recording_Notification( managerCompat);
+        notif.send_New_Account_Notification( managerCompat);
+        notif.send_Motion_Detected_Notification( managerCompat);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+//        MyAsyncTask database = new MyAsyncTask(() -> {
+//            System.out.println("calling backend");
+//            BackEnd.init();
+//        });
+//        try {
+//            System.out.println("running async");
+//            database.execute();
+//            database.get();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
         ImageView btn = findViewById(R.id.settings);
         ImageView accountImageView = findViewById(R.id.account);
