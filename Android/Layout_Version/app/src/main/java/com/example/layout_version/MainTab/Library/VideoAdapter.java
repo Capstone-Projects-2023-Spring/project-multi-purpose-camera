@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.layout_version.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -24,6 +26,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
      * (custom ViewHolder)
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView videoThumbnailImageView;
         private final TextView titleView;
         private final TextView descriptionView;
         private final View view;
@@ -32,6 +35,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             super(view);
             this.view = view;
             // Define click listener for the ViewHolder's View
+            videoThumbnailImageView = view.findViewById(R.id.videoThumbnailImageView);
             titleView = view.findViewById(R.id.video_title);
             descriptionView = view.findViewById(R.id.video_description);
             view.setOnClickListener(v -> {
@@ -42,6 +46,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         public View getView()
         {
             return view;
+        }
+        public ImageView getVideoThumbnailImageView()
+        {
+            return videoThumbnailImageView;
         }
         public TextView getTitleView() {
             return titleView;
@@ -87,6 +95,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             viewHolder.getView().setOnClickListener(
                     view -> clickEvent.accept(localDataSet.get(position))
             );
+        }
+
+        String thumbnailUrl = localDataSet.get(position).getThumbnailUrl();
+        if(thumbnailUrl != null)
+        {
+            Picasso.get()
+                    .load(thumbnailUrl)
+                    .into(viewHolder.getVideoThumbnailImageView());
         }
     }
 

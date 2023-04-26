@@ -38,7 +38,7 @@ class Recording(Data):
     ]
     """Organizes the explicit versions of the variables above into an array"""
 
-    def __init__(self, file_name: str, date: str, timestamp: str, recording_id: int = None, account_id: int = None, hardware_id: int = None):
+    def __init__(self, file_name: str, date: str = "CURDATE()", timestamp: str = "NOW()", recording_id: int = None, account_id: int = None, hardware_id: int = None):
         """Initializes the file name, date, timestamp, recording id, account id, and hardware id variables"""
         self.file_name = file_name
         """criteria_type  : string<   Store the criteria_type of the recording"""

@@ -16,6 +16,7 @@ import com.example.layout_version.R;
 
 public class Account_Page_Profile extends AppCompatActivity {
     private Account account;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +57,11 @@ public class Account_Page_Profile extends AppCompatActivity {
                     .setPositiveButton(android.R.string.yes, (dialog, which) ->
                             account.delete(
                                     Account_Page_Profile.this,
-                                    a-> {
+                                    ()-> {
                                         onBackPressed();
                                         account.clear();
                                     },
-                                    a-> {}
+                                    ()-> {}
                     ))
 
                     // A null listener allows the button to dismiss the dialog and take no further action.
@@ -71,11 +72,11 @@ public class Account_Page_Profile extends AppCompatActivity {
 
         account.profile(
                 Account_Page_Profile.this,
-                a -> {
-                    username.setText(a.getUsername());
-                    email.setText(a.getEmail());
+                () -> {
+                    username.setText(account.getUsername());
+                    email.setText(account.getEmail());
                 },
-                a -> {
+                () -> {
                     onBackPressed();
                     account.setToken(null);
                 });

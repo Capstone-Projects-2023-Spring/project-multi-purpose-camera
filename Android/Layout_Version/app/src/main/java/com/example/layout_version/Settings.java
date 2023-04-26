@@ -35,6 +35,7 @@ public class Settings extends AppCompatActivity {
         back_home_txt = (TextView) findViewById(R.id.back_home_text_setting);
 
         TextView saving_policy = (TextView) findViewById(R.id.cloud_saving_settings);
+        TextView bluetooth = (TextView) findViewById(R.id.bluetooth_settings);
 
         LinearLayout accountLayout = findViewById(R.id.account_layout);
 
@@ -53,6 +54,14 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent (Settings.this,Saving_Policy_Page.class);
+                startActivity(intent);
+            }
+        });
+
+        bluetooth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (Settings.this,Bluetooth_Page.class);
                 startActivity(intent);
             }
         });

@@ -1,12 +1,10 @@
 package com.example.layout_version.Account;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 import android.widget.Toast;
+
+import androidx.lifecycle.MutableLiveData;
 
 import androidx.core.app.NotificationManagerCompat;
 
@@ -20,32 +18,25 @@ import org.json.JSONObject;
 
 interface AccountActionInterface
 {
-    void action(Account account);
+    void action();
 }
 
 public class Account {
     private static Account single_instance = null;
     private String username;
     private String email;
-    private String token;
     private String code;
     private String status;
-    private TokenChangeInterface tokenChangeInterface;
+    private MutableLiveData<String> tokenData;
+//    private TokenChangeInterface tokenChangeInterface;
 
-    private Account(){}
-    private Context context;
-
-    private Notifications notif;
-
-    private NotificationManagerCompat managerCompat;
-
-    private Account(TokenChangeInterface tokenChangeInterface, Context c){
-        this.tokenChangeInterface = tokenChangeInterface;
-        context = c;
-        notif = new Notifications(context);
-        managerCompat = NotificationManagerCompat.from(context);
-
+    private Account(){
+        tokenData = new MutableLiveData<>();
     }
+
+//    private Account(TokenChangeInterface tokenChangeInterface){
+//        this.tokenChangeInterface = tokenChangeInterface;
+//    }
 
     public void setUsername(String username)
     {
@@ -59,9 +50,9 @@ public class Account {
 
     public void setToken(String token)
     {
-        this.token = token;
-        if(tokenChangeInterface != null)
-            tokenChangeInterface.changed(token);
+        tokenData.setValue(token);
+//        if(tokenChangeInterface != null)
+//            tokenChangeInterface.changed(token);
     }
 
     public void setCode(String code)
@@ -74,6 +65,10 @@ public class Account {
         this.status = status;
     }
 
+    public MutableLiveData<String> getTokenData()
+    {
+        return tokenData;
+    }
     public String getUsername() {
         return username;
     }
@@ -83,31 +78,29 @@ public class Account {
     }
 
     public boolean isSignedIn(){
-        return token != null;
+        return tokenData.getValue() != null;
     }
 
     public void clear()
     {
         username = null;
         email = null;
-        token = null;
         status = null;
-        if(tokenChangeInterface != null)
-            tokenChangeInterface.changed(token);
+        tokenData.setValue(null);
     }
 
     public void profile(Context context, AccountActionInterface success, AccountActionInterface fail)
     {
-        if(token == null)
+        if(tokenData.getValue() == null)
         {
             Toast.makeText(context, "Log in first", Toast.LENGTH_SHORT).show();
-            fail.action(this);
+            fail.action();
             return;
         }
 
         JSONObject jsonBody = new JSONObject();
         try {
-            jsonBody.put("token", token);
+            jsonBody.put("token", tokenData.getValue());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -119,17 +112,17 @@ public class Account {
                         this.setUsername(json.get("username").toString());
                         this.setEmail(json.get("email").toString());
                         this.setStatus(json.get("status").toString());
-                        success.action(this);
+                        success.action();
                     } catch (JSONException e) {
-                        fail.action(this);
+                        fail.action();
                     }
                 },
                 json -> {
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
-                        fail.action(this);
+                        fail.action();
                     } catch (JSONException e) {
-                        fail.action(this);
+                        fail.action();
                     }
                 });
     }
@@ -151,20 +144,20 @@ public class Account {
                 json -> {
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
-                        success.action(this);
+                        this.setToken(json.get("token").toString());
+                        success.action();
                     } catch (JSONException e) {
-                        fail.action(this);
+                        fail.action();
                     }
                 },
                 json -> {
                     try {
                         Toast.makeText(context, "Login failed: " + json.get("message"), Toast.LENGTH_SHORT).show();
-                        fail.action(this);
+                        fail.action();
                     } catch (JSONException e) {
-                        fail.action(this);
+                        fail.action();
                     }
                 });
-        notif.send_New_Account_Notification( managerCompat);
     }
 
     public void signin(Context context, String username, String password,
@@ -186,13 +179,13 @@ public class Account {
                         this.setEmail(json.get("email").toString());
                         this.setToken(json.get("token").toString());
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
-                        success.action(this);
+                        success.action();
                     } catch (JSONException e) {
-                        fail.action(this);
+                        fail.action();
                     }
                 },
                 json -> {
-                    fail.action(this);
+                    fail.action();
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
                     } catch (JSONException ignored) {
@@ -200,7 +193,6 @@ public class Account {
                     }
                 }
         );
-        notif.send_Sign_In_Notification( managerCompat);
     }
 
 
@@ -221,13 +213,13 @@ public class Account {
                     try {
                         this.setUsername(username);
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
-                        success.action(this);
+                        success.action();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
                 },
                 json -> {
-                    fail.action(this);
+                    fail.action();
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
                     } catch (JSONException ignored) {
@@ -255,13 +247,13 @@ public class Account {
                         this.setCode(code);
                         this.setToken(json.get("token").toString());
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
-                        success.action(this);
+                        success.action();
                     } catch (JSONException e) {
-                        fail.action(this);
+                        fail.action();
                     }
                 },
                 json -> {
-                    fail.action(this);
+                    fail.action();
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
                     } catch (JSONException ignored) {
@@ -278,7 +270,7 @@ public class Account {
         try {
             jsonBody.put("username", username);
             jsonBody.put("password", password);
-            jsonBody.put("token", token);
+            jsonBody.put("token", tokenData.getValue());
             jsonBody.put("code", code);
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -289,13 +281,13 @@ public class Account {
                 json -> {
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
-                        success.action(this);
+                        success.action();
                     } catch (JSONException e) {
-                        fail.action(this);
+                        fail.action();
                     }
                 },
                 json -> {
-                    fail.action(this);
+                    fail.action();
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
                     } catch (JSONException ignored) {
@@ -303,21 +295,20 @@ public class Account {
                     }
                 }
         );
-        notif.send_Password_Change_Notification( managerCompat);
     }
 
     public void delete(Context context, AccountActionInterface success, AccountActionInterface fail)
     {
-        if(token == null)
+        if(tokenData.getValue() == null)
         {
             Toast.makeText(context, "Log in first", Toast.LENGTH_SHORT).show();
-            fail.action(this);
+            fail.action();
             return;
         }
 
         JSONObject jsonBody = new JSONObject();
         try {
-            jsonBody.put("token", token);
+            jsonBody.put("token", tokenData.getValue());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -327,20 +318,19 @@ public class Account {
                 json -> {
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
-                        success.action(this);
+                        success.action();
                     } catch (JSONException e) {
-                        fail.action(this);
+                        fail.action();
                     }
                 },
                 json -> {
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
-                        fail.action(this);
+                        fail.action();
                     } catch (JSONException e) {
-                        fail.action(this);
+                        fail.action();
                     }
                 });
-        notif.send_Delete_Notification( managerCompat);
     }
 
 
@@ -352,10 +342,10 @@ public class Account {
         return single_instance;
     }
 
-    public static synchronized Account getInstance(TokenChangeInterface changeInterface)
-    {
-        if (single_instance == null)
-            single_instance = new Account(changeInterface);
-        return single_instance;
-    }
+//    public static synchronized Account getInstance(TokenChangeInterface changeInterface)
+//    {
+//        if (single_instance == null)
+//            single_instance = new Account(changeInterface);
+//        return single_instance;
+//    }
 }

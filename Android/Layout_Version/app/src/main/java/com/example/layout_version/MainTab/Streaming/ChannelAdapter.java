@@ -18,6 +18,7 @@ import com.amazonaws.ivs.player.Player;
 import com.amazonaws.ivs.player.PlayerView;
 import com.example.layout_version.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -26,6 +27,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
     private final List<ChannelItem> localDataSet;
     private final Consumer<ChannelItem> clickEvent;
     private Context context;
+    private final List<Player> players;
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder)
@@ -84,6 +86,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
     public ChannelAdapter(List<ChannelItem> dataSet, Consumer<ChannelItem> clickEvent) {
         localDataSet = dataSet;
         this.clickEvent = clickEvent;
+        players = new ArrayList<>();
     }
 
     // Create new views (invoked by the layout manager)
@@ -107,6 +110,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         viewHolder.getDescriptionView().setText("Default description");
 
         Player player = viewHolder.getPlayerView().getPlayer();
+        players.add(player);
         if(localDataSet.get(position).getPlaybackUrl() != null)
         {
             player.addListener(new StreamingPlayerListener(context, player, viewHolder.getStatusView(), localDataSet.get(position).getPlaybackUrl(), false));
@@ -124,5 +128,13 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
     @Override
     public int getItemCount() {
         return localDataSet.size();
+    }
+
+    public void checkPlayers(){
+        Log.e("Streaming Adapter Check", players.size() + "");
+        for(Player player: players)
+        {
+            Log.e("State", player.getState() + "");
+        }
     }
 }
