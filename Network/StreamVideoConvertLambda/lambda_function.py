@@ -12,7 +12,6 @@ ACCOUNT_ID = os.environ.get('ACCOUNT_ID')
 
 
 def lambda_handler(event, context):
-    # TODO implement
     s3 = boto3.client("s3")
 
     channelArn = event["arn"].split("/")[1]
@@ -24,50 +23,57 @@ def lambda_handler(event, context):
         Prefix=f"{PREFIX}/{ACCOUNT_ID}/{channelArn}"
     )
 
-    print(response)
+    max_date = response["Contents"][0]['LastModified']
+    max_file = ""
+    for file in response["Contents"]:
+        if (max_date - file["LastModified"]).days < 0:
+            max_date = file['LastModified']
+            max_file = file["Key"]
 
-    stream_key_files = {}
+    print(max_file)
 
-    index = len(response["Contents"]) - 1
-    index_date = None
-    while index > 0:
-        if response["Contents"][index]["Key"][-len(".ts"):] != ".ts":
-            index = index - 1
-            continue
-        split_file = response["Contents"][index]["Key"].split("/")
+    split_file = max_file.split("/")
+    prefix = "/".join(split_file[:10])
+    print(prefix)
 
-        if index_date is None or datetime(int(split_file[4]), int(split_file[5]), int(split_file[6]),
-                                          int(split_file[7]), int(split_file[8])) == index_date:
+    prefix += "/media/hls/"
 
-            index_date = datetime(int(split_file[4]), int(split_file[5]), int(split_file[6]), int(split_file[7]),
-                                  int(split_file[8]))
-            folder = f"{channelArn}/{index_date.strftime('%Y-%m-%d %H:%M:%S')}-{split_file[9]}"
-            stream_key_files[folder] = []
-            basename = os.path.basename(response["Contents"][index]["Key"])
-            basename = basename.replace(".ts", "")
-            number = int(basename)
-            for j in range(number + 1):
-                stream_key_files[folder].append(response["Contents"][index - j]["Key"])
-            index = index - (number + 1 + 2) * 4 - 3 - 3
-            stream_key_files[folder].reverse()
-        else:
-            break
+    resolution_key_map = {}
+    for file in response["Contents"]:
+        if file["Key"][-len(".ts"):] == ".ts" and file["Key"][:len(prefix)] == prefix:
+            split_file = file["Key"].split("/")
+            if split_file[12] not in resolution_key_map:
+                resolution_key_map[split_file[12]] = [file["Key"]]
+            else:
+                resolution_key_map[split_file[12]].append(file["Key"])
+    print(resolution_key_map)
+    resolution_key_map_sort = {}
+    for key in resolution_key_map:
+        resolution_key_map_sort[int(key.split("p")[0])] = resolution_key_map[key]
 
-    print(stream_key_files)
-    for key in stream_key_files:
-        print("MediaConvert: Converting " + key)
-        settings = make_settings(key, stream_key_files[key])
-        user_metadata = {
-            'JobCreatedBy': 'videoConvertSample',
-        }
+    print(resolution_key_map_sort)
 
-        client = boto3.client('mediaconvert', endpoint_url=MEDIACONVERT_ENDPOINT)
-        result = client.create_job(
-            Role=MEDIACONVERT_ROLE,
-            JobTemplate=JOB_TEMPLATE_NAME,
-            Settings=settings,
-            UserMetadata=user_metadata,
-        )
+    max_key = max(resolution_key_map_sort.keys())
+    print(max_key)
+    print(resolution_key_map_sort[max_key])
+
+    split_prefix = prefix.split("/")
+    key = f"{split_prefix[3]}/{'-'.join(split_prefix[4:10])}"
+
+    print("MediaConvert: Converting " + key)
+    settings = make_settings(key, resolution_key_map_sort[max_key])
+    user_metadata = {
+        'JobCreatedBy': 'videoConvertSample',
+    }
+
+    client = boto3.client('mediaconvert', endpoint_url=MEDIACONVERT_ENDPOINT)
+    result = client.create_job(
+        Role=MEDIACONVERT_ROLE,
+        JobTemplate=JOB_TEMPLATE_NAME,
+        Settings=settings,
+        UserMetadata=user_metadata,
+    )
+
     return {
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
