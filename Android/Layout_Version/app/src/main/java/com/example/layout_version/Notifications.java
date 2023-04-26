@@ -12,144 +12,41 @@ public class Notifications {
     public Notifications( Context c ){
         context = c;
     }
-    public void send_Recording_Notification( NotificationManagerCompat managerCompat ) {
+    public void send_Notification( NotificationManagerCompat managerCompat, String title, String content) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My_Notification");
         builder.setSmallIcon(android.R.drawable.stat_notify_sync);
-        builder.setContentTitle("Recording");
-        builder.setContentText("A recording has started");
+        builder.setContentTitle(title);
+        builder.setContentText(content);
         builder.setSmallIcon(R.drawable.ic_launcher_background);
         builder.setAutoCancel(true);
         Notification notification;
         notification = builder.build();
         if (ActivityCompat.checkSelfPermission( context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         managerCompat.notify(1, notification);
+    }
+
+    public void send_Recording_Notification( NotificationManagerCompat managerCompat)
+    {
+        send_Notification(managerCompat, "Recording", "A recording has started");
     }
     public void send_New_Account_Notification( NotificationManagerCompat managerCompat ) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My_Notification");
-        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
-        builder.setContentTitle("New Account");
-        builder.setContentText("You have created a new account");
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
-        builder.setAutoCancel(true);
-        Notification notification;
-        notification = builder.build();
-        if (ActivityCompat.checkSelfPermission( context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        managerCompat.notify(1, notification);
+        send_Notification(managerCompat, "New Account", "You have created a new account");
     }
     public void send_Motion_Detected_Notification( NotificationManagerCompat managerCompat ) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My_Notification");
-        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
-        builder.setContentTitle("Motion Detected");
-        builder.setContentText("Motion has been detected on your camera");
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
-        builder.setAutoCancel(true);
-        Notification notification;
-        notification = builder.build();
-        if (ActivityCompat.checkSelfPermission( context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        managerCompat.notify(1, notification);
+        send_Notification(managerCompat, "Motion Detected", "Motion has been detected on your camera");
     }
     public void send_Network_Connected_Notification( NotificationManagerCompat managerCompat ) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My_Notification");
-        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
-        builder.setContentTitle("Network Connected");
-        builder.setContentText("You have successfully connected to the network");
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
-        builder.setAutoCancel(true);
-        Notification notification;
-        notification = builder.build();
-        if (ActivityCompat.checkSelfPermission( context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        managerCompat.notify(1, notification);
+        send_Notification(managerCompat, "Network Connected", "You have successfully connected to the network");
     }
     public void send_Sign_In_Notification( NotificationManagerCompat managerCompat ) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My_Notification");
-        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
-        builder.setContentTitle("Signed In");
-        builder.setContentText("You have successfully signed in!");
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
-        builder.setAutoCancel(true);
-        Notification notification;
-        notification = builder.build();
-        if (ActivityCompat.checkSelfPermission( context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        managerCompat.notify(1, notification);
+        send_Notification(managerCompat, "Signed In", "You have successfully signed in!");
     }
     public void send_Password_Change_Notification( NotificationManagerCompat managerCompat ) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My_Notification");
-        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
-        builder.setContentTitle("Password Changed");
-        builder.setContentText("You have successfully changed your password");
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
-        builder.setAutoCancel(true);
-        Notification notification;
-        notification = builder.build();
-        if (ActivityCompat.checkSelfPermission( context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        managerCompat.notify(1, notification);
+        send_Notification(managerCompat, "Password Changed", "You have successfully changed your password");
     }
     public void send_Delete_Notification( NotificationManagerCompat managerCompat ) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My_Notification");
-        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
-        builder.setContentTitle("Deleted");
-        builder.setContentText("Information from your account has been deleted");
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
-        builder.setAutoCancel(true);
-        Notification notification;
-        notification = builder.build();
-        if (ActivityCompat.checkSelfPermission( context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        managerCompat.notify(1, notification);
+        send_Notification(managerCompat, "Deleted", "Information from your account has been deleted");
     }
 }
