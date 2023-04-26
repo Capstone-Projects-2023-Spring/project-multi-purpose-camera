@@ -6,6 +6,7 @@ get wifi name, password, and new name for the device
 
 import subprocess
 import time
+import os.path
 
 def wifi_setup(ssid,password):
     # path for wpa_supplicant configuration file 
@@ -67,11 +68,29 @@ def wifi_setup(ssid,password):
     
     return ""
     
+"""Checks if there is a device_id saved onto the mahcine
+    Parameter: string (new device_id)
+    Return: string (new or device_id given by the user from the app)
+
+"""
+def device_id_setup(string):
+    #print(string)
+    result = ""
+    #if new device send new
+        #create new file for device id and different file for stream info
+    #if registered send device_id
     
-def token_obs(string):
-    print(string)
+    if len(string) > 2:
+        with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/device_id.txt", "w") as file_device_id:
+            file_device_id.write(string)
     
-    return ""
+    if (os.path.isfile("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/device_id.txt")):
+        with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/device_id.txt", "r") as file_device_id:
+            result = file_device_id.read()
+    
+    
+    
+    return result
     
     
 def parser(byte_string):
@@ -100,14 +119,18 @@ def parser(byte_string):
         result = wifi_setup(string_ssid,string_password)
         # print(result)
         
-    if "token" in string_option:
-        token_item = string_list[1:2]
-        result = token_obs(token_item)
+    if "device_id" in string_option:
+        deviceID = string_list[1:2]
+        deviceID = ''.join(deviceID)
+        
+        #print(deviceID)
+        result = device_id_setup(deviceID)
+        
     
     return result
     
    
 if __name__ == "__main__":
-    byte_string = b'wifi\nCOMPUTER 7084\nAC24dc34!\n'
+    byte_string = b'device_id\nCOMPUTER 7084\nAC24dc34!\n'
     temp = parser(byte_string)
     print(temp)
