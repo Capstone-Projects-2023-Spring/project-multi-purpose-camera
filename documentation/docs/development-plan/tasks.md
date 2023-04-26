@@ -9,4 +9,5 @@ _A task is the performance of an activity leading to a specific feature in a pro
 | # | Task | Platform | Estimated Timeframe | Finish Data | Assigned Individual(s) | Successor Task(s) |
 |:---:|:---------------:|:----------:|:----------:|:--------------------:|:---------------:|:--------------------:|
 | 1 | Brainstorming | - | 1 week | Ideas | Everyone | - |
-| 2 | Brainstorming | - | 1 week | Ideas | Everyone | - |
+| 2 | Initial hardware mockup | Raspberry Pi | 1 week | Blueprint/design of hardware | Tim, Nick, Joanne | Building Hardware (Camera / Raspberry Pi) |
+
