@@ -8,6 +8,14 @@ import subprocess
 import time
 import os.path
 
+
+"""Sets up new wifi credentials
+    Parameter: String,String
+    Return: String
+    
+    It takes in a string that is the ssid and a string that is the password. It replaces the wpa_supplicant.conf file
+    with the new credentials then restarts the wifi services. It checks the status of the wifi service to see if it returns
+    COMPLETED to know it was set up properly"""
 def wifi_setup(ssid,password):
     # path for wpa_supplicant configuration file 
     wpa_supplicant_path = "/etc/wpa_supplicant/wpa_supplicant.conf"
@@ -66,7 +74,7 @@ def wifi_setup(ssid,password):
     if result in decode_output:
         return "Connected to " + ssid + "\n"
     
-    return ""
+    return "Unable to connect to " + ssid + "\n"
     
 """Checks if there is a device_id saved onto the mahcine
     Parameter: string (new device_id)
@@ -93,8 +101,21 @@ def device_id_setup(string):
     
     
     return result
+
+
+def stream_setup(stream_info1,stream_info2,stream_info3):
     
+    with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/stream.txt", "w"): file_stream:
+        file_stream.write(stream_info1)
+        file_stream.write(stream_info2)
+        file_stream.write(stream_info3)
     
+    result = ""
+    return result     
+    
+"""Recieves the byte array from the phone and parses it to see where it should send the data
+    Parameter: byte array (data from the user's phone)
+    Return: String (results from the setup)""" 
 def parser(byte_string):
     # recieves byte string and splits it into an array to be parsed
     
@@ -127,6 +148,13 @@ def parser(byte_string):
         
         #print(deviceID)
         result = device_id_setup(deviceID)
+        
+    if "stream_info" in string_option:
+        stream_info1 = ''.join(string_list[1:2])
+        stream_info2 = ''.join(string_list[2:3])
+        stream_info3 = ''.join(string_list[3:4])
+        
+        result = stream_setup(stream_info1,stream_info2,stream_info3)
         
     
     return result
