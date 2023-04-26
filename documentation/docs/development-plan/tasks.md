@@ -21,3 +21,8 @@ _A task is the performance of an activity leading to a specific feature in a pro
 _Camera_
 | # | Task | Platform | Estimated Timeframe | Finish Data | Assigned Individual(s) | Successor Task(s) |
 |:---:|:---------------:|:----------:|:----------:|:--------------------:|:---------------:|:--------------------:|
+| 1 | Connect Raspberry Pi to camera | Raspberry Pi | 1 week | Working camera that can capture/record | Tim, Nick | Connection to other devices
+| 2 | Connect Raspberry Pi to microphone | Raspberry Pi | 1 week | Can capture sound | Tim, Nick | Audio settings
+| 3 | Connect Raspberry Pi to Device | Bluetooth | 1 week | Using bluetooth to connect to the app to be able to access wifi | Tyler, Justin | App development/Connection to cloud |
+| 4 | Camera connection to cloud | Wifi | 1 week | Connection to cloud for video storage | Keita, Sid | Cloud storage and database management |
+
