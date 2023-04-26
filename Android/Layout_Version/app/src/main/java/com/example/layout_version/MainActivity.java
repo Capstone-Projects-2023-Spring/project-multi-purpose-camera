@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -152,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             libraryTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
             cameraTabButton.setBackgroundColor(Color.parseColor("#c4fffd"));
         });
+
     }
 
     public void onBackPressed()
@@ -211,5 +213,7 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             return null;
         }
     }
+
+
 
 }

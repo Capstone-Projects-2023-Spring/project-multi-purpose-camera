@@ -16,8 +16,6 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <permission
         android:name="com.example.layout_version.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
@@ -39,7 +37,7 @@
         android:testOnly="true"
         android:theme="@style/Theme.Layout_Version" >
         <activity
-            android:name="com.example.layout_version.Account.Account_Page"
+            android:name="com.example.layout_version.MainActivity"
             android:exported="true"
             android:launchMode="singleTask" >
             <intent-filter>
@@ -54,7 +52,9 @@
         <activity android:name="com.example.layout_version.Camera_Page" />
         <activity android:name="com.example.layout_version.Library_Videos_Page" />
         <activity android:name="com.example.layout_version.Bluetooth_Page" />
-        <activity android:name="com.example.layout_version.MainActivity" />
+        <activity
+            android:name="com.example.layout_version.Account.Account_Page"
+            android:launchMode="singleTask" />
         <activity
             android:name="com.example.layout_version.Account.Account_Page_Signup"
             android:launchMode="singleTask" />
@@ -82,6 +82,10 @@
                 android:name="androidx.lifecycle.ProcessLifecycleInitializer"
                 android:value="androidx.startup" />
         </provider>
+        <provider
+            android:name="com.squareup.picasso.PicassoProvider"
+            android:authorities="com.example.layout_version.com.squareup.picasso"
+            android:exported="false" />
     </application>
 
 </manifest>

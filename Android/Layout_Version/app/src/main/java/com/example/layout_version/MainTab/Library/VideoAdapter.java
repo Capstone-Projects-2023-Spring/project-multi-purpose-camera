@@ -1,15 +1,20 @@
 package com.example.layout_version.MainTab.Library;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.layout_version.Library_Video;
 import com.example.layout_version.R;
 import com.squareup.picasso.Picasso;
 
@@ -28,7 +33,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView videoThumbnailImageView;
         private final TextView titleView;
-        private final TextView descriptionView;
+//        private final TextView descriptionView;
+
+        private final ImageView optionButton;
         private final View view;
 
         public ViewHolder(View view) {
@@ -37,11 +44,19 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             // Define click listener for the ViewHolder's View
             videoThumbnailImageView = view.findViewById(R.id.videoThumbnailImageView);
             titleView = view.findViewById(R.id.video_title);
-            descriptionView = view.findViewById(R.id.video_description);
+//            descriptionView = view.findViewById(R.id.video_description);
+            optionButton = view.findViewById(R.id.delete_item);
             view.setOnClickListener(v -> {
 
             });
 
+            optionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Toast.makeText(v.getContext(), "Item deleted successfully", Toast.LENGTH_SHORT).show();
+                    showAlertDialog(v);
+                }
+            });
         }
         public View getView()
         {
@@ -54,10 +69,34 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         public TextView getTitleView() {
             return titleView;
         }
-        public TextView getDescriptionView() {
-            return descriptionView;
-        }
+//        public TextView getDescriptionView() {
+//            return descriptionView;
+//        }
 
+
+    }
+
+    private static void showAlertDialog(View v)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+
+        builder.setTitle("Delete?");
+        builder.setMessage("Are you sure you want to delete?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                Toast.makeText(v.getContext(), "Item deleted successfully", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 
     /**
@@ -89,7 +128,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.getTitleView().setText(localDataSet.get(position).getTitle());
-        viewHolder.getDescriptionView().setText(localDataSet.get(position).getDescription());
+//        viewHolder.getDescriptionView().setText(localDataSet.get(position).getDescription());
         if(localDataSet.get(position).getUrl() != null)
         {
             viewHolder.getView().setOnClickListener(
