@@ -79,15 +79,17 @@ def device_id_setup(string):
     #if new device send new
         #create new file for device id and different file for stream info
     #if registered send device_id
-    
-    if len(string) > 2:
-        with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/device_id.txt", "w") as file_device_id:
-            file_device_id.write(string)
+    if (os.path.isfile("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/device_id.txt")):
+        if len(string) > 2:
+            with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/device_id.txt", "w") as file_device_id:
+                file_device_id.write(string)
     
     if (os.path.isfile("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/device_id.txt")):
         with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/device_id.txt", "r") as file_device_id:
             result = file_device_id.read()
-    
+    else:
+        with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/device_id.txt", "w") as file_device_id:
+            file_device_id.write("new")
     
     
     return result
