@@ -30,7 +30,7 @@ start_time = 0
 # Setup settings for video saving
 RECORD_DURATION = 10
 VIDEO_PATH = '/home/mpc/Videos'
-fourcc = cv2.VideoWriter_fourcc(*'H264')
+fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 fps = 20
 frame_size = (640, 480)
 #video_writer = cv2.VideoWriter('test.avi', cv2.VideoWriter_fourcc(*'MPEG'), fps, frame_size)
@@ -39,7 +39,7 @@ frame_size = (640, 480)
 def create_video_writer():
     # Create the video file name using the current date and time
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    video_path = os.path.join(VIDEO_PATH, f"motion_{timestamp}.h264")
+    video_path = os.path.join(VIDEO_PATH, f"motion_{timestamp}.avi")
     # Create the video writer object
 
     
@@ -81,16 +81,18 @@ while True:
         
         if not is_motion:
             is_motion = True
-            video_writer = create_video_writer()
+         #   video_writer = create_video_writer()
             start_time = time.time()
 
     if is_motion and ((time.time() - start_time) > RECORD_DURATION):
         is_motion = False
-        video_writer.release()
+        print("End Motion")
+        #video_writer.release()
     
     if is_motion:
-        print("write")
-        video_writer.write(frame)
+       # print("write")
+    	print("finding motion")
+    	#video_writer.write(frame)
     
     # Show the frame
     cv2.imshow("Feed", frame)
