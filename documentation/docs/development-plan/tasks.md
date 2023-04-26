@@ -35,4 +35,4 @@ _App_
 | 4 | Create feature where user can customize streaming resolution | Android Studio | 1 week | Set different resolutions on videos | Tyler, Justin, Nick |
 | 5 | Create feature where user can save video/audio | Android Studio | 1 week | Save feature | Tyler, Justin, Nick |
 | 6 | Create log where user can scroll through and replay saved video/audio | Android Studio | 1 week | Access save video/audio | Tyler, Justin, Nick |
-| 7 | Create feature where user can select criterion for each type - Brightness: Intensity, Color, and length - Motion: Intensity and length - Sound: Range, Intensity, and length - Android Studio | 1 week | Customizable settings | Tyler, Justin, Nick |
+| 7 | Create feature where user can select criterion for each type - Brightness, Motion, Sound | Android Studio | 1 week | Customizable settings | Tyler, Justin, Nick |
