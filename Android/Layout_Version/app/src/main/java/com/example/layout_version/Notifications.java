@@ -7,9 +7,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.layout_version.Account.Account;
+
 public class Notifications {
     private Context context;
-    public Notifications( Context c ){
+
+    private static Notifications single_instance = null;
+    private Notifications( Context c ){
         context = c;
     }
     public void send_Notification( NotificationManagerCompat managerCompat, String title, String content) {
@@ -49,4 +53,16 @@ public class Notifications {
     public void send_Delete_Notification( NotificationManagerCompat managerCompat ) {
         send_Notification(managerCompat, "Deleted", "Information from your account has been deleted");
     }
+    public static synchronized Notifications getInstance(Context c)
+    {
+        if (single_instance == null)
+            single_instance = new Notifications(c);
+
+        return single_instance;
+    }
+    public static synchronized Notifications getInstance()
+    {
+        return single_instance;
+    }
+
 }

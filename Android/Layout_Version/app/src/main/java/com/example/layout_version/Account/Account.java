@@ -28,7 +28,9 @@ public class Account {
     private String code;
     private String status;
     private MutableLiveData<String> tokenData;
-//    private TokenChangeInterface tokenChangeInterface;
+
+    private Notifications notif = Notifications.getInstance();
+//    private TokenChangeInterface tokenChangeInterface
 
     private Account(){
         tokenData = new MutableLiveData<>();

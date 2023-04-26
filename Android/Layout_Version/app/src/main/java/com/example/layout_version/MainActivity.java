@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-        Notifications notif = new Notifications(this);
+        Notifications notif = Notifications.getInstance(this);
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
         notif.send_Recording_Notification( managerCompat);
         notif.send_New_Account_Notification( managerCompat);
