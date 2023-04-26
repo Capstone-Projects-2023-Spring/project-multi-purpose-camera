@@ -26,3 +26,17 @@ _Camera_
 | 3 | Connect Raspberry Pi to Device | Bluetooth | 1 week | Using bluetooth to connect to the app to be able to access wifi | Tyler, Justin | App development/Connection to cloud |
 | 4 | Camera connection to cloud | Wifi | 1 week | Connection to cloud for video storage | Keita, Sid | Cloud storage and database management |
 
+_App_
+| # | Task | Platform | Estimated Timeframe | Finish Data | Assigned Individual(s) |
+|:---:|:---------------:|:----------:|:----------:|:--------------------:|:---------------:|
+| 1 | Create user interface environment where buttons and features will be added | Android Studio | 1 week | Compete UI | Tyler, Justin, Joanne |
+| 2 | Create button where user can choose between cameras | Android Studio | 1 week | Switching between cameras (thermal, night vision, etc.) | Tyler, Justin, Nick |
+| 3 | Be able to see video live from the application (bitrate and resolution is low for live streaming) | Android Studio | 1 week | Live stream | Tyler, Justin, Nick | 
+| 4 | Create feature where user can customize streaming resolution | Android Studio | 1 week | Set different resolutions on videos | Tyler, Justin, Nick |
+| 5 | Create feature where user can save video/audio | Android Studio | 1 week | Save feature | Tyler, Justin, Nick |
+| 6 | Create log where user can scroll through and replay saved video/audio | Android Studio | 1 week | Access save video/audio | Tyler, Justin, Nick |
+| 7 | Create feature where user can select criterion for each type 
+- Brightness: Intensity, Color, and length
+- Motion: Intensity and length
+- Sound: Range, Intensity, and length
+- Android Studio | 1 week | Customizable settings | Tyler, Justin, Nick |
