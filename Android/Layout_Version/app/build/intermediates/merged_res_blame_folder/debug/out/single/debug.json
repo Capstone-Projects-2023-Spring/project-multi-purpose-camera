@@ -144,6 +144,10 @@
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_streaming_item.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/streaming_item.xml"
+    },
+    {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\drawable_notification_setting.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\drawable\\notification_setting.xml"
     },
@@ -354,9 +358,5 @@
     {
         "merged": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-merged_res-29:\\layout_library.xml.flat",
         "source": "C:\\Users\\jpax2\\.gradle\\daemon\\7.5\\com.example.layout_version.app-main-31:\\layout\\library.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_library_videos.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/library_videos.xml"
     }
 ]

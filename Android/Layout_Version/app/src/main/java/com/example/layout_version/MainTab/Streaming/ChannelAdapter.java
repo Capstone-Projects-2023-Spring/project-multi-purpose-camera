@@ -1,6 +1,7 @@
 package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +43,8 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         private final TextView statusView;
         private final PlayerView playerView;
 
+        private final ImageView optionButton;
+
         public ViewHolder(View view) {
             super(view);
             this.view = view;
@@ -46,6 +52,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
             titleView = view.findViewById(R.id.streamingTitleView);
             descriptionView = view.findViewById(R.id.streamingDescriptionView);
             statusView = view.findViewById(R.id.deviceStatusView);
+            optionButton = view.findViewById(R.id.delete_item);
 
             FrameLayout playerFrameLayout = view.findViewById(R.id.playerFrameLayout);
             playerView = new PlayerView(view.getContext());
@@ -57,7 +64,39 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
                 Log.e("", "Channel Clicked");
             });
 
+            optionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Toast.makeText(v.getContext(), "Item deleted successfully", Toast.LENGTH_SHORT).show();
+                    showAlertDialog(v);
+                }
+            });
+
         }
+
+        private static void showAlertDialog(View v)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+
+            builder.setTitle("Delete?");
+            builder.setMessage("Are you sure you want to delete?");
+
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    Toast.makeText(v.getContext(), "Item deleted successfully", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        }
+
         public View getView()
         {
             return view;
