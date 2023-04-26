@@ -82,10 +82,10 @@ Compared to most products on the market, our products aims to be more multi-func
 
 
 ## Quick Setup:
-pip install opencv-python\
-pip install imutils\
-pip install pybluez\
-pip install pyaudio
+- pip install opencv-python
+- pip install imutils
+- pip install pybluez
+- pip install pyaudio
 
 
 ## Collaborators
