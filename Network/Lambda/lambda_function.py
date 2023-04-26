@@ -2,6 +2,8 @@ import json
 import os
 import random
 import re
+import sys
+from datetime import datetime
 
 import EmailSender
 import boto3
@@ -361,6 +363,28 @@ def account_signin(event, pathPara, queryPara):
         return json_payload({"message": "Token Found"})
 
     return json_payload({"message": Error.TOKEN_NOT_FOUND}, True)
+
+
+@api.handle("/account/get/device", httpMethod=MPC_API.POST)
+def account_signin(event, pathPara, queryPara):
+    """Handles users reset their account by verifying their username in the database"""
+    body: dict = event["body"]
+
+    hardware: list[Hardware] = database.get_all_by_joins(
+        Hardware,
+        [
+            (Account_has_Hardware, Account_has_Hardware.EXPLICIT_HARDWARE_ID, Hardware.EXPLICIT_HARDWARE_ID),
+            (Account, Account.EXPLICIT_ID, Account_has_Hardware.EXPLICIT_ACCOUNT_ID)
+        ],
+        [
+            (Account.TOKEN, body[Account.TOKEN]),
+            (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])
+        ])
+
+    if len(hardware) <= 0:
+        return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
+
+    return json_payload({"hardware": Hardware.object_to_dict(hardware[0])})
 
 
 @api.handle("/account/verify/device", httpMethod=MPC_API.POST)
@@ -858,116 +882,80 @@ def send_email(event, pathPara, queryPara):
 
 @api.handle("/file/all", httpMethod=MPC_API.POST)
 def get_recording_videos(event, pathPara, queryPara):
-    import datetime
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
         return json_payload({"message": "Account does not exist"})
 
     records = database.query(
-        f"""Select distinct Account.account_id, Hardware.hardware_id, arn, file_name, Recording.timestamp From Account 
+        f"""Select distinct arn From Account 
         Inner Join Account_has_Hardware ON  Account_has_Hardware.account_id = Account.account_id
         Inner Join Hardware ON  Account_has_Hardware.hardware_id = Hardware.hardware_id
-        Left Join Recording On Hardware.hardware_id = Recording.hardware_id
         WHere token = "{token}";"""
     )
 
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    recordings = []
     arns = set()
-    channel_id_dict = {}
     files = []
-    for account_id, hardware_id, arn, file_name, timestamp in records:
+    for arn, in records:
         arns.add(arn)
-        channel_id_dict[arn] = hardware_id
-        if file_name != None:
-            timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
-            r = Recording(file_name, timestamp, timestamp, account_id=account_id, hardware_id=hardware_id)
-            r.arn = arn
-            recordings.append(r)
-            files.append(file_name)
     arns = list(arns)
-
-    if len(recordings) == 0:
-        account_id = database.get_field_by_field(Account, Account.ID, Account.TOKEN, token)
-    else:
-        account_id = recordings[0].account_id
 
     video_retriever = VideoRetriever(settings.BUCKET)
     converted_files = video_retriever.converted_streams(arns)
     for file in converted_files:
         if file not in files:
             files.append(file)
-            recordings.append(Recording(file, timestamp=now))
-
-    id_to_folder_stream_list_map = video_retriever.unregistered_stream_map_from_channels(recordings, channel_id_dict)
-    for id in id_to_folder_stream_list_map:
-        for folder in id_to_folder_stream_list_map[id]:
-            if len(id_to_folder_stream_list_map[id][folder]) == 1:
-                id_to_folder_stream_list_map[id].pop(folder)
-                break
-            elif len(id_to_folder_stream_list_map[id][folder]) > 1:
-                id_to_folder_stream_list_map[id][folder].pop()
-
-    for id in id_to_folder_stream_list_map:
-        for folder in id_to_folder_stream_list_map[id]:
-            recordings.append(Recording(folder, None, None))
-
-    video_retriever.convert_stream_in_account(database, account_id, id_to_folder_stream_list_map)
 
     return json_payload({
         "files": [
             {
-                "file_name": f.file_name,
-                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f.file_name}/0.mp4",
-                                                          expire=3600) if f.timestamp is not None else None,
-                "timestamp": f.timestamp if f.timestamp is not None else "Processing",
-                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f.file_name),
-                                                                3600) if f.timestamp is not None else None
-            } for f in recordings]
+                "file_name": f,
+                "url": video_retriever.pre_signed_url_get(f"{settings.CONVERTED}/{f}/0.mp4", expire=3600),
+                "timestamp": "Description",
+                "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f), 3600)
+            } for f in files]
     })
 
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
 
-    event = {
-        "resource": "/account",
-        "httpMethod": MPC_API.GET,
-        "body": """{
-            "username": "John Smith",
-            "password": "Password",
-            "email": "default@temple.edu",
-            "code": "658186",
-            "token": "abe5af3cbc47c47b803ade26be8807a0",
-            "device_id": "60df7562bc4e566abe803c448f5609ea"
-        }""",
-        "pathParameters": {
-            "key": "sample.txt"
-        },
-        "queryStringParameters": {
-            "notification_type": 10
-        }
-    }
-    response = lambda_handler(event, None)
-    # token = json.loads(response["body"])["token"]
-    # print(token)
+    # event = {
+    #     "resource": "/file/all",
+    #     "httpMethod": MPC_API.POST,
+    #     "body": """{
+    #         "username": "John Smith",
+    #         "password": "Password",
+    #         "email": "default@temple.edu",
+    #         "code": "658186",
+    #         "token": "994acab3fdb83325a34e55a635fe5afe",
+    #         "device_id": "f4cd9ff05855d0048e28cf9eccc9bed2"
+    #     }""",
+    #     "pathParameters": {
+    #         "key": "sample.txt"
+    #     },
+    #     "queryStringParameters": {
+    #         "notification_type": 10
+    #     }
+    # }
+    # response = lambda_handler(event, None)
+    # # token = json.loads(response["body"])["token"]
+    # print(response)
+    # #
+    # token = "abe5af3cbc47c47b803ade26be8807a0"
+    # event = {
+    #     "resource": "/file/all",
+    #     "httpMethod": MPC_API.POST,
+    #     "body": "{\"token\":\"" + token + "\"}",
+    #     "pathParameters": {
+    #         "key": "sample.txt"
+    #     },
+    #     "queryStringParameters": {
+    #         "notification_type": 10
+    #     }
+    # }
+    # response = lambda_handler(event, None)
     #
-    token = "abe5af3cbc47c47b803ade26be8807a0"
-    event = {
-        "resource": "/file/all",
-        "httpMethod": MPC_API.POST,
-        "body": "{\"token\":\"" + token + "\"}",
-        "pathParameters": {
-            "key": "sample.txt"
-        },
-        "queryStringParameters": {
-            "notification_type": 10
-        }
-    }
-    response = lambda_handler(event, None)
-
-    print(response)
+    # print(response)
     # database.insert(Account_has_Hardware(18, 36))
     # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
     # # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
@@ -982,6 +970,85 @@ if __name__ == "__main__":
     #     aws_secret_access_key=AWS_SERVER_SECRET_KEY
     # )
     #
-    # recorder = Recorder("arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw")
-    # # recorder.stop_recording()
-    # print(recorder.isRecording())
+    # s3 = session.client("s3")
+    #
+    # channelArn = "HCBh4loJzOvw"
+    # response = s3.list_objects(
+    #     Bucket="mpc-capstone",
+    #     Prefix=f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{channelArn}"
+    # )
+    #
+    # keys = [f["Key"] for f in response["Contents"]]
+    #
+
+    channelArn = "arn:aws:ivs:us-east-1:052524269538:channel/vIvvphhE1OJL".split("/")[1]
+
+    print("MediaConvert: Request received")
+
+    session = boto3.Session(
+        aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
+        aws_secret_access_key=AWS_SERVER_SECRET_KEY
+    )
+
+    s3 = session.client('s3')
+
+    response = s3.list_objects(
+        Bucket="mpc-capstone",
+        Prefix=f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{channelArn}"
+    )
+
+    max_date = response["Contents"][0]['LastModified']
+    max_file = ""
+    for file in response["Contents"]:
+        if (max_date - file["LastModified"]).days < 0:
+            max_date = file['LastModified']
+            max_file = file["Key"]
+
+    print(max_file)
+
+    split_file = max_file.split("/")
+    prefix = "/".join(split_file[:10])
+    print(prefix)
+
+    prefix += "/media/hls/"
+
+    resolution_key_map = {}
+    for file in response["Contents"]:
+        if file["Key"][-len(".ts"):] == ".ts" and file["Key"][:len(prefix)] == prefix:
+            split_file = file["Key"].split("/")
+            if split_file[12] not in resolution_key_map:
+                resolution_key_map[split_file[12]] = [file["Key"]]
+            else:
+                resolution_key_map[split_file[12]].append(file["Key"])
+    print(resolution_key_map)
+    resolution_key_map_sort = {}
+    for key in resolution_key_map:
+        resolution_key_map_sort[int(key.split("p")[0])] = resolution_key_map[key]
+
+    print(resolution_key_map_sort)
+
+    max_key = max(resolution_key_map_sort.keys())
+    print(max_key)
+    print(resolution_key_map_sort[max_key])
+
+    if len(resolution_key_map_sort[max_key]) > 0:
+        resolution_key_map_sort[max_key].pop()
+
+    file_number_map = {}
+    for file in resolution_key_map_sort[max_key]:
+        splitted = file.split("/")
+        file_number_map[int(splitted[-1].split(".")[0])] = file
+
+    keys_sorted = list(file_number_map.keys())
+
+    keys_sorted.sort()
+
+    stream_files = []
+
+    for key in keys_sorted:
+        stream_files.append(file_number_map[key])
+
+    split_prefix = prefix.split("/")
+    key = f"{split_prefix[3]}/{'-'.join(split_prefix[4:10])}"
+
+    print("MediaConvert: Converting " + key)
