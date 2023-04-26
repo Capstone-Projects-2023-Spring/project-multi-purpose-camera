@@ -1,9 +1,17 @@
 package com.example.layout_version.Account;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationManagerCompat;
+
 import com.example.layout_version.Network.NetworkRequestManager;
+import com.example.layout_version.Notifications;
 import com.example.layout_version.R;
 
 import org.json.JSONException;
@@ -25,9 +33,18 @@ public class Account {
     private TokenChangeInterface tokenChangeInterface;
 
     private Account(){}
+    private Context context;
 
-    private Account(TokenChangeInterface tokenChangeInterface){
+    private Notifications notif;
+
+    private NotificationManagerCompat managerCompat;
+
+    private Account(TokenChangeInterface tokenChangeInterface, Context c){
         this.tokenChangeInterface = tokenChangeInterface;
+        context = c;
+        notif = new Notifications(context);
+        managerCompat = NotificationManagerCompat.from(context);
+
     }
 
     public void setUsername(String username)
@@ -147,6 +164,7 @@ public class Account {
                         fail.action(this);
                     }
                 });
+        notif.send_New_Account_Notification( managerCompat);
     }
 
     public void signin(Context context, String username, String password,
@@ -182,6 +200,7 @@ public class Account {
                     }
                 }
         );
+        notif.send_Sign_In_Notification( managerCompat);
     }
 
 
@@ -284,6 +303,7 @@ public class Account {
                     }
                 }
         );
+        notif.send_Password_Change_Notification( managerCompat);
     }
 
     public void delete(Context context, AccountActionInterface success, AccountActionInterface fail)
@@ -320,6 +340,7 @@ public class Account {
                         fail.action(this);
                     }
                 });
+        notif.send_Delete_Notification( managerCompat);
     }
 
 

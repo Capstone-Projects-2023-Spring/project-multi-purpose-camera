@@ -65,16 +65,11 @@ public class MainActivity extends AppCompatActivity implements TokenChangeInterf
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "My_Notification");
-        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
-        builder.setContentTitle("Test");
-        builder.setContentText("You have clicked the Settings button");
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
-        builder.setAutoCancel(true);
-
         Notifications notif = new Notifications(this);
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        notif.send_Notifications( managerCompat);
+        notif.send_Recording_Notification( managerCompat);
+        notif.send_New_Account_Notification( managerCompat);
+        notif.send_Motion_Detected_Notification( managerCompat);
 
         try {
             Thread.sleep(2000);
