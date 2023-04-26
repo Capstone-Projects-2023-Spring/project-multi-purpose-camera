@@ -82,10 +82,10 @@ Compared to most products on the market, our products aims to be more multi-func
 
 
 ## Quick Setup:
-pip install opencv-python\
-pip install imutils\
-pip install pybluez\
-pip install pyaudio
+- pip install opencv-python
+- pip install imutils
+- pip install pybluez
+- pip install pyaudio
 
 
 ## Collaborators
@@ -101,7 +101,7 @@ pip install pyaudio
         </a>
     </td>
     <td align="center">
-        <a href="">
+        <a href="https://github.com/tuk12915">
             <br />
             <sub><b>Tim Brennan</b></sub>
         </a>
@@ -119,13 +119,13 @@ pip install pyaudio
         </a>
     </td>
     <td align="center">
-        <a href="">
+        <a href="https://github.com/fes7713">
             <br />
             <sub><b>Keita Nakashima</b></sub>
         </a>
     </td>
     <td align="center">
-        <a href="">
+        <a href="https://github.com/tuj02630">
             <br />
             <sub><b>Sid Philips</b></sub>
         </a>

@@ -23,6 +23,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.layout_version.MainActivity;
+import com.example.layout_version.Notifications;
 import com.example.layout_version.R;
 
 import org.json.JSONException;
@@ -35,10 +36,16 @@ public class NetworkRequestManager {
     private final RequestQueue mRequestQueue;
     private final Context context;
 
+    private Notifications notif;
+
+    private NotificationManagerCompat managerCompat;
+
     public NetworkRequestManager(Context context)
     {
         this.context = context;
         mRequestQueue = Volley.newRequestQueue(context);
+        notif = new Notifications(context);
+        managerCompat = NotificationManagerCompat.from(context);
     }
 
     public void Post(int endpointID, JSONObject data, NetworkInterface success, NetworkInterface fail)
@@ -70,5 +77,6 @@ public class NetworkRequestManager {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mRequestQueue.add(jsonRequest);
+        notif.send_Network_Connected_Notification( managerCompat);
     }
 }
