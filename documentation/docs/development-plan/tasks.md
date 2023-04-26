@@ -17,13 +17,13 @@ _A task is the performance of an activity leading to a specific feature in a pro
     <th> Successor Task(s) </th>
   </tr>
   <tr>
-    <td align="center"> 1 </th>
-    <td align="center"> Brainstorming </th>
-    <td align="center"> - </th>
-    <td align="center"> 1 week </th>
-    <td align="center"> Ideas </th>
-    <td align="center"> Everyone </th>
-    <td align="center"> Plans for next step </th>
+    <td> 1 </td>
+    <td> Brainstorming </td>
+    <td> - </td>
+    <td> 1 week </td>
+    <td> Ideas </td>
+    <td> Everyone </td>
+    <td> Plans for next step </td>
   </tr> 
 </table>
   
