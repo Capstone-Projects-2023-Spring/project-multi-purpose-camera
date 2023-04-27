@@ -38,7 +38,7 @@ public class Edit_Saving_Policy_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_policy);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.edit_policy_linear_layout);
-        ConstraintLayout view = (ConstraintLayout) linearLayout.getChildAt(0);
+//        ConstraintLayout view = (ConstraintLayout) linearLayout.getChildAt(0);
         //linearLayout.removeView(view);
         main_layout = linearLayout;
         linearLayout.removeAllViews();
