@@ -103,15 +103,15 @@ def device_id_setup(string):
     return result
 
 
-def stream_setup(stream_info1,stream_info2,stream_info3):
-    
-    with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/stream.txt", "w"): file_stream:
-        file_stream.write(stream_info1)
-        file_stream.write(stream_info2)
-        file_stream.write(stream_info3)
-    
-    result = ""
-    return result     
+# def stream_setup(stream_info1,stream_info2,stream_info3):
+#     
+#     with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/stream.txt", "w"): file_stream:
+#         file_stream.write(stream_info1)
+#         file_stream.write(stream_info2)
+#         file_stream.write(stream_info3)
+#     
+#     result = ""
+#     return result     
     
 """Recieves the byte array from the phone and parses it to see where it should send the data
     Parameter: byte array (data from the user's phone)
