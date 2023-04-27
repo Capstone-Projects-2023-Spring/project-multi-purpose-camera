@@ -921,37 +921,45 @@ def file_all(event, pathPara, queryPara):
             } for f in files]
     })
 
-    @api.handle("/file/add", httpMethod=MPC_API.DELETE)
-    def file_all(event, pathPara, queryPara):
-        # TODO
 
-        return
+@api.handle("/file/delete", httpMethod=MPC_API.DELETE)
+def file_delete(event, pathPara, queryPara):
+    token = event["body"]["token"]
+    if not database.verify_field(Account, Account.TOKEN, token):
+        return json_payload({"message": "Account does not exist"})
+
+    # channelId/year-month-date-hour-minute-id
+    file_name = event["body"][Recording.NAME]
+
+    converted_key = f"{settings.CONVERTED}/{file_name}/0.mp4"
+    stream_prefix = f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{file_name.replace('-', '/')}/"
+
+    videoRetreiver = VideoRetriever(settings.BUCKET)
+    stream_files = videoRetreiver.get_under_directory(stream_prefix)
+
+    delete_files = [converted_key] + stream_files
+
+    return json_payload({"deleted": videoRetreiver.delete_keys(delete_files)})
 
 
 if __name__ == "__main__":
     # database.insert(Notification(10000, criteria_id=3), ignore=True)
 
-    # event = {
-    #     "resource": "/file/all",
-    #     "httpMethod": MPC_API.POST,
-    #     "body": """{
-    #         "username": "John Smith",
-    #         "password": "Password",
-    #         "email": "default@temple.edu",
-    #         "code": "658186",
-    #         "token": "994acab3fdb83325a34e55a635fe5afe",
-    #         "device_id": "f4cd9ff05855d0048e28cf9eccc9bed2"
-    #     }""",
-    #     "pathParameters": {
-    #         "key": "sample.txt"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
-    # }
-    # response = lambda_handler(event, None)
-    # # token = json.loads(response["body"])["token"]
-    # print(response)
+    event = {
+        "resource": "/file/delete",
+        "httpMethod": MPC_API.DELETE,
+        "body": """{
+            "username": "John Smith",
+            "password": "Password",
+            "email": "default@temple.edu",
+            "code": "658186",
+            "token": "4e590dc96af3abea28b8955d59409087",
+            "file_name": "vIvvphhE1OJL/2023-4-27-17-35-t0QjMMgqDKRm"
+        }"""
+    }
+    response = lambda_handler(event, None)
+    # token = json.loads(response["body"])["token"]
+    print(response)
     # #
     # token = "abe5af3cbc47c47b803ade26be8807a0"
     # event = {
@@ -992,75 +1000,3 @@ if __name__ == "__main__":
     #
     # keys = [f["Key"] for f in response["Contents"]]
     #
-
-    channelArn = "arn:aws:ivs:us-east-1:052524269538:channel/vIvvphhE1OJL".split("/")[1]
-
-    print("MediaConvert: Request received")
-
-    session = boto3.Session(
-        aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
-        aws_secret_access_key=AWS_SERVER_SECRET_KEY
-    )
-
-    s3 = session.client('s3')
-
-    response = s3.list_objects(
-        Bucket="mpc-capstone",
-        Prefix=f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{channelArn}"
-    )
-
-    max_date = response["Contents"][0]['LastModified']
-    max_file = ""
-    for file in response["Contents"]:
-        if (max_date - file["LastModified"]).days < 0:
-            max_date = file['LastModified']
-            max_file = file["Key"]
-
-    print(max_file)
-
-    split_file = max_file.split("/")
-    prefix = "/".join(split_file[:10])
-    print(prefix)
-
-    prefix += "/media/hls/"
-
-    resolution_key_map = {}
-    for file in response["Contents"]:
-        if file["Key"][-len(".ts"):] == ".ts" and file["Key"][:len(prefix)] == prefix:
-            split_file = file["Key"].split("/")
-            if split_file[12] not in resolution_key_map:
-                resolution_key_map[split_file[12]] = [file["Key"]]
-            else:
-                resolution_key_map[split_file[12]].append(file["Key"])
-    print(resolution_key_map)
-    resolution_key_map_sort = {}
-    for key in resolution_key_map:
-        resolution_key_map_sort[int(key.split("p")[0])] = resolution_key_map[key]
-
-    print(resolution_key_map_sort)
-
-    max_key = max(resolution_key_map_sort.keys())
-    print(max_key)
-    print(resolution_key_map_sort[max_key])
-
-    if len(resolution_key_map_sort[max_key]) > 0:
-        resolution_key_map_sort[max_key].pop()
-
-    file_number_map = {}
-    for file in resolution_key_map_sort[max_key]:
-        splitted = file.split("/")
-        file_number_map[int(splitted[-1].split(".")[0])] = file
-
-    keys_sorted = list(file_number_map.keys())
-
-    keys_sorted.sort()
-
-    stream_files = []
-
-    for key in keys_sorted:
-        stream_files.append(file_number_map[key])
-
-    split_prefix = prefix.split("/")
-    key = f"{split_prefix[3]}/{'-'.join(split_prefix[4:10])}"
-
-    print("MediaConvert: Converting " + key)
