@@ -20,7 +20,7 @@ public class Camera implements Displayable_Setting{
         return 2;
     }
 
-    public Attribute[] get_attributes(){
+    public Attribute[] get_edit_attributes(){
         Attribute[] attributes = new Attribute[]{
                 new Title(name) {
                     @Override
@@ -30,6 +30,16 @@ public class Camera implements Displayable_Setting{
                 }
         };
         return attributes;
+    }
+
+    @Override
+    public String get_display_text() {
+        return null;
+    }
+
+    @Override
+    public boolean includes_duplicate(Displayable_Setting setting) {
+        return false;
     }
 
     public static ArrayList<String> names (ArrayList<Camera> cameras) {
