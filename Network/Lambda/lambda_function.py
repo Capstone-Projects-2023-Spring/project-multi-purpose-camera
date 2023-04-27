@@ -470,6 +470,12 @@ def hardware_insert(event, pathPara, queryPara):
     return json_payload({"hardware": Hardware.list_object_to_dict_list(hardware)})
 
 
+@api.handle("/hardware/add", httpMethod=MPC_API.DELETE)
+def file_all(event, pathPara, queryPara):
+    # TODO
+
+    return
+
 @api.handle("/hardware/register", httpMethod=MPC_API.PUT)
 def hardware_insert(event, pathPara, queryPara):
     """Inserts new rows into the hardware table based on account id"""
@@ -881,7 +887,7 @@ def send_email(event, pathPara, queryPara):
 
 
 @api.handle("/file/all", httpMethod=MPC_API.POST)
-def get_recording_videos(event, pathPara, queryPara):
+def file_all(event, pathPara, queryPara):
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
         return json_payload({"message": "Account does not exist"})
@@ -914,6 +920,12 @@ def get_recording_videos(event, pathPara, queryPara):
                 "thumbnail": video_retriever.pre_signed_url_get(video_retriever.get_thumbnail_key(f), 3600)
             } for f in files]
     })
+
+    @api.handle("/file/add", httpMethod=MPC_API.DELETE)
+    def file_all(event, pathPara, queryPara):
+        # TODO
+
+        return
 
 
 if __name__ == "__main__":
