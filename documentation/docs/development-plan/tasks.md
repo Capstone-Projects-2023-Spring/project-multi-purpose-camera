@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2Brainstorming
+sidebar_position: 2
 ---
 
 # Tasks
