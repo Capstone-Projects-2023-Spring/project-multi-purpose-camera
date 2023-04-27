@@ -14,11 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.layout_version.Account.Account;
 import com.example.layout_version.Library_Video;
+import com.example.layout_version.MainTab.Streaming.ChannelItem;
+import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
@@ -50,13 +56,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
             });
 
-            optionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Toast.makeText(v.getContext(), "Item deleted successfully", Toast.LENGTH_SHORT).show();
-                    showAlertDialog(v);
-                }
-            });
+
         }
         public View getView()
         {
@@ -69,33 +69,42 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         public TextView getTitleView() {
             return titleView;
         }
-//        public TextView getDescriptionView() {
-//            return descriptionView;
-//        }
+        public ImageView getOptionButton(){
+            return optionButton;
+        }
 
 
     }
 
-    private static void showAlertDialog(View v)
+    private void showAlertDialog(View v, VideoItem item, int position)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-
+        NetworkRequestManager nrm = new NetworkRequestManager(v.getContext());
         builder.setTitle("Delete?");
         builder.setMessage("Are you sure you want to delete?");
 
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                Toast.makeText(v.getContext(), "Item deleted successfully", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
+        builder.setPositiveButton("Yes", (dialog, i) -> {
+            Toast.makeText(v.getContext(), "Deleting item", Toast.LENGTH_SHORT).show();
+            String token = Account.getInstance().getTokenData().getValue();
+            if(token == null)
+                ;
+            else{
+                JSONObject jsonObject = new JSONObject(Map.of("token", token, "file_name", item.getTitle()));
+                v.setVisibility(View.INVISIBLE);
+                nrm.Post(R.string.file_delete_endpoint, jsonObject,
+                        json -> {
+                            removeAt(position);
+                            Toast.makeText(v.getContext(), "Item removed", Toast.LENGTH_SHORT).show();
+                        },
+                        json -> {
+                            Toast.makeText(v.getContext(), "Failed to remove item", Toast.LENGTH_SHORT).show();
+                            v.setVisibility(View.VISIBLE);
+                        });
             }
+
+            dialog.dismiss();
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                dialog.dismiss();
-            }
-        });
+        builder.setNegativeButton("No", (dialog, i) -> dialog.dismiss());
         builder.create().show();
     }
 
@@ -143,11 +152,22 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                     .load(thumbnailUrl)
                     .into(viewHolder.getVideoThumbnailImageView());
         }
+
+        viewHolder.getOptionButton().setOnClickListener(v -> {
+            //Toast.makeText(v.getContext(), "Item deleted successfully", Toast.LENGTH_SHORT).show();
+            showAlertDialog(viewHolder.getView(), localDataSet.get(position), position);
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return localDataSet.size();
+    }
+
+    public void removeAt(int position) {
+        localDataSet.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, localDataSet.size());
     }
 }
