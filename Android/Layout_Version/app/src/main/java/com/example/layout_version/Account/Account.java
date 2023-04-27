@@ -33,7 +33,7 @@ public class Account {
 //    private TokenChangeInterface tokenChangeInterface
     private Notifications notif = Notifications.getInstance();
     private MainActivity notif2 = new MainActivity();
-    NotificationManagerCompat managerCompat = notif2.getManagerCompat();
+    private NotificationManagerCompat managerCompat = notif2.getManagerCompat();
 
     private Account(){
         tokenData = new MutableLiveData<>();
