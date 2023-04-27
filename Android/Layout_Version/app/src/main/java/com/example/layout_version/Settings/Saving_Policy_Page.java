@@ -23,47 +23,8 @@ import com.example.layout_version.View_Factory;
 import java.util.ArrayList;
 
 public class Saving_Policy_Page extends AppCompatActivity {
-    ArrayList<Saving_Policy> current_saving_policies;
+    public static ArrayList<Displayable_Setting> displayed_policies;
     boolean data_saved = false;
-
-    public static ArrayList<Saving_Policy> is_policies_valid(ArrayList<Saving_Policy> current_saving_policies){
-        System.out.println("policies: ");
-        for(int i = 0; i < current_saving_policies.size(); i++){
-            System.out.println(current_saving_policies.get(i));
-        }
-        //unique policy: resolution, camera
-        for(int saving_policy = 0; saving_policy < current_saving_policies.size(); saving_policy++){
-            Saving_Policy temp = current_saving_policies.get(saving_policy);
-            Resolution resolution = temp.get_resolution();
-            ArrayList<Camera> cameras = temp.get_cameras();
-            for(int camera_index = 0; camera_index < cameras.size(); camera_index++){
-                Camera camera = cameras.get(camera_index);
-                Saving_Policy duplicate = has_camera_resolution(current_saving_policies, camera, resolution, saving_policy + 1);
-                if(duplicate != null){
-                    ArrayList<Saving_Policy> list = new ArrayList<>();
-                    list.add(temp);
-                    list.add(duplicate);
-                    return list;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static Saving_Policy has_camera_resolution(ArrayList<Saving_Policy> current_saving_policies, Camera camera, Resolution resolution, int start){
-        System.out.println("is there: " + camera + ", " + resolution + ", after " + start);
-        for(int i = start; i < current_saving_policies.size(); i++){
-            Saving_Policy policy = current_saving_policies.get(i);
-            if(policy.get_resolution().equals(resolution)){
-                if(policy.get_cameras().contains(camera)){
-                    System.out.println("yes");
-                    return policy;
-                }
-            }
-        }
-        System.out.println("no");
-        return null;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,21 +40,26 @@ public class Saving_Policy_Page extends AppCompatActivity {
 
     }
     void setup_view(){
-        if(current_saving_policies == null){
-            current_saving_policies = BackEnd.main.get_savings();
+        if(displayed_policies == null){
+            throw new RuntimeException();
         }
         System.out.println("setting up saving_policy page: ");
-        System.out.println("\n\npolicies: " + current_saving_policies.size());
-        for(int i = 0; i < current_saving_policies.size(); i++){
-            System.out.println(current_saving_policies.get(i).get_display_text());
+        System.out.println("\n\npolicies: " + displayed_policies.size());
+        for(int i = 0; i < displayed_policies.size(); i++){
+            System.out.println(displayed_policies.get(i).get_display_text());
         }
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.saving_vertical_layout_title);
         LinearLayout linearLayout_policies = (LinearLayout)findViewById(R.id.saving_policies_container);
-        ArrayList<String> policies;
-
-        policies = Saving_Policy.list_to_string(current_saving_policies);
         linearLayout_policies.removeAllViews();
-        add_policies_using_template(linearLayout_policies, policies);
+        add_policies_using_template(linearLayout_policies);
+    }
+
+    public ArrayList<String> list_to_string(ArrayList<Displayable_Setting> settings){
+        ArrayList<String> strings = new ArrayList<>();
+        for(int i = 0; i < settings.size(); i++) {
+            strings.add(settings.get(i).get_display_text());
+        }
+        return strings;
     }
 
     protected void onStart(){
@@ -101,36 +67,36 @@ public class Saving_Policy_Page extends AppCompatActivity {
         setup_view();
     }
 
-    public boolean save_data(){
-        ArrayList<Saving_Policy> to_add = new ArrayList<>();
-        ArrayList<Saving_Policy> to_delete = new ArrayList<>();
-
-        BackEnd.main.get_different_saving(current_saving_policies, to_delete, to_add);
-        data_saved = false;
-        try {
-            Thread.sleep(2000);
-        } catch(InterruptedException e) {
-            // Process exception
-        }
-        BackEnd old = BackEnd.main;
-        BackEnd new_data = new BackEnd(old.get_cameras(), current_saving_policies, old.get_notifications());
-        BackEnd.main = new_data;
-        data_saved = false;
-        System.out.println("\n\nto add: " + to_add.size());
-        for(int i = 0; i < to_add.size(); i++){
-            System.out.println(to_add.get(i).get_display_text());
-        }
-        System.out.println("\n\nto delete: " + to_delete.size());
-        for(int i = 0; i < to_delete.size(); i++){
-            System.out.println(to_delete.get(i).get_display_text());
-        }
-        if(!database_delete_policies(to_delete))
-            return false;
-
-        if (!database_add_policies(to_add))
-            return false;
-        return true;
-    }
+//    public boolean save_data(){
+//        ArrayList<Saving_Policy> to_add = new ArrayList<>();
+//        ArrayList<Saving_Policy> to_delete = new ArrayList<>();
+//
+//        BackEnd.main.get_different_saving(displayed_policies, to_delete, to_add);
+//        data_saved = false;
+//        try {
+//            Thread.sleep(2000);
+//        } catch(InterruptedException e) {
+//            // Process exception
+//        }
+//        BackEnd old = BackEnd.main;
+//        BackEnd new_data = new BackEnd(old.get_cameras(), displayed_policies, old.get_notifications());
+//        BackEnd.main = new_data;
+//        data_saved = false;
+//        System.out.println("\n\nto add: " + to_add.size());
+//        for(int i = 0; i < to_add.size(); i++){
+//            System.out.println(to_add.get(i).get_display_text());
+//        }
+//        System.out.println("\n\nto delete: " + to_delete.size());
+//        for(int i = 0; i < to_delete.size(); i++){
+//            System.out.println(to_delete.get(i).get_display_text());
+//        }
+//        if(!database_delete_policies(to_delete))
+//            return false;
+//
+//        if (!database_add_policies(to_add))
+//            return false;
+//        return true;
+//    }
 
     public boolean database_delete_policies(ArrayList<Saving_Policy> policies){
         for(int i = 0; i < policies.size(); i++){
@@ -159,7 +125,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        ArrayList<Saving_Policy> duplicate = is_policies_valid(current_saving_policies);
+        ArrayList<Displayable_Setting> duplicate = BackEnd.main.return_duplicates(displayed_policies);
         if(duplicate != null){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Cannot save duplicate");
@@ -173,6 +139,12 @@ public class Saving_Policy_Page extends AppCompatActivity {
 
                     // User chose to save and exit, call the superclass onBackPressed() method to exit the activity
 
+                }
+            });
+            builder.setPositiveButton("Discard", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Saving_Policy_Page.super.onBackPressed();
                 }
             });
             AlertDialog alertDialog = builder.create();
@@ -205,8 +177,8 @@ public class Saving_Policy_Page extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             // Save your data here
-            boolean saved=  save_data();
-            data_saved = saved;
+            //boolean saved=  save_data();
+            //data_saved = saved;
             return null;
         }
 
@@ -227,6 +199,7 @@ public class Saving_Policy_Page extends AppCompatActivity {
 
         }
     }
+
     private void show_saving_error_dialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Exit");
@@ -281,17 +254,18 @@ public class Saving_Policy_Page extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void add_policies_using_template(LinearLayout linearLayout, ArrayList<String> policies){
-        for(int i = 0; i < policies.size(); i++){
+    public void add_policies_using_template(LinearLayout linearLayout){
+        System.out.println("adding polciies using template");
+        for(int i = 0; i < displayed_policies.size(); i++){
             int finalI = i;
-            Saving_Policy policy = current_saving_policies.get(finalI);
+            Displayable_Setting policy = displayed_policies.get(finalI);
             ConstraintLayout policy_layout = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.title_and_description_template, null);
             policy_layout.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     Edit_Saving_Policy_Page.current_policy = policy;
-                    Edit_Saving_Policy_Page.policy_list = current_saving_policies;
+                    Edit_Saving_Policy_Page.policy_list = displayed_policies;
                     Intent intent = new Intent (Saving_Policy_Page.this,Edit_Saving_Policy_Page.class);
                     startActivity(intent);
                 }
@@ -299,13 +273,15 @@ public class Saving_Policy_Page extends AppCompatActivity {
 
             LinearLayout inner_layout = (LinearLayout) ((ConstraintLayout) policy_layout.getChildAt(0)).getChildAt(0);
 
-            String[] tokens = policies.get(i).split("\n");
+            String text = policy.get_display_text();
+            String[] tokens = text.split("\n");
             TextView title = (TextView) inner_layout.getChildAt(0);
             TextView time = (TextView) inner_layout.getChildAt(2);
             TextView second = (TextView) inner_layout.getChildAt(4);
 
             title.setText(tokens[0]);
             time.setText(tokens[1]);
+            second.setText(tokens[2]);
 
             linearLayout.addView(policy_layout);
         }

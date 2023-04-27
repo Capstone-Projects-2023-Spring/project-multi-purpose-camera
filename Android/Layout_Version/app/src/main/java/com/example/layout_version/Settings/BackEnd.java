@@ -77,6 +77,25 @@ public class BackEnd {
         main = new BackEnd(cameras, savings, notifications);
     }
 
+    public ArrayList<Displayable_Setting> return_duplicates(ArrayList<Displayable_Setting> policies){
+        System.out.println("policies: ");
+        for(int i = 0; i < policies.size(); i++){
+            System.out.println(policies.get(i));
+        }
+        //unique policy: resolution, camera
+        for(int i = 0; i < policies.size(); i++){
+            for(int dup = i; dup < policies.size(); dup++){
+                if(policies.get(i).includes_duplicate(policies.get(dup))){
+                    ArrayList<Displayable_Setting> dups = new ArrayList<>();
+                    dups.add(policies.get(i));
+                    dups.add(policies.get(dup));
+                    return policies;
+                }
+            }
+        }
+        return null;
+    }
+
 
     public Camera name_to_camera(String name){
         Camera chosen_camera = null;

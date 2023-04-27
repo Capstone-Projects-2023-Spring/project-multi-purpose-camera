@@ -26,6 +26,7 @@ public class Saving_Policy implements Displayable_Setting{
     private Saving_Policy old;
 
     public void set_max_time(int time){
+        System.out.println("set_max_time called: " + time);
         if(!edited())
             set_edited();
         max_time = time;
@@ -104,6 +105,19 @@ public class Saving_Policy implements Displayable_Setting{
         return camera_string + "\n" + max_time + " minutes" + "\n" + resolution;
     }
 
+    public boolean includes_duplicate(Displayable_Setting setting){
+        Saving_Policy temp = (Saving_Policy) setting;
+        if(temp.get_resolution() != resolution)
+            return false;
+        ArrayList<Camera> temp_cameras = temp.get_cameras();
+        for(int camera_index = 0; camera_index < cameras.size(); camera_index++){
+            Camera camera = cameras.get(camera_index);
+            if(temp_cameras.contains(camera))
+                return true;
+        }
+        return false;
+    }
+
     public String toString(){
         return get_display_text();
     }
@@ -140,10 +154,10 @@ public class Saving_Policy implements Displayable_Setting{
 
 
     @Override
-    public Attribute[] get_attributes() {
-        ArrayList<Object> resolution_objects = new ArrayList<>();
+    public Attribute[] get_edit_attributes() {
+        ArrayList<String> resolution_objects = new ArrayList<>();
         for (int i = 0; i < Resolution.resolutions.size(); i++) {
-            resolution_objects.add(Resolution.resolutions.get(i));
+            resolution_objects.add(Resolution.resolutions.get(i).name);
         }
 
         Attribute[] attributes = new Attribute[cameras.size() + 3];
@@ -170,15 +184,15 @@ public class Saving_Policy implements Displayable_Setting{
         attributes[attributes.length - 2] = new Number(max_time) {
             @Override
             public void set(Object object) {
-                this_policy.set_max_time((Integer)max_time);
+                this_policy.set_max_time((Integer)object);
             }
         };
-        attributes[attributes.length - 1] = new Drop_Down_Attribute(resolution, resolution_objects) {
+        attributes[attributes.length - 1] = new Drop_Down_Attribute(resolution.name, resolution_objects) {
             @Override
             public void set(Object object) {
-                this_policy.set_resolution((Resolution) object);
+                Resolution res = Resolution.name_to_resolution(object.toString());
+                this_policy.set_resolution(res);
             }
-
         };
         return attributes;
     }

@@ -20,6 +20,8 @@ import com.example.layout_version.Bluetooth_Page;
 import com.example.layout_version.MainActivity;
 import com.example.layout_version.R;
 
+import java.util.ArrayList;
+
 
 public class Settings extends AppCompatActivity {
 
@@ -38,6 +40,7 @@ public class Settings extends AppCompatActivity {
         back_home_txt = (TextView) findViewById(R.id.back_home_text_setting);
 
         TextView saving_policy = (TextView) findViewById(R.id.cloud_saving_settings);
+        TextView notification_policy = (TextView) findViewById(R.id.notification_settings);
         TextView bluetooth = (TextView) findViewById(R.id.bluetooth_settings);
 
         LinearLayout accountLayout = findViewById(R.id.account_layout);
@@ -56,6 +59,25 @@ public class Settings extends AppCompatActivity {
         saving_policy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<Saving_Policy> temp_policies = BackEnd.main.get_savings();
+                ArrayList<Displayable_Setting> policies = new ArrayList<>();
+                for(int i = 0; i < temp_policies.size(); i++){
+                    policies.add(temp_policies.get(i));
+                }
+                Saving_Policy_Page.displayed_policies = policies;
+                Intent intent = new Intent (Settings.this, Saving_Policy_Page.class);
+                startActivity(intent);
+            }
+        });
+        notification_policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Notification_Policy> temp_policies = BackEnd.main.get_notifications();
+                ArrayList<Displayable_Setting> policies = new ArrayList<>();
+                for(int i = 0; i < temp_policies.size(); i++){
+                    policies.add(temp_policies.get(i));
+                }
+                Saving_Policy_Page.displayed_policies = policies;
                 Intent intent = new Intent (Settings.this, Saving_Policy_Page.class);
                 startActivity(intent);
             }

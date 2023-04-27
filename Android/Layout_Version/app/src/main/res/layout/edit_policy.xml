@@ -44,15 +44,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/spacer1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:text="_____________________ Camera _____________________" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/saving_constraint_layout_saving_policy"
                     android:layout_width="match_parent"
@@ -60,16 +51,14 @@
                     android:layout_weight="1">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="50dp"
+                        android:layout_marginStart="50dp"
                         android:layout_marginTop="25dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
                         android:background="@drawable/round_rectangle_cyan_16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
@@ -92,7 +81,6 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -102,17 +90,15 @@
                     android:layout_weight="1">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="50dp"
+                        android:layout_marginStart="50dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
                         android:alpha="0.5"
                         android:background="@drawable/round_rectangle_cyan_16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
@@ -138,14 +124,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/spacer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:text="_______________________ Time _______________________" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/edit_policy_time_layout"
                     android:layout_width="match_parent"
@@ -153,16 +131,14 @@
                     android:layout_weight="1">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="50dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
                         android:background="@drawable/round_rectangle_cyan_16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
@@ -202,16 +178,14 @@
                     android:layout_weight="1">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="50dp"
+                        android:layout_marginStart="50dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
                         android:background="@drawable/round_rectangle_cyan_16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
