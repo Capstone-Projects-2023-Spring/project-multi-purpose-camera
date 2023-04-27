@@ -56,7 +56,7 @@ public class Notifications {
     public void send_Delete_Notification() {
         send_Notification(managerCompat, "Deleted", "Information from your account has been deleted");
     }
-    public void send_Stream_Notification( NotificationManagerCompat managerCompat ) {
+    public void send_Stream_Notification() {
         send_Notification(managerCompat, "Stream Started", "You have started streaming");
     }
     public static synchronized Notifications getInstance(Context c)

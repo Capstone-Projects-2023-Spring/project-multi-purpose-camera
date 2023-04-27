@@ -245,8 +245,4 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             return null;
         }
     }
-    public NotificationManagerCompat getManagerCompat(){
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        return managerCompat;
-    }
 }
