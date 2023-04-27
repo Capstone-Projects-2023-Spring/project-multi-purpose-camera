@@ -470,40 +470,35 @@ def hardware_insert(event, pathPara, queryPara):
     return json_payload({"hardware": Hardware.list_object_to_dict_list(hardware)})
 
 
-@api.handle("/hardware/delete", httpMethod=MPC_API.DELETE)
+@api.handle("/hardware/delete", httpMethod=MPC_API.POST)
 def hardware_delete(event, pathPara, queryPara):
     body = event["body"]
-    if not database.verify_fields_by_joins(Account,
-                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
-                                         Account.EXPLICIT_ID),
-                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
-                                         Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
-                                       [(Account.TOKEN, body[Account.TOKEN]),
-                                        (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+    id_a = database.get_field_by_field(Account, Account.ID, Account.TOKEN, body[Account.TOKEN])
+    id_h = database.get_field_by_field(Hardware, Hardware.ID, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
+    if id_a is None or id_h is None:
         return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
 
-    hardware: list[Hardware] = database.get_all_by_joins(Hardware,
-                                                         [(Account_has_Hardware,
-                                                           Account_has_Hardware.EXPLICIT_HARDWARE_ID,
-                                                           Hardware.EXPLICIT_ID),
-                                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
-                                                           Account.EXPLICIT_ID)],
-                                                         [(Account.TOKEN, body[Account.TOKEN])])
-    if len(hardware) > 1:
-        # TODO
-        database.delete_by_fields(Account_has_Hardware, [()])
-    # channelId/year-month-date-hour-minute-id
-    file_name = event["body"][Recording.NAME]
+    account_hardware_ids = database.get_all_by_hardware_id(Account_has_Hardware, id_h)
+    if len(account_hardware_ids) > 1:
+        database.delete_by_fields(Account_has_Hardware, [
+            (Account_has_Hardware.ACCOUNT_ID, id_a), (Account_has_Hardware.EXPLICIT_HARDWARE_ID, id_h)])
+        return json_payload({"message": "deleted channel"})
+    else:
+        hardware: Hardware = database.get_by_id(Hardware, id_h)
+        arn = hardware.arn
+        channel_id = arn.split("/")[1]
+        converted_prefix = f"{settings.CONVERTED}/{channel_id}"
+        stream_prefix = f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{channel_id}"
 
-    converted_key = f"{settings.CONVERTED}/{file_name}/0.mp4"
-    stream_prefix = f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{file_name.replace('-', '/')}/"
+        videoRetreiver = VideoRetriever(settings.BUCKET)
+        converted_files = videoRetreiver.get_under_directory(converted_prefix)
+        stream_files = videoRetreiver.get_under_directory(stream_prefix)
+        delete_files = converted_files + stream_files
+        database.delete_by_fields(Account_has_Hardware, [
+            (Account_has_Hardware.ACCOUNT_ID, id_a), (Account_has_Hardware.EXPLICIT_HARDWARE_ID, id_h)])
+        database.delete_by_fields(Hardware, [(Hardware.ID, id_h)])
 
-    videoRetreiver = VideoRetriever(settings.BUCKET)
-    stream_files = videoRetreiver.get_under_directory(stream_prefix)
-
-    delete_files = [converted_key] + stream_files
-
-    return json_payload({"deleted": videoRetreiver.delete_keys(delete_files)})
+        return json_payload({"deleted": videoRetreiver.delete_keys(delete_files)})
 
 
 @api.handle("/hardware/register", httpMethod=MPC_API.PUT)
@@ -952,7 +947,7 @@ def file_all(event, pathPara, queryPara):
     })
 
 
-@api.handle("/file/delete", httpMethod=MPC_API.DELETE)
+@api.handle("/file/delete", httpMethod=MPC_API.POST)
 def file_delete(event, pathPara, queryPara):
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
@@ -973,60 +968,22 @@ def file_delete(event, pathPara, queryPara):
 
 
 if __name__ == "__main__":
-    # database.insert(Notification(10000, criteria_id=3), ignore=True)
-
-    event = {
-        "resource": "/file/delete",
-        "httpMethod": MPC_API.DELETE,
-        "body": """{
-            "username": "John Smith",
-            "password": "Password",
-            "email": "default@temple.edu",
-            "code": "658186",
-            "token": "4e590dc96af3abea28b8955d59409087",
-            "file_name": "vIvvphhE1OJL/2023-4-27-17-35-t0QjMMgqDKRm"
-        }"""
-    }
-    response = lambda_handler(event, None)
-    # token = json.loads(response["body"])["token"]
-    print(response)
-    # #
-    # token = "abe5af3cbc47c47b803ade26be8807a0"
     # event = {
-    #     "resource": "/file/all",
-    #     "httpMethod": MPC_API.POST,
-    #     "body": "{\"token\":\"" + token + "\"}",
-    #     "pathParameters": {
-    #         "key": "sample.txt"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
+    #     "resource": "/hardware/delete",
+    #     "httpMethod": MPC_API.DELETE,
+    #     "body": """{
+    #         "username": "John Smith",
+    #         "password": "Password",
+    #         "email": "default@temple.edu",
+    #         "code": "658186",
+    #         "token": "a787d4477f1d74512e97df5185ef229d",
+    #         "file_name": "vIvvphhE1OJL/2023-4-27-17-35-t0QjMMgqDKRm",
+    #         "device_id": "06eb485809c8f0ca2569fbe530bacd0d"
+    #     }"""
     # }
     # response = lambda_handler(event, None)
-    #
+    # # token = json.loads(response["body"])["token"]
     # print(response)
-    # database.insert(Account_has_Hardware(18, 36))
-    # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
-    # # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
-    #
-    #
-    # recording = database.get_all(Recording)
-    # for r in recording:
-    #     print(r)
 
-    # session = boto3.Session(
-    #     aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
-    #     aws_secret_access_key=AWS_SERVER_SECRET_KEY
-    # )
-    #
-    # s3 = session.client("s3")
-    #
-    # channelArn = "HCBh4loJzOvw"
-    # response = s3.list_objects(
-    #     Bucket="mpc-capstone",
-    #     Prefix=f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{channelArn}"
-    # )
-    #
-    # keys = [f["Key"] for f in response["Contents"]]
-    #
+    database.insert(Account_has_Hardware(18, 53))
+    a = 1
