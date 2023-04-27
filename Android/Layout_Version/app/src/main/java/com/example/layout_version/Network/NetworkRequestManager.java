@@ -36,7 +36,7 @@ public class NetworkRequestManager {
     private final RequestQueue mRequestQueue;
     private final Context context;
 
-    private Notifications notif;
+    private Notifications notif = Notifications.getInstance();
 
     private NotificationManagerCompat managerCompat;
 
@@ -44,7 +44,6 @@ public class NetworkRequestManager {
     {
         this.context = context;
         mRequestQueue = Volley.newRequestQueue(context);
-        notif = new Notifications(context);
         managerCompat = NotificationManagerCompat.from(context);
     }
 

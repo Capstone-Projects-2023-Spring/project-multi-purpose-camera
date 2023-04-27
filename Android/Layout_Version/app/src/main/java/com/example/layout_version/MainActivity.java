@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
 
     private boolean videoDetailViewFlag;
 
+    private static MainActivity single_instance = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,5 +245,8 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             return null;
         }
     }
-
+    public NotificationManagerCompat getManagerCompat(){
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        return managerCompat;
+    }
 }

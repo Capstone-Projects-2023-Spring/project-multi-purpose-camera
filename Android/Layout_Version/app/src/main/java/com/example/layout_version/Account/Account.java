@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.layout_version.MainActivity;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.Notifications;
 import com.example.layout_version.R;
@@ -31,6 +32,8 @@ public class Account {
 
     private Notifications notif = Notifications.getInstance();
 //    private TokenChangeInterface tokenChangeInterface
+    private MainActivity notif2 = new MainActivity();
+    NotificationManagerCompat managerCompat = notif2.getManagerCompat();
 
     private Account(){
         tokenData = new MutableLiveData<>();
@@ -160,6 +163,7 @@ public class Account {
                         fail.action();
                     }
                 });
+        notif.send_New_Account_Notification( managerCompat );
     }
 
     public void signin(Context context, String username, String password,
@@ -195,6 +199,7 @@ public class Account {
                     }
                 }
         );
+        notif.send_Sign_In_Notification( managerCompat );
     }
 
 
@@ -297,6 +302,7 @@ public class Account {
                     }
                 }
         );
+        notif.send_Password_Change_Notification( managerCompat );
     }
 
     public void delete(Context context, AccountActionInterface success, AccountActionInterface fail)
@@ -333,6 +339,7 @@ public class Account {
                         fail.action();
                     }
                 });
+        notif.send_Delete_Notification( managerCompat );
     }
 
 
