@@ -197,7 +197,7 @@ class MPCDatabase:
             print("[Error   ]: {}".format(err), file=sys.stderr)
             raise err
 
-    def delete(self, table_class, condition_item: MatchItem):
+    def delete(self, table_class, condition_items: list[MatchItem]):
         """
            Deletes the information in the table
 
@@ -209,7 +209,7 @@ class MPCDatabase:
            Returns:
            None
        """
-        script = f"Delete From {table_class.__name__} Where {condition_item.key} = {condition_item.value}"
+        script = f"Delete From {table_class.__name__} Where {'and'.join([f'{i.key} = {i.value}' for i in condition_items])}"
         if "delete" not in script.lower():
             raise TypeError("Delete should only be delete")
         try:
@@ -794,7 +794,7 @@ class MPCDatabase:
         self.update(table_class, MatchItem(condition_tuple[0], condition_tuple[1]),
                     [MatchItem(item[0], item[1]) for item in update_list])
 
-    def delete_by_field(self, table_class, condition_field: tuple[str, str]):
+    def delete_by_fields(self, table_class, condition_fields: list[tuple[str, str]]):
         """
             Deletes the records by given fields
 
@@ -808,7 +808,7 @@ class MPCDatabase:
             Returns:
             None
         """
-        self.delete(table_class, MatchItem(condition_field[0], condition_field[1]))
+        self.delete(table_class, [MatchItem(i[0], i[1]) for i in condition_fields])
 
     def varidate_timestamp(self, table_name, field: str, value: str) -> bool:
         """
@@ -997,7 +997,7 @@ if __name__ == "__main__":
     print(database.get_field_by_name(Account, Account.TOKEN, "Keita Nakashima"))
     print(max)
 
-    database.delete(Account, MatchItem(Account.NAME, "username"))
+    database.delete(Account, [MatchItem(Account.NAME, "username")])
     print("Value" + str(database.get_field_by_name(Account, Account.ID, "username")))
 
     print(database.get_field_by_field(Account, Account.NAME, Account.EMAIL, "username1@email.com"))

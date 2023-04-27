@@ -24,7 +24,7 @@ cc = Criteria(5000, 500, 500)
 cw = Criteria(50000000, 500000, 500000)
 length = len([a.criteria_type for a in database.get_all(Criteria)])
 if length > 1 or length == 0:
-    database.delete(Criteria, MatchItem(Criteria.TYPE, cc.criteria_type))
+    database.delete(Criteria, [MatchItem(Criteria.TYPE, cc.criteria_type)])
     database.insert(cc, True)
 else:
      pass

@@ -152,21 +152,21 @@ def get_by_name(table_class, pathPara):
 
 def delete_by_id(table_class, pathPara):
     """Deletes information based on the specified id"""
-    database.delete_by_field(table_class, (table_class.ID, pathPara["id"]))
+    database.delete_by_fields(table_class, (table_class.ID, pathPara["id"]))
 
     return json_payload({})
 
 
 def delete_by_name(table_class, pathPara):
     """Deletes information from the database based on the specified name"""
-    database.delete_by_field(table_class, (table_class.NAME, pathPara["name"]))
+    database.delete_by_fields(table_class, (table_class.NAME, pathPara["name"]))
 
     return json_payload({})
 
 
 def delete_by_hardware_id(table_class, pathPara):
     """Deletes information from the database based on the specified hardware id"""
-    database.delete_by_field(table_class, (table_class.HARDWARE_ID, pathPara["hardware_id"]))
+    database.delete_by_fields(table_class, (table_class.HARDWARE_ID, pathPara["hardware_id"]))
 
     return json_payload({})
 
@@ -470,11 +470,41 @@ def hardware_insert(event, pathPara, queryPara):
     return json_payload({"hardware": Hardware.list_object_to_dict_list(hardware)})
 
 
-@api.handle("/hardware/add", httpMethod=MPC_API.DELETE)
-def file_all(event, pathPara, queryPara):
-    # TODO
+@api.handle("/hardware/delete", httpMethod=MPC_API.DELETE)
+def hardware_delete(event, pathPara, queryPara):
+    body = event["body"]
+    if not database.verify_fields_by_joins(Account,
+                                       [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                         Account.EXPLICIT_ID),
+                                        (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
+                                         Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+                                       [(Account.TOKEN, body[Account.TOKEN]),
+                                        (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+        return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
 
-    return
+    hardware: list[Hardware] = database.get_all_by_joins(Hardware,
+                                                         [(Account_has_Hardware,
+                                                           Account_has_Hardware.EXPLICIT_HARDWARE_ID,
+                                                           Hardware.EXPLICIT_ID),
+                                                          (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+                                                           Account.EXPLICIT_ID)],
+                                                         [(Account.TOKEN, body[Account.TOKEN])])
+    if len(hardware) > 1:
+        # TODO
+        database.delete_by_fields(Account_has_Hardware, [()])
+    # channelId/year-month-date-hour-minute-id
+    file_name = event["body"][Recording.NAME]
+
+    converted_key = f"{settings.CONVERTED}/{file_name}/0.mp4"
+    stream_prefix = f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{file_name.replace('-', '/')}/"
+
+    videoRetreiver = VideoRetriever(settings.BUCKET)
+    stream_files = videoRetreiver.get_under_directory(stream_prefix)
+
+    delete_files = [converted_key] + stream_files
+
+    return json_payload({"deleted": videoRetreiver.delete_keys(delete_files)})
+
 
 @api.handle("/hardware/register", httpMethod=MPC_API.PUT)
 def hardware_insert(event, pathPara, queryPara):
