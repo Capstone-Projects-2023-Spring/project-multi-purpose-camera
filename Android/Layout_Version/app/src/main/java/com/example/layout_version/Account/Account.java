@@ -32,8 +32,6 @@ public class Account {
 
 //    private TokenChangeInterface tokenChangeInterface
     private Notifications notif = Notifications.getInstance();
-    private MainActivity notif2 = new MainActivity();
-    private NotificationManagerCompat managerCompat = notif2.getManagerCompat();
 
     private Account(){
         tokenData = new MutableLiveData<>();
@@ -163,7 +161,7 @@ public class Account {
                         fail.action();
                     }
                 });
-        notif.send_New_Account_Notification( managerCompat );
+        notif.send_New_Account_Notification();
     }
 
     public void signin(Context context, String username, String password,
@@ -199,7 +197,7 @@ public class Account {
                     }
                 }
         );
-        notif.send_Sign_In_Notification( managerCompat );
+        notif.send_Sign_In_Notification();
     }
 
 
@@ -302,7 +300,7 @@ public class Account {
                     }
                 }
         );
-        notif.send_Password_Change_Notification( managerCompat );
+        notif.send_Password_Change_Notification();
     }
 
     public void delete(Context context, AccountActionInterface success, AccountActionInterface fail)
@@ -339,7 +337,7 @@ public class Account {
                         fail.action();
                     }
                 });
-        notif.send_Delete_Notification( managerCompat );
+        notif.send_Delete_Notification();
     }
 
 

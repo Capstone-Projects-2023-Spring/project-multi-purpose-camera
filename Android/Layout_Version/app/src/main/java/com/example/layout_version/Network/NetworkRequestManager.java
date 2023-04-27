@@ -38,13 +38,10 @@ public class NetworkRequestManager {
 
     private Notifications notif = Notifications.getInstance();
 
-    private NotificationManagerCompat managerCompat;
-
     public NetworkRequestManager(Context context)
     {
         this.context = context;
         mRequestQueue = Volley.newRequestQueue(context);
-        managerCompat = NotificationManagerCompat.from(context);
     }
 
     public void Post(int endpointID, JSONObject data, NetworkInterface success, NetworkInterface fail)
@@ -76,6 +73,6 @@ public class NetworkRequestManager {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mRequestQueue.add(jsonRequest);
-        notif.send_Network_Connected_Notification( managerCompat);
+        notif.send_Network_Connected_Notification();
     }
 }

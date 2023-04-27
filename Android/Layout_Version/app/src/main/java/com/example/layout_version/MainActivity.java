@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
         }
         Notifications notif = Notifications.getInstance(this);
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        notif.send_Recording_Notification( managerCompat);
-        notif.send_New_Account_Notification( managerCompat);
-        notif.send_Motion_Detected_Notification( managerCompat);
+        notif.send_Recording_Notification();
+        notif.send_New_Account_Notification();
+        notif.send_Motion_Detected_Notification();
 
         try {
             Thread.sleep(2000);

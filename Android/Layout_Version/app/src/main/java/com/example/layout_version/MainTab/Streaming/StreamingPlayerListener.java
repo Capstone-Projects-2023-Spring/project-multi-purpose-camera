@@ -25,9 +25,7 @@ public class StreamingPlayerListener extends Player.Listener {
     private boolean autostart;
 
     private Notifications notif = Notifications.getInstance();
-    private MainActivity notif2 = new MainActivity();
 
-    private NotificationManagerCompat managerCompat = notif2.getManagerCompat();
 
 
 
@@ -63,7 +61,7 @@ public class StreamingPlayerListener extends Player.Listener {
 //        executor.shutdown();
 //        executing = false;
         loaded = true;
-        notif.send_Stream_Notification( managerCompat );
+        notif.send_Stream_Notification();
         switch (state) {
             case BUFFERING:
                 // player is buffering
