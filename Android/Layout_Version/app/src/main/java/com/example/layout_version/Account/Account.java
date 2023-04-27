@@ -30,8 +30,8 @@ public class Account {
     private String status;
     private MutableLiveData<String> tokenData;
 
-    private Notifications notif = Notifications.getInstance();
 //    private TokenChangeInterface tokenChangeInterface
+    private Notifications notif = Notifications.getInstance();
     private MainActivity notif2 = new MainActivity();
     NotificationManagerCompat managerCompat = notif2.getManagerCompat();
 
