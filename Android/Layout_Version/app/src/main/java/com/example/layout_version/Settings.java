@@ -36,8 +36,8 @@ public class Settings extends AppCompatActivity {
 
         LinearLayout saving_policy = findViewById(R.id.cloud_saving_layout);
         LinearLayout bluetooth = findViewById(R.id.bluetooth_layout);
-
         LinearLayout accountLayout = findViewById(R.id.account_layout);
+        LinearLayout livestreamLayout = findViewById(R.id.livestream_layout);
 
         accountLayout.setOnClickListener(view -> {
             Account account = Account.getInstance();
@@ -64,6 +64,11 @@ public class Settings extends AppCompatActivity {
                 Intent intent = new Intent (Settings.this,Bluetooth_Page.class);
                 startActivity(intent);
             }
+        });
+
+        livestreamLayout.setOnClickListener(view -> {
+            Intent intent = new Intent (Settings.this,LiveStreamActivity.class);
+            startActivity(intent);
         });
 
         back_home_im.setOnClickListener(new View.OnClickListener()

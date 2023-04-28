@@ -6,4 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".LiveStreamActivity">
 
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="409dp"
+        android:layout_height="657dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
