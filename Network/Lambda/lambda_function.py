@@ -968,22 +968,21 @@ def file_delete(event, pathPara, queryPara):
 
 
 if __name__ == "__main__":
-    # event = {
-    #     "resource": "/hardware/delete",
-    #     "httpMethod": MPC_API.DELETE,
-    #     "body": """{
-    #         "username": "John Smith",
-    #         "password": "Password",
-    #         "email": "default@temple.edu",
-    #         "code": "658186",
-    #         "token": "a787d4477f1d74512e97df5185ef229d",
-    #         "file_name": "vIvvphhE1OJL/2023-4-27-17-35-t0QjMMgqDKRm",
-    #         "device_id": "06eb485809c8f0ca2569fbe530bacd0d"
-    #     }"""
-    # }
-    # response = lambda_handler(event, None)
-    # # token = json.loads(response["body"])["token"]
-    # print(response)
+    event = {
+        "resource": "/hardware/delete",
+        "httpMethod": MPC_API.POST,
+        "body": """{
+            "username": "John Smith",
+            "password": "Password",
+            "email": "default@temple.edu",
+            "code": "658186",
+            "token": "f7af2efa2a0e81263b136664ca61e0d9",
+            "file_name": "vIvvphhE1OJL/2023-4-27-17-35-t0QjMMgqDKRm",
+            "device_id": "5f2a07aa327872954a00d28027549a94567b5b76dfefed03b9c9bc77"
+        }"""
+    }
+    response = lambda_handler(event, None)
+    # token = json.loads(response["body"])["token"]
+    print(response)
 
-    database.insert(Account_has_Hardware(18, 53))
     a = 1

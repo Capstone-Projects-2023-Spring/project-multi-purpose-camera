@@ -75,6 +75,8 @@ class VideoRetriever:
 
     def delete_keys(self, keys: list[str]):
         print([{"Key": v} for v in keys])
+        if len(keys) == 0:
+            return []
         response = self.s3.delete_objects(
             Bucket=self.bucket,
             Delete={

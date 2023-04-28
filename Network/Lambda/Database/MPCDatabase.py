@@ -209,7 +209,7 @@ class MPCDatabase:
            Returns:
            None
        """
-        script = f"Delete From {table_class.__name__} Where {'and'.join([f'{i.key} = {i.value}' for i in condition_items])}"
+        script = f"Delete From {table_class.__name__} Where {' and '.join([f'{i.key} = {i.value}' for i in condition_items])}"
         if "delete" not in script.lower():
             raise TypeError("Delete should only be delete")
         try:
