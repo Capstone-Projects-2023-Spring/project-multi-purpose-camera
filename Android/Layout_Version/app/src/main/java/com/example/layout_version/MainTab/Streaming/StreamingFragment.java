@@ -3,12 +3,16 @@ package com.example.layout_version.MainTab.Streaming;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +27,13 @@ import com.example.layout_version.MainTab.State.StateFragment;
 import com.example.layout_version.MainTab.Streaming.Recorder.Recorder;
 import com.example.layout_version.MainTab.Streaming.Recorder.RecordingState;
 import com.example.layout_version.MainTab.Streaming.Recorder.RecordingStateChangeListener;
+import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 public class StreamingFragment extends StateFragment<RecordingState> {
     private Context context;
@@ -153,6 +163,55 @@ public class StreamingFragment extends StateFragment<RecordingState> {
     public void showShareDialog()
     {
         View view = getActivity().getLayoutInflater().inflate(R.layout.device_share, null);
+        TextView codeText = view.findViewById(R.id.codeTextView);
+        EditText codeEditText = view.findViewById(R.id.codeEdit);
+        Button connectButton = view.findViewById(R.id.connectButton);
+        Button shareButton = view.findViewById(R.id.shareButton);
+
+        codeText.setVisibility(View.INVISIBLE);
+        codeEditText.setText("");
+
+        connectButton.setOnClickListener(view1 -> {
+            Log.e("Connect", "here");
+
+            Log.e("Share", "here");
+            NetworkRequestManager nrm = new NetworkRequestManager(context);
+            JSONObject jsonObject = new JSONObject(Map.of(
+                    "token", Account.getInstance().getTokenData().getValue(),
+                    "code", codeEditText.getText().toString()
+            ));
+            nrm.Post(R.string.device_code_endpoint, jsonObject,
+                    json -> {
+                        Toast.makeText(context, "Successfully connected device to account", Toast.LENGTH_SHORT).show();
+                    },
+                    json->{
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                    });
+        });
+
+        shareButton.setOnClickListener(view1 -> {
+            NetworkRequestManager nrm = new NetworkRequestManager(context);
+            JSONObject jsonObject = new JSONObject(Map.of(
+                    "token", Account.getInstance().getTokenData().getValue(),
+                    "device_id", streamingViewModel.getSelectedItem().getValue().getDeviceId()
+            ));
+            nrm.Post(R.string.device_share_endpoint, jsonObject,
+                    json -> {
+                        String code = null;
+                        try {
+                            code = json.getString("code");
+                            codeText.setText(code);
+                        } catch (JSONException e) {
+                            codeText.setText("Error");
+                        }
+                        codeText.setVisibility(View.VISIBLE);
+                    },
+                    json->{
+                        codeText.setText("Error");
+                        codeText.setVisibility(View.VISIBLE);
+                    });
+        });
+
         new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .show();
