@@ -6,8 +6,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.layout_version.MainTab.Library.VideoViewModel;
+import com.example.layout_version.Notifications;
 import com.example.layout_version.R;
 
 public class Account_Page extends AppCompatActivity {
@@ -36,7 +38,9 @@ public class Account_Page extends AppCompatActivity {
                         () -> {}
                 )
         );
-
+        Notifications notif = new Notifications(this);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        notif.send_Sign_In_Notification(managerCompat);
 //        loginbtn.setOnClickListener(view -> {
 //            startActivity(new Intent (Account_Page.this, Bluetooth_Page.class));
 //        });

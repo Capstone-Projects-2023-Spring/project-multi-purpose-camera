@@ -49,4 +49,10 @@ public class Notifications {
     public void send_Delete_Notification( NotificationManagerCompat managerCompat ) {
         send_Notification(managerCompat, "Deleted", "Information from your account has been deleted");
     }
+    public void send_Streaming_Notification( NotificationManagerCompat managerCompat ) {
+        send_Notification(managerCompat, "Stream Started!", "The system has started streaming");
+    }
+    public void send_Forgot_Password_Notification( NotificationManagerCompat managerCompat ) {
+        send_Notification(managerCompat, "Forgot Password", "Looks like you forgot your password. We got your back!");
+    }
 }
