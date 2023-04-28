@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -35,7 +36,11 @@ public class StreamingFragment extends StateFragment<RecordingState> {
     private ImageButton recordingButton;
     private ImageButton streamRefreshButton;
 
+    private ImageButton optionButton;
+    private ImageButton shareButton;
     private Recorder recorder;
+
+    private boolean optionFlag;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +64,11 @@ public class StreamingFragment extends StateFragment<RecordingState> {
         deviceStatusView = layout.findViewById(R.id.deviceStatusView);
         recordingButton = layout.findViewById(R.id.recordingButton);
         streamRefreshButton = layout.findViewById(R.id.streamRefreshButton);
+        optionButton = layout.findViewById(R.id.optionButton);
+        shareButton = layout.findViewById(R.id.shareButton);
         recorder = new Recorder(context, streamingViewModel);
+
+        hideOptions();
 
         return layout;
     }
@@ -87,6 +96,16 @@ public class StreamingFragment extends StateFragment<RecordingState> {
             update(streamingViewModel.getSelectedItem().getValue());
         });
 
+        optionButton.setOnClickListener(view1 -> {
+            if(optionFlag)
+                hideOptions();
+            else
+                showOptions();
+        });
+
+        shareButton.setOnClickListener(view1 -> {
+            showShareDialog();
+        });
     }
 
     public void update(@Nullable ChannelItem channel)
@@ -114,4 +133,30 @@ public class StreamingFragment extends StateFragment<RecordingState> {
         streamingPlayer.removeListener(playerListener);
         streamingPlayer.release();
     }
+
+    public void hideOptions()
+    {
+        optionFlag = false;
+        optionButton.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.baseline_vert_options_24));
+        recordingButton.setVisibility(View.INVISIBLE);
+        shareButton.setVisibility(View.INVISIBLE);
+    }
+
+    public void showOptions()
+    {
+        optionFlag = true;
+        optionButton.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.baseline_close_24));
+        recordingButton.setVisibility(View.VISIBLE);
+        shareButton.setVisibility(View.VISIBLE);
+    }
+
+    public void showShareDialog()
+    {
+        View view = getActivity().getLayoutInflater().inflate(R.layout.device_share, null);
+        new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .show();
+    }
+
+
 }
