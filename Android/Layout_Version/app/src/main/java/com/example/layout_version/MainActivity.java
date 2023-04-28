@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
+import com.example.layout_version.Bluetooth.BluetoothManager;
 import com.example.layout_version.MainTab.Library.LibraryFragment;
 import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
 import com.example.layout_version.MainTab.Library.VideoDetailFragment;
@@ -96,23 +97,23 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             startActivity(intent);
         }
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        MyAsyncTask database = new MyAsyncTask(() -> {
-            System.out.println("calling backend");
-            BackEnd.init();
-        });
-        try {
-            System.out.println("running async");
-            database.execute();
-            database.get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        MyAsyncTask database = new MyAsyncTask(() -> {
+//            System.out.println("calling backend");
+//            BackEnd.init();
+//        });
+//        try {
+//            System.out.println("running async");
+//            database.execute();
+//            database.get();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
 
         btn.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, Settings.class);
@@ -185,7 +186,6 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             libraryTabButton.setBackgroundColor(Color.parseColor("#ffffff"));
             cameraTabButton.setBackgroundColor(Color.parseColor("#c4fffd"));
         });
-
     }
 
     public void onBackPressed()
@@ -232,6 +232,42 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
                 .commit();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("debug","onStart()");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("debug","onRestart()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("debug","onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("debug","onPause()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("debug","onStop()");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("debug","onDestroy()");
+    }
+
 
     private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
         private Runnable task = null;
@@ -244,6 +280,21 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             task.run();
             return null;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("key", "value");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        String value = savedInstanceState.getString("key");
+        Log.d("Restore", value);
     }
 
 

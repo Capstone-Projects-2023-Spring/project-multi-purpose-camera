@@ -3717,7 +3717,9 @@ int string exposed_dropdown_menu_content_description 0x7f100033
 int string fab_transformation_scrim_behavior 0x7f100034
 int string fab_transformation_sheet_behavior 0x7f100035
 int string file_all_endpoint 0x7f100036
+int string file_delete_endpoint 0x7f1000b0
 int string hardware_all_endpoint 0x7f100037
+int string hardware_delete_endpoint 0x7f1000b1
 int string hello_blank_fragment 0x7f100038
 int string hide_bottom_view_on_scroll_behavior 0x7f100039
 int string icon_content_description 0x7f10003a

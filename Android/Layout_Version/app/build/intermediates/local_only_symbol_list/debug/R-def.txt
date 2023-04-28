@@ -206,7 +206,9 @@ string app_name
 string db_base_url
 string db_stage
 string file_all_endpoint
+string file_delete_endpoint
 string hardware_all_endpoint
+string hardware_delete_endpoint
 string hello_blank_fragment
 string is_recording_endpoint
 string recording_start

@@ -6,11 +6,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.amazonaws.ivs.player.Cue;
 import com.amazonaws.ivs.player.Player;
 import com.amazonaws.ivs.player.PlayerException;
 import com.amazonaws.ivs.player.Quality;
+import com.example.layout_version.Notifications;
 import com.example.layout_version.R;
 
 public class StreamingPlayerListener extends Player.Listener {
@@ -21,7 +23,9 @@ public class StreamingPlayerListener extends Player.Listener {
     private final String playbackUri;
     private boolean autostart;
 
+    private Notifications notif;
 
+    private NotificationManagerCompat managerCompat;
 
     private boolean loaded;
     public StreamingPlayerListener(Context context, Player player, TextView deviceStatusView, String playbackUri, boolean autostart)
@@ -33,6 +37,9 @@ public class StreamingPlayerListener extends Player.Listener {
         this.playbackUri =playbackUri;
 
         loaded = false;
+
+        notif = new Notifications(context);
+        managerCompat = NotificationManagerCompat.from(context);
     }
 
     public StreamingPlayerListener(Context context, Player player, TextView deviceStatusView, String playbackUri)
@@ -55,6 +62,7 @@ public class StreamingPlayerListener extends Player.Listener {
 //        executor.shutdown();
 //        executing = false;
         loaded = true;
+        notif.send_Streaming_Notification( managerCompat);
         switch (state) {
             case BUFFERING:
                 // player is buffering

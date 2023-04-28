@@ -152,21 +152,21 @@ def get_by_name(table_class, pathPara):
 
 def delete_by_id(table_class, pathPara):
     """Deletes information based on the specified id"""
-    database.delete_by_field(table_class, (table_class.ID, pathPara["id"]))
+    database.delete_by_fields(table_class, (table_class.ID, pathPara["id"]))
 
     return json_payload({})
 
 
 def delete_by_name(table_class, pathPara):
     """Deletes information from the database based on the specified name"""
-    database.delete_by_field(table_class, (table_class.NAME, pathPara["name"]))
+    database.delete_by_fields(table_class, (table_class.NAME, pathPara["name"]))
 
     return json_payload({})
 
 
 def delete_by_hardware_id(table_class, pathPara):
     """Deletes information from the database based on the specified hardware id"""
-    database.delete_by_field(table_class, (table_class.HARDWARE_ID, pathPara["hardware_id"]))
+    database.delete_by_fields(table_class, (table_class.HARDWARE_ID, pathPara["hardware_id"]))
 
     return json_payload({})
 
@@ -468,6 +468,37 @@ def hardware_insert(event, pathPara, queryPara):
             (Account, Account_has_Hardware.EXPLICIT_ACCOUNT_ID, Account.EXPLICIT_ID)
         ], Account.TOKEN, token)
     return json_payload({"hardware": Hardware.list_object_to_dict_list(hardware)})
+
+
+@api.handle("/hardware/delete", httpMethod=MPC_API.POST)
+def hardware_delete(event, pathPara, queryPara):
+    body = event["body"]
+    id_a = database.get_field_by_field(Account, Account.ID, Account.TOKEN, body[Account.TOKEN])
+    id_h = database.get_field_by_field(Hardware, Hardware.ID, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
+    if id_a is None or id_h is None:
+        return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
+
+    account_hardware_ids = database.get_all_by_hardware_id(Account_has_Hardware, id_h)
+    if len(account_hardware_ids) > 1:
+        database.delete_by_fields(Account_has_Hardware, [
+            (Account_has_Hardware.ACCOUNT_ID, id_a), (Account_has_Hardware.EXPLICIT_HARDWARE_ID, id_h)])
+        return json_payload({"message": "deleted channel"})
+    else:
+        hardware: Hardware = database.get_by_id(Hardware, id_h)
+        arn = hardware.arn
+        channel_id = arn.split("/")[1]
+        converted_prefix = f"{settings.CONVERTED}/{channel_id}"
+        stream_prefix = f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{channel_id}"
+
+        videoRetreiver = VideoRetriever(settings.BUCKET)
+        converted_files = videoRetreiver.get_under_directory(converted_prefix)
+        stream_files = videoRetreiver.get_under_directory(stream_prefix)
+        delete_files = converted_files + stream_files
+        database.delete_by_fields(Account_has_Hardware, [
+            (Account_has_Hardware.ACCOUNT_ID, id_a), (Account_has_Hardware.EXPLICIT_HARDWARE_ID, id_h)])
+        database.delete_by_fields(Hardware, [(Hardware.ID, id_h)])
+
+        return json_payload({"deleted": videoRetreiver.delete_keys(delete_files)})
 
 
 @api.handle("/hardware/register", httpMethod=MPC_API.PUT)
@@ -881,7 +912,7 @@ def send_email(event, pathPara, queryPara):
 
 
 @api.handle("/file/all", httpMethod=MPC_API.POST)
-def get_recording_videos(event, pathPara, queryPara):
+def file_all(event, pathPara, queryPara):
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
         return json_payload({"message": "Account does not exist"})
@@ -916,139 +947,42 @@ def get_recording_videos(event, pathPara, queryPara):
     })
 
 
+@api.handle("/file/delete", httpMethod=MPC_API.POST)
+def file_delete(event, pathPara, queryPara):
+    token = event["body"]["token"]
+    if not database.verify_field(Account, Account.TOKEN, token):
+        return json_payload({"message": "Account does not exist"})
+
+    # channelId/year-month-date-hour-minute-id
+    file_name = event["body"][Recording.NAME]
+
+    converted_key = f"{settings.CONVERTED}/{file_name}/0.mp4"
+    stream_prefix = f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{file_name.replace('-', '/')}/"
+
+    videoRetreiver = VideoRetriever(settings.BUCKET)
+    stream_files = videoRetreiver.get_under_directory(stream_prefix)
+
+    delete_files = [converted_key] + stream_files
+
+    return json_payload({"deleted": videoRetreiver.delete_keys(delete_files)})
+
+
 if __name__ == "__main__":
-    # database.insert(Notification(10000, criteria_id=3), ignore=True)
+    event = {
+        "resource": "/hardware/delete",
+        "httpMethod": MPC_API.POST,
+        "body": """{
+            "username": "John Smith",
+            "password": "Password",
+            "email": "default@temple.edu",
+            "code": "658186",
+            "token": "f7af2efa2a0e81263b136664ca61e0d9",
+            "file_name": "vIvvphhE1OJL/2023-4-27-17-35-t0QjMMgqDKRm",
+            "device_id": "5f2a07aa327872954a00d28027549a94567b5b76dfefed03b9c9bc77"
+        }"""
+    }
+    response = lambda_handler(event, None)
+    # token = json.loads(response["body"])["token"]
+    print(response)
 
-    # event = {
-    #     "resource": "/file/all",
-    #     "httpMethod": MPC_API.POST,
-    #     "body": """{
-    #         "username": "John Smith",
-    #         "password": "Password",
-    #         "email": "default@temple.edu",
-    #         "code": "658186",
-    #         "token": "994acab3fdb83325a34e55a635fe5afe",
-    #         "device_id": "f4cd9ff05855d0048e28cf9eccc9bed2"
-    #     }""",
-    #     "pathParameters": {
-    #         "key": "sample.txt"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
-    # }
-    # response = lambda_handler(event, None)
-    # # token = json.loads(response["body"])["token"]
-    # print(response)
-    # #
-    # token = "abe5af3cbc47c47b803ade26be8807a0"
-    # event = {
-    #     "resource": "/file/all",
-    #     "httpMethod": MPC_API.POST,
-    #     "body": "{\"token\":\"" + token + "\"}",
-    #     "pathParameters": {
-    #         "key": "sample.txt"
-    #     },
-    #     "queryStringParameters": {
-    #         "notification_type": 10
-    #     }
-    # }
-    # response = lambda_handler(event, None)
-    #
-    # print(response)
-    # database.insert(Account_has_Hardware(18, 36))
-    # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-5-CqEzvvmfv15Q", account_id=18, hardware_id=29))
-    # # database.insert(Recording("HCBh4loJzOvw/2023-4-22-23-7-L31x4uLipprO", account_id=18, hardware_id=29))
-    #
-    #
-    # recording = database.get_all(Recording)
-    # for r in recording:
-    #     print(r)
-
-    # session = boto3.Session(
-    #     aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
-    #     aws_secret_access_key=AWS_SERVER_SECRET_KEY
-    # )
-    #
-    # s3 = session.client("s3")
-    #
-    # channelArn = "HCBh4loJzOvw"
-    # response = s3.list_objects(
-    #     Bucket="mpc-capstone",
-    #     Prefix=f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{channelArn}"
-    # )
-    #
-    # keys = [f["Key"] for f in response["Contents"]]
-    #
-
-    channelArn = "arn:aws:ivs:us-east-1:052524269538:channel/vIvvphhE1OJL".split("/")[1]
-
-    print("MediaConvert: Request received")
-
-    session = boto3.Session(
-        aws_access_key_id=AWS_SERVER_PUBLIC_KEY,
-        aws_secret_access_key=AWS_SERVER_SECRET_KEY
-    )
-
-    s3 = session.client('s3')
-
-    response = s3.list_objects(
-        Bucket="mpc-capstone",
-        Prefix=f"{settings.PREFIX}/{settings.ACCOUNT_ID}/{channelArn}"
-    )
-
-    max_date = response["Contents"][0]['LastModified']
-    max_file = ""
-    for file in response["Contents"]:
-        if (max_date - file["LastModified"]).days < 0:
-            max_date = file['LastModified']
-            max_file = file["Key"]
-
-    print(max_file)
-
-    split_file = max_file.split("/")
-    prefix = "/".join(split_file[:10])
-    print(prefix)
-
-    prefix += "/media/hls/"
-
-    resolution_key_map = {}
-    for file in response["Contents"]:
-        if file["Key"][-len(".ts"):] == ".ts" and file["Key"][:len(prefix)] == prefix:
-            split_file = file["Key"].split("/")
-            if split_file[12] not in resolution_key_map:
-                resolution_key_map[split_file[12]] = [file["Key"]]
-            else:
-                resolution_key_map[split_file[12]].append(file["Key"])
-    print(resolution_key_map)
-    resolution_key_map_sort = {}
-    for key in resolution_key_map:
-        resolution_key_map_sort[int(key.split("p")[0])] = resolution_key_map[key]
-
-    print(resolution_key_map_sort)
-
-    max_key = max(resolution_key_map_sort.keys())
-    print(max_key)
-    print(resolution_key_map_sort[max_key])
-
-    if len(resolution_key_map_sort[max_key]) > 0:
-        resolution_key_map_sort[max_key].pop()
-
-    file_number_map = {}
-    for file in resolution_key_map_sort[max_key]:
-        splitted = file.split("/")
-        file_number_map[int(splitted[-1].split(".")[0])] = file
-
-    keys_sorted = list(file_number_map.keys())
-
-    keys_sorted.sort()
-
-    stream_files = []
-
-    for key in keys_sorted:
-        stream_files.append(file_number_map[key])
-
-    split_prefix = prefix.split("/")
-    key = f"{split_prefix[3]}/{'-'.join(split_prefix[4:10])}"
-
-    print("MediaConvert: Converting " + key)
+    a = 1
