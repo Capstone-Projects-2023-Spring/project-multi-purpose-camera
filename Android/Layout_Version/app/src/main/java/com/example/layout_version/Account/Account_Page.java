@@ -28,7 +28,9 @@ public class Account_Page extends AppCompatActivity {
         Button signupbtn = findViewById(R.id.signup);
 
         TextView resetPassword = findViewById(R.id.resetPassword);
-
+        Notifications notif = new Notifications(this);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        notif.send_Sign_In_Notification(managerCompat);
         loginbtn.setOnClickListener(v ->
                 account.signin(
                         Account_Page.this,
@@ -38,9 +40,6 @@ public class Account_Page extends AppCompatActivity {
                         () -> {}
                 )
         );
-        Notifications notif = new Notifications(this);
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        notif.send_Sign_In_Notification(managerCompat);
 //        loginbtn.setOnClickListener(view -> {
 //            startActivity(new Intent (Account_Page.this, Bluetooth_Page.class));
 //        });
