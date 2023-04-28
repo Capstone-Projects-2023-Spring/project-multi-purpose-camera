@@ -7,6 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.layout_version.Account.Account_Page;
+import com.example.layout_version.Bluetooth.BluetoothManager;
 
 public class Bluetooth_Page extends AppCompatActivity {
 
@@ -18,7 +19,8 @@ public class Bluetooth_Page extends AppCompatActivity {
         Button serialbtn = findViewById(R.id.serialButton);
 
         serialbtn.setOnClickListener(view -> {
-            startActivity(new Intent(Bluetooth_Page.this, MainActivity.class));
+            BluetoothManager bluetoothManager = new BluetoothManager();
+            bluetoothManager.show_bluetooth_devices(this);
         });
     }
 }
