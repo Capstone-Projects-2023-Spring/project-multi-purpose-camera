@@ -50,13 +50,17 @@
 
         <Button
             android:id="@+id/shareButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:background="@drawable/round_button_share"
+            android:letterSpacing="0.2"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="Share"
             android:textColor="#3C3C3C"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -139,13 +143,17 @@
 
         <Button
             android:id="@+id/connectButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:background="@drawable/round_button"
+            android:letterSpacing="0.2"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="Connect"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView15"
             app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
