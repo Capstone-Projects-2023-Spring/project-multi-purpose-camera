@@ -31,11 +31,11 @@ public class Settings extends AppCompatActivity {
         ImageView back_home_im;
         TextView back_home_txt;
 
-        back_home_im = (ImageView) findViewById(R.id.back_home_btn_setting);
-        back_home_txt = (TextView) findViewById(R.id.back_home_text_setting);
+        back_home_im = findViewById(R.id.back_home_btn_setting);
+        back_home_txt = findViewById(R.id.back_home_text_setting);
 
-        TextView saving_policy = (TextView) findViewById(R.id.cloud_saving_settings);
-        TextView bluetooth = (TextView) findViewById(R.id.bluetooth_settings);
+        LinearLayout saving_policy = findViewById(R.id.cloud_saving_layout);
+        LinearLayout bluetooth = findViewById(R.id.bluetooth_layout);
 
         LinearLayout accountLayout = findViewById(R.id.account_layout);
 
