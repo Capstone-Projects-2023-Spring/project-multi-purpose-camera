@@ -3718,7 +3718,9 @@ string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string file_all_endpoint
+string file_delete_endpoint
 string hardware_all_endpoint
+string hardware_delete_endpoint
 string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
