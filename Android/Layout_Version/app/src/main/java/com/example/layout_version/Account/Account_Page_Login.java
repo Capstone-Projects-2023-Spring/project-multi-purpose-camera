@@ -3,7 +3,6 @@ package com.example.layout_version.Account;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -18,7 +17,6 @@ import com.example.layout_version.R;
 public class Account_Page_Login extends AppCompatActivity {
     private Account account;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
