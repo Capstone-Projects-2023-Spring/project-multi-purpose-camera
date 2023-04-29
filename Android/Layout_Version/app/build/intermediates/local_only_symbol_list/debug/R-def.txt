@@ -168,6 +168,7 @@ layout account_profile
 layout account_reset
 layout account_signup_page
 layout account_verify
+layout activity_account_page_login
 layout activity_main
 layout bluetooth_hardware_page
 layout camera

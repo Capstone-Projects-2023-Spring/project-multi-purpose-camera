@@ -256,6 +256,10 @@
         "source": "com.example.layout_version.app-main-31:/drawable/buffering_icon.xml"
     },
     {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_activity_account_page_login.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/activity_account_page_login.xml"
+    },
+    {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_notification_add_24.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_notification_add_24.xml"
     },
