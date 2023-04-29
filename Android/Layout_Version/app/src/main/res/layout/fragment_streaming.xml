@@ -8,6 +8,51 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+        <FrameLayout
+            android:id="@+id/streamPlayerFrameView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/recordingButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="65dp"
+        android:background="@drawable/offline_icon"
+        android:src="@drawable/baseline_videocam_off_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+    <ImageButton
+        android:id="@+id/shareButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="65dp"
+        android:background="@drawable/offline_icon"
+        android:src="@drawable/baseline_share_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recordingButton" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="35dp"
@@ -29,12 +74,12 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
-            android:id="@+id/recordingButton"
+            android:id="@+id/optionButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/offline_icon"
-            android:src="@drawable/baseline_videocam_off_24"
+            android:background="@drawable/white_icon"
+            android:src="@drawable/baseline_vert_options_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/streamRefreshButton"
             app:layout_constraintTop_toTopOf="parent"
@@ -58,36 +103,14 @@
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="79dp"
+            android:layout_marginEnd="10dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="TextView"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/streamRefreshButton2"
+            app:layout_constraintEnd_toStartOf="@+id/optionButton"
             app:layout_constraintStart_toEndOf="@+id/deviceStatusView"
             app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
-
-        <FrameLayout
-            android:id="@+id/streamPlayerFrameView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
