@@ -2786,6 +2786,7 @@ drawable material_ic_keyboard_arrow_previous_black_24dp
 drawable material_ic_keyboard_arrow_right_black_24dp
 drawable material_ic_menu_arrow_down_black_24dp
 drawable material_ic_menu_arrow_up_black_24dp
+drawable mpc_icon
 drawable mtrl_bottomsheet_drag_handle
 drawable mtrl_checkbox_button
 drawable mtrl_checkbox_button_checked_unchecked
@@ -3106,6 +3107,7 @@ id ignoreRequest
 id image
 id imageView
 id imageView2
+id imageView6
 id immediateStop
 id included
 id indeterminate
