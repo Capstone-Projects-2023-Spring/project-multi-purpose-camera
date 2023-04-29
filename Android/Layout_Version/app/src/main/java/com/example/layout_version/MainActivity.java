@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-        Notifications notif = new Notifications(this);
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        //Notifications notif = new Notifications(this);
+        //NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
         //notif.send_Recording_Notification( managerCompat);
         //notif.send_New_Account_Notification( managerCompat);
         //notif.send_Motion_Detected_Notification( managerCompat);
@@ -124,10 +124,9 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
 
             Intent intent;
             if(account.isSignedIn())
-                intent = new Intent (MainActivity.this, Account_Page_Profile.class);
+                intent = new Intent(MainActivity.this, Account_Page_Profile.class);
             else
-                intent = new Intent (MainActivity.this, Account_Page.class);
-
+                intent = new Intent(MainActivity.this, Account_Page.class);
             startActivity(intent);
         });
 

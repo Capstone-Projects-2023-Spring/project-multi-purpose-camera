@@ -36,15 +36,18 @@ public class NetworkRequestManager {
     private final RequestQueue mRequestQueue;
     private final Context context;
 
-    private Notifications notif;
 
+    private Notifications notif;
     private NotificationManagerCompat managerCompat;
+
+    private static int n = 0;
 
     public NetworkRequestManager(Context context)
     {
         this.context = context;
         mRequestQueue = Volley.newRequestQueue(context);
-        notif = new Notifications(context);
+
+        notif = new Notifications(context );
         managerCompat = NotificationManagerCompat.from(context);
     }
 
@@ -71,12 +74,15 @@ public class NetworkRequestManager {
                     }
                 }){
         };
-
+        if( n == 0)
+            notif.send_Network_Connected_Notification(managerCompat);
+        n++;
         jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
                 DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        mRequestQueue.add(jsonRequest);
-        notif.send_Network_Connected_Notification( managerCompat);
+    }
+    public static void resetN(){
+        n = 0;
     }
 }
