@@ -14,7 +14,6 @@ import com.example.layout_version.R;
 
 public class Account_Page extends AppCompatActivity {
     private Account account;
-    private VideoViewModel videoViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +39,6 @@ public class Account_Page extends AppCompatActivity {
                         () -> {}
                 )
         );
-//        loginbtn.setOnClickListener(view -> {
-//            startActivity(new Intent (Account_Page.this, Bluetooth_Page.class));
-//        });
 
         signupbtn.setOnClickListener(view -> {
             startActivity(new Intent (Account_Page.this,Account_Page_Signup.class));

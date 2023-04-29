@@ -7,16 +7,19 @@ public class ChannelItem {
     private final String maxResolution;
     private final String recordingPrefix;
     private final String arn;
-    public static final ChannelItem DEFAULT_CHANNEL_ITEM = new ChannelItem(null, null, "Sign in first to view a list of videos", "720p", null, null);
+    private final String hardware_id;
+
+    public static final ChannelItem DEFAULT_CHANNEL_ITEM = new ChannelItem(null, null, "Sign in first to view a list of videos", "720p", null, null, null);
 
 
-    public ChannelItem(String deviceId, String playbackUrl, String deviceName, String maxResolution, String recordingPrefix, String arn) {
+    public ChannelItem(String deviceId, String playbackUrl, String deviceName, String maxResolution, String recordingPrefix, String arn, String hardware_id) {
         this.deviceId =deviceId;
         this.playbackUrl = playbackUrl;
         this.deviceName = deviceName;
         this.maxResolution = maxResolution;
         this.recordingPrefix = recordingPrefix;
         this.arn = arn;
+        this.hardware_id = hardware_id;
     }
     public String getDeviceId() {
         return deviceId;

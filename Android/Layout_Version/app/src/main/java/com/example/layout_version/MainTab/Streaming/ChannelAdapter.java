@@ -48,7 +48,6 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         private final View view;
         private final TextView statusView;
         private final PlayerView playerView;
-
         private final ImageView optionButton;
 
         public ViewHolder(View view) {
