@@ -3,15 +3,20 @@ package com.example.layout_version.MainTab.Streaming;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,7 +27,13 @@ import com.example.layout_version.MainTab.State.StateFragment;
 import com.example.layout_version.MainTab.Streaming.Recorder.Recorder;
 import com.example.layout_version.MainTab.Streaming.Recorder.RecordingState;
 import com.example.layout_version.MainTab.Streaming.Recorder.RecordingStateChangeListener;
+import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 public class StreamingFragment extends StateFragment<RecordingState> {
     private Context context;
@@ -35,7 +46,11 @@ public class StreamingFragment extends StateFragment<RecordingState> {
     private ImageButton recordingButton;
     private ImageButton streamRefreshButton;
 
+    private ImageButton optionButton;
+    private ImageButton shareButton;
     private Recorder recorder;
+
+    private boolean optionFlag;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +74,11 @@ public class StreamingFragment extends StateFragment<RecordingState> {
         deviceStatusView = layout.findViewById(R.id.deviceStatusView);
         recordingButton = layout.findViewById(R.id.recordingButton);
         streamRefreshButton = layout.findViewById(R.id.streamRefreshButton);
+        optionButton = layout.findViewById(R.id.optionButton);
+        shareButton = layout.findViewById(R.id.shareButton);
         recorder = new Recorder(context, streamingViewModel);
+
+        hideOptions();
 
         return layout;
     }
@@ -87,6 +106,16 @@ public class StreamingFragment extends StateFragment<RecordingState> {
             update(streamingViewModel.getSelectedItem().getValue());
         });
 
+        optionButton.setOnClickListener(view1 -> {
+            if(optionFlag)
+                hideOptions();
+            else
+                showOptions();
+        });
+
+        shareButton.setOnClickListener(view1 -> {
+            showShareDialog();
+        });
     }
 
     public void update(@Nullable ChannelItem channel)
@@ -114,4 +143,79 @@ public class StreamingFragment extends StateFragment<RecordingState> {
         streamingPlayer.removeListener(playerListener);
         streamingPlayer.release();
     }
+
+    public void hideOptions()
+    {
+        optionFlag = false;
+        optionButton.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.baseline_vert_options_24));
+        recordingButton.setVisibility(View.INVISIBLE);
+        shareButton.setVisibility(View.INVISIBLE);
+    }
+
+    public void showOptions()
+    {
+        optionFlag = true;
+        optionButton.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.baseline_close_24));
+        recordingButton.setVisibility(View.VISIBLE);
+        shareButton.setVisibility(View.VISIBLE);
+    }
+
+    public void showShareDialog()
+    {
+        View view = getActivity().getLayoutInflater().inflate(R.layout.device_share, null);
+        TextView codeText = view.findViewById(R.id.codeTextView);
+        EditText codeEditText = view.findViewById(R.id.codeEdit);
+        Button connectButton = view.findViewById(R.id.connectButton);
+        Button shareButton = view.findViewById(R.id.shareButton);
+
+        codeText.setVisibility(View.INVISIBLE);
+        codeEditText.setText("");
+
+        connectButton.setOnClickListener(view1 -> {
+            Log.e("Connect", "here");
+
+            Log.e("Share", "here");
+            NetworkRequestManager nrm = new NetworkRequestManager(context);
+            JSONObject jsonObject = new JSONObject(Map.of(
+                    "token", Account.getInstance().getTokenData().getValue(),
+                    "code", codeEditText.getText().toString()
+            ));
+            nrm.Post(R.string.device_code_endpoint, jsonObject,
+                    json -> {
+                        Toast.makeText(context, "Successfully connected device to account", Toast.LENGTH_SHORT).show();
+                    },
+                    json->{
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                    });
+        });
+
+        shareButton.setOnClickListener(view1 -> {
+            NetworkRequestManager nrm = new NetworkRequestManager(context);
+            JSONObject jsonObject = new JSONObject(Map.of(
+                    "token", Account.getInstance().getTokenData().getValue(),
+                    "device_id", streamingViewModel.getSelectedItem().getValue().getDeviceId()
+            ));
+            nrm.Post(R.string.device_share_endpoint, jsonObject,
+                    json -> {
+                        String code = null;
+                        try {
+                            code = json.getString("code");
+                            codeText.setText(code);
+                        } catch (JSONException e) {
+                            codeText.setText("Error");
+                        }
+                        codeText.setVisibility(View.VISIBLE);
+                    },
+                    json->{
+                        codeText.setText("Error");
+                        codeText.setVisibility(View.VISIBLE);
+                    });
+        });
+
+        new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .show();
+    }
+
+
 }
