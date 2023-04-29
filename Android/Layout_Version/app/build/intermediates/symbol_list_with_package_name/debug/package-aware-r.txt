@@ -3234,6 +3234,7 @@ id parentPanel
 id parentRelative
 id parent_matrix
 id password
+id password_input
 id password_toggle
 id path
 id pathRelative
@@ -3346,6 +3347,7 @@ id square
 id src_atop
 id src_in
 id src_over
+id ssid_input
 id standard
 id start
 id startHorizontal
@@ -3563,6 +3565,7 @@ layout account_verify
 layout activity_account_page_login
 layout activity_main
 layout bluetooth_hardware_page
+layout bluetooth_input_wifi
 layout camera
 layout camera_of_policy_template
 layout custom_dialog

@@ -113,6 +113,7 @@ id nav_bar_top
 id notification_description
 id notification_settings
 id password
+id password_input
 id playButton
 id playerFrameLayout
 id recordingButton
@@ -142,6 +143,7 @@ id spacer4
 id spacer5
 id spinner
 id spinner1
+id ssid_input
 id stopButton
 id streamPlayerFrameView
 id streamRefreshButton
@@ -173,6 +175,7 @@ layout account_verify
 layout activity_account_page_login
 layout activity_main
 layout bluetooth_hardware_page
+layout bluetooth_input_wifi
 layout camera
 layout camera_of_policy_template
 layout delete_message

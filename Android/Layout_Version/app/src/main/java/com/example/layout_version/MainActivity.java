@@ -3,6 +3,7 @@ package com.example.layout_version;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -11,9 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.Manifest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -55,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
         LibraryFragmentInterface.setUpNetwork(this, this, videoViewModel, 4);
         streamingViewModel = new ViewModelProvider(this).get(StreamingViewModel.class);
         StreamingListFragmentInterface.setUpNetwork(this, this, streamingViewModel, 4);
+
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("My_Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
