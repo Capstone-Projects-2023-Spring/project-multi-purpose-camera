@@ -15,6 +15,8 @@
     <string name="file_all_endpoint">/file/all</string>
     <string name="hardware_delete_endpoint">/hardware/delete</string>
     <string name="file_delete_endpoint">/file/delete</string>
+    <string name="device_share_endpoint">/hardware/share</string>
+    <string name="device_code_endpoint">/hardware/code</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="streaming_offline">Offline</string>
