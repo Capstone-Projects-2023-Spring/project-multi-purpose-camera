@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
+import com.example.layout_version.SenderStream.LiveStreamActivity;
 
 
 public class Settings extends AppCompatActivity {
@@ -67,7 +68,7 @@ public class Settings extends AppCompatActivity {
         });
 
         livestreamLayout.setOnClickListener(view -> {
-            Intent intent = new Intent (Settings.this,LiveStreamActivity.class);
+            Intent intent = new Intent (Settings.this, LiveStreamActivity.class);
             startActivity(intent);
         });
 

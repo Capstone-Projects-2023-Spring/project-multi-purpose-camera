@@ -29,7 +29,7 @@
         android:theme="@style/Theme.Layout_Version"
         tools:targetApi="31">
         <activity
-            android:name=".LiveStreamActivity"
+            android:name=".SenderStream.LiveStreamActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

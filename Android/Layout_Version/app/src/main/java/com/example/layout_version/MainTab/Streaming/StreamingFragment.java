@@ -163,54 +163,10 @@ public class StreamingFragment extends StateFragment<RecordingState> {
     public void showShareDialog()
     {
         View view = getActivity().getLayoutInflater().inflate(R.layout.device_share, null);
-        TextView codeText = view.findViewById(R.id.codeTextView);
-        EditText codeEditText = view.findViewById(R.id.codeEdit);
-        Button connectButton = view.findViewById(R.id.connectButton);
-        Button shareButton = view.findViewById(R.id.shareButton);
 
-        codeText.setVisibility(View.INVISIBLE);
-        codeEditText.setText("");
 
-        connectButton.setOnClickListener(view1 -> {
-            Log.e("Connect", "here");
 
-            Log.e("Share", "here");
-            NetworkRequestManager nrm = new NetworkRequestManager(context);
-            JSONObject jsonObject = new JSONObject(Map.of(
-                    "token", Account.getInstance().getTokenData().getValue(),
-                    "code", codeEditText.getText().toString()
-            ));
-            nrm.Post(R.string.device_code_endpoint, jsonObject,
-                    json -> {
-                        Toast.makeText(context, "Successfully connected device to account", Toast.LENGTH_SHORT).show();
-                    },
-                    json->{
-                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
-                    });
-        });
 
-        shareButton.setOnClickListener(view1 -> {
-            NetworkRequestManager nrm = new NetworkRequestManager(context);
-            JSONObject jsonObject = new JSONObject(Map.of(
-                    "token", Account.getInstance().getTokenData().getValue(),
-                    "device_id", streamingViewModel.getSelectedItem().getValue().getDeviceId()
-            ));
-            nrm.Post(R.string.device_share_endpoint, jsonObject,
-                    json -> {
-                        String code = null;
-                        try {
-                            code = json.getString("code");
-                            codeText.setText(code);
-                        } catch (JSONException e) {
-                            codeText.setText("Error");
-                        }
-                        codeText.setVisibility(View.VISIBLE);
-                    },
-                    json->{
-                        codeText.setText("Error");
-                        codeText.setVisibility(View.VISIBLE);
-                    });
-        });
 
         new AlertDialog.Builder(getActivity())
                 .setView(view)

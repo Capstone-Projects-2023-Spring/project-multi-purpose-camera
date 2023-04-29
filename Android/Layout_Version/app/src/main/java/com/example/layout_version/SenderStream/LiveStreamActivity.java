@@ -1,4 +1,4 @@
-package com.example.layout_version;
+package com.example.layout_version.SenderStream;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,6 +17,7 @@ import com.amazonaws.ivs.broadcast.ImageDevice;
 import com.amazonaws.ivs.broadcast.ImagePreviewView;
 import com.amazonaws.ivs.broadcast.Presets;
 import com.amazonaws.ivs.player.PlayerView;
+import com.example.layout_version.R;
 
 import android.Manifest;
 import android.view.ViewGroup;
@@ -33,17 +34,7 @@ public class LiveStreamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_stream);
-        broadcastListener = new BroadcastSession.Listener() {
-            @Override
-            public void onStateChanged(@NonNull BroadcastSession.State state) {
-                Log.d("TAG", "State=" + state);
-            }
-
-            @Override
-            public void onError(@NonNull BroadcastException exception) {
-                Log.e("TAG", "Exception: " + exception);
-            }
-        };
+        broadcastListener = new LivestreamBroadcastListener();
 
         final String[] requiredPermissions =
                 { Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO };
@@ -71,7 +62,7 @@ public class LiveStreamActivity extends AppCompatActivity {
     {
 
         // Create a broadcast-session instance and sign up to receive broadcast
-// events and errors.
+        // events and errors.
         Context ctx = getApplicationContext();
         broadcastSession = new BroadcastSession(ctx,
                 broadcastListener,
@@ -79,7 +70,7 @@ public class LiveStreamActivity extends AppCompatActivity {
                 Presets.Devices.FRONT_CAMERA(ctx));
 
         // awaitDeviceChanges will fire on the main thread after all pending devices
-// attachments have been completed
+        // attachments have been completed
 
 
         broadcastSession.awaitDeviceChanges(() -> {
@@ -99,15 +90,6 @@ public class LiveStreamActivity extends AppCompatActivity {
         broadcastSession.start(
                 "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
                 "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV");
-        findViewById(R.id.startButton).setOnClickListener(view -> {
-            broadcastSession.start(
-                    "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                    "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV");
-        });
-
-        findViewById(R.id.stopButton).setOnClickListener(view -> {
-            broadcastSession.stop();
-        });
 
     }
 
