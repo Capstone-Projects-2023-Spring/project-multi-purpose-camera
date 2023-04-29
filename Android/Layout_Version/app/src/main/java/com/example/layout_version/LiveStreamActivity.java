@@ -33,7 +33,7 @@ public class LiveStreamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_stream);
-        BroadcastSession.Listener broadcastListener = new BroadcastSession.Listener() {
+        broadcastListener = new BroadcastSession.Listener() {
             @Override
             public void onStateChanged(@NonNull BroadcastSession.State state) {
                 Log.d("TAG", "State=" + state);
@@ -49,14 +49,20 @@ public class LiveStreamActivity extends AppCompatActivity {
                 { Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO };
 
 
-
+        boolean flag = false;
         for (String permission : requiredPermissions) {
             if (ContextCompat.checkSelfPermission(this, permission)
                     != PackageManager.PERMISSION_GRANTED) {
                 // If any permissions are missing we want to just request them all.
                 ActivityCompat.requestPermissions(this, requiredPermissions, 0x100);
+                flag = true;
                 break;
             }
+        }
+
+        if(!flag)
+        {
+            setupBroadcastSession();
         }
 
     }
@@ -93,6 +99,16 @@ public class LiveStreamActivity extends AppCompatActivity {
         broadcastSession.start(
                 "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
                 "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV");
+        findViewById(R.id.startButton).setOnClickListener(view -> {
+            broadcastSession.start(
+                    "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
+                    "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV");
+        });
+
+        findViewById(R.id.stopButton).setOnClickListener(view -> {
+            broadcastSession.stop();
+        });
+
     }
 
     @Override
@@ -114,6 +130,7 @@ public class LiveStreamActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        broadcastSession.stop();
         previewHolder.removeAllViews();
         broadcastSession.release();
     }
