@@ -57,15 +57,15 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
         StreamingListFragmentInterface.setUpNetwork(this, this, streamingViewModel, 4);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("My_Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("My_Notification", "My Notification", NotificationManager.IMPORTANCE_HIGH);
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
         Notifications notif = new Notifications(this);
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        notif.send_Recording_Notification( managerCompat);
-        notif.send_New_Account_Notification( managerCompat);
-        notif.send_Motion_Detected_Notification( managerCompat);
+        //notif.send_Recording_Notification( managerCompat);
+        //notif.send_New_Account_Notification( managerCompat);
+        //notif.send_Motion_Detected_Notification( managerCompat);
 
         try {
             Thread.sleep(2000);

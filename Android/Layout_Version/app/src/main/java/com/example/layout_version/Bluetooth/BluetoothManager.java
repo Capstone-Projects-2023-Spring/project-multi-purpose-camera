@@ -10,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.example.layout_version.Notifications;
 
 import java.io.IOException;
 import java.io.InputStream;

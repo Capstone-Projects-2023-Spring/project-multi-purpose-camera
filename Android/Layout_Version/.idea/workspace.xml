@@ -9,18 +9,24 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdf8fbab-77c2-4968-9c70-861d7406e0ea" name="Changes" comment="fixed notifications fully integrated">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+    <list default="true" id="fdf8fbab-77c2-4968-9c70-861d7406e0ea" name="Changes" comment="fix signin notification">
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Account/Account_Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Account/Account_Page.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Account/Account_Page_Password_Change.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Account/Account_Page_Password_Change.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Account/Account_Page_Signup.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Account/Account_Page_Signup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Bluetooth/BluetoothManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Bluetooth/BluetoothManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Bluetooth_Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Bluetooth_Page.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Notifications.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Notifications.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Saving_Policy_Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/layout_version/Saving_Policy_Page.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[QV711MBX26]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\ncoff\.android\avd\Phone.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -519,7 +525,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682644845859</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="fix signin notification">
+      <created>1682645242019</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1682645242019</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -569,6 +582,7 @@
     <MESSAGE value="got notification context to work" />
     <MESSAGE value="delete unused imports" />
     <MESSAGE value="fixed notifications fully integrated" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed notifications fully integrated" />
+    <MESSAGE value="fix signin notification" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix signin notification" />
   </component>
 </project>
