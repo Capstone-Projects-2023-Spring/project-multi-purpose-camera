@@ -36,9 +36,11 @@ public interface StreamingListFragmentInterface {
                                 item.getString("max_resolution"),
                                 item.getString("s3_recording_prefix"),
                                 item.getString("arn"),
-                                item.getString("hardware_id"));
+                                item.getString("hardware_id"),
+                                item.getString("ingest_endpoint"),
+                                item.getString("stream_key"));
                     } catch (JSONException e) {
-                        return new ChannelItem("1234", "Unknown Video", "Failed to retrieve video file",  "720p", null, null, null);
+                        return new ChannelItem("1234", "Unknown Video", "Failed to retrieve video file",  "720p", null, null, null, null, null);
                     }
                 })
                 .collect(Collectors.toList());

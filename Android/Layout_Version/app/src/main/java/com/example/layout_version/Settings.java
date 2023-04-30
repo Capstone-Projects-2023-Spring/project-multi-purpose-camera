@@ -67,10 +67,10 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        livestreamLayout.setOnClickListener(view -> {
-            Intent intent = new Intent (Settings.this, LiveStreamActivity.class);
-            startActivity(intent);
-        });
+//        livestreamLayout.setOnClickListener(view -> {
+//            Intent intent = new Intent (Settings.this, LiveStreamActivity.class);
+//            startActivity(intent);
+//        });
 
         back_home_im.setOnClickListener(new View.OnClickListener()
         {

@@ -64,6 +64,9 @@
         <activity
             android:name=".Account.Account_Page_Profile"
             android:launchMode="singleTask" />
+        <activity
+            android:name=".SenderStream.LiveStreamActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

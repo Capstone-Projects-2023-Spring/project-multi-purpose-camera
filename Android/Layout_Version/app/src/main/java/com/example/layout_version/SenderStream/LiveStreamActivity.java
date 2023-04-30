@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,15 +27,24 @@ import android.widget.LinearLayout;
 
 public class LiveStreamActivity extends AppCompatActivity {
 
+    public static final String INGEST_ENDPOINT = "ingest_endpoint";
+    public static final String STREAM_KEY = "stream_key";
     FrameLayout previewHolder;
     BroadcastSession.Listener broadcastListener;
     BroadcastSession broadcastSession;
+
+    private String ingestEndpoint;
+    private String streamKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_stream);
         broadcastListener = new LivestreamBroadcastListener();
+
+        Intent intent = getIntent();
+        ingestEndpoint = intent.getStringExtra(INGEST_ENDPOINT);
+        streamKey = intent.getStringExtra(STREAM_KEY);
 
         final String[] requiredPermissions =
                 { Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO };
@@ -88,9 +98,8 @@ public class LiveStreamActivity extends AppCompatActivity {
         });
 
         broadcastSession.start(
-                "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV");
-
+                ingestEndpoint,
+                streamKey);
     }
 
     @Override

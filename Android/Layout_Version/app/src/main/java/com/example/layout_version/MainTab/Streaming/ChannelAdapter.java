@@ -1,6 +1,7 @@
 package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,8 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amazonaws.ivs.player.Player;
 import com.amazonaws.ivs.player.PlayerView;
 import com.example.layout_version.Account.Account;
+import com.example.layout_version.Account.Account_Page;
+import com.example.layout_version.MainActivity;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
+import com.example.layout_version.SenderStream.LiveStreamActivity;
 
 import org.json.JSONObject;
 
@@ -171,9 +175,23 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
             viewHolder.getStatusView().setText(R.string.streaming_unavailable);
         }
 
-        viewHolder.getDeleteButton().setOnClickListener(v->{
-            showAlertDialog(v, position);
-        });
+
+        if(localDataSet.get(position).getHardware_id() != null &&
+                localDataSet.get(position).getHardware_id().equals(Account.getInstance().getHardware_id()))
+        {
+            viewHolder.getDeleteButton().setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.baseline_photo_camera_front_24));
+            viewHolder.getDeleteButton().setOnClickListener(view -> {
+                Intent intent = new Intent (context, LiveStreamActivity.class);
+                intent.putExtra("ingest_endpoint", localDataSet.get(position).getIngestEndpoint());
+                intent.putExtra("stream_key", localDataSet.get(position).getStreamKey());
+                context.startActivity(intent);
+            });
+        }
+        else{
+            viewHolder.getDeleteButton().setOnClickListener(v->{
+                showAlertDialog(v, position);
+            });
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -8,11 +8,13 @@ public class ChannelItem {
     private final String recordingPrefix;
     private final String arn;
     private final String hardware_id;
+    private final String ingestEndpoint;
+    private final String streamKey;
 
-    public static final ChannelItem DEFAULT_CHANNEL_ITEM = new ChannelItem(null, null, "Sign in first to view a list of videos", "720p", null, null, null);
+    public static final ChannelItem DEFAULT_CHANNEL_ITEM = new ChannelItem(null, null, "Sign in first to view a list of videos", "720p", null, null, null, null, null);
 
 
-    public ChannelItem(String deviceId, String playbackUrl, String deviceName, String maxResolution, String recordingPrefix, String arn, String hardware_id) {
+    public ChannelItem(String deviceId, String playbackUrl, String deviceName, String maxResolution, String recordingPrefix, String arn, String hardware_id, String ingestEndpoint, String streamKey) {
         this.deviceId =deviceId;
         this.playbackUrl = playbackUrl;
         this.deviceName = deviceName;
@@ -20,6 +22,8 @@ public class ChannelItem {
         this.recordingPrefix = recordingPrefix;
         this.arn = arn;
         this.hardware_id = hardware_id;
+        this.ingestEndpoint =ingestEndpoint;
+        this.streamKey = streamKey;
     }
     public String getDeviceId() {
         return deviceId;
@@ -44,5 +48,18 @@ public class ChannelItem {
     public String getArn()
     {
         return arn;
+    }
+
+    public String getHardware_id()
+    {
+        return hardware_id;
+    }
+
+    public String getIngestEndpoint() {
+        return ingestEndpoint;
+    }
+
+    public String getStreamKey() {
+        return streamKey;
     }
 }
