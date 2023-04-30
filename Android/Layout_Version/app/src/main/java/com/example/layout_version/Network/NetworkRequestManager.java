@@ -48,7 +48,22 @@ public class NetworkRequestManager {
                 + resource.getString(R.string.db_stage)
                 + resource.getString(endpointID);
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+        Post(url, data, success, fail);
+    }
+
+    public void Post(String url, JSONObject data, NetworkInterface success, NetworkInterface fail)
+    {
+        Request(url, Request.Method.POST, data, success, fail);
+    }
+
+    public void Put(String url, JSONObject data, NetworkInterface success, NetworkInterface fail)
+    {
+        Request(url, Request.Method.PUT, data, success, fail);
+    }
+
+    public void Request(String url, int method, JSONObject data, NetworkInterface success, NetworkInterface fail)
+    {
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(method, url, data,
                 success::action,
                 error -> {
                     NetworkResponse response = error.networkResponse;

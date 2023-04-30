@@ -179,7 +179,7 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         if(localDataSet.get(position).getHardware_id() != null &&
                 localDataSet.get(position).getHardware_id().equals(Account.getInstance().getHardware_id()))
         {
-            viewHolder.getDeleteButton().setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.baseline_photo_camera_front_24));
+            viewHolder.getDeleteButton().setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.baseline_photo_camera_front_28));
             viewHolder.getDeleteButton().setOnClickListener(view -> {
                 Intent intent = new Intent (context, LiveStreamActivity.class);
                 intent.putExtra("ingest_endpoint", localDataSet.get(position).getIngestEndpoint());
