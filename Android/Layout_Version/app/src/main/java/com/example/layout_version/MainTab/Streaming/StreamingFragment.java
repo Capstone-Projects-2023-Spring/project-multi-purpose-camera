@@ -23,7 +23,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.amazonaws.ivs.player.Player;
 import com.amazonaws.ivs.player.PlayerView;
 import com.example.layout_version.Account.Account;
+import com.example.layout_version.CameraShare.CameraConnectDialog;
 import com.example.layout_version.CameraShare.CameraConnectFragment;
+import com.example.layout_version.CameraShare.CameraShareDialog;
 import com.example.layout_version.CameraShare.CameraShareFragment;
 import com.example.layout_version.MainTab.State.StateFragment;
 import com.example.layout_version.MainTab.Streaming.Recorder.Recorder;
@@ -164,17 +166,7 @@ public class StreamingFragment extends StateFragment<RecordingState> {
 
     public void showShareDialog()
     {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.device_share, null);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.connectFragmentContainer, new CameraConnectFragment())
-                .commit();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.shareFragmentContainer, new CameraShareFragment())
-                .commit();
-        new AlertDialog.Builder(getActivity())
-                .setView(view)
-                .show();
-
+        new CameraShareDialog().show(getChildFragmentManager(), "Tag");
     }
 
 

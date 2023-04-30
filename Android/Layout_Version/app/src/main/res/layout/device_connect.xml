@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Share Device"
+        android:text="Connect Device"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,27 +18,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/connectFragmentContainer"
+        android:id="@+id/fragmentContainerView"
         android:name="com.example.layout_version.CameraShare.CameraConnectFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:layout="@layout/fragment_camera_share" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/shareFragmentContainer"
-        android:name="com.example.layout_version.CameraShare.CameraShareFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/connectFragmentContainer"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:layout="@layout/fragment_camera_connect" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
