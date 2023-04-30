@@ -1,6 +1,7 @@
 package com.example.layout_version.MainTab.Streaming;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,15 +12,23 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.layout_version.Account.Account;
+import com.example.layout_version.Account.Account_Page;
+import com.example.layout_version.CameraShare.CameraConnectFragment;
+import com.example.layout_version.CameraShare.CameraShareDialog;
+import com.example.layout_version.CameraShare.CameraShareFragment;
+import com.example.layout_version.MainActivity;
 import com.example.layout_version.MainTab.State.NetworkState;
 import com.example.layout_version.MainTab.State.NetworkStateChangeListener;
 import com.example.layout_version.MainTab.State.StateFragment;
 import com.example.layout_version.R;
+import com.example.layout_version.SenderStream.LiveStreamActivity;
 
 import java.util.function.Consumer;
 
@@ -31,6 +40,8 @@ public class StreamingListFragment extends StateFragment<NetworkState> {
 
     private TextView streamStatusTextView;
     private ImageButton refreshButton;
+    private ImageButton shareButton;
+    private ImageButton livestreamButton;
 
     public static StreamingListFragment newInstance() {
         return new StreamingListFragment();
@@ -46,6 +57,8 @@ public class StreamingListFragment extends StateFragment<NetworkState> {
         context = layout.getContext();
         streamStatusTextView = layout.findViewById(R.id.streamStatusTextView);
         refreshButton = layout.findViewById(R.id.streamRefreshButton);
+        shareButton = layout.findViewById(R.id.shareButton);
+        livestreamButton = layout.findViewById(R.id.livestream_layout);
         return layout;
     }
 
@@ -73,5 +86,31 @@ public class StreamingListFragment extends StateFragment<NetworkState> {
         refreshButton.setOnClickListener(view1 -> {
             StreamingListFragmentInterface.loadData(context, streamingViewModel, Account.getInstance().getTokenData().getValue(), 4);
         });
+
+        shareButton.setOnClickListener(view1 -> {
+            showShareDialog();
+        });
+
+//        livestreamButton.setOnClickListener(view1 -> {
+//            Intent intent = new Intent (getActivity(), LiveStreamActivity.class);
+//            startActivity(intent);
+//        });
+    }
+
+    public void showShareDialog()
+    {
+//        View view = getActivity().getLayoutInflater().inflate(R.layout.device_share, null);
+//        getActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.connectFragmentContainer, new CameraConnectFragment())
+//                .commit();
+//        getActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.shareFragmentContainer, new CameraShareFragment())
+//                .commit();
+//        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+//                .setView(view)
+//                .show();
+
+
+        new CameraShareDialog().show(getActivity().getSupportFragmentManager(), "theme");
     }
 }
