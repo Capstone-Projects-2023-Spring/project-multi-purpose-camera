@@ -8,44 +8,24 @@
         "source": "com.example.layout_version.app-main-31:/mipmap-xxxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_save_as_24.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_save_as_24.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_videocam_24.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_videocam_24.xml"
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_logout_24.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_logout_24.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
         "source": "com.example.layout_version.app-pngs-24:/drawable-anydpi-v24/ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "com.example.layout_version.app-main-31:/mipmap-xhdpi/ic_launcher.png"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_nightlight_24.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_nightlight_24.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_settings.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/settings.xml"
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_device_share.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/device_share.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
         "source": "com.example.layout_version.app-main-31:/mipmap-xxhdpi/ic_launcher_foreground.png"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_clip_24.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_clip_24.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_notification_setting_2.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/notification_setting_2.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/xml_data_extraction_rules.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/xml/data_extraction_rules.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_battery_4_bar_24.xml.flat",
@@ -60,10 +40,6 @@
         "source": "com.example.layout_version.app-main-31:/layout/account_login_signup_page.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_menu_24.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_menu_24.xml"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_directions_walk_24.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_directions_walk_24.xml"
     },
@@ -76,14 +52,6 @@
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_videocam_off_24.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_success_icon.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/success_icon.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_drawable_round_rectangle.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/drawable_round_rectangle.xml"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_account_circle_24.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_account_circle_24.xml"
     },
@@ -92,36 +60,8 @@
         "source": "com.example.layout_version.app-main-31:/layout/account_password.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
-        "source": "com.example.layout_version.app-main-31:/mipmap-xxxhdpi/ic_launcher_foreground.png"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "com.example.layout_version.app-main-31:/mipmap-xhdpi/ic_launcher_round.png"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_bluetooth_36.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_bluetooth_36.xml"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/layout_account_verify.xml.flat",
         "source": "com.example.layout_version.app-main-31:/layout/account_verify.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xhdpi_ic_launcher_foreground.png.flat",
-        "source": "com.example.layout_version.app-main-31:/mipmap-xhdpi/ic_launcher_foreground.png"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_streaming_item.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/streaming_item.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_refresh_24.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_refresh_24.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_video_detail.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/fragment_video_detail.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_cloud_setting.xml.flat",
@@ -152,14 +92,6 @@
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_surround_sound_24.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_library.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/fragment_library.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_account_setting.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/account_setting.xml"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_device_thermostat_24.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_device_thermostat_24.xml"
     },
@@ -172,6 +104,182 @@
         "source": "com.example.layout_version.app-main-31:/layout/account_reset.xml"
     },
     {
+        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "com.example.layout_version.app-main-31:/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_mic_24.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_mic_24.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_title_and_description_template.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/title_and_description_template.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_library.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/library.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_bluetooth_hardware_page.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/bluetooth_hardware_page.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_account_profile.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/account_profile.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_activity_account_page_login.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/activity_account_page_login.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_camera_of_policy_template.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/camera_of_policy_template.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_description_template.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/description_template.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_round_button_share.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/round_button_share.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/xml_network_security_config.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/xml/network_security_config.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_online_icon.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/online_icon.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "com.example.layout_version.app-main-31:/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/xml_backup_rules.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_edit_policy.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/edit_policy.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_settings_24.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_settings_24.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_round_rectangle_cyan_16dp.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/round_rectangle_cyan_16dp.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_streaming_list.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/fragment_streaming_list.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_library_videos.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/library_videos.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.example.layout_version.app-main-31:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_share_24.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_share_24.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_save_as_24.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_save_as_24.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_videocam_24.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_videocam_24.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.example.layout_version.app-main-31:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_settings.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/settings.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_white_icon.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/white_icon.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_clip_24.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_clip_24.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_notification_setting_2.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/notification_setting_2.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_round_button.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/round_button.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_menu_24.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_menu_24.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_success_icon.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/success_icon.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_drawable_round_rectangle.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/drawable_round_rectangle.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.example.layout_version.app-main-31:/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.example.layout_version.app-main-31:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_bluetooth_36.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_bluetooth_36.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.example.layout_version.app-main-31:/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_streaming_item.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/streaming_item.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_video_detail.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/fragment_video_detail.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_refresh_24.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_refresh_24.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_library.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/fragment_library.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_account_setting.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/account_setting.xml"
+    },
+    {
+        "merged": "com.example.layout_version.app-merged_res-29:/layout_bluetooth_input_wifi.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/layout/bluetooth_input_wifi.xml"
+    },
+    {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_photo_camera_24.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_photo_camera_24.xml"
     },
@@ -180,8 +288,8 @@
         "source": "com.example.layout_version.app-main-31:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_mpc_icon.png.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/mpc_icon.png"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_offline_icon.xml.flat",
@@ -200,10 +308,6 @@
         "source": "com.example.layout_version.app-main-31:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-mdpi_ic_launcher_foreground.png.flat",
-        "source": "com.example.layout_version.app-main-31:/mipmap-mdpi/ic_launcher_foreground.png"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_ic_launcher_background.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/ic_launcher_background.xml"
     },
@@ -216,18 +320,6 @@
         "source": "com.example.layout_version.app-main-31:/layout/fragment_streaming.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_mic_24.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_mic_24.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_title_and_description_template.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/title_and_description_template.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_library.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/library.xml"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_unavailable_icon.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/unavailable_icon.xml"
     },
@@ -236,16 +328,8 @@
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_cloud_queue_24.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_bluetooth_hardware_page.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/bluetooth_hardware_page.xml"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/layout_saving_policies.xml.flat",
         "source": "com.example.layout_version.app-main-31:/layout/saving_policies.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_account_profile.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/account_profile.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/mipmap-hdpi_ic_launcher.png.flat",
@@ -268,28 +352,12 @@
         "source": "com.example.layout_version.app-main-31:/layout/delete_message.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_camera_of_policy_template.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/camera_of_policy_template.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_description_template.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/description_template.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/xml_network_security_config.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/xml/network_security_config.xml"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/layout_saving_policy_template.xml.flat",
         "source": "com.example.layout_version.app-main-31:/layout/saving_policy_template.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/mipmap-mdpi_ic_launcher_round.png.flat",
         "source": "com.example.layout_version.app-main-31:/mipmap-mdpi/ic_launcher_round.png"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_online_icon.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/online_icon.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/layout_policy_text_view.xml.flat",
@@ -304,48 +372,20 @@
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_linked_camera_192.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-hdpi_ic_launcher_foreground.png.flat",
-        "source": "com.example.layout_version.app-main-31:/mipmap-hdpi/ic_launcher_foreground.png"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/xml_backup_rules.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/xml/backup_rules.xml"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_theme_circle.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/theme_circle.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_edit_policy.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/edit_policy.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/layout_account_signup_page.xml.flat",
         "source": "com.example.layout_version.app-main-31:/layout/account_signup_page.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_settings_24.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/baseline_settings_24.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/drawable_round_rectangle_cyan_16dp.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/drawable/round_rectangle_cyan_16dp.xml"
-    },
-    {
         "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_play_circle_outline_24.xml.flat",
         "source": "com.example.layout_version.app-main-31:/drawable/baseline_play_circle_outline_24.xml"
     },
     {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_fragment_streaming_list.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/fragment_streaming_list.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/layout_library_videos.xml.flat",
-        "source": "com.example.layout_version.app-main-31:/layout/library_videos.xml"
-    },
-    {
-        "merged": "com.example.layout_version.app-merged_res-29:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.example.layout_version.app-main-31:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "com.example.layout_version.app-merged_res-29:/drawable_baseline_login_24.xml.flat",
+        "source": "com.example.layout_version.app-main-31:/drawable/baseline_login_24.xml"
     },
     {
         "merged": "com.example.layout_version.app-merged_res-29:/layout_library_videos_page.xml.flat",
