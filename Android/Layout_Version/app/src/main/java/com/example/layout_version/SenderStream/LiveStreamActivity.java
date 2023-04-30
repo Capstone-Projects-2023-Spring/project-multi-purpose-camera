@@ -24,14 +24,16 @@ import android.Manifest;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class LiveStreamActivity extends AppCompatActivity {
 
     public static final String INGEST_ENDPOINT = "ingest_endpoint";
     public static final String STREAM_KEY = "stream_key";
-    FrameLayout previewHolder;
-    BroadcastSession.Listener broadcastListener;
-    BroadcastSession broadcastSession;
+    private FrameLayout previewHolder;
+    private BroadcastSession.Listener broadcastListener;
+    private BroadcastSession broadcastSession;
+    private TextView liveStatusTextView;
 
     private String ingestEndpoint;
     private String streamKey;
@@ -40,11 +42,16 @@ public class LiveStreamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_stream);
-        broadcastListener = new LivestreamBroadcastListener();
+
+        liveStatusTextView = findViewById(R.id.liveStatusTextView);
+
+        broadcastListener = new LivestreamBroadcastListener(this, liveStatusTextView);
 
         Intent intent = getIntent();
         ingestEndpoint = intent.getStringExtra(INGEST_ENDPOINT);
         streamKey = intent.getStringExtra(STREAM_KEY);
+
+
 
         final String[] requiredPermissions =
                 { Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO };
@@ -70,7 +77,6 @@ public class LiveStreamActivity extends AppCompatActivity {
 
     public void setupBroadcastSession()
     {
-
         // Create a broadcast-session instance and sign up to receive broadcast
         // events and errors.
         Context ctx = getApplicationContext();
