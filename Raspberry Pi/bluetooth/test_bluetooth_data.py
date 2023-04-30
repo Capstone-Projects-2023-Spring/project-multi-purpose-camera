@@ -20,7 +20,11 @@ while True:
     client_socket, address = server_socket.accept()
     print("Accepted connection from", address)
     # mac address of pi --> DC:A6:32:03:E5:7A
-    client_socket.send("E4:5F:01:AF:19:30\n")
+
+    internet_check = internet_check()
+
+    #client_socket.send("E4:5F:01:AF:19:30\n")
+    client_socket.send(internet_check)
     
     ###recieves data from the client in try catch so it can connect again if there is a disconnection
     while True:
