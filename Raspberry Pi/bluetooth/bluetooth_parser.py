@@ -7,6 +7,7 @@ get wifi name, password, and new name for the device
 import subprocess
 import time
 import os.path
+import requests
 
 
 """Sets up new wifi credentials
@@ -75,6 +76,20 @@ def wifi_setup(ssid,password):
         return "Connected to " + ssid + "\n"
     
     return "Unable to connect to " + ssid + "\n"
+
+"""Checks if there is an internet connection
+    Parameter: 
+    Return: String saying if it can access the internet"""
+def internet_check():
+    url = "http://www.google.com"
+    timeout = 5
+    try:
+        request = requests.get(url, timeout=timeout)
+        return("Connected to the Internet")
+    except (requests.ConnectionError, requests.Timeout) as exception:
+        return("No internet connection.")
+
+
     
 """Checks if there is a device_id saved onto the mahcine
     Parameter: string (new device_id)
@@ -103,15 +118,15 @@ def device_id_setup(string):
     return result
 
 
-# def stream_setup(stream_info1,stream_info2,stream_info3):
+def stream_setup(stream_info1,stream_info2,stream_info3):
 #     
 #     with open("/home/mpc/project-multi-purpose-camera/Raspberry Pi/id_and_stream/stream.txt", "w"): file_stream:
 #         file_stream.write(stream_info1)
 #         file_stream.write(stream_info2)
 #         file_stream.write(stream_info3)
 #     
-#     result = ""
-#     return result     
+    result = ""
+    return result
     
 """Recieves the byte array from the phone and parses it to see where it should send the data
     Parameter: byte array (data from the user's phone)
