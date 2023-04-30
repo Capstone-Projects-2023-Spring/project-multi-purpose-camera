@@ -81,6 +81,7 @@ public class NetworkRequestManager {
                 DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mRequestQueue.add(jsonRequest);
     }
     public static void resetN(){
         n = 0;
