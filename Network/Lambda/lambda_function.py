@@ -225,8 +225,10 @@ def account_signup(event, pathPara, queryPara):
 
     if len(error) == 0:
         database.insert(Account(body["username"], body["password"], body["email"], timestamp="NOW()"))
-        token = database.get_field_by_field(Account, Account.TOKEN, Account.NAME, body[Account.NAME])
-        return json_payload({"message": "Account created", "token": token})
+        account: Account = database.get_by_field(Account, Account.NAME, body[Account.NAME])
+        return json_payload({"message": "Account created",
+                         Account.TOKEN: account.token, Account.NAME: account.username, Account.EMAIL: account.email,
+                         Account.HARDWARE_ID: account.hardware_id})
     return json_payload({"message": "\n".join(error)}, True)
 
 
@@ -238,9 +240,9 @@ def account_signup(event, pathPara, queryPara):
         json_payload({"message": Error.UNKNOWN_ACCOUNT}, True)
 
     account: Account = database.get_by_field(Account, Account.TOKEN, body[Account.TOKEN])
-    return json_payload({"message": "Account found", Account.NAME: account.username,
-                         Account.EMAIL: account.email,
-                         Account.STATUS: account.status})
+    return json_payload({"message": "Account found",
+                         Account.TOKEN: account.token, Account.NAME: account.username, Account.EMAIL: account.email,
+                         Account.HARDWARE_ID: account.hardware_id})
 
 
 @api.handle("/account/signin", httpMethod=MPC_API.POST)
@@ -267,7 +269,8 @@ def account_signin(event, pathPara, queryPara):
 
     account: Account = database.get_by_field(Account, field, body[Account.NAME])
     return json_payload({"message": "Signed in to Account",
-                         Account.TOKEN: account.token, Account.NAME: account.username, Account.EMAIL: account.email})
+                         Account.TOKEN: account.token, Account.NAME: account.username, Account.EMAIL: account.email,
+                         Account.HARDWARE_ID: account.hardware_id})
 
 
 @api.handle("/account/reset", httpMethod=MPC_API.POST)
@@ -416,6 +419,22 @@ def account_signin(event, pathPara, queryPara):
 
     database.insert(Account_has_Hardware(id_a, id_h))
     # database.insert()
+    return json_payload({"message": "Account associated with device"})
+
+
+@api.handle("/account/livestream/device", httpMethod=MPC_API.PUT)
+def account_signin(event, pathPara, queryPara):
+    """Handles users reset their account by verifying their username in the database"""
+    body: dict = event["body"]
+    id_a = database.get_field_by_field(Account, Account.ID, Account.TOKEN, body[Account.TOKEN])
+    id_h = database.get_field_by_field(Hardware, Hardware.ID, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
+    if id_a is None:
+        return json_payload({"message": Error.TOKEN_MISMATCH}, True)
+    if id_h is None:
+        return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
+
+    database.update_fields(Account, (Account.TOKEN, body[Account.TOKEN]), [(Account.HARDWARE_ID, id_h)])
+    database.insert(Account_has_Hardware(id_a, id_h))
     return json_payload({"message": "Account associated with device"})
 
 
