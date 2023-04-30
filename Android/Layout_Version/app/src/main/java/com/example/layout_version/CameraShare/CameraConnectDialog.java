@@ -14,11 +14,11 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.layout_version.R;
 
-public class CameraShareDialog extends DialogFragment {
+public class CameraConnectDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.device_share, container, false);
+        View v = inflater.inflate(R.layout.device_connect, container, false);
         Dialog dialog = getDialog();
         WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
         DisplayMetrics metrics = getResources().getDisplayMetrics();
