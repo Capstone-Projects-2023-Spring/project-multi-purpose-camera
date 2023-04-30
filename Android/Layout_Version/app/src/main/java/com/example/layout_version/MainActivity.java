@@ -26,18 +26,21 @@ import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
 import com.example.layout_version.Bluetooth.BluetoothManager;
+import com.example.layout_version.CameraShare.CameraConnectFragment;
+import com.example.layout_version.CameraShare.CameraShareFragment;
 import com.example.layout_version.MainTab.Library.LibraryFragment;
 import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
 import com.example.layout_version.MainTab.Library.VideoDetailFragment;
 import com.example.layout_version.MainTab.Library.VideoViewModel;
 import com.example.layout_version.MainTab.Streaming.ChannelItem;
+import com.example.layout_version.MainTab.Streaming.DialogUpdateInterface;
 import com.example.layout_version.MainTab.Streaming.StreamingFragment;
 import com.example.layout_version.MainTab.Streaming.StreamingListFragment;
 import com.example.layout_version.MainTab.Streaming.StreamingListFragmentInterface;
 import com.example.layout_version.MainTab.Streaming.StreamingViewModel;
 
 
-public class MainActivity extends AppCompatActivity implements LibraryFragmentInterface, StreamingListFragmentInterface {
+public class MainActivity extends AppCompatActivity implements LibraryFragmentInterface, StreamingListFragmentInterface, DialogUpdateInterface {
 
     private Fragment libraryFragment;
     private VideoViewModel videoViewModel;
@@ -237,41 +240,14 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
                 .addToBackStack("StreamingFragment")
                 .commit();
     }
-
     @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("debug","onStart()");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("debug","onRestart()");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("debug","onResume()");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("debug","onPause()");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("debug","onStop()");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("debug","onDestroy()");
+    public void dialogUpdate() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.connectFragmentContainer, new CameraConnectFragment())
+                .commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.shareFragmentContainer, new CameraShareFragment())
+                .commit();
     }
 
 
