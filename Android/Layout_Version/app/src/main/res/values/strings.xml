@@ -26,4 +26,7 @@
     <string name="streaming_streaming">Streaming</string>
     <string name="hardware_all_endpoint">/hardware/all</string>
     <string name="streaming_unavailable">Unavailable</string>
+    <string name="live_disconnected">Disconnected</string>
+    <string name="live_connecting">Connecting</string>
+    <string name="live_connected">Connected</string>
 </resources>
