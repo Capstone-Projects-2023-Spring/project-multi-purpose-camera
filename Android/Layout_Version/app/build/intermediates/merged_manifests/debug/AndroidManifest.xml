@@ -18,9 +18,6 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
 
     <permission
         android:name="com.example.layout_version.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
@@ -43,6 +40,9 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/Theme.Layout_Version" >
+        <activity
+            android:name="com.example.layout_version.Account.Account_Page_Login"
+            android:exported="false" />
         <activity
             android:name="com.example.layout_version.MainActivity"
             android:exported="true"
