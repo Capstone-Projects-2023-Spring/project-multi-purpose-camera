@@ -72,7 +72,6 @@ public class LiveStreamActivity extends AppCompatActivity {
         {
             setupBroadcastSession();
         }
-
     }
 
     public void setupBroadcastSession()

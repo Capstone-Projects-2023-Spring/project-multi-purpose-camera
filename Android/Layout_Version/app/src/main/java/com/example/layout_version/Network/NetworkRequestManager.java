@@ -64,12 +64,7 @@ public class NetworkRequestManager {
 
     public void Post(String url, JSONObject data, NetworkInterface success, NetworkInterface fail)
     {
-        Request(url, Request.Method.POST, data, success, fail);
-    }
-
-    public void Put(String url, JSONObject data, NetworkInterface success, NetworkInterface fail)
-    {
-        Request(url, Request.Method.PUT, data, success, fail);
+        Request(url, Request.Method.POST, data, success, fail, DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 4, DefaultRetryPolicy.DEFAULT_MAX_RETRIES);
     }
 
     public void Put(int endpointID, JSONObject data, NetworkInterface success, NetworkInterface fail)
@@ -78,10 +73,15 @@ public class NetworkRequestManager {
         String url = resource.getString(R.string.db_base_url)
                 + resource.getString(R.string.db_stage)
                 + resource.getString(endpointID);
-        Request(url, Request.Method.PUT, data, success, fail);
+        Put(url, data, success, fail);
     }
 
-    public void Request(String url, int method, JSONObject data, NetworkInterface success, NetworkInterface fail)
+    public void Put(String url, JSONObject data, NetworkInterface success, NetworkInterface fail)
+    {
+        Request(url, Request.Method.PUT, data, success, fail, DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 5, 0);
+    }
+
+    public void Request(String url, int method, JSONObject data, NetworkInterface success, NetworkInterface fail, int timeout, int retry)
     {
         if(progressBar != null)
             progressBar.setVisibility(View.VISIBLE);
@@ -110,8 +110,8 @@ public class NetworkRequestManager {
         };
 
         jsonRequest.setRetryPolicy(new DefaultRetryPolicy(
-                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                timeout,
+                retry,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mRequestQueue.add(jsonRequest);
     }

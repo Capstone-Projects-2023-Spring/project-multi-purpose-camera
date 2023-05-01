@@ -1,9 +1,11 @@
 package com.example.layout_version.CameraShare;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.layout_version.Account.Account;
+import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
+import com.example.layout_version.MainTab.Library.VideoViewModel;
+import com.example.layout_version.MainTab.Streaming.StreamingListFragmentInterface;
+import com.example.layout_version.MainTab.Streaming.StreamingViewModel;
 import com.example.layout_version.Network.NetworkRequestManager;
 import com.example.layout_version.R;
 
@@ -54,6 +60,12 @@ public class CameraConnectFragment extends Fragment {
             nrm.Post(R.string.device_code_endpoint, jsonObject,
                     json -> {
                         Toast.makeText(context, "Successfully connected device to account", Toast.LENGTH_SHORT).show();
+                        if(getParentFragment() instanceof CameraShareInterface)
+                        {
+                            ((CameraShareInterface)getParentFragment()).action();
+                            StreamingViewModel streamingViewModel = new ViewModelProvider(requireActivity()).get(StreamingViewModel.class);
+                            StreamingListFragmentInterface.loadData(getContext(), streamingViewModel, Account.getInstance().getTokenData().getValue(), 4);
+                        }
                     },
                     json->{
                         Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
@@ -61,5 +73,9 @@ public class CameraConnectFragment extends Fragment {
         });
 
         return layout;
+    }
+
+    interface CameraShareInterface{
+        void action();
     }
 }

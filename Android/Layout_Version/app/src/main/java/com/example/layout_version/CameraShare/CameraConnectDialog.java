@@ -14,7 +14,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.layout_version.R;
 
-public class CameraConnectDialog extends DialogFragment {
+public class CameraConnectDialog extends DialogFragment implements CameraConnectFragment.CameraShareInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,5 +45,10 @@ public class CameraConnectDialog extends DialogFragment {
         int dialogWidth = (int) (metrics.widthPixels * 0.9);
         lp.width = dialogWidth;
         dialog.getWindow().setAttributes(lp);
+    }
+
+    @Override
+    public void action() {
+        dismiss();
     }
 }
