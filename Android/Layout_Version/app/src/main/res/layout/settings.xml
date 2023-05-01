@@ -100,7 +100,9 @@
             android:id="@+id/spacer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="                          ____________________________________________" />
+            android:gravity="right"
+            android:layout_marginRight="36dp"
+            android:text="____________________________________________" />
 
         <LinearLayout
             android:id="@+id/bluetooth_layout"
@@ -146,7 +148,9 @@
             android:id="@+id/spacer4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="                          ____________________________________________" />
+            android:gravity="right"
+            android:layout_marginRight="36dp"
+            android:text="____________________________________________" />
 
         <LinearLayout
             android:id="@+id/notification_layout"
@@ -192,7 +196,9 @@
             android:id="@+id/spacer2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="                          ____________________________________________" />
+            android:gravity="right"
+            android:layout_marginRight="36dp"
+            android:text="____________________________________________" />
 
         <LinearLayout
             android:id="@+id/cloud_saving_layout"
@@ -238,7 +244,9 @@
             android:id="@+id/spacer3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="                          ____________________________________________" />
+            android:gravity="right"
+            android:layout_marginRight="36dp"
+            android:text="____________________________________________" />
 
         <LinearLayout
             android:id="@+id/livestream_layout"
@@ -250,9 +258,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="36dp"
                 android:src="@drawable/baseline_connected_tv_24" />
 
             <RelativeLayout
@@ -284,7 +292,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="                          ____________________________________________" />
+            android:gravity="right"
+            android:layout_marginRight="36dp"
+            android:text="____________________________________________" />
 
     </LinearLayout>
 

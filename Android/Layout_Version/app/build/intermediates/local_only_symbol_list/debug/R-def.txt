@@ -22,6 +22,7 @@ drawable baseline_bluetooth_48
 drawable baseline_clip_24
 drawable baseline_close_24
 drawable baseline_cloud_queue_24
+drawable baseline_connected_tv_24
 drawable baseline_device_thermostat_24
 drawable baseline_directions_walk_24
 drawable baseline_fiber_manual_record_24
@@ -76,10 +77,12 @@ id back_setting_btn_savingP
 id back_setting_text_savingP
 id bluetooth_camera
 id bluetooth_description
+id bluetooth_layout
 id bluetooth_settings
 id cam_vid_clip
 id change
 id cloud_saving_description
+id cloud_saving_layout
 id cloud_saving_settings
 id code
 id codeEdit
@@ -103,6 +106,8 @@ id edit_policy_linear_layout_parent
 id edit_policy_scroll
 id edit_policy_time_layout
 id emailAddress
+id fragmentContainerView
+id fragmentContainerView2
 id frameLayout
 id frameLayout2
 id imageView
@@ -117,6 +122,7 @@ id linearLayout
 id linearLayout2
 id linearLayout3
 id linearLayout5
+id livestream_layout
 id login
 id logout
 id mainFragmentContainerView
@@ -124,8 +130,11 @@ id main_layout
 id nav_bar_bottom
 id nav_bar_top
 id notification_description
+id notification_layout
 id notification_settings
 id optionButton
+id optionButton2
+id optionButton3
 id password
 id password_input
 id playButton
@@ -156,6 +165,7 @@ id spacer2
 id spacer3
 id spacer4
 id spacer5
+id spacer8
 id spinner
 id spinner1
 id ssid_input
@@ -194,6 +204,7 @@ layout account_reset
 layout account_signup_page
 layout account_verify
 layout activity_account_page_login
+layout activity_live_stream
 layout activity_main
 layout bluetooth_hardware_page
 layout bluetooth_input_wifi
@@ -205,6 +216,8 @@ layout device_share
 layout drawable_round_rectangle
 layout edit_policy
 layout fragment_blank
+layout fragment_camera_connect
+layout fragment_camera_share
 layout fragment_library
 layout fragment_streaming
 layout fragment_streaming_list
