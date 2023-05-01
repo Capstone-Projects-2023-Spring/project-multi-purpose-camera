@@ -19,9 +19,6 @@ public class Account_Page_Password_Change extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Notifications notif = new Notifications(this);
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        notif.send_Password_Change_Notification(managerCompat);
         setContentView(R.layout.account_password);
         account = Account.getInstance();
 
@@ -37,6 +34,9 @@ public class Account_Page_Password_Change extends AppCompatActivity {
         changeBtn.setOnClickListener(v ->
                 {
                     if (password.getText().toString().equals(re_password.getText().toString())) {
+                        Notifications notif = new Notifications(this);
+                        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+                        notif.send_Password_Change_Notification(managerCompat);
                         account.changePassword(
                                 Account_Page_Password_Change.this,
                                 password.getText().toString(),

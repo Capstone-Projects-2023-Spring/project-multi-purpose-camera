@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Bluetooth.BluetoothManager;
@@ -21,6 +22,11 @@ public class Bluetooth_Page extends AppCompatActivity {
         serialbtn.setOnClickListener(view -> {
             BluetoothManager bluetoothManager = new BluetoothManager();
             bluetoothManager.show_bluetooth_devices(this);
+            if(bluetoothManager.getConnected()){
+                Notifications notif = new Notifications(this);
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+                notif.send_Bluetooth_Notification(managerCompat);
+            }
         });
     }
 }

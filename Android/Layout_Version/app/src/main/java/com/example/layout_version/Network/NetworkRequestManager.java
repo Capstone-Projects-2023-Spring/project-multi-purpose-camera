@@ -39,6 +39,7 @@ import java.io.UnsupportedEncodingException;
 public class NetworkRequestManager {
     private final RequestQueue mRequestQueue;
     private final Context context;
+
     private final ProgressBar progressBar;
 
     private final ImageView resultView;

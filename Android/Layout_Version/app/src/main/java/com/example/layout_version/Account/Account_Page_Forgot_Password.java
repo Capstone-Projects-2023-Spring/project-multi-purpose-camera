@@ -19,11 +19,12 @@ public class Account_Page_Forgot_Password extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.account_reset);
+        account = Account.getInstance();
+
         Notifications notif = new Notifications(this);
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
         notif.send_Forgot_Password_Notification(managerCompat);
-        setContentView(R.layout.account_reset);
-        account = Account.getInstance();
 
         TextView username = findViewById(R.id.username);
 

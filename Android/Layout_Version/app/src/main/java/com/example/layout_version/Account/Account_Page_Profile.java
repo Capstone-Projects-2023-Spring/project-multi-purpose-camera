@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
+import com.example.layout_version.Notifications;
 import com.example.layout_version.R;
 
 public class Account_Page_Profile extends AppCompatActivity {
@@ -22,7 +24,6 @@ public class Account_Page_Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_profile);
         account = Account.getInstance();
-
         TextView username = findViewById(R.id.username);
         TextView resetPassword = findViewById(R.id.resetPassword);
 

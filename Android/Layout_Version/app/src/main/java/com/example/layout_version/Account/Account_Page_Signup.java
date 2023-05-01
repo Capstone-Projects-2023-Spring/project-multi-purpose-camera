@@ -20,9 +20,6 @@ public class Account_Page_Signup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Notifications notif = new Notifications(this);
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        notif.send_New_Account_Notification(managerCompat);
         setContentView(R.layout.account_signup_page);
         account = Account.getInstance();
         ImageView back_im;
@@ -41,6 +38,9 @@ public class Account_Page_Signup extends AppCompatActivity {
         signupbtn.setOnClickListener(v -> {
             if(password.getText().toString().equals(re_password.getText().toString()))
             {
+                Notifications notif = new Notifications(this);
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+                notif.send_New_Account_Notification(managerCompat);
                 account.signup(
                         Account_Page_Signup.this,
                         username.getText().toString(),

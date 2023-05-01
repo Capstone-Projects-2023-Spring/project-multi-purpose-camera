@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.Manifest;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
@@ -29,6 +31,11 @@ import com.example.layout_version.MainTab.Streaming.StreamingFragment;
 import com.example.layout_version.MainTab.Streaming.StreamingListFragment;
 import com.example.layout_version.MainTab.Streaming.StreamingListFragmentInterface;
 import com.example.layout_version.MainTab.Streaming.StreamingViewModel;
+import com.example.layout_version.Network.NetworkInterface;
+import com.example.layout_version.Network.NetworkRequestManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity implements LibraryFragmentInterface, StreamingListFragmentInterface {
@@ -57,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("My_Notification", "My Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("My_Notification", "My Notification", NotificationManager.IMPORTANCE_HIGH);
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
@@ -252,5 +259,7 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
         String value = savedInstanceState.getString("key");
         Log.d("Restore", value);
     }
+
+
 
 }
