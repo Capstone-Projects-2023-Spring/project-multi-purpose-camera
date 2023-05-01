@@ -31,8 +31,12 @@ public class BluetoothManager {
     private InputStream inputStream;
     private OutputStream outputStream;
 
+    public boolean connected;
+
     public BluetoothManager() {
+
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        connected = false;
     }
 
     @SuppressLint("MissingPermission")
@@ -45,6 +49,7 @@ public class BluetoothManager {
             outputStream = socket.getOutputStream();
             read();
             write("Change name\nnew_device");
+            connected = true;
             return true;
         } catch (IOException e) {
             Log.e(TAG, "Error connecting to device", e);
@@ -121,5 +126,8 @@ public class BluetoothManager {
 
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         builder.create().show();
+    }
+    public boolean getConnected(){
+        return connected;
     }
 }

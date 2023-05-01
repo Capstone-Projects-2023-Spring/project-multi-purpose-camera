@@ -22,6 +22,10 @@ public class Account_Page_Forgot_Password extends AppCompatActivity {
         setContentView(R.layout.account_reset);
         account = Account.getInstance();
 
+        Notifications notif = new Notifications(this);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        notif.send_Forgot_Password_Notification(managerCompat);
+
         TextView username = findViewById(R.id.username);
 
         Button sendBtn = findViewById(R.id.send);

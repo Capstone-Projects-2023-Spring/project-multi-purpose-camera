@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
@@ -31,6 +32,11 @@ import com.example.layout_version.MainTab.Streaming.StreamingFragment;
 import com.example.layout_version.MainTab.Streaming.StreamingListFragment;
 import com.example.layout_version.MainTab.Streaming.StreamingListFragmentInterface;
 import com.example.layout_version.MainTab.Streaming.StreamingViewModel;
+import com.example.layout_version.Network.NetworkInterface;
+import com.example.layout_version.Network.NetworkRequestManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity implements LibraryFragmentInterface, StreamingListFragmentInterface {
@@ -61,11 +67,23 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-        //Notifications notif = new Notifications(this);
-        //NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        //notif.send_Recording_Notification( managerCompat);
-        //notif.send_New_Account_Notification( managerCompat);
-        //notif.send_Motion_Detected_Notification( managerCompat);
+        NetworkRequestManager nrm = new NetworkRequestManager(this);
+        JSONObject jsonBody = new JSONObject();
+
+        nrm.Post(R.string.account_code_endpoint, jsonBody,
+                json -> {
+                    Notifications notif = new Notifications(this);
+                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+                    notif.send_Network_Connected_Notification(managerCompat);
+                    //success.action();
+                },
+                json -> {
+                    Notifications notif = new Notifications(this);
+                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+                    notif.send_Sign_In_Notification(managerCompat);
+                    //fail.action();
+                }
+        );
 
         try {
             Thread.sleep(2000);

@@ -58,4 +58,7 @@ public class Notifications {
     public void send_Bluetooth_Notification( NotificationManagerCompat managerCompat ) {
         send_Notification(managerCompat, "Bluetooth Connected", "Bluetooth has been connected and is working properly");
     }
+    public void send_Network_Not_Connected_Notification( NotificationManagerCompat managerCompat ) {
+        send_Notification(managerCompat, "Network Connection Failed", "Your device was unable to connect");
+    }
 }
