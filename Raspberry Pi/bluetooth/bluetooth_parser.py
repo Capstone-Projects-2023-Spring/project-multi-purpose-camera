@@ -49,20 +49,20 @@ def wifi_setup(ssid,password):
 #         wifi.write('wpa-psk "' + password + '"\n')
 # 
 
-    # copies text file to a temp wpa_supplicant"""
-    cmd = "sudo cp temp.txt wpa_supplicant.conf.temp"
-    subprocess.run(cmd,shell=True)
-    
-    # copies the temp wpa_supplicant to the actual wpa_supplicant that the pi will use"""
-    cmd = "sudo cp wpa_supplicant.conf.temp /etc/wpa_supplicant/wpa_supplicant.conf"
-    subprocess.run(cmd,shell=True)
-    
-    # applies the new wifi credentials 
-    cmd = "sudo wpa_cli -i wlan0 reconfigure"
-    subprocess.run(cmd,shell=True)
+#     # copies text file to a temp wpa_supplicant"""
+#     cmd = "sudo cp temp.txt wpa_supplicant.conf.temp"
+#     subprocess.run(cmd,shell=True)
+#     
+#     # copies the temp wpa_supplicant to the actual wpa_supplicant that the pi will use"""
+#     cmd = "sudo cp wpa_supplicant.conf.temp /etc/wpa_supplicant/wpa_supplicant.conf"
+#     subprocess.run(cmd,shell=True)
+#     
+#     # applies the new wifi credentials 
+#     cmd = "sudo wpa_cli -i wlan0 reconfigure"
+#     subprocess.run(cmd,shell=True)
 
     # sleeps so the pi has enough time to reconfigure
-    time.sleep(10)
+    time.sleep(15)
     
     cmd = "sudo wpa_cli -i wlan0 status"
     output = subprocess.check_output(cmd,shell=True)
@@ -176,6 +176,6 @@ def parser(byte_string):
     
    
 if __name__ == "__main__":
-    byte_string = b'device_id\nCOMPUTER 7084\nAC24dc34!\n'
+    byte_string = b'wifi\nCOMPUTER 7084\nAC24dc34!\n'
     temp = parser(byte_string)
     print(temp)
