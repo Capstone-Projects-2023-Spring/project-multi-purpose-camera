@@ -127,8 +127,12 @@ public class LiveStreamActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        broadcastSession.stop();
-        previewHolder.removeAllViews();
-        broadcastSession.release();
+        if(broadcastSession != null)
+        {
+            broadcastSession.stop();
+            previewHolder.removeAllViews();
+            broadcastSession.release();
+        }
+
     }
 }
