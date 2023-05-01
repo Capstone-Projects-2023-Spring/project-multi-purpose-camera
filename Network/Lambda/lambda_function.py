@@ -434,7 +434,7 @@ def account_signin(event, pathPara, queryPara):
         return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
 
     database.update_fields(Account, (Account.TOKEN, body[Account.TOKEN]), [(Account.HARDWARE_ID, id_h)])
-    database.insert(Account_has_Hardware(id_a, id_h))
+    # database.insert(Account_has_Hardware(id_a, id_h))
     return json_payload({"message": "Account associated with device"})
 
 
