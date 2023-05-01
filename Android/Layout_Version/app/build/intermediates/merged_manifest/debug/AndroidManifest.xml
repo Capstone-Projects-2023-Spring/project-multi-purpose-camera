@@ -41,6 +41,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.Layout_Version" >
         <activity
+            android:name="com.example.layout_version.Account.Account_Page_Login"
+            android:exported="false" />
+        <activity
             android:name="com.example.layout_version.MainActivity"
             android:exported="true"
             android:launchMode="singleTask" >

@@ -6,13 +6,18 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.layout_version.Notifications;
+
+import com.example.layout_version.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -116,8 +121,9 @@ public class BluetoothManager {
         builder.setAdapter(adapter, (dialog, which) -> {
             BluetoothDevice selectedDevice = deviceList.get(which);
             if (this.connectToDevice(selectedDevice.getAddress())) {
-                System.out.println("selected device: "+selectedDevice.getAddress());
-                Toast.makeText(context, "Connected to " + selectedDevice.getName(), Toast.LENGTH_SHORT).show();
+                showWifiInputDialog(context);
+                //System.out.println("selected device: "+selectedDevice.getAddress());
+                //Toast.makeText(context, "Connected to " + selectedDevice.getName(), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(context, "Failed to connect to " + selectedDevice.getName(), Toast.LENGTH_LONG).show();
                 return;
@@ -125,6 +131,30 @@ public class BluetoothManager {
         });
 
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        builder.create().show();
+    }
+
+    private void showWifiInputDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Enter WiFi Information");
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.bluetooth_input_wifi, null);
+
+        final EditText inputSSID = view.findViewById(R.id.ssid_input);
+        final EditText inputPassword = view.findViewById(R.id.password_input);
+
+        builder.setView(view);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String ssid = inputSSID.getText().toString();
+            String password = inputPassword.getText().toString();
+            String wifi_information = "wifi\n"+ssid + "\n" + password;
+            this.write(wifi_information);
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
         builder.create().show();
     }
     public boolean getConnected(){

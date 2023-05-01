@@ -209,7 +209,7 @@ class MPCDatabase:
            Returns:
            None
        """
-        script = f"Delete From {table_class.__name__} Where {'and'.join([f'{i.key} = {i.value}' for i in condition_items])}"
+        script = f"Delete From {table_class.__name__} Where {' and '.join([f'{i.key} = {i.value}' for i in condition_items])}"
         if "delete" not in script.lower():
             raise TypeError("Delete should only be delete")
         try:
@@ -886,49 +886,12 @@ if __name__ == "__main__":
                          "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
                          "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
                          "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
-    hardware2 = Hardware("Hardware-2", "1080p", "test-ivs",
-                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
-                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
-    hardware3 = Hardware("Hardware-3", "1080p", "test-ivs",
-                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
-                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
-    hardware4 = Hardware("Hardware-4", "1080p", "test-ivs",
-                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
-                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
-    hardware5 = Hardware("Hardware-5", "720p", "test-ivs",
-                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
-                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
-    hardware6 = Hardware("Hardware-6", "720p", "test-ivs",
-                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
-                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
-    hardware7 = Hardware("Hardware-7", "720p", "test-ivs",
-                         "arn:aws:ivs:us-east-1:052524269538:channel/HCBh4loJzOvw",
-                         "sk_us-east-1_DdqDOfelQCU9_ofTx6s4yekNFgesMT8eLdWIS9k8zLV",
-                         "rtmps://1958e2d97d88.global-contribute.live-video.net:443/app/",
-                         "https://1958e2d97d88.us-east-1.playback.live-video.net/api/video/v1/us-east-1.052524269538.channel.HCBh4loJzOvw.m3u8")
-
-    for h in [hardware1, hardware2, hardware3, hardware4, hardware5, hardware6, hardware7]:
+    for h in [hardware1]:
         database.insert(h, ignore=True)
 
     account_hardware_map = {
         id_a: {
-            hardware1, hardware2, hardware3
-        },
-        id_a1: {
-            hardware4, hardware5
-        },
-        id_a2: {
-            hardware6, hardware7
+            hardware1
         }
     }
 
@@ -938,12 +901,12 @@ if __name__ == "__main__":
                                                Hardware.NAME, hardware.device_name)
             database.insert(Account_has_Hardware(id, id_h), True)
 
-    id_a_h = database.get_fields_by_field(Account_has_Hardware, Account_has_Hardware.HARDWARE_ID,
-                                          Account_has_Hardware.ACCOUNT_ID, str(id_a))
-    id_a1_h = database.get_fields_by_field(Account_has_Hardware, Account_has_Hardware.HARDWARE_ID,
-                                           Account_has_Hardware.ACCOUNT_ID, str(id_a1))
-    id_a2_h = database.get_fields_by_field(Account_has_Hardware, Account_has_Hardware.HARDWARE_ID,
-                                           Account_has_Hardware.ACCOUNT_ID, str(id_a2))
+    # id_a_h = database.get_fields_by_field(Account_has_Hardware, Account_has_Hardware.HARDWARE_ID,
+    #                                       Account_has_Hardware.ACCOUNT_ID, str(id_a))
+    # id_a1_h = database.get_fields_by_field(Account_has_Hardware, Account_has_Hardware.HARDWARE_ID,
+    #                                        Account_has_Hardware.ACCOUNT_ID, str(id_a1))
+    # id_a2_h = database.get_fields_by_field(Account_has_Hardware, Account_has_Hardware.HARDWARE_ID,
+    #                                        Account_has_Hardware.ACCOUNT_ID, str(id_a2))
 
     data = database.get_all(Hardware)
     for d in data:
@@ -968,7 +931,7 @@ if __name__ == "__main__":
     for d in data:
         print(str(d))
 
-    print(id_a_h)
+    # print(id_a_h)
     # recording1 = Recording("_import_616e5dcf2a2362.07330217_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
     #                        hardware_id=random.choice(id_a_h))
     # recording2 = Recording("_import_616e710b7f2ff0.35776522_preview.mp4", "CURDATE()", "NOW()", account_id=id_a,
@@ -987,22 +950,5 @@ if __name__ == "__main__":
     #     print(str(d))
 
     a = Account("Keita Nakashima", "Password", "tun05036@temple.edu")
-    database.insert(a, ignore=True)
-
-    database.update(Account, MatchItem(Account.ID, 4),
-                    [MatchItem(Account.TOKEN, "md5(ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000))")])
-    a = database.get_by_name(Account, "Keita Nakashima")
-    print(a)
-    max = database.get_max_id(Account)
-    print(database.get_field_by_name(Account, Account.TOKEN, "Keita Nakashima"))
-    print(max)
-
-    database.delete(Account, [MatchItem(Account.NAME, "username")])
-    print("Value" + str(database.get_field_by_name(Account, Account.ID, "username")))
-
-    print(database.get_field_by_field(Account, Account.NAME, Account.EMAIL, "username1@email.com"))
-    print(MatchItem("Key", "NONE").value)
-    print(database.varidate_timestamp(Account, Account.NAME, "username1"))
-
 
     database.close()

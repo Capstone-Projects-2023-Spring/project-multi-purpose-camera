@@ -3,6 +3,7 @@ package com.example.layout_version;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -11,10 +12,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.Manifest;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -67,23 +71,11 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-        NetworkRequestManager nrm = new NetworkRequestManager(this);
-        JSONObject jsonBody = new JSONObject();
-
-        nrm.Post(R.string.account_code_endpoint, jsonBody,
-                json -> {
-                    Notifications notif = new Notifications(this);
-                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-                    notif.send_Network_Connected_Notification(managerCompat);
-                    //success.action();
-                },
-                json -> {
-                    Notifications notif = new Notifications(this);
-                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-                    notif.send_Sign_In_Notification(managerCompat);
-                    //fail.action();
-                }
-        );
+        Notifications notif = new Notifications(this);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        notif.send_Recording_Notification( managerCompat);
+        notif.send_New_Account_Notification( managerCompat);
+        notif.send_Motion_Detected_Notification( managerCompat);
 
         try {
             Thread.sleep(2000);
@@ -142,9 +134,10 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
 
             Intent intent;
             if(account.isSignedIn())
-                intent = new Intent(MainActivity.this, Account_Page_Profile.class);
+                intent = new Intent (MainActivity.this, Account_Page_Profile.class);
             else
-                intent = new Intent(MainActivity.this, Account_Page.class);
+                intent = new Intent (MainActivity.this, Account_Page.class);
+
             startActivity(intent);
         });
 

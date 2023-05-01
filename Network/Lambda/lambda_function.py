@@ -554,6 +554,53 @@ def hardware_newname(event, pathPara, queryPara):
     return json_payload({"name": f"{prefix} {max(prefixed_numbers) + 1}"})
 
 
+@api.handle("/hardware/share", httpMethod=MPC_API.POST)
+def hardware_newname(event, pathPara, queryPara):
+    """Inserts new rows into the hardware table based on account id"""
+    body = event["body"]
+    if not database.verify_fields_by_joins(
+            Account,
+           [(Account_has_Hardware, Account_has_Hardware.EXPLICIT_ACCOUNT_ID,
+             Account.EXPLICIT_ID),
+            (Hardware, Hardware.EXPLICIT_HARDWARE_ID,
+             Account_has_Hardware.EXPLICIT_HARDWARE_ID)],
+           [(Account.TOKEN, body[Account.TOKEN]),
+            (Hardware.EXPLICIT_DEVICE_ID, body[Hardware.DEVICE_ID])]):
+        return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
+
+    code = random.randint(0, 999999)
+    code_zero = str(code).zfill(6)
+    if database.verify_field(Hardware, Hardware.CODE, code_zero):
+        return json_payload({"message": "Failed to generate code"}, True)
+
+    database.update_fields(Hardware, (Hardware.DEVICE_ID, body[Hardware.DEVICE_ID]), [(Hardware.CODE, code_zero)])
+
+    result_code = database.get_field_by_field(Hardware, Hardware.CODE, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
+
+    return json_payload({"code": result_code})
+
+
+@api.handle("/hardware/code", httpMethod=MPC_API.POST)
+def hardware_newname(event, pathPara, queryPara):
+    """Inserts new rows into the hardware table based on account id"""
+    body = event["body"]
+
+    id_a = database.get_field_by_field(Account, Account.ID, Account.TOKEN, body[Account.TOKEN])
+    id_h = database.get_field_by_field(Hardware, Hardware.ID, Hardware.CODE, body[Hardware.CODE])
+
+    if id_a is None:
+        return json_payload({"message": Error.UNKNOWN_ACCOUNT}, True)
+
+    if id_h is None:
+        return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
+
+    database.update_fields(Hardware, (Hardware.CODE, body[Hardware.CODE]), [(Hardware.CODE, None)])
+
+    database.insert(Account_has_Hardware(id_a, id_h))
+
+    return json_payload({"message": "Successfully connected account to device"})
+
+
 @api.handle("/hardware/{id}")
 def hardware_request_by_id(event, pathPara, queryPara):
     """Gets information from the hardware table based on specified id"""
@@ -915,7 +962,7 @@ def send_email(event, pathPara, queryPara):
 def file_all(event, pathPara, queryPara):
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
-        return json_payload({"message": "Account does not exist"})
+        return json_payload({"message": Error.UNKNOWN_ACCOUNT}, True)
 
     records = database.query(
         f"""Select distinct arn From Account 
@@ -951,7 +998,7 @@ def file_all(event, pathPara, queryPara):
 def file_delete(event, pathPara, queryPara):
     token = event["body"]["token"]
     if not database.verify_field(Account, Account.TOKEN, token):
-        return json_payload({"message": "Account does not exist"})
+        return json_payload({"message": Error.UNKNOWN_ACCOUNT}, True)
 
     # channelId/year-month-date-hour-minute-id
     file_name = event["body"][Recording.NAME]
@@ -968,22 +1015,21 @@ def file_delete(event, pathPara, queryPara):
 
 
 if __name__ == "__main__":
-    # event = {
-    #     "resource": "/hardware/delete",
-    #     "httpMethod": MPC_API.DELETE,
-    #     "body": """{
-    #         "username": "John Smith",
-    #         "password": "Password",
-    #         "email": "default@temple.edu",
-    #         "code": "658186",
-    #         "token": "a787d4477f1d74512e97df5185ef229d",
-    #         "file_name": "vIvvphhE1OJL/2023-4-27-17-35-t0QjMMgqDKRm",
-    #         "device_id": "06eb485809c8f0ca2569fbe530bacd0d"
-    #     }"""
-    # }
-    # response = lambda_handler(event, None)
-    # # token = json.loads(response["body"])["token"]
-    # print(response)
+    event = {
+        "resource": "/hardware/all",
+        "httpMethod": MPC_API.POST,
+        "body": """{
+            "username": "John Smith",
+            "password": "Password",
+            "email": "default@temple.edu",
+            "code": "658186",
+            "token": "afd39d162160bf1e0ef609efd8dc3530",
+            "file_name": "vIvvphhE1OJL/2023-4-27-17-35-t0QjMMgqDKRm",
+            "device_id": "5f2a07aa327872954a00d28027549a94567b5b76dfefed03b9c9bc77"
+        }"""
+    }
+    response = lambda_handler(event, None)
+    # token = json.loads(response["body"])["token"]
+    print(response)
 
-    database.insert(Account_has_Hardware(18, 53))
     a = 1
