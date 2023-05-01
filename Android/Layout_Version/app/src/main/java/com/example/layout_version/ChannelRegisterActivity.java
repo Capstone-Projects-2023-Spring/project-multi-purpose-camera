@@ -58,10 +58,24 @@ public class ChannelRegisterActivity extends AppCompatActivity {
                         View view = getLayoutInflater().inflate(R.layout.channel_information, null);
                         TextView ingestEndpoint = view.findViewById(R.id.ingestEndpointTextView);
                         TextView streamKey = view.findViewById(R.id.streamKeyTextView);
+                        Button emailButton = view.findViewById(R.id.emailButton);
+                        ProgressBar progressBar = view.findViewById(R.id.progressBar);
+                        ImageView networkResultView = view.findViewById(R.id.networkResultView);
                         try{
                             JSONObject hardware = json.getJSONObject("hardware");
                             ingestEndpoint.setText(hardware.getString("ingest_endpoint"));
                             streamKey.setText(hardware.getString("stream_key"));
+                            String deviceId = (hardware.getString("device_id"));
+                            NetworkRequestManager nrm = new NetworkRequestManager(this, progressBar, networkResultView);
+                            emailButton.setOnClickListener(view1 -> {
+                                email(emailButton, nrm, deviceId,
+                                        json1 -> {
+
+                                        },
+                                        json1 -> {
+
+                                        });
+                            });
                             errorTextView.setText("");
                         }catch(JSONException e)
                         {
@@ -94,6 +108,7 @@ public class ChannelRegisterActivity extends AppCompatActivity {
                                     json1->{
                                         channelRegisterImageView.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.baseline_check_circle_outline_192));
                                         Account.getInstance().setHardware_id(hardwareId);
+                                        errorTextView.setText("");
                                     },
                                     json1 ->{
                                         errorTextView.setText("Failed to connect to process request. Try again");
@@ -136,8 +151,7 @@ public class ChannelRegisterActivity extends AppCompatActivity {
                 });
     }
 
-    private void connectDevice(Button button, String device_id, NetworkInterface success, NetworkInterface fail)
-    {
+    private void connectDevice(Button button, String device_id, NetworkInterface success, NetworkInterface fail) {
         JSONObject jsonObject = new JSONObject(
                 Map.of(
                         "token", Account.getInstance().getTokenData().getValue(),
@@ -148,6 +162,26 @@ public class ChannelRegisterActivity extends AppCompatActivity {
                 json -> {
                     button.setEnabled(false);
                     phoneButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.round_button_diabled));
+                    success.action(json);
+                },
+                json -> {
+                    errorTextView.setText("Failed to connect to process request. Try again");
+                    button.setEnabled(true);
+                    fail.action(json);
+                });
+    }
+
+    private void email(Button button, NetworkRequestManager nrm, String device_id, NetworkInterface success, NetworkInterface fail)
+    {
+        JSONObject jsonObject = new JSONObject(
+                Map.of(
+                        "token", Account.getInstance().getTokenData().getValue(),
+                        "device_id", device_id
+                ));
+        button.setEnabled(false);
+        nrm.Post(R.string.device_email_endpoint, jsonObject,
+                json -> {
+                    button.setEnabled(true);
                     success.action(json);
                 },
                 json -> {

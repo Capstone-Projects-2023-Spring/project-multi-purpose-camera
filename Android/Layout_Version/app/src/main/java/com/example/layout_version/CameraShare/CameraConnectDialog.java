@@ -11,7 +11,11 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.layout_version.Account.Account;
+import com.example.layout_version.MainTab.Streaming.StreamingListFragmentInterface;
+import com.example.layout_version.MainTab.Streaming.StreamingViewModel;
 import com.example.layout_version.R;
 
 public class CameraConnectDialog extends DialogFragment implements CameraConnectFragment.CameraShareInterface {
@@ -49,6 +53,8 @@ public class CameraConnectDialog extends DialogFragment implements CameraConnect
 
     @Override
     public void action() {
+        StreamingViewModel streamingViewModel = new ViewModelProvider(requireActivity()).get(StreamingViewModel.class);
+        StreamingListFragmentInterface.loadData(getContext(), streamingViewModel, Account.getInstance().getTokenData().getValue(), 4);
         dismiss();
     }
 }
