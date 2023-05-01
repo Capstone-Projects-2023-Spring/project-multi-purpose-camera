@@ -447,6 +447,25 @@ def account_insert(event, pathPara, queryPara):
     return json_payload({"id": a.account_id, "token": a.token})
 
 
+@api.handle("/account/email/device", httpMethod=MPC_API.POST)
+def account_signin(event, pathPara, queryPara):
+    """Handles users reset their account by verifying their username in the database"""
+    body: dict = event["body"]
+
+    account = database.get_by_field(Account, Account.TOKEN, body[Account.TOKEN])
+    hardware = database.get_by_field(Hardware, Hardware.DEVICE_ID, body[Hardware.DEVICE_ID])
+    if account is None:
+        return json_payload({"message": Error.TOKEN_MISMATCH}, True)
+    if hardware is None:
+        return json_payload({"message": Error.DEVICE_NOT_FOUND}, True)
+
+    if EmailSender.send(account.email,
+                        "[MPC Account] Stream Information", f"Ingest Endpoint:  \n{hardware.ingest_endpoint}\nStream Key: {hardware.stream_key}"):
+        return json_payload({"message": "Code sent"})
+    else:
+        return json_payload({"message": "Failed to send code"})
+
+
 @api.handle("/account/{id}")
 def account_request_by_id(event, pathPara, queryPara):
     """Gets account based on specified id"""
