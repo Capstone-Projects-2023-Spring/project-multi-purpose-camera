@@ -18,15 +18,17 @@ import com.amazonaws.ivs.broadcast.ImageDevice;
 import com.amazonaws.ivs.broadcast.ImagePreviewView;
 import com.amazonaws.ivs.broadcast.Presets;
 import com.amazonaws.ivs.player.PlayerView;
+import com.example.layout_version.MainActivity;
 import com.example.layout_version.R;
 
 import android.Manifest;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class LiveStreamActivity extends AppCompatActivity {
+public class LiveStreamActivity extends AppCompatActivity implements LivestreamBroadcastListener.LiveStreamInterface {
 
     public static final String INGEST_ENDPOINT = "ingest_endpoint";
     public static final String STREAM_KEY = "stream_key";
@@ -34,6 +36,7 @@ public class LiveStreamActivity extends AppCompatActivity {
     private BroadcastSession.Listener broadcastListener;
     private BroadcastSession broadcastSession;
     private TextView liveStatusTextView;
+    private ImageButton streamRefreshButton;
 
     private String ingestEndpoint;
     private String streamKey;
@@ -44,8 +47,8 @@ public class LiveStreamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_live_stream);
 
         liveStatusTextView = findViewById(R.id.liveStatusTextView);
-
-        broadcastListener = new LivestreamBroadcastListener(this, liveStatusTextView);
+        streamRefreshButton = findViewById(R.id.streamRefreshButton);
+        broadcastListener = new LivestreamBroadcastListener(this, liveStatusTextView, this);
 
         Intent intent = getIntent();
         ingestEndpoint = intent.getStringExtra(INGEST_ENDPOINT);
@@ -72,6 +75,11 @@ public class LiveStreamActivity extends AppCompatActivity {
         {
             setupBroadcastSession();
         }
+
+        streamRefreshButton.setOnClickListener(v->{
+            stop();
+            setupBroadcastSession();
+        });
     }
 
     public void setupBroadcastSession()
@@ -87,12 +95,11 @@ public class LiveStreamActivity extends AppCompatActivity {
         // awaitDeviceChanges will fire on the main thread after all pending devices
         // attachments have been completed
 
-
+        previewHolder = findViewById(R.id.frameLayout);
         broadcastSession.awaitDeviceChanges(() -> {
             for(Device device: broadcastSession.listAttachedDevices()) {
                 // Find the camera we attached earlier
                 if(device.getDescriptor().type == Device.Descriptor.DeviceType.CAMERA) {
-                    previewHolder = findViewById(R.id.frameLayout);
                     ImagePreviewView preview = ((ImageDevice)device).getPreviewView();
                     preview.setLayoutParams(new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -102,9 +109,7 @@ public class LiveStreamActivity extends AppCompatActivity {
             }
         });
 
-        broadcastSession.start(
-                ingestEndpoint,
-                streamKey);
+        broadcastSession.start(ingestEndpoint, streamKey);
     }
 
     @Override
@@ -129,9 +134,31 @@ public class LiveStreamActivity extends AppCompatActivity {
         if(broadcastSession != null)
         {
             broadcastSession.stop();
-            previewHolder.removeAllViews();
+            broadcastSession.release();
+            if(previewHolder != null)
+                previewHolder.removeAllViews();
+
+        }
+    }
+
+    @Override
+    public void stop() {
+        if(broadcastSession != null)
+        {
+            broadcastSession.stop();
+
+            if(previewHolder != null)
+                previewHolder.removeAllViews();
             broadcastSession.release();
         }
+    }
 
+    @Override
+    public void reconnect() {
+        if(broadcastSession != null)
+        {
+            stop();
+            setupBroadcastSession();
+        }
     }
 }
