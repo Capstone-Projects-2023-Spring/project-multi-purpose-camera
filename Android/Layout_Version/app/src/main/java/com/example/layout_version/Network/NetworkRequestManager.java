@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Build;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -35,10 +37,19 @@ import java.io.UnsupportedEncodingException;
 public class NetworkRequestManager {
     private final RequestQueue mRequestQueue;
     private final Context context;
+    private final ProgressBar progressBar;
     public NetworkRequestManager(Context context)
+    {
+        this(context, null);
+    }
+
+    public NetworkRequestManager(Context context, ProgressBar progressBar)
     {
         this.context = context;
         mRequestQueue = Volley.newRequestQueue(context);
+        this.progressBar = progressBar;
+        if(progressBar != null)
+            progressBar.setVisibility(View.GONE);
     }
 
     public void Post(int endpointID, JSONObject data, NetworkInterface success, NetworkInterface fail)
@@ -63,8 +74,14 @@ public class NetworkRequestManager {
 
     public void Request(String url, int method, JSONObject data, NetworkInterface success, NetworkInterface fail)
     {
+        if(progressBar != null)
+            progressBar.setVisibility(View.VISIBLE);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(method, url, data,
-                success::action,
+                json -> {
+                    success.action(json);
+                    if(progressBar != null)
+                        progressBar.setVisibility(View.GONE);
+                },
                 error -> {
                     NetworkResponse response = error.networkResponse;
                     if (error instanceof ServerError && response != null) {
@@ -75,8 +92,11 @@ public class NetworkRequestManager {
                             fail.action((JSONObject) obj.get("body"));
                         } catch (UnsupportedEncodingException | JSONException e1) {
                             e1.printStackTrace();
+                            fail.action(null);
                         }
                     }
+                    if(progressBar != null)
+                        progressBar.setVisibility(View.GONE);
                 }){
         };
 
