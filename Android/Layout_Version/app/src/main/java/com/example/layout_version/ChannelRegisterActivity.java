@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.layout_version.Account.Account;
+import com.example.layout_version.Network.NetworkInterface;
 import com.example.layout_version.Network.NetworkRequestManager;
 
 import org.json.JSONException;
@@ -52,20 +53,7 @@ public class ChannelRegisterActivity extends AppCompatActivity {
         errorTextView.setText("");
 
         desktopButton.setOnClickListener(v -> {
-            String name = deviceNameEdit.getText().toString();
-            if(name.equals(""))
-            {
-                errorTextView.setText("Give device name");
-                return;
-            }
-
-            JSONObject jsonObject = new JSONObject(
-                    Map.of(
-                        "token", Account.getInstance().getTokenData().getValue(),
-                            "device_name", name
-                    ));
-            desktopButton.setEnabled(false);
-            nrm.Put(getResources().getString(R.string.device_register_url), jsonObject,
+            registerDevice(desktopButton,
                     json -> {
                         View view = getLayoutInflater().inflate(R.layout.channel_information, null);
                         TextView ingestEndpoint = view.findViewById(R.id.ingestEndpointTextView);
@@ -79,28 +67,105 @@ public class ChannelRegisterActivity extends AppCompatActivity {
                         {
                             errorTextView.setText("Internal error when creating dialog");
                         }
-
                         new AlertDialog.Builder(this)
                                 .setView(view)
                                 .show();
-                        desktopButton.setEnabled(true);
                     },
-                    json -> {
-                        errorTextView.setText("Failed to connect to process request. Try again");
-                        desktopButton.setEnabled(true);
-                    });
-
+                    json -> {});
         });
 
-        if(Account.getInstance().getHardware_id() == null)
+        if(!isNumeric(Account.getInstance().getHardware_id()))
         {
             phoneButton.setOnClickListener(v -> {
-                channelRegisterImageView.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.baseline_check_circle_outline_192));
+                registerDevice(phoneButton,
+                        json -> {
+                            String deviceId;
+                            String hardwareId;
+                            try{
+                                deviceId = json.getJSONObject("hardware").getString("device_id");
+                                hardwareId = json.getJSONObject("hardware").getString("hardware_id");
+                            }catch (JSONException e)
+                            {
+                                phoneButton.setEnabled(true);
+                                errorTextView.setText("Failed to connect to process request. Try again");
+                                return;
+                            }
+                            connectDevice(phoneButton, deviceId,
+                                    json1->{
+                                        channelRegisterImageView.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.baseline_check_circle_outline_192));
+                                        Account.getInstance().setHardware_id(hardwareId);
+                                    },
+                                    json1 ->{
+                                        errorTextView.setText("Failed to connect to process request. Try again");
+                                    });
+                        },
+                        json -> {
+                            errorTextView.setText("Failed to connect to process request. Try again");
+                        });
             });
         }
         else{
             phoneButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.round_button_diabled));
         }
+    }
 
+    private void registerDevice(Button button, NetworkInterface success, NetworkInterface fail)
+    {
+        String name = deviceNameEdit.getText().toString();
+        if(name.equals(""))
+        {
+            errorTextView.setText("Give device name");
+            return;
+        }
+
+        JSONObject jsonObject = new JSONObject(
+                Map.of(
+                    "token", Account.getInstance().getTokenData().getValue(),
+                    "device_name", name
+                ));
+        button.setEnabled(false);
+        nrm.Put(getResources().getString(R.string.device_register_url), jsonObject,
+                json -> {
+                    button.setEnabled(true);
+                    success.action(json);
+                },
+                json -> {
+                    errorTextView.setText("Failed to connect to process request. Try again");
+                    button.setEnabled(true);
+                    fail.action(json);
+                });
+    }
+
+    private void connectDevice(Button button, String device_id, NetworkInterface success, NetworkInterface fail)
+    {
+        JSONObject jsonObject = new JSONObject(
+                Map.of(
+                        "token", Account.getInstance().getTokenData().getValue(),
+                        "device_id", device_id
+                ));
+        button.setEnabled(false);
+        nrm.Put(R.string.livestream_connect_endpoint, jsonObject,
+                json -> {
+                    button.setEnabled(false);
+                    phoneButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.round_button_diabled));
+                    success.action(json);
+                },
+                json -> {
+                    errorTextView.setText("Failed to connect to process request. Try again");
+                    button.setEnabled(true);
+                    fail.action(json);
+                });
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 }

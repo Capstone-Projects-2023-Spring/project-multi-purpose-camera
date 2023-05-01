@@ -72,6 +72,15 @@ public class NetworkRequestManager {
         Request(url, Request.Method.PUT, data, success, fail);
     }
 
+    public void Put(int endpointID, JSONObject data, NetworkInterface success, NetworkInterface fail)
+    {
+        Resources resource = context.getResources();
+        String url = resource.getString(R.string.db_base_url)
+                + resource.getString(R.string.db_stage)
+                + resource.getString(endpointID);
+        Request(url, Request.Method.PUT, data, success, fail);
+    }
+
     public void Request(String url, int method, JSONObject data, NetworkInterface success, NetworkInterface fail)
     {
         if(progressBar != null)
