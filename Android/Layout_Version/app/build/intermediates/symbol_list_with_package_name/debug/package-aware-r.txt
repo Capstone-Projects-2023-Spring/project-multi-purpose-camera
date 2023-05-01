@@ -2717,6 +2717,7 @@ drawable baseline_bluetooth_48
 drawable baseline_clip_24
 drawable baseline_close_24
 drawable baseline_cloud_queue_24
+drawable baseline_connected_tv_24
 drawable baseline_device_thermostat_24
 drawable baseline_directions_walk_24
 drawable baseline_fiber_manual_record_24
@@ -2963,6 +2964,7 @@ id bestChoice
 id blocking
 id bluetooth_camera
 id bluetooth_description
+id bluetooth_layout
 id bluetooth_settings
 id bottom
 id bounce
@@ -2994,6 +2996,7 @@ id clip_vertical
 id clockwise
 id closest
 id cloud_saving_description
+id cloud_saving_layout
 id cloud_saving_settings
 id code
 id codeEdit
@@ -3091,6 +3094,8 @@ id fixed
 id flip
 id floating
 id forever
+id fragmentContainerView
+id fragmentContainerView2
 id fragment_container_view_tag
 id frameLayout
 id frameLayout2
@@ -3148,6 +3153,7 @@ id linearLayout3
 id linearLayout5
 id listMode
 id list_item
+id livestream_layout
 id login
 id logout
 id m3_side_sheet
@@ -3231,6 +3237,7 @@ id normal
 id north
 id notification_background
 id notification_description
+id notification_layout
 id notification_main_column
 id notification_main_column_container
 id notification_settings
@@ -3238,6 +3245,8 @@ id off
 id on
 id onInterceptTouchReturnSwipe
 id optionButton
+id optionButton2
+id optionButton3
 id outline
 id outward
 id overshoot
@@ -3350,6 +3359,7 @@ id spacer2
 id spacer3
 id spacer4
 id spacer5
+id spacer8
 id special_effects_controller_view_tag
 id spinner
 id spinner1
@@ -3584,6 +3594,7 @@ layout account_reset
 layout account_signup_page
 layout account_verify
 layout activity_account_page_login
+layout activity_live_stream
 layout activity_main
 layout bluetooth_hardware_page
 layout bluetooth_input_wifi
@@ -3611,6 +3622,8 @@ layout device_share
 layout drawable_round_rectangle
 layout edit_policy
 layout fragment_blank
+layout fragment_camera_connect
+layout fragment_camera_share
 layout fragment_library
 layout fragment_streaming
 layout fragment_streaming_list
@@ -3690,6 +3703,25 @@ mipmap ic_launcher
 mipmap ic_launcher_foreground
 mipmap ic_launcher_round
 plurals mtrl_badge_content_description
+raw es2_base
+raw es2_bgra_bgra
+raw es2_bgra_nv12
+raw es2_imc4_bgra
+raw es2_nv12_bgra
+raw es2_nv12_nv12
+raw es2_rgba_bgra
+raw es2_y420p_bgra
+raw es2_y420p_nv12
+raw es3_base
+raw es3_bgra_bgra
+raw es3_bgra_nv12
+raw es3_imc4_bgra
+raw es3_nv12_bgra
+raw es3_nv12_nv12
+raw es3_rgba_bgra
+raw es3_y420p_bgra
+raw es3_y420p_nv12
+raw keep
 raw pain
 string abc_action_bar_home_description
 string abc_action_bar_up_description

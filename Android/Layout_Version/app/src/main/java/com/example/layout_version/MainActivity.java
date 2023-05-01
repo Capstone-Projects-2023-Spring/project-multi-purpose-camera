@@ -3,21 +3,16 @@ package com.example.layout_version;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.Manifest;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,7 +20,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
-import com.example.layout_version.Bluetooth.BluetoothManager;
 import com.example.layout_version.MainTab.Library.LibraryFragment;
 import com.example.layout_version.MainTab.Library.LibraryFragmentInterface;
 import com.example.layout_version.MainTab.Library.VideoDetailFragment;
@@ -212,13 +206,6 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
 
     }
 
-//    @Override
-//    public void changed(String token) {
-//        Log.e("", "Token changed");
-//        videoViewModel.setToken(token);
-//        streamingViewModel.setToken(token);
-//    }
-
     @Override
     public void videoSelected() {
         getSupportFragmentManager().beginTransaction()
@@ -237,43 +224,6 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
                 .addToBackStack("StreamingFragment")
                 .commit();
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("debug","onStart()");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("debug","onRestart()");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("debug","onResume()");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("debug","onPause()");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("debug","onStop()");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("debug","onDestroy()");
-    }
-
 
     private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
         private Runnable task = null;
@@ -302,7 +252,5 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
         String value = savedInstanceState.getString("key");
         Log.d("Restore", value);
     }
-
-
 
 }

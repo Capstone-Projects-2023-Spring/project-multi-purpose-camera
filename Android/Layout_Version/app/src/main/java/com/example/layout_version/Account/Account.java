@@ -27,6 +27,7 @@ public class Account {
     private String email;
     private String code;
     private String status;
+    private String hardware_id;
     private MutableLiveData<String> tokenData;
 //    private TokenChangeInterface tokenChangeInterface;
 
@@ -64,6 +65,10 @@ public class Account {
     {
         this.status = status;
     }
+    public void setHardware_id(String hardware_id)
+    {
+        this.hardware_id = hardware_id;
+    }
 
     public MutableLiveData<String> getTokenData()
     {
@@ -75,6 +80,10 @@ public class Account {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getHardware_id() {
+        return hardware_id;
     }
 
     public boolean isSignedIn(){
@@ -112,6 +121,7 @@ public class Account {
                         this.setUsername(json.get("username").toString());
                         this.setEmail(json.get("email").toString());
                         this.setStatus(json.get("status").toString());
+                        this.setHardware_id(json.get("hardware_id").toString());
                         success.action();
                     } catch (JSONException e) {
                         fail.action();
@@ -145,6 +155,9 @@ public class Account {
                     try {
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
                         this.setToken(json.get("token").toString());
+                        this.setUsername(username);
+                        this.setEmail(email);
+                        this.setHardware_id(json.get("hardware_id").toString());
                         success.action();
                     } catch (JSONException e) {
                         fail.action();
@@ -178,6 +191,7 @@ public class Account {
                         this.setUsername(json.get("username").toString());
                         this.setEmail(json.get("email").toString());
                         this.setToken(json.get("token").toString());
+                        this.setHardware_id(json.get("hardware_id").toString());
                         Toast.makeText(context, json.get("message").toString(), Toast.LENGTH_SHORT).show();
                         success.action();
                     } catch (JSONException e) {

@@ -17,6 +17,9 @@
     <string name="file_delete_endpoint">/file/delete</string>
     <string name="device_share_endpoint">/hardware/share</string>
     <string name="device_code_endpoint">/hardware/code</string>
+    <string name="livestream_connect_endpoint">/account/livestream/device</string>
+    <string name="device_email_endpoint">/account/email/device</string>
+    <string name="device_register_url">https://cp0s049dll.execute-api.us-east-1.amazonaws.com/dev</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="streaming_offline">Offline</string>
@@ -26,4 +29,7 @@
     <string name="streaming_streaming">Streaming</string>
     <string name="hardware_all_endpoint">/hardware/all</string>
     <string name="streaming_unavailable">Unavailable</string>
+    <string name="live_disconnected">Disconnected</string>
+    <string name="live_connecting">Connecting</string>
+    <string name="live_connected">Connected</string>
 </resources>

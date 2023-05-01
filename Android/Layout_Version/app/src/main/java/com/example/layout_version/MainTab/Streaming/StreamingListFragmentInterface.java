@@ -30,14 +30,17 @@ public interface StreamingListFragmentInterface {
                     try {
                         JSONObject item = jsonArray.getJSONObject(i);
                         return new ChannelItem(
-                                item.get("device_id").toString(),
-                                item.get("playback_url").toString(),
-                                item.get("device_name").toString(),
-                                item.get("max_resolution").toString(),
-                                item.get("s3_recording_prefix").toString(),
-                                item.get("arn").toString());
+                                item.getString("device_id"),
+                                item.getString("playback_url"),
+                                item.getString("device_name"),
+                                item.getString("max_resolution"),
+                                item.getString("s3_recording_prefix"),
+                                item.getString("arn"),
+                                item.getString("hardware_id"),
+                                item.getString("ingest_endpoint"),
+                                item.getString("stream_key"));
                     } catch (JSONException e) {
-                        return new ChannelItem("1234", "Unknown Video", "Failed to retrieve video file",  "720p", null, null);
+                        return new ChannelItem("1234", "Unknown Video", "Failed to retrieve video file",  "720p", null, null, null, null, null);
                     }
                 })
                 .collect(Collectors.toList());
