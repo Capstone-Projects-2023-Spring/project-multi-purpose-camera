@@ -14,13 +14,15 @@ public class Notifications {
     }
     public void send_Notification( NotificationManagerCompat managerCompat, String title, String content) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My_Notification");
-        builder.setSmallIcon(android.R.drawable.stat_notify_sync);
-        builder.setContentTitle(title);
-        builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
-        builder.setAutoCancel(true);
+        builder.setSmallIcon(android.R.drawable.stat_notify_sync)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
         Notification notification;
         notification = builder.build();
+
         if (ActivityCompat.checkSelfPermission( context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
