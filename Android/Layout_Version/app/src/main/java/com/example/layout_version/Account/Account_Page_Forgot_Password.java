@@ -1,5 +1,6 @@
 package com.example.layout_version.Account;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -7,7 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
+import com.android.volley.toolbox.Volley;
+import com.example.layout_version.Notifications;
 import com.example.layout_version.R;
 
 public class Account_Page_Forgot_Password extends AppCompatActivity {
@@ -17,6 +21,10 @@ public class Account_Page_Forgot_Password extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_reset);
         account = Account.getInstance();
+
+        Notifications notif = new Notifications(this);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        notif.send_Forgot_Password_Notification(managerCompat);
 
         TextView username = findViewById(R.id.username);
 
@@ -29,12 +37,12 @@ public class Account_Page_Forgot_Password extends AppCompatActivity {
                 account.reset(
                         Account_Page_Forgot_Password.this,
                         username.getText().toString(),
-                        a -> startActivity(new Intent (
+                        () -> startActivity(new Intent (
                                 Account_Page_Forgot_Password.this,
                                             Account_Page_Verify_Code.class
                                 )
                         ),
-                        a -> {}
+                        () -> {}
                 )
         );
 

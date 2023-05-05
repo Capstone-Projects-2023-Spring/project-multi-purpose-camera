@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.layout_version.Account.Account;
 import com.example.layout_version.Account.Account_Page;
 import com.example.layout_version.Account.Account_Page_Profile;
+import com.example.layout_version.SenderStream.LiveStreamActivity;
 
 
 public class Settings extends AppCompatActivity {
@@ -31,12 +32,13 @@ public class Settings extends AppCompatActivity {
         ImageView back_home_im;
         TextView back_home_txt;
 
-        back_home_im = (ImageView) findViewById(R.id.back_home_btn_setting);
-        back_home_txt = (TextView) findViewById(R.id.back_home_text_setting);
+        back_home_im = findViewById(R.id.back_home_btn_setting);
+        back_home_txt = findViewById(R.id.back_home_text_setting);
 
-        TextView saving_policy = (TextView) findViewById(R.id.cloud_saving_settings);
-
+        LinearLayout saving_policy = findViewById(R.id.cloud_saving_layout);
+        LinearLayout bluetooth = findViewById(R.id.bluetooth_layout);
         LinearLayout accountLayout = findViewById(R.id.account_layout);
+        LinearLayout livestreamLayout = findViewById(R.id.livestream_layout);
 
         accountLayout.setOnClickListener(view -> {
             Account account = Account.getInstance();
@@ -56,6 +58,19 @@ public class Settings extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        bluetooth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (Settings.this,Bluetooth_Page.class);
+                startActivity(intent);
+            }
+        });
+
+//        livestreamLayout.setOnClickListener(view -> {
+//            Intent intent = new Intent (Settings.this, LiveStreamActivity.class);
+//            startActivity(intent);
+//        });
 
         back_home_im.setOnClickListener(new View.OnClickListener()
         {

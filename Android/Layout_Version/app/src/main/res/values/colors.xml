@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#3aa160</color>
     <color name="blue">#1A72E6</color>
+    <color name="pairing">#edd74a</color>
+    <color name="success">#56DF95</color>
+    <color name="error">#FF6464</color>
 </resources>

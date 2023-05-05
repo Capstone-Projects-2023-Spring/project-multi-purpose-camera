@@ -11,17 +11,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
+import com.example.layout_version.Notifications;
 import com.example.layout_version.R;
 
 public class Account_Page_Profile extends AppCompatActivity {
     private Account account;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_profile);
         account = Account.getInstance();
-
         TextView username = findViewById(R.id.username);
         TextView resetPassword = findViewById(R.id.resetPassword);
 
@@ -56,11 +58,11 @@ public class Account_Page_Profile extends AppCompatActivity {
                     .setPositiveButton(android.R.string.yes, (dialog, which) ->
                             account.delete(
                                     Account_Page_Profile.this,
-                                    a-> {
+                                    ()-> {
                                         onBackPressed();
                                         account.clear();
                                     },
-                                    a-> {}
+                                    ()-> {}
                     ))
 
                     // A null listener allows the button to dismiss the dialog and take no further action.
@@ -71,11 +73,11 @@ public class Account_Page_Profile extends AppCompatActivity {
 
         account.profile(
                 Account_Page_Profile.this,
-                a -> {
-                    username.setText(a.getUsername());
-                    email.setText(a.getEmail());
+                () -> {
+                    username.setText(account.getUsername());
+                    email.setText(account.getEmail());
                 },
-                a -> {
+                () -> {
                     onBackPressed();
                     account.setToken(null);
                 });

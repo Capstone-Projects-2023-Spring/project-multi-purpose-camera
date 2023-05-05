@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -41,10 +42,7 @@ public class VideoDetailFragment extends Fragment {
         stopButton = layout.findViewById(R.id.stopButton);
 
         videoViewModel = new ViewModelProvider(requireActivity()).get(VideoViewModel.class);
-        videoViewModel.getSelectedVideo().observe(getViewLifecycleOwner(), item -> {
-            Log.e("Observer", item.getTitle());
-            update(item);
-        });
+        videoViewModel.getSelectedItem().observe(getViewLifecycleOwner(), this::update);
 
         return layout;
     }
@@ -63,8 +61,14 @@ public class VideoDetailFragment extends Fragment {
         });
     }
 
-    public void update(VideoItem video)
+    public void update(@Nullable VideoItem video)
     {
+        if(video == null)
+        {
+            titleView.setText("Unknown");
+            videoView.setVideoPath(null);
+            return;
+        }
         titleView.setText(video.getTitle());
         if(video.getUrl() != null)
             videoView.setVideoPath(video.getUrl());

@@ -9,7 +9,17 @@
     <string name="account_password_endpoint">/account/password</string>
     <string name="account_profile_endpoint">/account/profile</string>
     <string name="account_delete_endpoint">/account/delete</string>
+    <string name="is_recording_endpoint">/recording/is_recording</string>
+    <string name="recording_start">/recording/start</string>
+    <string name="recording_stop">/recording/stop</string>
     <string name="file_all_endpoint">/file/all</string>
+    <string name="hardware_delete_endpoint">/hardware/delete</string>
+    <string name="file_delete_endpoint">/file/delete</string>
+    <string name="device_share_endpoint">/hardware/share</string>
+    <string name="device_code_endpoint">/hardware/code</string>
+    <string name="livestream_connect_endpoint">/account/livestream/device</string>
+    <string name="device_email_endpoint">/account/email/device</string>
+    <string name="device_register_url">https://cp0s049dll.execute-api.us-east-1.amazonaws.com/dev</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="streaming_offline">Offline</string>
@@ -19,4 +29,7 @@
     <string name="streaming_streaming">Streaming</string>
     <string name="hardware_all_endpoint">/hardware/all</string>
     <string name="streaming_unavailable">Unavailable</string>
+    <string name="live_disconnected">Disconnected</string>
+    <string name="live_connecting">Connecting</string>
+    <string name="live_connected">Connected</string>
 </resources>

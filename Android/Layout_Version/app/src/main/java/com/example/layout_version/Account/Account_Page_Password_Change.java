@@ -8,8 +8,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.layout_version.MainActivity;
+import com.example.layout_version.Notifications;
 import com.example.layout_version.R;
 
 public class Account_Page_Password_Change extends AppCompatActivity {
@@ -32,15 +34,18 @@ public class Account_Page_Password_Change extends AppCompatActivity {
         changeBtn.setOnClickListener(v ->
                 {
                     if (password.getText().toString().equals(re_password.getText().toString())) {
+                        Notifications notif = new Notifications(this);
+                        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+                        notif.send_Password_Change_Notification(managerCompat);
                         account.changePassword(
                                 Account_Page_Password_Change.this,
                                 password.getText().toString(),
-                                a -> startActivity(new Intent(
+                                () -> startActivity(new Intent(
                                                 Account_Page_Password_Change.this,
                                                 Account_Page.class
                                         )
                                 ),
-                                a -> {
+                                () -> {
                                 }
                         );
                     }else{

@@ -64,6 +64,29 @@ class VideoRetriever:
 
         return file_names
 
+    def get_under_directory(self, prefix):
+        response = self.s3.list_objects(
+            Bucket=self.bucket,
+            Prefix=prefix
+        )
+        if "Contents" not in response:
+            return []
+        return [f["Key"] for f in response["Contents"]]
+
+    def delete_keys(self, keys: list[str]):
+        print([{"Key": v} for v in keys])
+        if len(keys) == 0:
+            return []
+        response = self.s3.delete_objects(
+            Bucket=self.bucket,
+            Delete={
+                "Objects": [{"Key": v} for v in keys]
+            }
+        )
+        if "Deleted" not in response:
+            return []
+        return [d["Key"] for d in response["Deleted"]]
+
     def convert_stream_in_account(self, database: MPCDatabase, account_id, id_to_folder_stream_list_map: [str, dict[str, list[str]]]):
         for id in id_to_folder_stream_list_map:
             for folder in id_to_folder_stream_list_map[id]:
@@ -93,7 +116,9 @@ class VideoRetriever:
 
         for arn in channel_id_map:
             id = channel_id_map[arn]
-            id_to_folder_stream_list_map[id] = self.unregistered_stream_map_from_channel(recordings, arn, resolution_p, fps)
+            d = self.unregistered_stream_map_from_channel(recordings, arn, resolution_p, fps)
+            if len(d) != 0:
+                id_to_folder_stream_list_map[id] = d
 
         return id_to_folder_stream_list_map
 
