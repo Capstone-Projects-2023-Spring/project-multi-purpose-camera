@@ -1,15 +1,14 @@
 import bluetooth
 import time
-from bluetooth_parser import wifi_parser
+from bluetooth_parser import parser
 
 """Simple bluetooth server code to wait for user to connect using rfcomm on port 1"""
+serverAddr = 'E4:5F:01:AF:19:30'
 
 ###Sets up bluetooth server using rfcomm on port 1
-server_socket = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+server_socket=bluetooth.BluetoothSocket( bluetooth.RFCOMM )
 port = 1
-
-###Binds the port and begins to listen for new connections
-server_socket.bind(("", port))
+server_socket.bind(("",port))
 server_socket.listen(1)
 #DC:A6:32:03:E5:7A
 epoch = time.time()
@@ -21,7 +20,12 @@ while True:
     client_socket, address = server_socket.accept()
     print("Accepted connection from", address)
     # mac address of pi --> DC:A6:32:03:E5:7A
-    client_socket.send("DC:A6:32:03:E5:7A\n")
+
+    #internet_check = internet_check()
+
+    #client_socket.send("E4:5F:01:AF:19:30\n")
+    client_socket.send("Hello\n")
+    #client_socket.send(internet_check)
     
     ###recieves data from the client in try catch so it can connect again if there is a disconnection
     while True:
@@ -30,11 +34,11 @@ while True:
             if not data:
                 break
             print("Received:" , data)
-            result = wifi_parser(data)
-            if (len(result) < 2):
-                client_socket.send("Wifi credentials are incorrect try again.\n")
-            else:
-                client_socket.send("Connected to " + result + "\n")
+            result = parser(data)
+            
+            client_socket.send(result)
+            print(result)
+            data = ""
         except bluetooth.btcommon.BluetoothError:
             print("Client disconnected\n")
             break
