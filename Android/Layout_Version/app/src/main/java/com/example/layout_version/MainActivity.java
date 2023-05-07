@@ -2,6 +2,7 @@ package com.example.layout_version;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -70,10 +71,10 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
         }
         Notifications notif = new Notifications(this);
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        notif.send_Recording_Notification( managerCompat);
-        notif.send_New_Account_Notification( managerCompat);
-        notif.send_Motion_Detected_Notification( managerCompat);
-
+        Notifications notif2 = Notifications.getInstance(this);
+        //notif.send_Recording_Notification( managerCompat);
+        //notif.send_New_Account_Notification( managerCompat);
+        //notif.send_Motion_Detected_Notification( managerCompat);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -259,7 +260,8 @@ public class MainActivity extends AppCompatActivity implements LibraryFragmentIn
         String value = savedInstanceState.getString("key");
         Log.d("Restore", value);
     }
-
-
-
+    public NotificationManagerCompat getManagerCompat(){
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        return managerCompat;
+    }
 }

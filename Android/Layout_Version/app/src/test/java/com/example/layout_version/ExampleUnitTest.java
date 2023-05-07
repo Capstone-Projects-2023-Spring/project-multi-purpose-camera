@@ -1,6 +1,18 @@
 package com.example.layout_version;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
+import android.os.Looper;
 import android.util.Log;
+
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -9,6 +21,8 @@ import com.google.gson.reflect.TypeToken;
 
 import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockedConstruction;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -28,7 +42,8 @@ import java.util.List;
  */
 public class ExampleUnitTest {
 
-
+    private Notifications n;
+    private Looper mLooper;
     @Test
     public void test_user_settings_query(){
         List<Database_Manager.Account_Configuration> accounts = Database_Manager.get_accounts_from_database();
@@ -94,5 +109,50 @@ public class ExampleUnitTest {
         Saving_Policy_Page.is_policies_valid(policies);
     }
 
+    /*
+    Testing notifications
+    Tried testing the notifications using a mock Context object and mock Looper object.
+    The build isn't recognizing the mock even though I added it to the dependencies and
+    it synced correctly. The main problem with testing the notifications is using context outside
+    the onCreate() method. Everything is trying to get around using context outside of onCreate().
+    However, the notifications do work when you run the application.
+    @Test
+    public void test_Notifications_Using_Looper(){
+        System.out.println("Application Notifications");
+
+        Looper mLooper = mock(Looper.class);
+        Context c = mock(Context.class);
+        when(c.getMainLooper()).thenReturn(mLooper);
+        n = new Notifications(c);
+
+        //Notifications n = Notifications.getInstance();
+        MainActivity main = new MainActivity();
+        NotificationManagerCompat managerCompat = main.getManagerCompat();
+        n.send_Sign_In_Notification(managerCompat);
+        System.out.println("Application Notificatons");
+        n.send_New_Account_Notification(managerCompat);
+        System.out.println("New Account Notificaton");
+        n.send_Delete_Notification(managerCompat);
+        System.out.println("Delete Notificaton");
+        n.send_Password_Change_Notification(managerCompat);
+        System.out.println("Password Change Notificaton");
+        n.send_Forgot_Password_Notification(managerCompat);
+        System.out.println("Forgot Password Notificaton");
+        n.send_Motion_Detected_Notification(managerCompat);
+        System.out.println("Motion Detected Notificaton");
+        n.send_Recording_Notification(managerCompat);
+        System.out.println("Recording Notificaton");
+        n.send_Network_Connected_Notification(managerCompat);
+        System.out.println("Network Connected Notificaton");
+        n.send_Sign_In_Notification(managerCompat);
+        System.out.println("Sign In Notificaton");
+        n.send_Streaming_Notification(managerCompat);
+        System.out.println("Streaming Notificaton");
+        n.send_Network_Not_Connected_Notification(managerCompat);
+        System.out.println("Network Not Connected Notificaton");
+        n.send_Bluetooth_Notification(managerCompat);
+        System.out.println("Bluetooth Notificaton");
+    }
+    */
 
 }

@@ -3,14 +3,25 @@ package com.example.layout_version;
 import android.app.Notification;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Looper;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class Notifications {
     private Context context;
+    private static Notifications single_instance = null;
+
+    private Looper looper;
+
+    private Handler mHandler;
     public Notifications( Context c ){
+
         context = c;
+        looper = context.getMainLooper();
+        mHandler = new Handler(looper);
     }
     public void send_Notification( NotificationManagerCompat managerCompat, String title, String content) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "My_Notification");
@@ -62,5 +73,16 @@ public class Notifications {
     }
     public void send_Network_Not_Connected_Notification( NotificationManagerCompat managerCompat ) {
         send_Notification(managerCompat, "Network Connection Failed", "Your device was unable to connect");
+    }
+    public static synchronized Notifications getInstance(Context c)
+    {
+        if (single_instance == null)
+            single_instance = new Notifications(c);
+
+        return single_instance;
+    }
+    public static synchronized Notifications getInstance()
+    {
+        return single_instance;
     }
 }

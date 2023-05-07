@@ -2710,10 +2710,13 @@ drawable account_setting
 drawable avd_hide_password
 drawable avd_show_password
 drawable baseline_account_circle_24
+drawable baseline_add_24
 drawable baseline_arrow_back_ios_new_24
 drawable baseline_battery_4_bar_24
 drawable baseline_bluetooth_36
 drawable baseline_bluetooth_48
+drawable baseline_check_circle_outline_192
+drawable baseline_check_circle_outline_32
 drawable baseline_clip_24
 drawable baseline_close_24
 drawable baseline_cloud_queue_24
@@ -2721,6 +2724,8 @@ drawable baseline_connected_tv_24
 drawable baseline_device_thermostat_24
 drawable baseline_directions_walk_24
 drawable baseline_fiber_manual_record_24
+drawable baseline_fullscreen_24
+drawable baseline_highlight_off_24
 drawable baseline_linked_camera_192
 drawable baseline_login_24
 drawable baseline_logout_24
@@ -2730,6 +2735,8 @@ drawable baseline_nightlight_24
 drawable baseline_notification_add_24
 drawable baseline_notifications_none_24
 drawable baseline_photo_camera_24
+drawable baseline_photo_camera_front_192
+drawable baseline_photo_camera_front_28
 drawable baseline_play_arrow_48
 drawable baseline_play_circle_outline_24
 drawable baseline_refresh_24
@@ -2846,6 +2853,8 @@ drawable notify_panel_notification_icon_bg
 drawable offline_icon
 drawable online_icon
 drawable round_button
+drawable round_button_diabled
+drawable round_button_email
 drawable round_button_share
 drawable round_rectangle_cyan_16dp
 drawable success_icon
@@ -2986,6 +2995,9 @@ id chain
 id chain2
 id chains
 id change
+id channelAddButton
+id channelNameEditText
+id channelRegisterImageView
 id checkbox
 id checked
 id chronometer
@@ -3005,6 +3017,7 @@ id collapseActionView
 id compress
 id confirm_button
 id connectButton
+id connectFragmentContainer
 id constraint
 id constraintLayout
 id constraintLayout2
@@ -3012,6 +3025,8 @@ id constraintLayout3
 id constraintLayout4
 id constraintLayout5
 id constraintLayout6
+id constraintLayout7
+id constraintLayout8
 id container
 id content
 id contentPanel
@@ -3039,6 +3054,7 @@ id design_menu_item_action_area
 id design_menu_item_action_area_stub
 id design_menu_item_text
 id design_navigation_view
+id desktopChannelButton
 id deviceNameView
 id deviceStatusView
 id dialog_button
@@ -3072,11 +3088,13 @@ id edit_policy_time_layout
 id edit_query
 id elastic
 id emailAddress
+id emailButton
 id embed
 id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id errorTextView
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -3095,7 +3113,6 @@ id flip
 id floating
 id forever
 id fragmentContainerView
-id fragmentContainerView2
 id fragment_container_view_tag
 id frameLayout
 id frameLayout2
@@ -3130,6 +3147,7 @@ id immediateStop
 id included
 id indeterminate
 id info
+id ingestEndpointTextView
 id invisible
 id inward
 id italic
@@ -3153,6 +3171,7 @@ id linearLayout3
 id linearLayout5
 id listMode
 id list_item
+id liveStatusTextView
 id livestream_layout
 id login
 id logout
@@ -3227,6 +3246,7 @@ id navigation_bar_item_labels_group
 id navigation_bar_item_large_label_view
 id navigation_bar_item_small_label_view
 id navigation_header_container
+id networkResultView
 id never
 id neverCompleteToEnd
 id neverCompleteToStart
@@ -3245,8 +3265,6 @@ id off
 id on
 id onInterceptTouchReturnSwipe
 id optionButton
-id optionButton2
-id optionButton3
 id outline
 id outward
 id overshoot
@@ -3263,12 +3281,14 @@ id path
 id pathRelative
 id peekHeight
 id percent
+id phoneChannelButton
 id pin
 id playButton
 id playerFrameLayout
 id position
 id postLayout
 id pressed
+id progressBar
 id progress_circular
 id progress_horizontal
 id radio
@@ -3337,6 +3357,7 @@ id serialButton
 id serialNumber
 id settings
 id shareButton
+id shareFragmentContainer
 id sharedValueSet
 id sharedValueUnset
 id shortcut
@@ -3382,6 +3403,7 @@ id staticLayout
 id staticPostLayout
 id stop
 id stopButton
+id streamKeyTextView
 id streamPlayerFrameView
 id streamRefreshButton
 id streamStatusTextView
@@ -3416,12 +3438,14 @@ id textStart
 id textTop
 id textView
 id textView10
-id textView110
 id textView16
 id textView19
 id textView2
 id textView3
+id textView4
+id textView5
 id textView6
+id textView7
 id textView9
 id text_input_end_icon
 id text_input_error_icon
@@ -3594,12 +3618,14 @@ layout account_reset
 layout account_signup_page
 layout account_verify
 layout activity_account_page_login
+layout activity_channel_register
 layout activity_live_stream
 layout activity_main
 layout bluetooth_hardware_page
 layout bluetooth_input_wifi
 layout camera
 layout camera_of_policy_template
+layout channel_information
 layout custom_dialog
 layout delete_message
 layout description_template
@@ -3618,6 +3644,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout device_connect
 layout device_share
 layout drawable_round_rectangle
 layout edit_policy
@@ -3773,6 +3800,8 @@ string clear_text_end_icon_content_description
 string db_base_url
 string db_stage
 string device_code_endpoint
+string device_email_endpoint
+string device_register_url
 string device_share_endpoint
 string error_a11y_label
 string error_icon_content_description
@@ -3788,6 +3817,10 @@ string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string is_recording_endpoint
 string item_view_role_description
+string live_connected
+string live_connecting
+string live_disconnected
+string livestream_connect_endpoint
 string m3_sys_motion_easing_emphasized
 string m3_sys_motion_easing_emphasized_accelerate
 string m3_sys_motion_easing_emphasized_decelerate

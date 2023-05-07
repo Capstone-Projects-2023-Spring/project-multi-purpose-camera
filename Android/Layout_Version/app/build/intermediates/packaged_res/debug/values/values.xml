@@ -24,6 +24,8 @@
     <string name="db_base_url">https://nk0fs4t630.execute-api.us-east-1.amazonaws.com</string>
     <string name="db_stage">/product2</string>
     <string name="device_code_endpoint">/hardware/code</string>
+    <string name="device_email_endpoint">/account/email/device</string>
+    <string name="device_register_url">https://cp0s049dll.execute-api.us-east-1.amazonaws.com/dev</string>
     <string name="device_share_endpoint">/hardware/share</string>
     <string name="file_all_endpoint">/file/all</string>
     <string name="file_delete_endpoint">/file/delete</string>
@@ -31,6 +33,10 @@
     <string name="hardware_delete_endpoint">/hardware/delete</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="is_recording_endpoint">/recording/is_recording</string>
+    <string name="live_connected">Connected</string>
+    <string name="live_connecting">Connecting</string>
+    <string name="live_disconnected">Disconnected</string>
+    <string name="livestream_connect_endpoint">/account/livestream/device</string>
     <string name="recording_start">/recording/start</string>
     <string name="recording_stop">/recording/stop</string>
     <string name="streaming_buffering">Buffering</string>
