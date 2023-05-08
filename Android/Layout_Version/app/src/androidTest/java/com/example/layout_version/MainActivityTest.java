@@ -35,6 +35,7 @@ public class MainActivityTest {
                         isDisplayed()));
         imageView.check(matches(isDisplayed()));
 
+
         ViewInteraction button = onView(
                 allOf(withId(R.id.library), withText("LIBRARY"),
                         withParent(allOf(withId(R.id.nav_bar_bottom),
