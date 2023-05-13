@@ -80,6 +80,39 @@ Compared to most products on the market, our products aims to be more multi-func
 - MySQL Database
 - Android Emulator (or physical Android device will work too)
 
+## Features
+<b>System and Device Installation</b>
+- Mounting and securing the camera in the desired spot
+- Setting up the Night Vision/Thermal Vision to Raspberry Pi
+- Setting up the Raspberry Pi on your device and cloud.
+
+<b>Create and Modify User Account</b>
+- Create/Modify User Account and Password
+- Profile Management
+- Database Management
+
+<b>Receiving live stream from another device</b>
+- Users should be able to receive a live video feed from another device
+- Users should be able to receive a live audio feed from another device
+- Users should be able to record live video feed
+- Users should be able to record live audio feed
+- Recording video and audio to the cloud
+- Cloud Storage
+- Self-Device Camera
+
+<b>Create Custom Alert and Notifications</b>
+- Tracking User Interactions
+
+## Bugs
+- Account will automatically logout after pressing on the account button or account settings
+- Recording will sometimes record
+- Too many task will crash the app 
+
+## Instructions to Build 
+- Android Only!
+- Make sure you have at least Android Version 10 or higher
+- Download the latest release
+- Make an account and you're set
 
 ## Quick Setup:
 - pip install opencv-python
